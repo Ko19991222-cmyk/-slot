@@ -131,7 +131,7 @@ body{
   }
 }
 
-/* 白フラッシュ */
+/* フラッシュ */
 
 #flash{
   position:fixed;
@@ -154,7 +154,7 @@ body{
   100%{opacity:0}
 }
 
-/* 当たり */
+/* 当たり画面 */
 
 #hit{
   position:fixed;
@@ -164,6 +164,7 @@ body{
   align-items:center;
   justify-content:center;
   overflow:hidden;
+
   background:
     radial-gradient(
       circle,
@@ -205,6 +206,7 @@ body{
   z-index:5;
   font-size:min(24vw,150px);
   font-weight:1000;
+  text-align:center;
   text-shadow:
     0 0 12px #fff,
     0 0 30px #ffe100,
@@ -229,12 +231,14 @@ body{
   }
 }
 
-#congrats{
+#subText{
   position:absolute;
-  bottom:20%;
-  font-size:14px;
+  bottom:25%;
+  z-index:5;
+  font-size:15px;
   font-weight:900;
-  letter-spacing:.25em;
+  letter-spacing:.16em;
+  text-align:center;
 }
 
 #next{
@@ -243,6 +247,106 @@ body{
 
 #hit.show #next{
   display:block;
+}
+
+/* 等級抽選中 */
+
+#lotteryBox{
+  position:fixed;
+  inset:0;
+  z-index:130;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:
+    radial-gradient(circle,#151515 0%,#050505 55%,#000 100%);
+}
+
+#lotteryBox.show{
+  display:flex;
+}
+
+#lotteryTitle{
+  font-size:clamp(22px,7vw,48px);
+  font-weight:1000;
+  letter-spacing:.12em;
+  margin-bottom:28px;
+}
+
+#lotteryRoll{
+  font-size:clamp(60px,22vw,140px);
+  font-weight:1000;
+  text-shadow:
+    0 0 20px #fff,
+    0 0 50px rgba(255,255,255,.5);
+}
+
+/* 等級結果 */
+
+#prizeBox{
+  position:fixed;
+  inset:0;
+  z-index:160;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#prizeBox.show{
+  display:flex;
+}
+
+#prizeBox.first{
+  background:
+    radial-gradient(circle,#fff7a0 0%,#d99b00 25%,#5c2500 60%,#000 100%);
+}
+
+#prizeBox.second{
+  background:
+    radial-gradient(circle,#ffffff 0%,#9ca7b6 28%,#272d35 62%,#000 100%);
+}
+
+#prizeBox.third{
+  background:
+    radial-gradient(circle,#ffd2a8 0%,#b75a22 30%,#4c1e08 62%,#000 100%);
+}
+
+#prizeLabel{
+  font-size:clamp(72px,28vw,180px);
+  font-weight:1000;
+  line-height:1;
+  text-align:center;
+  text-shadow:
+    0 0 12px #fff,
+    0 0 40px rgba(255,255,255,.7),
+    0 0 90px rgba(255,180,0,.7);
+  animation:prizeIn .7s cubic-bezier(.05,1.5,.2,1);
+}
+
+#prizeWon{
+  margin-top:20px;
+  font-size:clamp(20px,6vw,38px);
+  font-weight:1000;
+  letter-spacing:.15em;
+}
+
+@keyframes prizeIn{
+  0%{
+    transform:scale(.15) rotate(-8deg);
+    opacity:0;
+    filter:blur(14px);
+  }
+  70%{
+    transform:scale(1.18) rotate(2deg);
+    opacity:1;
+    filter:blur(0);
+  }
+  100%{
+    transform:scale(1) rotate(0);
+  }
 }
 </style>
 </head>
@@ -266,20 +370,31 @@ body{
 <div id="hit">
   <div id="glow"></div>
   <div id="hitText">当たり</div>
-  <div id="congrats">CONGRATULATIONS</div>
+  <div id="subText">CONGRATULATIONS</div>
   <button id="next">NEXT</button>
+</div>
+
+<div id="lotteryBox">
+  <div id="lotteryTitle">等級抽選中...</div>
+  <div id="lotteryRoll">?</div>
+</div>
+
+<div id="prizeBox">
+  <div id="prizeLabel">3等</div>
+  <div id="prizeWon">当選！</div>
 </div>
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260912-200"
+  src="./hit_music_final.mp3?v=20260912-300"
   preload="auto"
   playsinline>
 </audio>
 
 <script>
+
 const $ = s => document.querySelector(s);
-const sleep = ms => new Promise(r => setTimeout(r, ms));
+const sleep = ms => new Promise(r => setTimeout(r,ms));
 
 let busy = false;
 let audioCtx = null;
@@ -293,7 +408,7 @@ const hitMusic = $("#hitMusic");
 
 
 /* =========================
-   WebAudio
+   Web Audio
 ========================= */
 
 function initAudio(){
@@ -314,7 +429,7 @@ function initAudio(){
 
 
 /* =========================
-   iPhone用 当たり曲解禁
+   iPhone用 音楽解禁
 ========================= */
 
 async function unlockHitMusic(){
@@ -323,33 +438,20 @@ async function unlockHitMusic(){
 
     hitMusic.pause();
     hitMusic.currentTime = 0;
-
     hitMusic.muted = false;
-
-    /*
-      完全ミュートではなく
-      超小音量で再生する
-    */
     hitMusic.volume = 0.001;
 
     await hitMusic.play();
 
-    /*
-      少しだけ再生して
-      iPhoneに許可させる
-    */
     await sleep(60);
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.volume = 1;
 
   }catch(e){
 
-    console.log("unlock error:", e);
-
+    console.log("unlock error:",e);
     hitMusic.volume = 1;
 
   }
@@ -357,7 +459,7 @@ async function unlockHitMusic(){
 
 
 /* =========================
-   緊張音
+   緊張BGM
 ========================= */
 
 function startTension(){
@@ -371,12 +473,12 @@ function startTension(){
   tensionGain = audioCtx.createGain();
 
   tensionGain.gain.setValueAtTime(
-    0.0001,
+    .0001,
     now
   );
 
   tensionGain.gain.exponentialRampToValueAtTime(
-    0.08,
+    .08,
     now + .8
   );
 
@@ -392,7 +494,6 @@ function startTension(){
 
   tensionOsc1.connect(tensionGain);
   tensionOsc2.connect(tensionGain);
-
   tensionGain.connect(audioCtx.destination);
 
   tensionOsc1.start();
@@ -425,10 +526,6 @@ function startTension(){
   },650);
 }
 
-
-/* =========================
-   緊張音停止
-========================= */
 
 function stopTension(){
 
@@ -581,6 +678,33 @@ function slashSound(){
 
 
 /* =========================
+   等級抽選音
+========================= */
+
+function lotteryTick(){
+
+  initAudio();
+
+  const now = audioCtx.currentTime;
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = "square";
+  osc.frequency.value = 520;
+
+  gain.gain.setValueAtTime(.13,now);
+  gain.gain.exponentialRampToValueAtTime(.0001,now+.08);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.start(now);
+  osc.stop(now+.09);
+}
+
+
+/* =========================
    当たり曲
 ========================= */
 
@@ -589,28 +713,54 @@ async function playHitMusic(){
   try{
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.muted = false;
     hitMusic.volume = 1;
 
-    const p = hitMusic.play();
-
-    if(p){
-      await p;
-    }
+    await hitMusic.play();
 
   }catch(e){
 
-    console.log("HIT MUSIC ERROR:", e);
+    console.log("HIT MUSIC ERROR:",e);
 
   }
 }
 
 
 /* =========================
-   数字
+   等級抽選
+   1等 10%
+   2等 30%
+   3等 60%
+========================= */
+
+function drawPrize(){
+
+  const r = Math.random();
+
+  if(r < .10){
+    return {
+      label:"1等",
+      className:"first"
+    };
+  }
+
+  if(r < .40){
+    return {
+      label:"2等",
+      className:"second"
+    };
+  }
+
+  return {
+    label:"3等",
+    className:"third"
+  };
+}
+
+
+/* =========================
+   数字表示
 ========================= */
 
 function showNumber(n){
@@ -618,7 +768,6 @@ function showNumber(n){
   const el = $("#number");
 
   el.className = "";
-
   el.textContent = n;
 
   void el.offsetWidth;
@@ -646,7 +795,111 @@ function flash(){
 
 
 /* =========================
-   当たり表示
+   等級抽選演出
+========================= */
+
+async function runPrizeLottery(){
+
+  /*
+    当たりを少し見せてから
+    2段目の抽選へ
+  */
+
+  await sleep(1800);
+
+  $("#hit").className = "";
+
+  $("#lotteryBox").className = "show";
+
+
+  const roll = $("#lotteryRoll");
+
+  const fakeResults = [
+    "1等",
+    "3等",
+    "2等",
+    "3等",
+    "1等",
+    "2等",
+    "3等"
+  ];
+
+
+  /*
+    最初は速く
+    後半はゆっくり
+  */
+
+  const delays = [
+    90,90,100,110,130,
+    150,180,210,250,
+    300,360,450
+  ];
+
+
+  for(let i = 0; i < delays.length; i++){
+
+    roll.textContent =
+      fakeResults[
+        Math.floor(
+          Math.random() * fakeResults.length
+        )
+      ];
+
+    lotteryTick();
+
+    await sleep(delays[i]);
+  }
+
+
+  /*
+    ★ここで本当の等級決定
+  */
+
+  const prize = drawPrize();
+
+
+  await sleep(450);
+
+
+  $("#lotteryBox").className = "";
+
+
+  const prizeBox = $("#prizeBox");
+
+  prizeBox.className =
+    "show " + prize.className;
+
+
+  $("#prizeLabel").textContent =
+    prize.label;
+
+
+  /*
+    最終結果で強フラッシュ
+  */
+
+  flash();
+
+
+  /*
+    結果を見せたあとNEXTを表示
+  */
+
+  await sleep(1200);
+
+  $("#next").style.display = "block";
+
+  /*
+    NEXTを等級画面の上に移動
+  */
+
+  prizeBox.appendChild($("#next"));
+}
+
+
+/* =========================
+   当たり
 ========================= */
 
 async function showHit(){
@@ -654,6 +907,12 @@ async function showHit(){
   $("#hit").className = "show";
 
   await playHitMusic();
+
+  /*
+    当たり後の等級抽選へ
+  */
+
+  runPrizeLottery();
 }
 
 
@@ -665,9 +924,6 @@ async function slashHit(){
 
   stopTension();
 
-  /*
-    一瞬の無音
-  */
   await sleep(180);
 
   slashSound();
@@ -736,10 +992,11 @@ async function play(){
 
   busy = true;
 
+
   /*
-    ★ STARTを押したこの瞬間に
-    iPhoneの音声を解禁
+    iPhone音声解禁
   */
+
   initAudio();
 
   await unlockHitMusic();
@@ -747,23 +1004,26 @@ async function play(){
 
   $("#start").style.display = "none";
 
-  $("#hit").className = "";
 
-
-  /*
-    カウントダウン緊張音
-  */
   startTension();
 
 
   /*
-    今は100%当たり
+    今は100%当たりテスト
+
+    0 = 3途中
+    1 = 2途中
+    2 = 1途中
+    3 = 1後
+    4 = 暗転
+    5 = 復活
   */
+
   const pattern =
     Math.floor(Math.random() * 6);
 
 
-  /* ===== 3 ===== */
+  /* 3 */
 
   showNumber(3);
 
@@ -779,7 +1039,7 @@ async function play(){
   await sleep(2100);
 
 
-  /* ===== 2 ===== */
+  /* 2 */
 
   showNumber(2);
 
@@ -795,7 +1055,7 @@ async function play(){
   await sleep(2250);
 
 
-  /* ===== 1 ===== */
+  /* 1 */
 
   showNumber(1);
 
@@ -813,8 +1073,6 @@ async function play(){
 
   $("#number").textContent = "";
 
-
-  /* ===== 1の後 ===== */
 
   if(pattern === 3){
 
@@ -835,6 +1093,7 @@ async function play(){
     await revivalHit();
 
   }
+
 }
 
 
@@ -852,22 +1111,29 @@ function reset(){
     hitMusic.currentTime = 0;
   }catch(e){}
 
-  hitMusic.volume = 1;
-
 
   $("#hit").className = "";
+  $("#lotteryBox").className = "";
+  $("#prizeBox").className = "";
 
   $("#slash").className = "";
-
   $("#black").style.display = "none";
 
 
   $("#number").textContent = "3";
-
   $("#number").className = "";
 
 
   $("#start").style.display = "block";
+
+
+  /*
+    NEXTを当たり画面へ戻す
+  */
+
+  $("#hit").appendChild($("#next"));
+
+  $("#next").style.display = "none";
 
 
   busy = false;
