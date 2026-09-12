@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>COUNTDOWN IMPACT TEST</title>
+<title>COUNTDOWN CHANCE</title>
 
 <style>
 *{
@@ -12,9 +12,9 @@
 }
 
 html,body{
+  margin:0;
   width:100%;
   height:100%;
-  margin:0;
   overflow:hidden;
   background:#000;
   color:#fff;
@@ -25,8 +25,6 @@ body{
   user-select:none;
 }
 
-/* ===== MAIN ===== */
-
 #stage{
   position:fixed;
   inset:0;
@@ -34,73 +32,53 @@ body{
   place-items:center;
   overflow:hidden;
   background:
-    radial-gradient(circle at 50% 48%, #1c1c1c 0%, #090909 42%, #000 78%);
+    radial-gradient(circle at 50% 45%,#241212 0%,#090909 42%,#000 78%);
 }
 
-#ambientGlow{
+#energy{
   position:absolute;
-  inset:-20%;
+  inset:-25%;
+  opacity:.18;
+  transform:scale(1);
   background:
     radial-gradient(circle at center,
-      rgba(110,0,0,.22) 0%,
-      rgba(30,0,0,.12) 28%,
-      transparent 60%);
-  opacity:.2;
-  transform:scale(1);
-  transition:1s;
-}
-
-#vignette{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle,
-      transparent 30%,
-      rgba(0,0,0,.2) 56%,
-      rgba(0,0,0,.9) 100%);
+    rgba(180,0,0,.28),
+    rgba(70,0,0,.12) 28%,
+    transparent 62%);
+  transition:1s ease;
 }
 
 #number{
   position:relative;
-  z-index:2;
-  font-size:min(47vw,290px);
+  z-index:3;
+  font-size:min(49vw,300px);
   font-weight:1000;
-  line-height:.85;
-  letter-spacing:-.06em;
+  line-height:.9;
   text-shadow:
     0 0 18px rgba(255,255,255,.22),
-    0 0 55px rgba(255,0,0,.05);
-  transform:scale(1);
-  transition:
-    transform .25s ease,
-    opacity .25s ease,
-    text-shadow .4s ease;
+    0 0 55px rgba(255,0,0,.16);
+  transition:.25s;
 }
 
-#number.active{
-  transform:scale(1.035);
-}
-
-#number.tense{
+#number.hot{
+  transform:scale(1.06);
   text-shadow:
-    0 0 20px rgba(255,255,255,.28),
-    0 0 65px rgba(180,0,0,.28);
+    0 0 20px #ffffff66,
+    0 0 60px #ff000055;
 }
 
-#label{
+#status{
   position:absolute;
-  bottom:16%;
+  bottom:15%;
   font-size:11px;
-  letter-spacing:.32em;
-  opacity:.35;
-  z-index:4;
+  letter-spacing:.28em;
+  opacity:.28;
 }
 
 button{
-  border:1px solid rgba(255,255,255,.35);
-  background:rgba(15,15,15,.9);
+  border:1px solid #ffffff55;
   color:#fff;
+  background:#111;
   border-radius:999px;
   padding:16px 42px;
   font-size:16px;
@@ -120,8 +98,8 @@ button{
   position:fixed;
   inset:0;
   z-index:20;
-  overflow:hidden;
   display:none;
+  overflow:hidden;
   background:#000;
 }
 
@@ -129,131 +107,127 @@ button{
   display:block;
 }
 
-#fxGlow{
+#fire{
   position:absolute;
-  inset:-20%;
+  inset:-25%;
   opacity:0;
   background:
-    radial-gradient(circle at 50% 50%,
-      #fff 0%,
-      #ffdf8a 6%,
-      #ff4a00 16%,
-      #8d0000 32%,
-      #120000 58%,
-      #000 78%);
+    radial-gradient(circle at center,
+    #fff 0%,
+    #ffe469 5%,
+    #ff6a00 14%,
+    #a50000 32%,
+    #210000 58%,
+    #000 80%);
 }
 
-#fxGlow.burst{
-  animation:burstGlow 1.2s ease-out forwards;
+#fire.burst{
+  animation:fireBurst 1.2s ease-out forwards;
 }
 
-@keyframes burstGlow{
+@keyframes fireBurst{
   0%{opacity:0;transform:scale(.7)}
-  10%{opacity:1;transform:scale(.9)}
-  35%{opacity:.85;transform:scale(1.08)}
-  100%{opacity:.36;transform:scale(1.25)}
+  12%{opacity:1;transform:scale(.9)}
+  45%{opacity:.9;transform:scale(1.08)}
+  100%{opacity:.4;transform:scale(1.25)}
 }
 
-/* slicing flash */
-#cutFlash{
+#slash{
   position:absolute;
   left:-30%;
-  top:49%;
+  top:48%;
   width:160%;
-  height:16px;
+  height:18px;
   z-index:9;
   opacity:0;
-  transform:rotate(-15deg) scaleX(.05);
+  transform:rotate(-16deg) scaleX(.02);
   transform-origin:left center;
   background:#fff;
   box-shadow:
-    0 0 15px #fff,
-    0 0 38px #fff,
-    0 0 70px #ff7600,
-    0 0 110px #ff0000;
+    0 0 16px #fff,
+    0 0 40px #fff,
+    0 0 80px #ff7b00,
+    0 0 130px #ff0000;
 }
 
-#cutFlash.go{
-  animation:cut .19s cubic-bezier(.1,.8,.1,1) forwards;
+#slash.go{
+  animation:slashGo .2s ease-out forwards;
 }
 
-@keyframes cut{
+@keyframes slashGo{
   0%{
     opacity:0;
-    transform:rotate(-15deg) scaleX(.02);
+    transform:rotate(-16deg) scaleX(.02);
   }
-  15%{opacity:1}
+  20%{opacity:1}
   100%{
     opacity:1;
-    transform:rotate(-15deg) scaleX(1);
+    transform:rotate(-16deg) scaleX(1);
   }
 }
 
-/* torn panels */
-#upper,#lower{
+#topPanel,#bottomPanel{
   position:absolute;
   inset:-12%;
-  z-index:6;
+  z-index:7;
   background:
-    radial-gradient(circle at 50% 50%,#141414 0%,#050505 55%,#000 100%);
-  transition:transform .58s cubic-bezier(.15,.82,.12,1);
+    radial-gradient(circle,#181818,#050505 60%,#000);
+  transition:.6s cubic-bezier(.1,.85,.15,1);
 }
 
-#upper{
-  clip-path:polygon(0 0,100% 0,100% 41%,0 66%);
+#topPanel{
+  clip-path:polygon(0 0,100% 0,100% 42%,0 68%);
 }
 
-#lower{
-  clip-path:polygon(0 66%,100% 41%,100% 100%,0 100%);
+#bottomPanel{
+  clip-path:polygon(0 68%,100% 42%,100% 100%,0 100%);
 }
 
-#fx.torn #upper{
-  transform:translate(-10%,-15%) rotate(-1.5deg);
+#fx.torn #topPanel{
+  transform:translate(-12%,-16%) rotate(-2deg);
 }
 
-#fx.torn #lower{
-  transform:translate(10%,15%) rotate(1.5deg);
+#fx.torn #bottomPanel{
+  transform:translate(12%,16%) rotate(2deg);
 }
 
-#hitText{
+#hit{
   position:absolute;
   inset:0;
-  z-index:5;
+  z-index:6;
   display:grid;
   place-items:center;
-  text-align:center;
   opacity:0;
-  transform:scale(.48);
-  font-size:min(24vw,170px);
+  transform:scale(.4);
+  font-size:min(24vw,165px);
   font-weight:1000;
-  letter-spacing:.04em;
   text-shadow:
     0 0 15px #fff,
-    0 0 40px rgba(255,160,0,.85),
-    0 0 80px rgba(255,0,0,.8);
+    0 0 45px #ff9500,
+    0 0 85px #ff0000;
 }
 
-#hitText.show{
-  animation:hitIn .62s cubic-bezier(.08,1.35,.15,1) forwards;
+#hit.show{
+  animation:hitPop .65s cubic-bezier(.08,1.3,.18,1) forwards;
 }
 
-@keyframes hitIn{
-  0%{opacity:0;transform:scale(.45)}
-  50%{opacity:1;transform:scale(1.12)}
+@keyframes hitPop{
+  0%{opacity:0;transform:scale(.4)}
+  55%{opacity:1;transform:scale(1.18)}
   100%{opacity:1;transform:scale(1)}
 }
 
-#whiteFlash{
+#white{
   position:fixed;
   inset:0;
   z-index:50;
+  pointer-events:none;
   background:#fff;
   opacity:0;
-  pointer-events:none;
 }
 
-#whiteFlash.flash{
-  animation:whiteFlash .26s ease-out;
+#white.flash{
+  animation:whiteFlash .28s ease-out;
 }
 
 @keyframes whiteFlash{
@@ -266,8 +240,22 @@ button{
   position:fixed;
   inset:0;
   z-index:40;
-  background:#000;
   display:none;
+  background:#000;
+}
+
+.shake{
+  animation:shake .32s linear;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  16%{transform:translate(-9px,4px)}
+  32%{transform:translate(10px,-5px)}
+  48%{transform:translate(-8px,-2px)}
+  64%{transform:translate(7px,5px)}
+  80%{transform:translate(-4px,-3px)}
+  100%{transform:translate(0,0)}
 }
 
 /* ===== WIN ===== */
@@ -280,32 +268,31 @@ button{
   place-items:center;
   text-align:center;
   background:
-    radial-gradient(circle at center,#2b0b00 0%,#080000 38%,#000 78%);
+    radial-gradient(circle,#4b1600 0%,#130000 38%,#000 78%);
 }
 
 #winInner{
-  transform:scale(.7);
   opacity:0;
+  transform:scale(.6);
 }
 
 #win.show #winInner{
-  animation:winPop .7s cubic-bezier(.1,1.2,.2,1) forwards;
+  animation:winIn .8s cubic-bezier(.1,1.25,.2,1) forwards;
 }
 
-@keyframes winPop{
+@keyframes winIn{
   to{
-    transform:scale(1);
     opacity:1;
+    transform:scale(1);
   }
 }
 
 #winTitle{
-  font-size:min(13vw,90px);
+  font-size:min(13vw,88px);
   font-weight:1000;
-  letter-spacing:.02em;
   text-shadow:
-    0 0 20px rgba(255,255,255,.45),
-    0 0 50px rgba(255,140,0,.5);
+    0 0 18px #ffffffaa,
+    0 0 50px #ff990088;
 }
 
 #winSub{
@@ -318,44 +305,28 @@ button{
   position:absolute;
   bottom:7%;
 }
-
-/* shake */
-.shakeHeavy{
-  animation:shakeHeavy .32s linear;
-}
-
-@keyframes shakeHeavy{
-  0%{transform:translate(0,0)}
-  15%{transform:translate(-8px,4px)}
-  30%{transform:translate(9px,-4px)}
-  45%{transform:translate(-7px,-2px)}
-  60%{transform:translate(7px,4px)}
-  75%{transform:translate(-4px,-3px)}
-  100%{transform:translate(0,0)}
-}
 </style>
 </head>
 
 <body>
 
 <div id="stage">
-  <div id="ambientGlow"></div>
+  <div id="energy"></div>
   <div id="number">3</div>
-  <div id="label">TEST MODE / 100% HIT</div>
+  <div id="status">TEST MODE / 100% HIT</div>
   <button id="start">START</button>
-  <div id="vignette"></div>
 </div>
 
 <div id="fx">
-  <div id="fxGlow"></div>
-  <div id="hitText">当たり</div>
-  <div id="upper"></div>
-  <div id="lower"></div>
-  <div id="cutFlash"></div>
+  <div id="fire"></div>
+  <div id="hit">当たり</div>
+  <div id="topPanel"></div>
+  <div id="bottomPanel"></div>
+  <div id="slash"></div>
 </div>
 
 <div id="blackout"></div>
-<div id="whiteFlash"></div>
+<div id="white"></div>
 
 <div id="win">
   <div id="winInner">
@@ -365,60 +336,70 @@ button{
   <button id="next">NEXT</button>
 </div>
 
-
 <script>
 const $ = s => document.querySelector(s);
-const sleep = ms => new Promise(r => setTimeout(r,ms));
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
 let ctx;
-let busy = false;
-
-let ambienceNodes = [];
-let tensionLevel = 0;
+let busy=false;
+let bgm=[];
 
 
-/* =========================
-   AUDIO
-========================= */
+/* ======================
+   AUDIO CORE
+====================== */
 
 function initAudio(){
+
   if(!ctx){
-    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
   }
 
-  if(ctx.state === "suspended"){
+  if(ctx.state==="suspended"){
     ctx.resume();
   }
 }
 
-function osc(freq, duration, volume, type="sine", startDelay=0){
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
+function tone(
+  freq,
+  duration=.3,
+  volume=.1,
+  type="sine",
+  delay=0
+){
 
-  const start = ctx.currentTime + startDelay;
+  const o=ctx.createOscillator();
+  const g=ctx.createGain();
 
-  o.type = type;
-  o.frequency.setValueAtTime(freq,start);
+  const t=ctx.currentTime+delay;
 
-  g.gain.setValueAtTime(Math.max(volume,.0001),start);
-  g.gain.exponentialRampToValueAtTime(.0001,start+duration);
+  o.type=type;
+  o.frequency.setValueAtTime(freq,t);
+
+  g.gain.setValueAtTime(Math.max(volume,.0001),t);
+  g.gain.exponentialRampToValueAtTime(.0001,t+duration);
 
   o.connect(g);
   g.connect(ctx.destination);
 
-  o.start(start);
-  o.stop(start+duration+.05);
-
-  return {o,g};
+  o.start(t);
+  o.stop(t+duration+.05);
 }
 
-function noiseBurst(duration=.18, volume=.12){
-  const length = Math.floor(ctx.sampleRate * duration);
-  const buffer = ctx.createBuffer(1,length,ctx.sampleRate);
-  const data = buffer.getChannelData(0);
+function noise(duration=.12,volume=.12){
+
+  const length=Math.floor(ctx.sampleRate*duration);
+
+  const buffer=ctx.createBuffer(
+    1,
+    length,
+    ctx.sampleRate
+  );
+
+  const data=buffer.getChannelData(0);
 
   for(let i=0;i<length;i++){
-    data[i]=(Math.random()*2-1);
+    data[i]=Math.random()*2-1;
   }
 
   const src=ctx.createBufferSource();
@@ -428,11 +409,15 @@ function noiseBurst(duration=.18, volume=.12){
   src.buffer=buffer;
 
   filter.type="bandpass";
-  filter.frequency.value=1400;
-  filter.Q.value=.7;
+  filter.frequency.value=1450;
+  filter.Q.value=.8;
 
-  gain.gain.setValueAtTime(volume,ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);
+  gain.gain.value=volume;
+
+  gain.gain.exponentialRampToValueAtTime(
+    .0001,
+    ctx.currentTime+duration
+  );
 
   src.connect(filter);
   filter.connect(gain);
@@ -441,260 +426,401 @@ function noiseBurst(duration=.18, volume=.12){
   src.start();
 }
 
-function startAmbience(){
 
-  stopAmbience();
+/* ======================
+   ACTUAL TENSION BGM
+====================== */
 
-  const master = ctx.createGain();
-  master.gain.value=.035;
+function startBGM(){
 
-  const low = ctx.createOscillator();
-  low.type="sine";
-  low.frequency.value=42;
+  stopBGM();
 
-  const lowGain = ctx.createGain();
-  lowGain.gain.value=.45;
+  const master=ctx.createGain();
 
-  const mid = ctx.createOscillator();
-  mid.type="triangle";
-  mid.frequency.value=84;
-
-  const midGain = ctx.createGain();
-  midGain.gain.value=.06;
-
-  const filter = ctx.createBiquadFilter();
-  filter.type="lowpass";
-  filter.frequency.value=160;
-
-  low.connect(lowGain);
-  mid.connect(midGain);
-
-  lowGain.connect(filter);
-  midGain.connect(filter);
-
-  filter.connect(master);
+  master.gain.value=.055;
   master.connect(ctx.destination);
 
-  low.start();
-  mid.start();
+  bgm.push(master);
 
-  ambienceNodes=[low,mid,master,filter,lowGain,midGain];
+  /*
+   Dark repeating chord / melody
+  */
+
+  const notes=[
+    55,
+    65.4,
+    73.4,
+    82.4
+  ];
+
+  let step=0;
+
+  function loop(){
+
+    if(!bgm.length)return;
+
+    const root=notes[step%notes.length];
+
+    const bass=ctx.createOscillator();
+    const bassGain=ctx.createGain();
+
+    bass.type="sine";
+    bass.frequency.value=root;
+
+    bassGain.gain.setValueAtTime(
+      .24,
+      ctx.currentTime
+    );
+
+    bassGain.gain.exponentialRampToValueAtTime(
+      .001,
+      ctx.currentTime+.75
+    );
+
+    bass.connect(bassGain);
+    bassGain.connect(master);
+
+    bass.start();
+    bass.stop(ctx.currentTime+.8);
+
+    /* dark upper tone */
+
+    const pad=ctx.createOscillator();
+    const padGain=ctx.createGain();
+
+    pad.type="triangle";
+    pad.frequency.value=root*2;
+
+    padGain.gain.setValueAtTime(
+      .035,
+      ctx.currentTime
+    );
+
+    padGain.gain.exponentialRampToValueAtTime(
+      .001,
+      ctx.currentTime+.75
+    );
+
+    pad.connect(padGain);
+    padGain.connect(master);
+
+    pad.start();
+    pad.stop(ctx.currentTime+.8);
+
+    step++;
+
+    bgm.timer=setTimeout(loop,780);
+  }
+
+  loop();
 }
 
-function raiseTension(level){
+function increaseBGM(level){
 
-  tensionLevel=level;
-
-  const master=ambienceNodes[2];
-  const filter=ambienceNodes[3];
-  const lowGain=ambienceNodes[4];
+  const master=bgm[0];
 
   if(!master)return;
 
-  const now=ctx.currentTime;
+  const target=
+    level===1 ? .055 :
+    level===2 ? .075 :
+    .10;
 
-  master.gain.cancelScheduledValues(now);
   master.gain.linearRampToValueAtTime(
-    level===1 ? .045 :
-    level===2 ? .062 :
-    .082,
-    now+.4
-  );
-
-  filter.frequency.linearRampToValueAtTime(
-    level===1 ? 160 :
-    level===2 ? 210 :
-    290,
-    now+.4
-  );
-
-  lowGain.gain.linearRampToValueAtTime(
-    level===1 ? .45 :
-    level===2 ? .58 :
-    .72,
-    now+.4
+    target,
+    ctx.currentTime+.35
   );
 }
 
-function stopAmbience(){
-  ambienceNodes.forEach(n=>{
+function stopBGM(){
+
+  if(bgm.timer){
+    clearTimeout(bgm.timer);
+  }
+
+  if(bgm[0]){
     try{
-      if(n.stop)n.stop();
+      bgm[0].gain.linearRampToValueAtTime(
+        .0001,
+        ctx.currentTime+.05
+      );
     }catch(e){}
-  });
+  }
 
-  ambienceNodes=[];
+  bgm=[];
 }
 
-function heartbeat(level=1){
 
-  const base =
-    level===1 ? 48 :
-    level===2 ? 52 :
-    56;
+/* ======================
+   COUNT SOUNDS
+====================== */
 
-  osc(base,.22,.18,"sine");
-  osc(base*2,.12,.045,"triangle");
+function countSound(n){
+
+  const f=
+    n===3 ? 58 :
+    n===2 ? 66 :
+    76;
+
+  tone(f,.42,.22,"sine");
+  tone(f*2,.16,.04,"triangle");
 
   setTimeout(()=>{
-    osc(base-5,.18,.11,"sine");
-  },180);
+    tone(f-8,.22,.11,"sine");
+  },210);
 }
 
-function countImpact(n){
 
-  let f =
-    n===3 ? 65 :
-    n===2 ? 72 :
-    82;
-
-  osc(f,.35,.24,"sine");
-  osc(f*2,.20,.055,"triangle");
-
-  noiseBurst(.04,.022);
-}
+/* ======================
+   SLASH SOUND
+====================== */
 
 function slashSound(){
 
-  noiseBurst(.12,.23);
+  noise(.13,.24);
 
-  osc(1100,.09,.11,"sawtooth");
-  osc(720,.14,.08,"sawtooth",.03);
-
-  setTimeout(()=>{
-    osc(62,.55,.38,"sine");
-    osc(124,.3,.08,"triangle");
-  },65);
-}
-
-function impactBoom(){
-
-  osc(48,.75,.48,"sine");
-  osc(96,.38,.10,"triangle");
+  tone(1300,.09,.1,"sawtooth");
+  tone(840,.15,.08,"sawtooth",.03);
 
   setTimeout(()=>{
-    osc(36,1,.33,"sine");
+    tone(54,.7,.5,"sine");
+    tone(108,.35,.08,"triangle");
   },55);
 }
 
+
+/* ======================
+   ORIGINAL CONFIRM SOUND
+====================== */
+
 function confirmSound(){
 
-  const now = ctx.currentTime;
+  /*
+    Original "big win" style sound.
+    Not copied from any machine.
+  */
 
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
+  const now=ctx.currentTime;
+
+  const o=ctx.createOscillator();
+  const g=ctx.createGain();
 
   o.type="sine";
 
-  o.frequency.setValueAtTime(520,now);
-  o.frequency.exponentialRampToValueAtTime(1800,now+.42);
-  o.frequency.exponentialRampToValueAtTime(2350,now+.7);
+  o.frequency.setValueAtTime(480,now);
+  o.frequency.exponentialRampToValueAtTime(
+    1400,
+    now+.20
+  );
+  o.frequency.exponentialRampToValueAtTime(
+    2600,
+    now+.55
+  );
 
   g.gain.setValueAtTime(.001,now);
-  g.gain.linearRampToValueAtTime(.18,now+.05);
-  g.gain.exponentialRampToValueAtTime(.001,now+.8);
+  g.gain.linearRampToValueAtTime(.22,now+.04);
+  g.gain.exponentialRampToValueAtTime(.001,now+.72);
 
   o.connect(g);
   g.connect(ctx.destination);
 
   o.start();
-  o.stop(now+.82);
+  o.stop(now+.75);
 
-  setTimeout(()=>{
-    osc(1040,.32,.08,"triangle");
-  },150);
+  /* sparkle sequence */
+
+  const notes=[
+    1200,
+    1450,
+    1700,
+    2000,
+    2350
+  ];
+
+  notes.forEach((f,i)=>{
+    tone(
+      f,
+      .12,
+      .075,
+      "triangle",
+      .20+i*.075
+    );
+  });
+
+  /* final punch */
+
+  tone(72,.65,.36,"sine",.12);
 }
 
-function victoryJingle(){
 
-  osc(392,.38,.12);
-  setTimeout(()=>osc(523,.38,.13),170);
-  setTimeout(()=>osc(659,.4,.14),340);
-  setTimeout(()=>osc(784,.75,.13),520);
+/* ======================
+   WIN JINGLE
+====================== */
+
+function winJingle(){
+
+  const notes=[
+    523,
+    659,
+    784,
+    1046
+  ];
+
+  notes.forEach((n,i)=>{
+    tone(
+      n,
+      .42,
+      .13,
+      "triangle",
+      i*.18
+    );
+  });
+
+  tone(
+    130,
+    1.0,
+    .12,
+    "sine",
+    .15
+  );
 }
 
 
-/* =========================
-   VISUAL FX
-========================= */
+/* ======================
+   VISUALS
+====================== */
 
 function flash(){
 
-  const f=$("#whiteFlash");
+  const f=$("#white");
 
   f.classList.remove("flash");
+
   void f.offsetWidth;
+
   f.classList.add("flash");
 }
 
 function shake(){
 
-  document.body.classList.remove("shakeHeavy");
+  document.body.classList.remove("shake");
+
   void document.body.offsetWidth;
-  document.body.classList.add("shakeHeavy");
+
+  document.body.classList.add("shake");
 
   setTimeout(()=>{
-    document.body.classList.remove("shakeHeavy");
-  },380);
+    document.body.classList.remove("shake");
+  },350);
 }
 
 function resetFX(){
 
   $("#fx").className="";
-  $("#cutFlash").className="";
-  $("#fxGlow").className="";
-  $("#hitText").className="";
+  $("#slash").className="";
+  $("#fire").className="";
+  $("#hit").className="";
   $("#blackout").style.display="none";
 }
 
+
+/* ======================
+   HIT FX
+====================== */
+
 async function cutHit(){
 
-  stopAmbience();
+  stopBGM();
 
-  /* tiny silence before impact */
-  await sleep(280);
+  /*
+   This silence is intentional.
+  */
 
-  const fx=$("#fx");
+  await sleep(330);
 
-  fx.className="show";
+  $("#fx").className="show";
 
-  await sleep(130);
+  await sleep(110);
 
-  $("#cutFlash").className="go";
+  $("#slash").className="go";
 
   slashSound();
 
-  await sleep(120);
+  await sleep(115);
 
   flash();
 
-  fx.classList.add("torn");
-  $("#fxGlow").className="burst";
+  $("#fx").classList.add("torn");
+  $("#fire").className="burst";
 
-  impactBoom();
   shake();
 
-  await sleep(300);
+  await sleep(260);
 
-  $("#hitText").className="show";
+  $("#hit").className="show";
 
-  await sleep(170);
+  /*
+    Delay after impact.
+    Then confirmation sound.
+  */
+
+  await sleep(160);
 
   confirmSound();
 
-  await sleep(1450);
+  await sleep(1500);
 }
+
+
+/* ======================
+   COUNTDOWN
+====================== */
+
+async function showCount(n,level){
+
+  const number=$("#number");
+
+  number.textContent=n;
+  number.className="hot";
+
+  increaseBGM(level);
+
+  $("#energy").style.opacity=
+    level===1 ? ".25" :
+    level===2 ? ".42" :
+    ".62";
+
+  $("#energy").style.transform=
+    `scale(${1+level*.08})`;
+
+  countSound(n);
+
+  const hold=
+    n===3 ? 1500 :
+    n===2 ? 1650 :
+    1850;
+
+  await sleep(hold);
+
+  number.className="";
+
+  await sleep(420);
+}
+
+
+/* ======================
+   OTHER HIT TYPES
+====================== */
 
 async function blackoutHit(){
 
-  stopAmbience();
+  stopBGM();
 
   $("#blackout").style.display="block";
 
-  /* intentionally uncomfortable silence */
-  await sleep(1250);
+  await sleep(1400);
 
-  osc(33,.8,.2,"sine");
+  tone(34,.8,.18,"sine");
 
   await sleep(500);
 
@@ -703,36 +829,36 @@ async function blackoutHit(){
   await cutHit();
 }
 
-async function silentHit(){
+async function silenceHit(){
 
-  stopAmbience();
+  stopBGM();
 
   $("#number").textContent="";
 
-  await sleep(1900);
+  await sleep(2100);
 
   await cutHit();
 }
 
-async function fakeRevival(){
+async function revivalHit(){
 
-  stopAmbience();
+  stopBGM();
 
   $("#number").textContent="";
+
   $("#start").style.display="block";
 
-  /* looks fully over */
-  await sleep(1700);
+  await sleep(1900);
 
   $("#start").style.display="none";
 
   $("#blackout").style.display="block";
 
+  await sleep(650);
+
+  tone(42,.35,.18,"sine");
+
   await sleep(500);
-
-  heartbeat(3);
-
-  await sleep(620);
 
   $("#blackout").style.display="none";
 
@@ -740,58 +866,9 @@ async function fakeRevival(){
 }
 
 
-/* =========================
-   COUNTDOWN
-========================= */
-
-async function showNumber(n,level){
-
-  const number=$("#number");
-  const glow=$("#ambientGlow");
-
-  number.textContent=n;
-  number.className="active";
-
-  if(level>=2){
-    number.classList.add("tense");
-  }
-
-  glow.style.opacity =
-    level===1 ? ".24" :
-    level===2 ? ".40" :
-    ".58";
-
-  glow.style.transform =
-    `scale(${1 + level*.06})`;
-
-  raiseTension(level);
-
-  countImpact(n);
-  heartbeat(level);
-
-  /*
-    slower countdown:
-    3 = ~1.6 sec
-    2 = ~1.75 sec
-    1 = ~2.0 sec
-  */
-
-  const hold =
-    n===3 ? 1200 :
-    n===2 ? 1320 :
-    1500;
-
-  await sleep(hold);
-
-  number.classList.remove("active");
-
-  await sleep(380);
-}
-
-
-/* =========================
-   MAIN PLAY
-========================= */
+/* ======================
+   MAIN
+====================== */
 
 async function play(){
 
@@ -800,44 +877,47 @@ async function play(){
   busy=true;
 
   initAudio();
+
   resetFX();
 
   $("#start").style.display="none";
-  $("#win").style.display="none";
 
-  startAmbience();
+  $("#win").style.display="none";
+  $("#win").className="";
+
+  startBGM();
 
   /*
-    TEST MODE:
-    100% HIT
+   TEST MODE: 100% HIT
 
-    event:
-    0 = cut during 3
-    1 = cut during 2
-    2 = cut during 1
-    3 = after 1 blackout
-    4 = after 1 long silence
-    5 = fake miss revival
+   0 = hit during 3
+   1 = hit during 2
+   2 = hit during 1
+   3 = blackout after 1
+   4 = silence after 1
+   5 = revival
   */
 
   const event=Math.floor(Math.random()*6);
 
+
   /* 3 */
-  $("#number").textContent="3";
 
   if(event===0){
 
-    raiseTension(1);
-    countImpact(3);
-    heartbeat(1);
+    $("#number").textContent="3";
 
-    await sleep(900);
+    increaseBGM(1);
+    countSound(3);
+
+    await sleep(1200);
 
     await cutHit();
+
     return finishWin();
   }
 
-  await showNumber(3,1);
+  await showCount(3,1);
 
 
   /* 2 */
@@ -846,17 +926,17 @@ async function play(){
 
     $("#number").textContent="2";
 
-    raiseTension(2);
-    countImpact(2);
-    heartbeat(2);
+    increaseBGM(2);
+    countSound(2);
 
-    await sleep(1050);
+    await sleep(1350);
 
     await cutHit();
+
     return finishWin();
   }
 
-  await showNumber(2,2);
+  await showCount(2,2);
 
 
   /* 1 */
@@ -865,22 +945,21 @@ async function play(){
 
     $("#number").textContent="1";
 
-    raiseTension(3);
-    countImpact(1);
-    heartbeat(3);
+    increaseBGM(3);
+    countSound(1);
 
-    await sleep(1250);
+    await sleep(1500);
 
     await cutHit();
+
     return finishWin();
   }
 
-  await showNumber(1,3);
+  await showCount(1,3);
 
 
   $("#number").textContent="";
 
-  /* after countdown variations */
 
   if(event===3){
 
@@ -888,24 +967,25 @@ async function play(){
 
   }else if(event===4){
 
-    await silentHit();
+    await silenceHit();
 
   }else{
 
-    await fakeRevival();
+    await revivalHit();
   }
+
 
   finishWin();
 }
 
 
-/* =========================
-   WIN
-========================= */
+/* ======================
+   FINISH
+====================== */
 
 async function finishWin(){
 
-  await sleep(650);
+  await sleep(600);
 
   resetFX();
 
@@ -915,17 +995,17 @@ async function finishWin(){
     $("#win").classList.add("show");
   });
 
-  victoryJingle();
+  winJingle();
 }
 
 
-/* =========================
+/* ======================
    RESET
-========================= */
+====================== */
 
 function reset(){
 
-  stopAmbience();
+  stopBGM();
 
   $("#win").style.display="none";
   $("#win").className="";
@@ -935,8 +1015,8 @@ function reset(){
   $("#number").textContent="3";
   $("#number").className="";
 
-  $("#ambientGlow").style.opacity=".2";
-  $("#ambientGlow").style.transform="scale(1)";
+  $("#energy").style.opacity=".18";
+  $("#energy").style.transform="scale(1)";
 
   $("#start").style.display="block";
 
@@ -947,5 +1027,6 @@ $("#start").onclick=play;
 $("#next").onclick=reset;
 
 </script>
+
 </body>
 </html>
