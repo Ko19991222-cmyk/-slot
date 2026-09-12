@@ -54,7 +54,6 @@ body{
     transform:scale(1.35);
     filter:blur(8px);
   }
-
   100%{
     opacity:1;
     transform:scale(1);
@@ -62,8 +61,7 @@ body{
   }
 }
 
-#start,
-#next{
+#start,#next{
   position:absolute;
   bottom:8%;
   padding:17px 46px;
@@ -111,15 +109,15 @@ body{
 
 #line{
   position:absolute;
-  top:50%;
   left:-30%;
+  top:50%;
   width:160%;
   height:9px;
   background:#fff;
   box-shadow:
     0 0 15px #fff,
     0 0 40px #fff,
-    0 0 90px rgba(255,255,255,.95);
+    0 0 90px #fff;
   transform:rotate(-18deg) scaleX(0);
 }
 
@@ -133,7 +131,7 @@ body{
   }
 }
 
-/* 白フラッシュ */
+/* フラッシュ */
 
 #flash{
   position:fixed;
@@ -166,6 +164,7 @@ body{
   align-items:center;
   justify-content:center;
   overflow:hidden;
+
   background:
     radial-gradient(
       circle,
@@ -185,6 +184,7 @@ body{
   width:150vw;
   height:150vw;
   border-radius:50%;
+
   background:
     conic-gradient(
       transparent,
@@ -193,6 +193,7 @@ body{
       rgba(255,0,0,.42),
       transparent
     );
+
   animation:spin 3s linear infinite;
 }
 
@@ -207,11 +208,13 @@ body{
   z-index:5;
   font-size:min(24vw,150px);
   font-weight:1000;
+
   text-shadow:
     0 0 12px #fff,
     0 0 30px #ffe100,
     0 0 70px #ff4500,
     0 0 110px red;
+
   animation:hitIn .55s cubic-bezier(.05,1.4,.2,1);
 }
 
@@ -295,56 +298,51 @@ body{
 
 </div>
 
+
+<!-- ★ GitHubに実際にある完成版 -->
 <audio
   id="hitMusic"
-  src="./hit_music.mp3?v=20260912-30"
+  src="./hit_music_final.mp3?v=20260912-100"
   preload="auto"
   playsinline>
 </audio>
 
+
 <script>
 
-const $ = s =>
-  document.querySelector(s);
-
-const sleep = ms =>
-  new Promise(r =>
-    setTimeout(r,ms)
-  );
+const $ = s => document.querySelector(s);
+const sleep = ms => new Promise(r => setTimeout(r,ms));
 
 let busy = false;
 
-const hitMusic =
-  $("#hitMusic");
+const hitMusic = $("#hitMusic");
+
+let audioCtx = null;
+
+let tensionOsc1 = null;
+let tensionOsc2 = null;
+let tensionGain = null;
+let pulseTimer = null;
 
 
 /* =========================
-   WEB AUDIO
+   AUDIO開始
 ========================= */
-
-let audioCtx = null;
-let tensionGain = null;
-let tensionOsc1 = null;
-let tensionOsc2 = null;
-let tensionPulseTimer = null;
-
 
 function initAudio(){
 
   if(!audioCtx){
 
-    audioCtx =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+    audioCtx = new (
+      window.AudioContext ||
+      window.webkitAudioContext
+    )();
 
   }
 
   if(audioCtx.state === "suspended"){
     audioCtx.resume();
   }
-
 }
 
 
@@ -358,11 +356,10 @@ function startTension(){
 
   stopTension();
 
-  const now =
-    audioCtx.currentTime;
+  const now = audioCtx.currentTime;
 
-  tensionGain =
-    audioCtx.createGain();
+
+  tensionGain = audioCtx.createGain();
 
   tensionGain.gain.setValueAtTime(
     0.0001,
@@ -370,43 +367,27 @@ function startTension(){
   );
 
   tensionGain.gain.exponentialRampToValueAtTime(
-    0.12,
-    now + 1.2
+    0.09,
+    now + .8
   );
 
 
-  tensionOsc1 =
-    audioCtx.createOscillator();
-
-  tensionOsc2 =
-    audioCtx.createOscillator();
+  tensionOsc1 = audioCtx.createOscillator();
+  tensionOsc2 = audioCtx.createOscillator();
 
 
-  tensionOsc1.type =
-    "sine";
-
-  tensionOsc2.type =
-    "triangle";
+  tensionOsc1.type = "sine";
+  tensionOsc2.type = "triangle";
 
 
-  tensionOsc1.frequency.value =
-    48;
-
-  tensionOsc2.frequency.value =
-    72;
+  tensionOsc1.frequency.value = 52;
+  tensionOsc2.frequency.value = 78;
 
 
-  tensionOsc1.connect(
-    tensionGain
-  );
+  tensionOsc1.connect(tensionGain);
+  tensionOsc2.connect(tensionGain);
 
-  tensionOsc2.connect(
-    tensionGain
-  );
-
-  tensionGain.connect(
-    audioCtx.destination
-  );
+  tensionGain.connect(audioCtx.destination);
 
 
   tensionOsc1.start();
@@ -414,55 +395,48 @@ function startTension(){
 
 
   /*
-    脈打つような緊張感
+    心拍っぽく脈打たせる
   */
 
-  tensionPulseTimer =
-    setInterval(() => {
+  pulseTimer = setInterval(() => {
 
-      if(!tensionGain) return;
+    if(!tensionGain) return;
 
-      const t =
-        audioCtx.currentTime;
+    const t = audioCtx.currentTime;
 
-      tensionGain.gain.cancelScheduledValues(t);
+    tensionGain.gain.cancelScheduledValues(t);
 
-      tensionGain.gain.setValueAtTime(
-        0.05,
-        t
-      );
+    tensionGain.gain.setValueAtTime(
+      .045,
+      t
+    );
 
-      tensionGain.gain.exponentialRampToValueAtTime(
-        0.14,
-        t + .12
-      );
+    tensionGain.gain.exponentialRampToValueAtTime(
+      .13,
+      t + .08
+    );
 
-      tensionGain.gain.exponentialRampToValueAtTime(
-        0.05,
-        t + .55
-      );
+    tensionGain.gain.exponentialRampToValueAtTime(
+      .045,
+      t + .48
+    );
 
-    },700);
-
+  },650);
 }
 
 
 /* =========================
-   緊張音停止
+   緊張BGM停止
 ========================= */
 
 function stopTension(){
 
-  if(tensionPulseTimer){
+  if(pulseTimer){
 
-    clearInterval(
-      tensionPulseTimer
-    );
+    clearInterval(pulseTimer);
 
-    tensionPulseTimer = null;
-
+    pulseTimer = null;
   }
-
 
   try{
     tensionOsc1?.stop();
@@ -472,81 +446,71 @@ function stopTension(){
     tensionOsc2?.stop();
   }catch(e){}
 
-
   tensionOsc1 = null;
   tensionOsc2 = null;
   tensionGain = null;
-
 }
 
 
 /* =========================
-   カウント音
+   3・2・1 の重い音
 ========================= */
 
-function countSound(step){
+function countSound(number){
 
   initAudio();
 
-  const now =
-    audioCtx.currentTime;
+  const now = audioCtx.currentTime;
 
-  const osc =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
 
 
-  osc.type =
-    "sine";
+  osc.type = "sine";
 
 
-  /*
-    3→2→1で少しずつ低く重く
-  */
-
-  const freqMap = {
-    3:110,
-    2:95,
-    1:78
+  const frequencies = {
+    3:115,
+    2:98,
+    1:80
   };
 
-  osc.frequency.value =
-    freqMap[step] || 90;
+
+  osc.frequency.setValueAtTime(
+    frequencies[number],
+    now
+  );
+
+  osc.frequency.exponentialRampToValueAtTime(
+    45,
+    now + .45
+  );
 
 
   gain.gain.setValueAtTime(
-    0.0001,
+    .0001,
     now
   );
 
   gain.gain.exponentialRampToValueAtTime(
-    0.35,
-    now + .02
+    .55,
+    now + .015
   );
 
   gain.gain.exponentialRampToValueAtTime(
-    0.0001,
+    .0001,
     now + .55
   );
 
 
-  osc.connect(
-    gain
-  );
+  osc.connect(gain);
 
-  gain.connect(
-    audioCtx.destination
-  );
+  gain.connect(audioCtx.destination);
 
 
   osc.start(now);
 
-  osc.stop(
-    now + .6
-  );
-
+  osc.stop(now + .6);
 }
 
 
@@ -558,37 +522,30 @@ function slashSound(){
 
   initAudio();
 
-  const now =
-    audioCtx.currentTime;
+  const now = audioCtx.currentTime;
 
 
-  /*
-    高い斬撃音
-  */
+  /* ザシュッ */
 
-  const osc =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
 
 
-  osc.type =
-    "sawtooth";
+  osc.type = "sawtooth";
 
   osc.frequency.setValueAtTime(
-    1200,
+    1600,
     now
   );
 
   osc.frequency.exponentialRampToValueAtTime(
-    180,
-    now + .16
+    170,
+    now + .15
   );
 
 
   gain.gain.setValueAtTime(
-    .25,
+    .32,
     now
   );
 
@@ -600,69 +557,50 @@ function slashSound(){
 
   osc.connect(gain);
 
-  gain.connect(
-    audioCtx.destination
-  );
-
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
 
-  osc.stop(
-    now + .2
-  );
+  osc.stop(now + .2);
 
 
-  /*
-    低音ドン
-  */
+  /* 低音ドン */
 
-  const bass =
-    audioCtx.createOscillator();
-
-  const bassGain =
-    audioCtx.createGain();
+  const bass = audioCtx.createOscillator();
+  const bassGain = audioCtx.createGain();
 
 
-  bass.type =
-    "sine";
+  bass.type = "sine";
 
   bass.frequency.setValueAtTime(
-    90,
+    95,
     now
   );
 
   bass.frequency.exponentialRampToValueAtTime(
-    35,
-    now + .4
+    32,
+    now + .5
   );
 
 
   bassGain.gain.setValueAtTime(
-    .65,
+    .75,
     now
   );
 
   bassGain.gain.exponentialRampToValueAtTime(
     .0001,
-    now + .45
-  );
-
-
-  bass.connect(
-    bassGain
-  );
-
-  bassGain.connect(
-    audioCtx.destination
-  );
-
-
-  bass.start(now);
-
-  bass.stop(
     now + .5
   );
 
+
+  bass.connect(bassGain);
+
+  bassGain.connect(audioCtx.destination);
+
+  bass.start(now);
+
+  bass.stop(now + .55);
 }
 
 
@@ -679,31 +617,28 @@ async function playHitMusic(){
     hitMusic.currentTime = 0;
 
     hitMusic.muted = false;
-
     hitMusic.volume = 1;
 
     await hitMusic.play();
 
-  }catch(e){
+  }catch(error){
 
     console.log(
-      "HIT MUSIC ERROR",
-      e
+      "HIT MUSIC ERROR:",
+      error
     );
 
   }
-
 }
 
 
 /* =========================
-   数字
+   数字表示
 ========================= */
 
 function showNumber(n){
 
-  const el =
-    $("#number");
+  const el = $("#number");
 
   el.className = "";
 
@@ -714,7 +649,6 @@ function showNumber(n){
   el.className = "show";
 
   countSound(n);
-
 }
 
 
@@ -724,58 +658,53 @@ function showNumber(n){
 
 function flash(){
 
-  const el =
-    $("#flash");
+  const el = $("#flash");
 
   el.className = "";
 
   void el.offsetWidth;
 
   el.className = "go";
-
 }
 
 
 /* =========================
-   当たり
+   当たり表示
 ========================= */
 
 async function showHit(){
 
-  $("#hit").className =
-    "show";
+  $("#hit").className = "show";
 
   await playHitMusic();
-
 }
 
 
 /* =========================
-   切り裂き
+   切り裂き当たり
 ========================= */
 
 async function slashHit(){
 
   /*
-    当たりが来た瞬間
-    カウントBGMを止める
+    ★当たりの瞬間
+    緊張音をブツ切り
   */
 
   stopTension();
 
 
   /*
-    一瞬の無音
+    一瞬無音
   */
 
-  await sleep(180);
+  await sleep(200);
 
 
   slashSound();
 
 
-  $("#slash").className =
-    "go";
+  $("#slash").className = "go";
 
 
   await sleep(170);
@@ -787,59 +716,54 @@ async function slashHit(){
   await sleep(300);
 
 
-  $("#slash").className =
-    "";
+  $("#slash").className = "";
 
+
+  /*
+    ★完成版の当たり曲
+  */
 
   await showHit();
-
 }
 
 
 /* =========================
-   暗転
+   暗転当たり
 ========================= */
 
 async function blackoutHit(){
 
   stopTension();
 
-  $("#black").style.display =
-    "block";
+  $("#black").style.display = "block";
 
-  await sleep(1400);
+  await sleep(1300);
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display = "none";
 
   await slashHit();
-
 }
 
 
 /* =========================
-   復活
+   復活当たり
 ========================= */
 
 async function revivalHit(){
 
-  $("#number").textContent =
-    "";
+  $("#number").textContent = "";
 
-  await sleep(1100);
+  await sleep(1200);
 
   stopTension();
 
-  $("#black").style.display =
-    "block";
+  $("#black").style.display = "block";
 
   await sleep(900);
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display = "none";
 
   await slashHit();
-
 }
 
 
@@ -854,41 +778,52 @@ async function play(){
   busy = true;
 
 
+  /*
+    ★STARTタップでiPhoneの
+    WebAudioを有効化
+  */
+
   initAudio();
 
 
   /*
-    iPhone用
-    音源読み込み
+    ★当たり曲もこのタップで
+    先に読み込ませる
   */
 
-  try{
-    hitMusic.load();
-  }catch(e){}
+  hitMusic.load();
 
 
-  $("#start").style.display =
-    "none";
+  $("#start").style.display = "none";
+
+  $("#hit").className = "";
 
 
-  $("#hit").className =
-    "";
-
+  /*
+    ★緊張BGM開始
+  */
 
   startTension();
 
 
   /*
     現在は100%当たりテスト
+
+    0 = 3途中
+    1 = 2途中
+    2 = 1途中
+    3 = 1終了後
+    4 = 暗転
+    5 = 復活
   */
 
   const pattern =
-    Math.floor(
-      Math.random() * 6
-    );
+    Math.floor(Math.random() * 6);
 
 
-  /* ===== 3 ===== */
+  /* =================
+     3
+  ================= */
 
   showNumber(3);
 
@@ -906,7 +841,9 @@ async function play(){
   await sleep(2100);
 
 
-  /* ===== 2 ===== */
+  /* =================
+     2
+  ================= */
 
   showNumber(2);
 
@@ -924,7 +861,9 @@ async function play(){
   await sleep(2250);
 
 
-  /* ===== 1 ===== */
+  /* =================
+     1
+  ================= */
 
   showNumber(1);
 
@@ -942,11 +881,12 @@ async function play(){
   await sleep(2450);
 
 
-  $("#number").textContent =
-    "";
+  $("#number").textContent = "";
 
 
-  /* ===== 1の後 ===== */
+  /* =================
+     1の後
+  ================= */
 
   if(pattern === 3){
 
@@ -967,7 +907,6 @@ async function play(){
     await revivalHit();
 
   }
-
 }
 
 
@@ -987,29 +926,22 @@ function reset(){
   }catch(e){}
 
 
-  $("#hit").className =
-    "";
+  $("#hit").className = "";
 
-  $("#slash").className =
-    "";
+  $("#slash").className = "";
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display = "none";
 
 
-  $("#number").textContent =
-    "3";
+  $("#number").textContent = "3";
 
-  $("#number").className =
-    "";
+  $("#number").className = "";
 
 
-  $("#start").style.display =
-    "block";
+  $("#start").style.display = "block";
 
 
   busy = false;
-
 }
 
 
