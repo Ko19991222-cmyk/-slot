@@ -32,7 +32,7 @@ body{
   align-items:center;
   justify-content:center;
   background:
-    radial-gradient(circle at 50% 45%,#161616 0%,#050505 48%,#000 82%);
+    radial-gradient(circle at 50% 45%,#171717 0%,#050505 48%,#000 82%);
 }
 
 #number{
@@ -54,6 +54,7 @@ body{
     transform:scale(1.35);
     filter:blur(8px);
   }
+
   100%{
     opacity:1;
     transform:scale(1);
@@ -68,7 +69,7 @@ body{
   padding:17px 46px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.75);
   color:#fff;
   font-size:17px;
   font-weight:900;
@@ -80,7 +81,7 @@ body{
   top:max(25px,env(safe-area-inset-top));
   font-size:10px;
   letter-spacing:.2em;
-  opacity:.25;
+  opacity:.28;
 }
 
 /* 暗転 */
@@ -89,8 +90,8 @@ body{
   position:fixed;
   inset:0;
   z-index:40;
-  display:none;
   background:#000;
+  display:none;
 }
 
 /* 切り裂き */
@@ -117,8 +118,8 @@ body{
   background:#fff;
   box-shadow:
     0 0 15px #fff,
-    0 0 35px #fff,
-    0 0 80px rgba(255,255,255,.9);
+    0 0 40px #fff,
+    0 0 90px rgba(255,255,255,.95);
   transform:rotate(-18deg) scaleX(0);
 }
 
@@ -127,10 +128,7 @@ body{
 }
 
 @keyframes slashAnim{
-  0%{
-    transform:rotate(-18deg) scaleX(0);
-  }
-  100%{
+  to{
     transform:rotate(-18deg) scaleX(1);
   }
 }
@@ -151,11 +149,11 @@ body{
 }
 
 @keyframes flashAnim{
-  0%{opacity:0;}
-  10%{opacity:1;}
-  28%{opacity:.3;}
-  40%{opacity:1;}
-  100%{opacity:0;}
+  0%{opacity:0}
+  10%{opacity:1}
+  28%{opacity:.25}
+  40%{opacity:1}
+  100%{opacity:0}
 }
 
 /* 当たり */
@@ -168,13 +166,14 @@ body{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-
   background:
-    radial-gradient(circle,
-      #8a1900 0%,
-      #360000 35%,
+    radial-gradient(
+      circle,
+      #8b1a00 0%,
+      #390000 35%,
       #090000 68%,
-      #000 100%);
+      #000 100%
+    );
 }
 
 #hit.show{
@@ -186,20 +185,18 @@ body{
   width:150vw;
   height:150vw;
   border-radius:50%;
-
   background:
     conic-gradient(
       transparent,
-      rgba(255,170,0,.35),
+      rgba(255,180,0,.35),
       transparent,
-      rgba(255,0,0,.4),
+      rgba(255,0,0,.42),
       transparent
     );
-
-  animation:rotateGlow 3s linear infinite;
+  animation:spin 3s linear infinite;
 }
 
-@keyframes rotateGlow{
+@keyframes spin{
   to{
     transform:rotate(360deg);
   }
@@ -210,13 +207,11 @@ body{
   z-index:5;
   font-size:min(24vw,150px);
   font-weight:1000;
-
   text-shadow:
     0 0 12px #fff,
     0 0 30px #ffe100,
     0 0 70px #ff4500,
     0 0 110px red;
-
   animation:hitIn .55s cubic-bezier(.05,1.4,.2,1);
 }
 
@@ -274,17 +269,13 @@ body{
 
 </div>
 
-
 <div id="black"></div>
-
 
 <div id="slash">
   <div id="line"></div>
 </div>
 
-
 <div id="flash"></div>
-
 
 <div id="hit">
 
@@ -304,18 +295,12 @@ body{
 
 </div>
 
-
-<!--
-★ 新しい完成版の音
-★ ?v=4 で古いキャッシュを回避
--->
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=4"
+  src="./hit_music.mp3?v=20260912-30"
   preload="auto"
   playsinline>
 </audio>
-
 
 <script>
 
@@ -323,8 +308,8 @@ const $ = s =>
   document.querySelector(s);
 
 const sleep = ms =>
-  new Promise(resolve =>
-    setTimeout(resolve,ms)
+  new Promise(r =>
+    setTimeout(r,ms)
   );
 
 let busy = false;
@@ -334,51 +319,368 @@ const hitMusic =
 
 
 /* =========================
-   音源準備
+   WEB AUDIO
 ========================= */
 
-async function unlockAudio(){
+let audioCtx = null;
+let tensionGain = null;
+let tensionOsc1 = null;
+let tensionOsc2 = null;
+let tensionPulseTimer = null;
 
-  hitMusic.muted = true;
 
-  try{
+function initAudio(){
 
-    hitMusic.currentTime = 0;
+  if(!audioCtx){
 
-    await hitMusic.play();
-
-    hitMusic.pause();
-
-    hitMusic.currentTime = 0;
-
-  }catch(e){
-
-    console.log(e);
+    audioCtx =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
 
   }
 
-  hitMusic.muted = false;
+  if(audioCtx.state === "suspended"){
+    audioCtx.resume();
+  }
 
 }
 
 
 /* =========================
-   当たり音
+   緊張BGM
+========================= */
+
+function startTension(){
+
+  initAudio();
+
+  stopTension();
+
+  const now =
+    audioCtx.currentTime;
+
+  tensionGain =
+    audioCtx.createGain();
+
+  tensionGain.gain.setValueAtTime(
+    0.0001,
+    now
+  );
+
+  tensionGain.gain.exponentialRampToValueAtTime(
+    0.12,
+    now + 1.2
+  );
+
+
+  tensionOsc1 =
+    audioCtx.createOscillator();
+
+  tensionOsc2 =
+    audioCtx.createOscillator();
+
+
+  tensionOsc1.type =
+    "sine";
+
+  tensionOsc2.type =
+    "triangle";
+
+
+  tensionOsc1.frequency.value =
+    48;
+
+  tensionOsc2.frequency.value =
+    72;
+
+
+  tensionOsc1.connect(
+    tensionGain
+  );
+
+  tensionOsc2.connect(
+    tensionGain
+  );
+
+  tensionGain.connect(
+    audioCtx.destination
+  );
+
+
+  tensionOsc1.start();
+  tensionOsc2.start();
+
+
+  /*
+    脈打つような緊張感
+  */
+
+  tensionPulseTimer =
+    setInterval(() => {
+
+      if(!tensionGain) return;
+
+      const t =
+        audioCtx.currentTime;
+
+      tensionGain.gain.cancelScheduledValues(t);
+
+      tensionGain.gain.setValueAtTime(
+        0.05,
+        t
+      );
+
+      tensionGain.gain.exponentialRampToValueAtTime(
+        0.14,
+        t + .12
+      );
+
+      tensionGain.gain.exponentialRampToValueAtTime(
+        0.05,
+        t + .55
+      );
+
+    },700);
+
+}
+
+
+/* =========================
+   緊張音停止
+========================= */
+
+function stopTension(){
+
+  if(tensionPulseTimer){
+
+    clearInterval(
+      tensionPulseTimer
+    );
+
+    tensionPulseTimer = null;
+
+  }
+
+
+  try{
+    tensionOsc1?.stop();
+  }catch(e){}
+
+  try{
+    tensionOsc2?.stop();
+  }catch(e){}
+
+
+  tensionOsc1 = null;
+  tensionOsc2 = null;
+  tensionGain = null;
+
+}
+
+
+/* =========================
+   カウント音
+========================= */
+
+function countSound(step){
+
+  initAudio();
+
+  const now =
+    audioCtx.currentTime;
+
+  const osc =
+    audioCtx.createOscillator();
+
+  const gain =
+    audioCtx.createGain();
+
+
+  osc.type =
+    "sine";
+
+
+  /*
+    3→2→1で少しずつ低く重く
+  */
+
+  const freqMap = {
+    3:110,
+    2:95,
+    1:78
+  };
+
+  osc.frequency.value =
+    freqMap[step] || 90;
+
+
+  gain.gain.setValueAtTime(
+    0.0001,
+    now
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.35,
+    now + .02
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    now + .55
+  );
+
+
+  osc.connect(
+    gain
+  );
+
+  gain.connect(
+    audioCtx.destination
+  );
+
+
+  osc.start(now);
+
+  osc.stop(
+    now + .6
+  );
+
+}
+
+
+/* =========================
+   切り裂きSE
+========================= */
+
+function slashSound(){
+
+  initAudio();
+
+  const now =
+    audioCtx.currentTime;
+
+
+  /*
+    高い斬撃音
+  */
+
+  const osc =
+    audioCtx.createOscillator();
+
+  const gain =
+    audioCtx.createGain();
+
+
+  osc.type =
+    "sawtooth";
+
+  osc.frequency.setValueAtTime(
+    1200,
+    now
+  );
+
+  osc.frequency.exponentialRampToValueAtTime(
+    180,
+    now + .16
+  );
+
+
+  gain.gain.setValueAtTime(
+    .25,
+    now
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    .0001,
+    now + .18
+  );
+
+
+  osc.connect(gain);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
+
+  osc.start(now);
+
+  osc.stop(
+    now + .2
+  );
+
+
+  /*
+    低音ドン
+  */
+
+  const bass =
+    audioCtx.createOscillator();
+
+  const bassGain =
+    audioCtx.createGain();
+
+
+  bass.type =
+    "sine";
+
+  bass.frequency.setValueAtTime(
+    90,
+    now
+  );
+
+  bass.frequency.exponentialRampToValueAtTime(
+    35,
+    now + .4
+  );
+
+
+  bassGain.gain.setValueAtTime(
+    .65,
+    now
+  );
+
+  bassGain.gain.exponentialRampToValueAtTime(
+    .0001,
+    now + .45
+  );
+
+
+  bass.connect(
+    bassGain
+  );
+
+  bassGain.connect(
+    audioCtx.destination
+  );
+
+
+  bass.start(now);
+
+  bass.stop(
+    now + .5
+  );
+
+}
+
+
+/* =========================
+   当たり曲
 ========================= */
 
 async function playHitMusic(){
 
-  hitMusic.pause();
-
   try{
+
+    hitMusic.pause();
+
     hitMusic.currentTime = 0;
-  }catch(e){}
 
-  hitMusic.muted = false;
+    hitMusic.muted = false;
 
-  hitMusic.volume = 1;
-
-  try{
+    hitMusic.volume = 1;
 
     await hitMusic.play();
 
@@ -411,6 +713,8 @@ function showNumber(n){
 
   el.className = "show";
 
+  countSound(n);
+
 }
 
 
@@ -433,18 +737,13 @@ function flash(){
 
 
 /* =========================
-   ★ 当たり確定
+   当たり
 ========================= */
 
 async function showHit(){
 
   $("#hit").className =
     "show";
-
-  /*
-    当たり表示と同時に
-    完成版の音を必ず頭から再生
-  */
 
   await playHitMusic();
 
@@ -458,32 +757,39 @@ async function showHit(){
 async function slashHit(){
 
   /*
-    一瞬の溜め
+    当たりが来た瞬間
+    カウントBGMを止める
   */
 
-  await sleep(300);
+  stopTension();
+
+
+  /*
+    一瞬の無音
+  */
+
+  await sleep(180);
+
+
+  slashSound();
 
 
   $("#slash").className =
     "go";
 
 
-  await sleep(180);
+  await sleep(170);
 
 
   flash();
 
 
-  await sleep(280);
+  await sleep(300);
 
 
   $("#slash").className =
     "";
 
-
-  /*
-    ★どの当たりも最終的にここ
-  */
 
   await showHit();
 
@@ -496,16 +802,15 @@ async function slashHit(){
 
 async function blackoutHit(){
 
+  stopTension();
+
   $("#black").style.display =
     "block";
 
-
   await sleep(1400);
-
 
   $("#black").style.display =
     "none";
-
 
   await slashHit();
 
@@ -521,20 +826,17 @@ async function revivalHit(){
   $("#number").textContent =
     "";
 
+  await sleep(1100);
 
-  await sleep(1300);
-
+  stopTension();
 
   $("#black").style.display =
     "block";
 
-
   await sleep(900);
-
 
   $("#black").style.display =
     "none";
-
 
   await slashHit();
 
@@ -552,12 +854,17 @@ async function play(){
   busy = true;
 
 
+  initAudio();
+
+
   /*
-    iPhoneで後から音を
-    鳴らせるようにする
+    iPhone用
+    音源読み込み
   */
 
-  await unlockAudio();
+  try{
+    hitMusic.load();
+  }catch(e){}
 
 
   $("#start").style.display =
@@ -568,15 +875,11 @@ async function play(){
     "";
 
 
-  /*
-    現在はテスト用100%当たり
+  startTension();
 
-    0 = 3途中
-    1 = 2途中
-    2 = 1途中
-    3 = 1の後
-    4 = 暗転
-    5 = 復活
+
+  /*
+    現在は100%当たりテスト
   */
 
   const pattern =
@@ -594,8 +897,9 @@ async function play(){
 
     await sleep(1450);
 
-    return slashHit();
+    await slashHit();
 
+    return;
   }
 
 
@@ -611,8 +915,9 @@ async function play(){
 
     await sleep(1550);
 
-    return slashHit();
+    await slashHit();
 
+    return;
   }
 
 
@@ -628,8 +933,9 @@ async function play(){
 
     await sleep(1750);
 
-    return slashHit();
+    await slashHit();
 
+    return;
   }
 
 
@@ -670,6 +976,9 @@ async function play(){
 ========================= */
 
 function reset(){
+
+  stopTension();
+
 
   hitMusic.pause();
 
