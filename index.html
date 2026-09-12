@@ -21,171 +21,116 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
 
-body{
-  user-select:none;
-}
-
 #stage{
   position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at 50% 42%, #141414 0%, #050505 45%, #000 80%);
-  overflow:hidden;
-}
-
-#bgGlow{
-  position:absolute;
-  width:130vw;
-  height:130vw;
-  border-radius:50%;
-  background:
-    radial-gradient(circle,
-      rgba(255,255,255,.05),
-      rgba(255,255,255,.015) 35%,
-      transparent 65%);
-  animation:bgPulse 2.4s ease-in-out infinite;
-}
-
-@keyframes bgPulse{
-  0%,100%{
-    transform:scale(.92);
-    opacity:.35;
-  }
-  50%{
-    transform:scale(1.08);
-    opacity:.75;
-  }
+  background:radial-gradient(circle,#151515 0%,#050505 48%,#000 80%);
 }
 
 #number{
-  position:relative;
-  z-index:5;
   font-size:min(60vw,360px);
   font-weight:1000;
-  line-height:1;
-  text-shadow:
-    0 0 12px #fff,
-    0 0 35px rgba(255,255,255,.45);
+  text-shadow:0 0 15px #fff,0 0 35px rgba(255,255,255,.4);
 }
 
 #number.show{
-  animation:numberShow .5s cubic-bezier(.1,1,.2,1);
+  animation:numberIn .45s ease-out;
 }
 
-@keyframes numberShow{
+@keyframes numberIn{
   0%{
     opacity:0;
     transform:scale(1.35);
     filter:blur(8px);
   }
-  60%{
-    opacity:1;
-    transform:scale(.97);
-    filter:blur(0);
-  }
   100%{
+    opacity:1;
     transform:scale(1);
+    filter:blur(0);
   }
 }
 
-#start{
+#start,
+#next{
   position:absolute;
   bottom:8%;
-  z-index:20;
-  padding:17px 48px;
-  border-radius:100px;
+  padding:16px 45px;
+  border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.72);
-  color:#fff;
+  background:rgba(0,0,0,.7);
+  color:white;
   font-size:17px;
   font-weight:900;
-  letter-spacing:.15em;
 }
 
 #test{
   position:absolute;
-  top:max(20px,env(safe-area-inset-top));
-  z-index:10;
+  top:25px;
   font-size:10px;
+  opacity:.3;
   letter-spacing:.2em;
-  opacity:.25;
 }
 
 #black{
   position:fixed;
   inset:0;
-  z-index:50;
   background:#000;
+  z-index:30;
   display:none;
 }
 
-#slashLayer{
+#slash{
   position:fixed;
   inset:0;
-  z-index:70;
-  pointer-events:none;
+  z-index:50;
   display:none;
   overflow:hidden;
 }
 
-#slashLayer.show{
+#line{
+  position:absolute;
+  top:50%;
+  left:-30%;
+  width:160%;
+  height:9px;
+  background:#fff;
+  box-shadow:0 0 20px #fff,0 0 60px #fff;
+  transform:rotate(-18deg) scaleX(0);
+}
+
+#slash.go{
   display:block;
 }
 
-.slash{
-  position:absolute;
-  left:-30%;
-  top:50%;
-  width:160%;
-  height:8px;
-  background:#fff;
-  box-shadow:
-    0 0 12px #fff,
-    0 0 30px #fff,
-    0 0 70px rgba(255,255,255,.8);
-  transform:rotate(-18deg) scaleX(0);
-  transform-origin:center;
+#slash.go #line{
+  animation:slashAnim .2s ease-out forwards;
 }
 
-#slashLayer.go .slash{
-  animation:slash .22s ease-out forwards;
-}
-
-@keyframes slash{
-  0%{
-    transform:rotate(-18deg) scaleX(0);
-    opacity:0;
-  }
-  20%{
-    opacity:1;
-  }
-  100%{
+@keyframes slashAnim{
+  to{
     transform:rotate(-18deg) scaleX(1);
-    opacity:1;
   }
 }
 
 #flash{
   position:fixed;
   inset:0;
-  z-index:90;
   background:#fff;
+  z-index:70;
   opacity:0;
   pointer-events:none;
 }
 
 #flash.go{
-  animation:flash .5s ease-out;
+  animation:flashAnim .4s ease-out;
 }
 
-@keyframes flash{
+@keyframes flashAnim{
   0%{opacity:0;}
-  8%{opacity:1;}
-  20%{opacity:.25;}
-  32%{opacity:1;}
+  15%{opacity:1;}
   100%{opacity:0;}
 }
 
@@ -196,132 +141,43 @@ body{
   display:none;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-  background:
-    radial-gradient(circle,
-      #7b1600 0%,
-      #310000 32%,
-      #080000 65%,
-      #000 100%);
+  background:radial-gradient(circle,#861900 0%,#330000 35%,#080000 70%,#000 100%);
 }
 
 #hit.show{
   display:flex;
 }
 
-#hitGlow{
-  position:absolute;
-  width:150vw;
-  height:150vw;
-  border-radius:50%;
-  background:
-    conic-gradient(
-      transparent,
-      rgba(255,150,0,.35),
-      transparent,
-      rgba(255,0,0,.4),
-      transparent);
-  animation:rotate 3s linear infinite;
-}
-
-@keyframes rotate{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
 #hitText{
-  position:relative;
-  z-index:5;
   font-size:min(24vw,150px);
   font-weight:1000;
-  opacity:0;
-  transform:scale(.25);
   text-shadow:
-    0 0 10px #fff,
-    0 0 25px #ffdc00,
-    0 0 60px #ff4d00,
-    0 0 100px red;
+    0 0 12px #fff,
+    0 0 30px #ffd700,
+    0 0 70px #ff4500;
+  animation:hitIn .5s cubic-bezier(.1,1.4,.2,1);
 }
 
-#hit.show #hitText{
-  animation:hitText .65s cubic-bezier(.05,1.4,.2,1) forwards;
-}
-
-@keyframes hitText{
+@keyframes hitIn{
   0%{
     opacity:0;
-    transform:scale(.25);
-    filter:blur(12px);
+    transform:scale(.3);
   }
-  65%{
+  70%{
     opacity:1;
-    transform:scale(1.18);
-    filter:blur(0);
+    transform:scale(1.2);
   }
   100%{
-    opacity:1;
     transform:scale(1);
   }
 }
 
-#congrats{
-  position:absolute;
-  bottom:20%;
-  font-size:15px;
-  letter-spacing:.25em;
-  font-weight:800;
-  opacity:0;
-}
-
-#hit.show #congrats{
-  animation:congrats 1s 1s forwards;
-}
-
-@keyframes congrats{
-  to{
-    opacity:.9;
-  }
-}
-
 #next{
-  position:absolute;
-  bottom:7%;
-  z-index:10;
-  padding:15px 42px;
-  border-radius:100px;
-  border:1px solid rgba(255,255,255,.45);
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  font-size:15px;
-  font-weight:900;
-  opacity:0;
-  pointer-events:none;
+  display:none;
 }
 
 #hit.show #next{
-  animation:nextShow .5s 2.5s forwards;
-}
-
-@keyframes nextShow{
-  to{
-    opacity:1;
-    pointer-events:auto;
-  }
-}
-
-.shake{
-  animation:shake .3s linear;
-}
-
-@keyframes shake{
-  0%{transform:translate(0,0);}
-  15%{transform:translate(-9px,5px);}
-  30%{transform:translate(10px,-6px);}
-  45%{transform:translate(-7px,-5px);}
-  60%{transform:translate(8px,6px);}
-  80%{transform:translate(-4px,2px);}
-  100%{transform:translate(0,0);}
+  display:block;
 }
 </style>
 </head>
@@ -329,67 +185,59 @@ body{
 <body>
 
 <div id="stage">
-  <div id="bgGlow"></div>
-
-  <div id="test">
-    TEST MODE / 100% HIT
-  </div>
-
+  <div id="test">TEST MODE / 100% HIT</div>
   <div id="number">3</div>
-
   <button id="start">START</button>
 </div>
 
 <div id="black"></div>
 
-<div id="slashLayer">
-  <div class="slash"></div>
+<div id="slash">
+  <div id="line"></div>
 </div>
 
 <div id="flash"></div>
 
 <div id="hit">
-  <div id="hitGlow"></div>
-
-  <div id="hitText">
-    当たり
-  </div>
-
-  <div id="congrats">
-    CONGRATULATIONS
-  </div>
-
-  <button id="next">
-    NEXT
-  </button>
+  <div id="hitText">当たり</div>
+  <button id="next">NEXT</button>
 </div>
 
-<audio
-  id="hitMusic"
-  src="hit_music.mp3"
-  preload="auto"
-></audio>
+<audio id="hitMusic" src="./hit_music.mp3" preload="auto"></audio>
 
 <script>
 const $ = s => document.querySelector(s);
-
-const sleep = ms =>
-  new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(r => setTimeout(r,ms));
 
 let busy = false;
 
 const hitMusic = $("#hitMusic");
 
-hitMusic.volume = 1;
+function showNumber(n){
+  const el = $("#number");
 
+  el.className = "";
+  el.textContent = n;
 
-/* =========================
-   iPhone音声アンロック
-========================= */
+  void el.offsetWidth;
 
-async function unlockHitMusic(){
+  el.className = "show";
+}
+
+function flash(){
+  const el = $("#flash");
+
+  el.className = "";
+
+  void el.offsetWidth;
+
+  el.className = "go";
+}
+
+async function prepareAudio(){
 
   try{
+    hitMusic.load();
 
     hitMusic.muted = true;
 
@@ -400,282 +248,60 @@ async function unlockHitMusic(){
     hitMusic.currentTime = 0;
 
     hitMusic.muted = false;
-
-  }catch(e){
-
-    hitMusic.muted = false;
-
   }
-
+  catch(e){
+    hitMusic.muted = false;
+  }
 }
-
-
-/* =========================
-   当たり曲停止
-========================= */
-
-function stopHitMusic(){
-
-  hitMusic.pause();
-
-  try{
-    hitMusic.currentTime = 0;
-  }catch(e){}
-
-}
-
-
-/* =========================
-   当たり曲再生
-========================= */
 
 async function playHitMusic(){
 
-  stopHitMusic();
-
-  hitMusic.volume = 1;
-
   try{
-
+    hitMusic.pause();
     hitMusic.currentTime = 0;
+    hitMusic.volume = 1;
 
     await hitMusic.play();
-
-  }catch(e){
-
-    console.log(
-      "hit music play error",
-      e
-    );
-
   }
-
+  catch(e){
+    console.log("audio error", e);
+  }
 }
-
-
-/* =========================
-   当たり確定
-   ★どのパターンも必ずここを通る
-========================= */
 
 async function showHit(){
 
   $("#hit").className = "show";
 
-  /*
-    当たり画面を出した瞬間に
-    必ず曲を頭から再生
-  */
-
   await playHitMusic();
-
 }
-
-
-/* =========================
-   仮カウント音
-========================= */
-
-let audioCtx = null;
-
-function startAudio(){
-
-  if(!audioCtx){
-
-    audioCtx =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
-
-  }
-
-  if(audioCtx.state === "suspended"){
-
-    audioCtx.resume();
-
-  }
-
-}
-
-function countSound(n){
-
-  if(!audioCtx) return;
-
-  const osc =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
-
-  const now =
-    audioCtx.currentTime;
-
-  const frequency =
-    n === 3 ? 82 :
-    n === 2 ? 73 :
-              65;
-
-  osc.type = "sine";
-
-  osc.frequency.setValueAtTime(
-    frequency,
-    now
-  );
-
-  gain.gain.setValueAtTime(
-    .10,
-    now
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now + .7
-  );
-
-  osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
-
-  osc.start(now);
-
-  osc.stop(now + .75);
-
-}
-
-
-/* =========================
-   数字表示
-========================= */
-
-function showNumber(n){
-
-  const el = $("#number");
-
-  el.className = "";
-
-  el.textContent = n;
-
-  void el.offsetWidth;
-
-  el.className = "show";
-
-  countSound(n);
-
-}
-
-
-/* =========================
-   フラッシュ
-========================= */
-
-function flash(){
-
-  const el = $("#flash");
-
-  el.className = "";
-
-  void el.offsetWidth;
-
-  el.className = "go";
-
-}
-
-
-/* =========================
-   揺れ
-========================= */
-
-function shake(){
-
-  document.body.classList.remove(
-    "shake"
-  );
-
-  void document.body.offsetWidth;
-
-  document.body.classList.add(
-    "shake"
-  );
-
-  setTimeout(()=>{
-
-    document.body.classList.remove(
-      "shake"
-    );
-
-  },350);
-
-}
-
-
-/* =========================
-   切り裂き当たり
-========================= */
 
 async function slashHit(){
 
   await sleep(300);
 
-  $("#slashLayer").className =
-    "show go";
+  $("#slash").className = "go";
 
   await sleep(180);
 
   flash();
 
-  shake();
+  await sleep(300);
 
-  await sleep(260);
-
-  $("#slashLayer").className = "";
-
-  /*
-    ★ここで絶対当たり曲
-  */
+  $("#slash").className = "";
 
   await showHit();
-
 }
-
-
-/* =========================
-   暗転当たり
-========================= */
 
 async function blackoutHit(){
 
-  $("#black").style.display =
-    "block";
+  $("#black").style.display = "block";
 
   await sleep(1400);
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display = "none";
 
   await slashHit();
-
 }
-
-
-/* =========================
-   通常当たり
-========================= */
-
-async function normalHit(){
-
-  await sleep(650);
-
-  await slashHit();
-
-}
-
-
-/* =========================
-   復活当たり
-========================= */
 
 async function revivalHit(){
 
@@ -683,22 +309,14 @@ async function revivalHit(){
 
   await sleep(1300);
 
-  $("#black").style.display =
-    "block";
+  $("#black").style.display = "block";
 
-  await sleep(850);
+  await sleep(900);
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display = "none";
 
   await slashHit();
-
 }
-
-
-/* =========================
-   ゲーム開始
-========================= */
 
 async function play(){
 
@@ -706,148 +324,76 @@ async function play(){
 
   busy = true;
 
-  startAudio();
-
-  /*
-    ★STARTを押した瞬間に
-    iPhone用アンロック
-  */
-
-  await unlockHitMusic();
-
-  stopHitMusic();
-
-  $("#start").style.display =
-    "none";
-
+  $("#start").style.display = "none";
   $("#hit").className = "";
 
-  /*
-    今は100%当たり。
+  await prepareAudio();
 
-    0 = 3の途中
-    1 = 2の途中
-    2 = 1の途中
-    3 = 1の後
-    4 = 暗転
-    5 = 復活
-  */
-
-  const pattern =
-    Math.floor(
-      Math.random() * 6
-    );
-
-
-  /* ===== 3 ===== */
+  const pattern = Math.floor(Math.random()*6);
 
   showNumber(3);
 
   if(pattern === 0){
-
     await sleep(1450);
-
     return slashHit();
-
   }
 
   await sleep(2100);
 
-
-  /* ===== 2 ===== */
-
   showNumber(2);
 
   if(pattern === 1){
-
     await sleep(1550);
-
     return slashHit();
-
   }
 
   await sleep(2250);
 
-
-  /* ===== 1 ===== */
-
   showNumber(1);
 
   if(pattern === 2){
-
     await sleep(1750);
-
     return slashHit();
-
   }
 
   await sleep(2450);
 
   $("#number").textContent = "";
 
-
-  /* ===== 1の後 ===== */
-
   if(pattern === 3){
-
-    await normalHit();
-
+    await sleep(700);
+    await slashHit();
   }
-
   else if(pattern === 4){
-
     await blackoutHit();
-
   }
-
   else{
-
     await revivalHit();
-
   }
-
 }
-
-
-/* =========================
-   リセット
-========================= */
 
 function reset(){
 
-  stopHitMusic();
+  hitMusic.pause();
+
+  try{
+    hitMusic.currentTime = 0;
+  }catch(e){}
 
   $("#hit").className = "";
+  $("#slash").className = "";
+  $("#black").style.display = "none";
 
-  $("#black").style.display =
-    "none";
+  $("#number").textContent = "3";
+  $("#number").className = "";
 
-  $("#slashLayer").className =
-    "";
-
-  $("#number").textContent =
-    "3";
-
-  $("#number").className =
-    "";
-
-  $("#start").style.display =
-    "block";
+  $("#start").style.display = "block";
 
   busy = false;
-
 }
 
-
-$("#start").addEventListener(
-  "click",
-  play
-);
-
-$("#next").addEventListener(
-  "click",
-  reset
-);
+$("#start").addEventListener("click",play);
+$("#next").addEventListener("click",reset);
 </script>
 
 </body>
