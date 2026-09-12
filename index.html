@@ -25,6 +25,14 @@ body{
   user-select:none;
 }
 
+button{
+  font-family:inherit;
+}
+
+/* =========================
+   メイン
+========================= */
+
 #stage{
   position:fixed;
   inset:0;
@@ -72,6 +80,7 @@ body{
   font-size:17px;
   font-weight:900;
   letter-spacing:.12em;
+  z-index:300;
 }
 
 #test{
@@ -82,7 +91,9 @@ body{
   opacity:.28;
 }
 
-/* 暗転 */
+/* =========================
+   暗転
+========================= */
 
 #black{
   position:fixed;
@@ -92,7 +103,9 @@ body{
   background:#000;
 }
 
-/* 切り裂き */
+/* =========================
+   切り裂き
+========================= */
 
 #slash{
   position:fixed;
@@ -131,12 +144,14 @@ body{
   }
 }
 
-/* フラッシュ */
+/* =========================
+   フラッシュ
+========================= */
 
 #flash{
   position:fixed;
   inset:0;
-  z-index:80;
+  z-index:250;
   background:#fff;
   opacity:0;
   pointer-events:none;
@@ -149,12 +164,14 @@ body{
 @keyframes flashAnim{
   0%{opacity:0}
   10%{opacity:1}
-  28%{opacity:.25}
+  28%{opacity:.2}
   40%{opacity:1}
   100%{opacity:0}
 }
 
-/* 当たり画面 */
+/* =========================
+   当たり画面
+========================= */
 
 #hit{
   position:fixed;
@@ -164,15 +181,8 @@ body{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-
   background:
-    radial-gradient(
-      circle,
-      #8b1a00 0%,
-      #390000 35%,
-      #090000 68%,
-      #000 100%
-    );
+    radial-gradient(circle,#8b1a00 0%,#390000 35%,#090000 68%,#000 100%);
 }
 
 #hit.show{
@@ -196,9 +206,7 @@ body{
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg)}
 }
 
 #hitText{
@@ -238,56 +246,261 @@ body{
   font-size:15px;
   font-weight:900;
   letter-spacing:.16em;
-  text-align:center;
 }
 
-#next{
-  display:none;
-}
+/* =========================
+   宝箱選択画面
+========================= */
 
-#hit.show #next{
-  display:block;
-}
-
-/* 等級抽選中 */
-
-#lotteryBox{
+#treasureScreen{
   position:fixed;
   inset:0;
-  z-index:130;
+  z-index:140;
   display:none;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
   background:
-    radial-gradient(circle,#151515 0%,#050505 55%,#000 100%);
+    radial-gradient(circle at 50% 42%,#202020 0%,#090909 48%,#000 100%);
 }
 
-#lotteryBox.show{
+#treasureScreen.show{
   display:flex;
 }
 
-#lotteryTitle{
-  font-size:clamp(22px,7vw,48px);
+#treasureTitle{
+  position:absolute;
+  top:12%;
+  width:100%;
+  text-align:center;
+  font-size:clamp(24px,8vw,48px);
   font-weight:1000;
-  letter-spacing:.12em;
-  margin-bottom:28px;
-}
-
-#lotteryRoll{
-  font-size:clamp(60px,22vw,140px);
-  font-weight:1000;
+  letter-spacing:.14em;
   text-shadow:
-    0 0 20px #fff,
-    0 0 50px rgba(255,255,255,.5);
+    0 0 12px #fff,
+    0 0 30px rgba(255,255,255,.35);
 }
 
-/* 等級結果 */
+#treasureSub{
+  position:absolute;
+  top:20%;
+  width:100%;
+  text-align:center;
+  font-size:13px;
+  letter-spacing:.14em;
+  opacity:.72;
+}
+
+#chests{
+  width:min(94vw,700px);
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:10px;
+  padding:0 10px;
+}
+
+.chest{
+  appearance:none;
+  border:none;
+  background:transparent;
+  width:31%;
+  padding:0;
+  color:#fff;
+  cursor:pointer;
+  position:relative;
+  transition:transform .18s ease,filter .18s ease;
+}
+
+.chest:active{
+  transform:scale(.94);
+}
+
+.chest.disabled{
+  pointer-events:none;
+}
+
+.chestWrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:1 / .88;
+  animation:chestFloat 1.5s ease-in-out infinite;
+}
+
+.chest:nth-child(2) .chestWrap{
+  animation-delay:.15s;
+}
+
+.chest:nth-child(3) .chestWrap{
+  animation-delay:.3s;
+}
+
+@keyframes chestFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+/* 箱本体 */
+
+.chestBody{
+  position:absolute;
+  left:10%;
+  bottom:7%;
+  width:80%;
+  height:48%;
+  border-radius:8px 8px 18px 18px;
+  background:
+    linear-gradient(
+      90deg,
+      #6e2f07 0%,
+      #b75b10 18%,
+      #7d3406 50%,
+      #bf6618 82%,
+      #642905 100%
+    );
+  border:4px solid #dca62f;
+  box-shadow:
+    inset 0 0 18px rgba(0,0,0,.5),
+    0 12px 22px rgba(0,0,0,.7),
+    0 0 20px rgba(255,190,60,.2);
+}
+
+/* 箱の蓋 */
+
+.chestLid{
+  position:absolute;
+  left:7%;
+  top:22%;
+  width:86%;
+  height:34%;
+  border-radius:50% 50% 7px 7px;
+  background:
+    linear-gradient(
+      90deg,
+      #6b2a05,
+      #c36813 25%,
+      #813605 55%,
+      #c9741a 82%,
+      #652705
+    );
+  border:4px solid #e0ad36;
+  transform-origin:50% 100%;
+  transition:transform .6s cubic-bezier(.2,.9,.2,1);
+  box-shadow:
+    inset 0 0 15px rgba(0,0,0,.45),
+    0 0 18px rgba(255,184,43,.22);
+}
+
+.chestBand{
+  position:absolute;
+  left:44%;
+  top:18%;
+  width:12%;
+  height:64%;
+  background:
+    linear-gradient(#ffe27a,#b37b13,#ffdd65);
+  border-radius:4px;
+  z-index:4;
+  box-shadow:0 0 8px rgba(255,220,90,.5);
+}
+
+.chestLock{
+  position:absolute;
+  left:40%;
+  bottom:26%;
+  width:20%;
+  aspect-ratio:1;
+  border-radius:6px;
+  background:
+    linear-gradient(#ffe98a,#a87511);
+  border:2px solid #fff1a5;
+  z-index:6;
+  box-shadow:0 0 10px rgba(255,210,50,.5);
+}
+
+.chestNum{
+  margin-top:8px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  opacity:.75;
+}
+
+/* 選択された宝箱 */
+
+.chest.selected .chestWrap{
+  animation:chestShake .12s linear infinite;
+}
+
+@keyframes chestShake{
+  0%{transform:translate(-3px,0) rotate(-1deg)}
+  25%{transform:translate(3px,-2px) rotate(1deg)}
+  50%{transform:translate(-2px,2px) rotate(-1deg)}
+  75%{transform:translate(2px,-1px) rotate(1deg)}
+  100%{transform:translate(-3px,0) rotate(-1deg)}
+}
+
+.chest.open .chestWrap{
+  animation:none;
+}
+
+.chest.open .chestLid{
+  transform:rotateX(145deg) translateY(-4px);
+}
+
+.chest.open{
+  transform:scale(1.15);
+  filter:brightness(1.35);
+}
+
+.chest.dim{
+  opacity:.3;
+  filter:grayscale(.8);
+}
+
+/* 宝箱から出る光 */
+
+.chestLight{
+  position:absolute;
+  left:26%;
+  bottom:26%;
+  width:48%;
+  height:15%;
+  opacity:0;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:
+    0 0 20px #fff,
+    0 0 50px #ffe66a,
+    0 0 100px #ffb300;
+  z-index:2;
+  transition:opacity .2s;
+}
+
+.chest.open .chestLight{
+  opacity:1;
+  animation:lightBurst .7s ease-out forwards;
+}
+
+@keyframes lightBurst{
+  from{
+    transform:scale(.3);
+    opacity:1;
+  }
+  to{
+    transform:scale(4.5);
+    opacity:0;
+  }
+}
+
+/* =========================
+   最終結果
+========================= */
 
 #prizeBox{
   position:fixed;
   inset:0;
-  z-index:160;
+  z-index:180;
   display:none;
   align-items:center;
   justify-content:center;
@@ -306,7 +519,7 @@ body{
 
 #prizeBox.second{
   background:
-    radial-gradient(circle,#ffffff 0%,#9ca7b6 28%,#272d35 62%,#000 100%);
+    radial-gradient(circle,#fff 0%,#a9b2be 28%,#272d35 62%,#000 100%);
 }
 
 #prizeBox.third{
@@ -314,7 +527,22 @@ body{
     radial-gradient(circle,#ffd2a8 0%,#b75a22 30%,#4c1e08 62%,#000 100%);
 }
 
+#prizeBurst{
+  position:absolute;
+  width:160vw;
+  height:160vw;
+  border-radius:50%;
+  background:
+    repeating-conic-gradient(
+      rgba(255,255,255,.22) 0deg 4deg,
+      transparent 4deg 11deg
+    );
+  animation:spin 6s linear infinite;
+}
+
 #prizeLabel{
+  position:relative;
+  z-index:3;
   font-size:clamp(72px,28vw,180px);
   font-weight:1000;
   line-height:1;
@@ -327,6 +555,8 @@ body{
 }
 
 #prizeWon{
+  position:relative;
+  z-index:3;
   margin-top:20px;
   font-size:clamp(20px,6vw,38px);
   font-weight:1000;
@@ -371,22 +601,64 @@ body{
   <div id="glow"></div>
   <div id="hitText">当たり</div>
   <div id="subText">CONGRATULATIONS</div>
-  <button id="next">NEXT</button>
 </div>
 
-<div id="lotteryBox">
-  <div id="lotteryTitle">等級抽選中...</div>
-  <div id="lotteryRoll">?</div>
+<!-- 宝箱 -->
+<div id="treasureScreen">
+
+  <div id="treasureTitle">宝箱を1つ選べ！</div>
+  <div id="treasureSub">タップして宝箱を開けてください</div>
+
+  <div id="chests">
+
+    <button class="chest" data-chest="1">
+      <div class="chestWrap">
+        <div class="chestLight"></div>
+        <div class="chestLid"></div>
+        <div class="chestBody"></div>
+        <div class="chestBand"></div>
+        <div class="chestLock"></div>
+      </div>
+      <div class="chestNum">CHEST 1</div>
+    </button>
+
+    <button class="chest" data-chest="2">
+      <div class="chestWrap">
+        <div class="chestLight"></div>
+        <div class="chestLid"></div>
+        <div class="chestBody"></div>
+        <div class="chestBand"></div>
+        <div class="chestLock"></div>
+      </div>
+      <div class="chestNum">CHEST 2</div>
+    </button>
+
+    <button class="chest" data-chest="3">
+      <div class="chestWrap">
+        <div class="chestLight"></div>
+        <div class="chestLid"></div>
+        <div class="chestBody"></div>
+        <div class="chestBand"></div>
+        <div class="chestLock"></div>
+      </div>
+      <div class="chestNum">CHEST 3</div>
+    </button>
+
+  </div>
+
 </div>
 
+<!-- 等級結果 -->
 <div id="prizeBox">
+  <div id="prizeBurst"></div>
   <div id="prizeLabel">3等</div>
   <div id="prizeWon">当選！</div>
+  <button id="next">NEXT</button>
 </div>
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260912-300"
+  src="./hit_music_final.mp3?v=20260912-400"
   preload="auto"
   playsinline>
 </audio>
@@ -394,9 +666,13 @@ body{
 <script>
 
 const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
 const sleep = ms => new Promise(r => setTimeout(r,ms));
 
 let busy = false;
+let chestBusy = false;
+let selectedPrize = null;
+
 let audioCtx = null;
 
 let tensionOsc1 = null;
@@ -408,7 +684,7 @@ const hitMusic = $("#hitMusic");
 
 
 /* =========================
-   Web Audio
+   WebAudio
 ========================= */
 
 function initAudio(){
@@ -459,29 +735,24 @@ async function unlockHitMusic(){
 
 
 /* =========================
-   緊張BGM
+   緊張音
 ========================= */
 
 function startTension(){
 
   initAudio();
-
   stopTension();
 
   const now = audioCtx.currentTime;
 
   tensionGain = audioCtx.createGain();
 
-  tensionGain.gain.setValueAtTime(
-    .0001,
-    now
-  );
+  tensionGain.gain.setValueAtTime(.0001,now);
 
   tensionGain.gain.exponentialRampToValueAtTime(
     .08,
     now + .8
   );
-
 
   tensionOsc1 = audioCtx.createOscillator();
   tensionOsc2 = audioCtx.createOscillator();
@@ -499,7 +770,6 @@ function startTension(){
   tensionOsc1.start();
   tensionOsc2.start();
 
-
   pulseTimer = setInterval(() => {
 
     if(!tensionGain) return;
@@ -508,10 +778,7 @@ function startTension(){
 
     tensionGain.gain.cancelScheduledValues(t);
 
-    tensionGain.gain.setValueAtTime(
-      .04,
-      t
-    );
+    tensionGain.gain.setValueAtTime(.04,t);
 
     tensionGain.gain.exponentialRampToValueAtTime(
       .12,
@@ -534,13 +801,8 @@ function stopTension(){
     pulseTimer = null;
   }
 
-  try{
-    tensionOsc1?.stop();
-  }catch(e){}
-
-  try{
-    tensionOsc2?.stop();
-  }catch(e){}
+  try{ tensionOsc1?.stop(); }catch(e){}
+  try{ tensionOsc2?.stop(); }catch(e){}
 
   tensionOsc1 = null;
   tensionOsc2 = null;
@@ -579,10 +841,7 @@ function countSound(number){
     now + .45
   );
 
-  gain.gain.setValueAtTime(
-    .0001,
-    now
-  );
+  gain.gain.setValueAtTime(.0001,now);
 
   gain.gain.exponentialRampToValueAtTime(
     .55,
@@ -617,20 +876,14 @@ function slashSound(){
 
   osc.type = "sawtooth";
 
-  osc.frequency.setValueAtTime(
-    1600,
-    now
-  );
+  osc.frequency.setValueAtTime(1600,now);
 
   osc.frequency.exponentialRampToValueAtTime(
     170,
     now + .15
   );
 
-  gain.gain.setValueAtTime(
-    .32,
-    now
-  );
+  gain.gain.setValueAtTime(.32,now);
 
   gain.gain.exponentialRampToValueAtTime(
     .0001,
@@ -649,20 +902,14 @@ function slashSound(){
 
   bass.type = "sine";
 
-  bass.frequency.setValueAtTime(
-    95,
-    now
-  );
+  bass.frequency.setValueAtTime(95,now);
 
   bass.frequency.exponentialRampToValueAtTime(
     32,
     now + .5
   );
 
-  bassGain.gain.setValueAtTime(
-    .75,
-    now
-  );
+  bassGain.gain.setValueAtTime(.75,now);
 
   bassGain.gain.exponentialRampToValueAtTime(
     .0001,
@@ -678,10 +925,10 @@ function slashSound(){
 
 
 /* =========================
-   等級抽選音
+   宝箱選択音
 ========================= */
 
-function lotteryTick(){
+function chestSelectSound(){
 
   initAudio();
 
@@ -690,17 +937,89 @@ function lotteryTick(){
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
 
-  osc.type = "square";
-  osc.frequency.value = 520;
+  osc.type = "sawtooth";
 
-  gain.gain.setValueAtTime(.13,now);
-  gain.gain.exponentialRampToValueAtTime(.0001,now+.08);
+  osc.frequency.setValueAtTime(170,now);
+
+  osc.frequency.exponentialRampToValueAtTime(
+    80,
+    now + .55
+  );
+
+  gain.gain.setValueAtTime(.2,now);
+
+  gain.gain.exponentialRampToValueAtTime(
+    .0001,
+    now + .6
+  );
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
 
   osc.start(now);
-  osc.stop(now+.09);
+  osc.stop(now + .65);
+}
+
+
+/* =========================
+   宝箱開封音
+========================= */
+
+function chestOpenSound(){
+
+  initAudio();
+
+  const now = audioCtx.currentTime;
+
+  const osc1 = audioCtx.createOscillator();
+  const gain1 = audioCtx.createGain();
+
+  osc1.type = "triangle";
+
+  osc1.frequency.setValueAtTime(250,now);
+  osc1.frequency.exponentialRampToValueAtTime(
+    900,
+    now + .3
+  );
+
+  gain1.gain.setValueAtTime(.3,now);
+
+  gain1.gain.exponentialRampToValueAtTime(
+    .0001,
+    now + .45
+  );
+
+  osc1.connect(gain1);
+  gain1.connect(audioCtx.destination);
+
+  osc1.start(now);
+  osc1.stop(now + .5);
+
+
+  const osc2 = audioCtx.createOscillator();
+  const gain2 = audioCtx.createGain();
+
+  osc2.type = "sine";
+
+  osc2.frequency.setValueAtTime(85,now);
+
+  osc2.frequency.exponentialRampToValueAtTime(
+    38,
+    now + .5
+  );
+
+  gain2.gain.setValueAtTime(.55,now);
+
+  gain2.gain.exponentialRampToValueAtTime(
+    .0001,
+    now + .55
+  );
+
+  osc2.connect(gain2);
+  gain2.connect(audioCtx.destination);
+
+  osc2.start(now);
+  osc2.stop(now + .6);
 }
 
 
@@ -729,6 +1048,9 @@ async function playHitMusic(){
 
 /* =========================
    等級抽選
+
+   ★確率はこれで固定★
+
    1等 10%
    2等 30%
    3等 60%
@@ -739,17 +1061,21 @@ function drawPrize(){
   const r = Math.random();
 
   if(r < .10){
+
     return {
       label:"1等",
       className:"first"
     };
+
   }
 
   if(r < .40){
+
     return {
       label:"2等",
       className:"second"
     };
+
   }
 
   return {
@@ -795,106 +1121,150 @@ function flash(){
 
 
 /* =========================
-   等級抽選演出
+   宝箱画面
 ========================= */
 
-async function runPrizeLottery(){
+async function showTreasureScreen(){
 
   /*
-    当たりを少し見せてから
-    2段目の抽選へ
+    この時点で等級を1回だけ抽選
+
+    宝箱をどれ選んでも
+    この結果が出る
+
+    ↓
+
+    だから確率は
+    1等10%
+    2等30%
+    3等60%
+    のまま
   */
 
-  await sleep(1800);
+  selectedPrize = drawPrize();
 
-  $("#hit").className = "";
+  chestBusy = false;
 
-  $("#lotteryBox").className = "show";
+  $$(".chest").forEach(chest => {
+
+    chest.classList.remove(
+      "selected",
+      "open",
+      "dim",
+      "disabled"
+    );
+
+  });
+
+  $("#treasureScreen").className = "show";
+}
 
 
-  const roll = $("#lotteryRoll");
+/* =========================
+   宝箱を選ぶ
+========================= */
 
-  const fakeResults = [
-    "1等",
-    "3等",
-    "2等",
-    "3等",
-    "1等",
-    "2等",
-    "3等"
-  ];
+async function chooseChest(chest){
+
+  if(chestBusy) return;
+
+  chestBusy = true;
 
 
   /*
-    最初は速く
-    後半はゆっくり
+    全部タップ不可
   */
 
-  const delays = [
-    90,90,100,110,130,
-    150,180,210,250,
-    300,360,450
-  ];
-
-
-  for(let i = 0; i < delays.length; i++){
-
-    roll.textContent =
-      fakeResults[
-        Math.floor(
-          Math.random() * fakeResults.length
-        )
-      ];
-
-    lotteryTick();
-
-    await sleep(delays[i]);
-  }
+  $$(".chest").forEach(c => {
+    c.classList.add("disabled");
+  });
 
 
   /*
-    ★ここで本当の等級決定
+    選んだ箱だけ強調
   */
 
-  const prize = drawPrize();
+  chest.classList.add("selected");
+
+  $$(".chest").forEach(c => {
+
+    if(c !== chest){
+      c.classList.add("dim");
+    }
+
+  });
 
 
-  await sleep(450);
-
-
-  $("#lotteryBox").className = "";
-
-
-  const prizeBox = $("#prizeBox");
-
-  prizeBox.className =
-    "show " + prize.className;
-
-
-  $("#prizeLabel").textContent =
-    prize.label;
+  chestSelectSound();
 
 
   /*
-    最終結果で強フラッシュ
+    ガタガタ演出
+  */
+
+  await sleep(1100);
+
+
+  chest.classList.remove("selected");
+
+
+  /*
+    一瞬溜め
+  */
+
+  await sleep(350);
+
+
+  /*
+    宝箱OPEN
+  */
+
+  chest.classList.add("open");
+
+  chestOpenSound();
+
+
+  await sleep(350);
+
+
+  /*
+    強フラッシュ
   */
 
   flash();
 
 
-  /*
-    結果を見せたあとNEXTを表示
-  */
+  await sleep(550);
 
-  await sleep(1200);
-
-  $("#next").style.display = "block";
 
   /*
-    NEXTを等級画面の上に移動
+    等級表示
   */
 
-  prizeBox.appendChild($("#next"));
+  showPrizeResult();
+}
+
+
+/* =========================
+   最終結果
+========================= */
+
+function showPrizeResult(){
+
+  $("#treasureScreen").className = "";
+
+  const prizeBox = $("#prizeBox");
+
+  prizeBox.className =
+    "show " + selectedPrize.className;
+
+  $("#prizeLabel").textContent =
+    selectedPrize.label;
+
+  $("#prizeWon").textContent =
+    "当選！";
+
+  flash();
 }
 
 
@@ -906,13 +1276,23 @@ async function showHit(){
 
   $("#hit").className = "show";
 
-  await playHitMusic();
+  playHitMusic();
+
 
   /*
-    当たり後の等級抽選へ
+    当たり画面を見せる
   */
 
-  runPrizeLottery();
+  await sleep(2200);
+
+
+  /*
+    宝箱へ
+  */
+
+  $("#hit").className = "";
+
+  await showTreasureScreen();
 }
 
 
@@ -993,10 +1373,6 @@ async function play(){
   busy = true;
 
 
-  /*
-    iPhone音声解禁
-  */
-
   initAudio();
 
   await unlockHitMusic();
@@ -1009,7 +1385,8 @@ async function play(){
 
 
   /*
-    今は100%当たりテスト
+    今はテスト用なので
+    毎回100%当たり
 
     0 = 3途中
     1 = 2途中
@@ -1098,12 +1475,13 @@ async function play(){
 
 
 /* =========================
-   NEXT
+   RESET
 ========================= */
 
 function reset(){
 
   stopTension();
+
 
   hitMusic.pause();
 
@@ -1112,12 +1490,29 @@ function reset(){
   }catch(e){}
 
 
+  selectedPrize = null;
+  chestBusy = false;
+
+
   $("#hit").className = "";
-  $("#lotteryBox").className = "";
+  $("#treasureScreen").className = "";
   $("#prizeBox").className = "";
 
   $("#slash").className = "";
+
   $("#black").style.display = "none";
+
+
+  $$(".chest").forEach(chest => {
+
+    chest.classList.remove(
+      "selected",
+      "open",
+      "dim",
+      "disabled"
+    );
+
+  });
 
 
   $("#number").textContent = "3";
@@ -1127,23 +1522,29 @@ function reset(){
   $("#start").style.display = "block";
 
 
-  /*
-    NEXTを当たり画面へ戻す
-  */
-
-  $("#hit").appendChild($("#next"));
-
-  $("#next").style.display = "none";
-
-
   busy = false;
 }
 
+
+/* =========================
+   ボタン
+========================= */
 
 $("#start").addEventListener(
   "click",
   play
 );
+
+
+$$(".chest").forEach(chest => {
+
+  chest.addEventListener(
+    "click",
+    () => chooseChest(chest)
+  );
+
+});
+
 
 $("#next").addEventListener(
   "click",
