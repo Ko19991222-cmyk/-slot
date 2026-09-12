@@ -29,20 +29,19 @@ button{
   font-family:inherit;
 }
 
-/* ===== STAGE ===== */
-
 #stage{
   position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at 50% 45%,
+  background:radial-gradient(
+    circle at 50% 45%,
     #171717 0%,
     #050505 48%,
-    #000 82%);
-  transition:background .15s,filter .15s;
+    #000 82%
+  );
+  transition:background .15s;
 }
 
 #number{
@@ -59,8 +58,7 @@ button{
     transform .15s,
     left .15s,
     top .15s,
-    opacity .15s,
-    filter .15s;
+    opacity .15s;
 }
 
 #number.show{
@@ -80,22 +78,12 @@ button{
   }
 }
 
-/* ===== 違和感 ===== */
-
 #number.red{
   color:#ff2828;
-  text-shadow:
-    0 0 16px #fff,
-    0 0 35px #ff0000,
-    0 0 80px #ff0000;
 }
 
 #number.gold{
   color:#ffe16b;
-  text-shadow:
-    0 0 15px #fff,
-    0 0 40px #ffc400,
-    0 0 90px #ff8c00;
 }
 
 #number.small{
@@ -138,8 +126,12 @@ button{
 }
 
 @keyframes flicker{
-  0%,100%{opacity:1}
-  50%{opacity:.05}
+  0%,100%{
+    opacity:1;
+  }
+  50%{
+    opacity:.05;
+  }
 }
 
 #number.ghost::after{
@@ -148,12 +140,10 @@ button{
   inset:0;
   transform:translate(14px,10px);
   opacity:.15;
-  filter:blur(1px);
 }
 
-/* ===== UI ===== */
-
-#start,#next{
+#start,
+#next{
   position:absolute;
   bottom:8%;
   z-index:400;
@@ -190,8 +180,6 @@ button{
     0 0 40px #fff;
 }
 
-/* ===== BLACKOUT ===== */
-
 #black{
   position:fixed;
   inset:0;
@@ -199,8 +187,6 @@ button{
   display:none;
   background:#000;
 }
-
-/* ===== SLASH ===== */
 
 #slash{
   position:fixed;
@@ -239,8 +225,6 @@ button{
   }
 }
 
-/* ===== FLASH ===== */
-
 #flash{
   position:fixed;
   inset:0;
@@ -262,8 +246,6 @@ button{
   100%{opacity:0}
 }
 
-/* ===== HIT ===== */
-
 #hit{
   position:fixed;
   inset:0;
@@ -272,12 +254,13 @@ button{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:
-    radial-gradient(circle,
+  background:radial-gradient(
+    circle,
     #8b1a00 0%,
     #390000 35%,
     #090000 68%,
-    #000 100%);
+    #000 100%
+  );
 }
 
 #hit.show{
@@ -289,19 +272,20 @@ button{
   width:150vw;
   height:150vw;
   border-radius:50%;
-  background:
-    conic-gradient(
-      transparent,
-      rgba(255,180,0,.35),
-      transparent,
-      rgba(255,0,0,.42),
-      transparent
-    );
+  background:conic-gradient(
+    transparent,
+    rgba(255,180,0,.35),
+    transparent,
+    rgba(255,0,0,.42),
+    transparent
+  );
   animation:spin 3s linear infinite;
 }
 
 @keyframes spin{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
 
 #hitText{
@@ -316,15 +300,6 @@ button{
     0 0 70px #ff4500,
     0 0 110px red;
   animation:hitIn .55s cubic-bezier(.05,1.4,.2,1);
-}
-
-#subText{
-  position:absolute;
-  bottom:25%;
-  z-index:5;
-  font-size:15px;
-  font-weight:900;
-  letter-spacing:.16em;
 }
 
 @keyframes hitIn{
@@ -343,7 +318,14 @@ button{
   }
 }
 
-/* ===== TREASURE ===== */
+#subText{
+  position:absolute;
+  bottom:25%;
+  z-index:5;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.16em;
+}
 
 #treasureScreen{
   position:fixed;
@@ -353,11 +335,12 @@ button{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  background:
-    radial-gradient(circle at 50% 42%,
+  background:radial-gradient(
+    circle at 50% 42%,
     #202020 0%,
     #090909 48%,
-    #000 100%);
+    #000 100%
+  );
 }
 
 #treasureScreen.show{
@@ -404,10 +387,7 @@ button{
   padding:0;
   color:#fff;
   position:relative;
-  transition:
-    transform .18s,
-    filter .18s,
-    opacity .18s;
+  transition:.18s;
 }
 
 .chest:active{
@@ -416,6 +396,11 @@ button{
 
 .chest.disabled{
   pointer-events:none;
+}
+
+.chest.dim{
+  opacity:.3;
+  filter:grayscale(.8);
 }
 
 .chestWrap{
@@ -434,8 +419,12 @@ button{
 }
 
 @keyframes chestFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-8px);
+  }
 }
 
 .chestBody{
@@ -445,20 +434,15 @@ button{
   width:80%;
   height:48%;
   border-radius:8px 8px 18px 18px;
-  background:
-    linear-gradient(
-      90deg,
-      #6e2f07 0%,
-      #b75b10 18%,
-      #7d3406 50%,
-      #bf6618 82%,
-      #642905 100%
-    );
+  background:linear-gradient(
+    90deg,
+    #6e2f07,
+    #b75b10 18%,
+    #7d3406 50%,
+    #bf6618 82%,
+    #642905
+  );
   border:4px solid #dca62f;
-  box-shadow:
-    inset 0 0 18px rgba(0,0,0,.5),
-    0 12px 22px rgba(0,0,0,.7),
-    0 0 20px rgba(255,190,60,.2);
 }
 
 .chestLid{
@@ -468,21 +452,17 @@ button{
   width:86%;
   height:34%;
   border-radius:50% 50% 7px 7px;
-  background:
-    linear-gradient(
-      90deg,
-      #6b2a05,
-      #c36813 25%,
-      #813605 55%,
-      #c9741a 82%,
-      #652705
-    );
+  background:linear-gradient(
+    90deg,
+    #6b2a05,
+    #c36813 25%,
+    #813605 55%,
+    #c9741a 82%,
+    #652705
+  );
   border:4px solid #e0ad36;
   transform-origin:50% 100%;
-  transition:transform .6s cubic-bezier(.2,.9,.2,1);
-  box-shadow:
-    inset 0 0 15px rgba(0,0,0,.45),
-    0 0 18px rgba(255,184,43,.22);
+  transition:transform .6s;
 }
 
 .chestBand{
@@ -491,15 +471,13 @@ button{
   top:18%;
   width:12%;
   height:64%;
-  background:
-    linear-gradient(
-      #ffe27a,
-      #b37b13,
-      #ffdd65
-    );
+  background:linear-gradient(
+    #ffe27a,
+    #b37b13,
+    #ffdd65
+  );
   border-radius:4px;
   z-index:4;
-  box-shadow:0 0 8px rgba(255,220,90,.5);
 }
 
 .chestLock{
@@ -509,51 +487,12 @@ button{
   width:20%;
   aspect-ratio:1;
   border-radius:6px;
-  background:
-    linear-gradient(
-      #ffe98a,
-      #a87511
-    );
+  background:linear-gradient(
+    #ffe98a,
+    #a87511
+  );
   border:2px solid #fff1a5;
   z-index:6;
-}
-
-.chestNum{
-  margin-top:8px;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.12em;
-  opacity:.75;
-}
-
-.chest.selected .chestWrap{
-  animation:chestShake .12s linear infinite;
-}
-
-@keyframes chestShake{
-  0%{transform:translate(-3px,0) rotate(-1deg)}
-  25%{transform:translate(3px,-2px) rotate(1deg)}
-  50%{transform:translate(-2px,2px) rotate(-1deg)}
-  75%{transform:translate(2px,-1px) rotate(1deg)}
-  100%{transform:translate(-3px,0) rotate(-1deg)}
-}
-
-.chest.open .chestWrap{
-  animation:none;
-}
-
-.chest.open .chestLid{
-  transform:rotateX(145deg) translateY(-4px);
-}
-
-.chest.open{
-  transform:scale(1.15);
-  filter:brightness(1.35);
-}
-
-.chest.dim{
-  opacity:.3;
-  filter:grayscale(.8);
 }
 
 .chestLight{
@@ -572,6 +511,49 @@ button{
   z-index:2;
 }
 
+.chestNum{
+  margin-top:8px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  opacity:.75;
+}
+
+.chest.selected .chestWrap{
+  animation:chestShake .12s linear infinite;
+}
+
+@keyframes chestShake{
+  0%{
+    transform:translate(-3px,0) rotate(-1deg);
+  }
+  25%{
+    transform:translate(3px,-2px) rotate(1deg);
+  }
+  50%{
+    transform:translate(-2px,2px) rotate(-1deg);
+  }
+  75%{
+    transform:translate(2px,-1px) rotate(1deg);
+  }
+  100%{
+    transform:translate(-3px,0) rotate(-1deg);
+  }
+}
+
+.chest.open .chestWrap{
+  animation:none;
+}
+
+.chest.open .chestLid{
+  transform:rotateX(145deg) translateY(-4px);
+}
+
+.chest.open{
+  transform:scale(1.15);
+  filter:brightness(1.35);
+}
+
 .chest.open .chestLight{
   opacity:1;
   animation:lightBurst .7s ease-out forwards;
@@ -587,8 +569,6 @@ button{
     opacity:0;
   }
 }
-
-/* ===== PRIZE ===== */
 
 #prizeBox{
   position:fixed;
@@ -606,30 +586,33 @@ button{
 }
 
 #prizeBox.first{
-  background:
-    radial-gradient(circle,
+  background:radial-gradient(
+    circle,
     #fff7a0 0%,
     #d99b00 25%,
     #5c2500 60%,
-    #000 100%);
+    #000 100%
+  );
 }
 
 #prizeBox.second{
-  background:
-    radial-gradient(circle,
+  background:radial-gradient(
+    circle,
     #fff 0%,
     #a9b2be 28%,
     #272d35 62%,
-    #000 100%);
+    #000 100%
+  );
 }
 
 #prizeBox.third{
-  background:
-    radial-gradient(circle,
+  background:radial-gradient(
+    circle,
     #ffd2a8 0%,
     #b75a22 30%,
     #4c1e08 62%,
-    #000 100%);
+    #000 100%
+  );
 }
 
 #prizeBurst{
@@ -637,11 +620,10 @@ button{
   width:160vw;
   height:160vw;
   border-radius:50%;
-  background:
-    repeating-conic-gradient(
-      rgba(255,255,255,.22) 0deg 4deg,
-      transparent 4deg 11deg
-    );
+  background:repeating-conic-gradient(
+    rgba(255,255,255,.22) 0deg 4deg,
+    transparent 4deg 11deg
+  );
   animation:spin 6s linear infinite;
 }
 
@@ -674,13 +656,11 @@ button{
     opacity:0;
     filter:blur(14px);
   }
-
   70%{
     transform:scale(1.18) rotate(2deg);
     opacity:1;
     filter:blur(0);
   }
-
   100%{
     transform:scale(1) rotate(0);
   }
@@ -691,25 +671,16 @@ button{
 <body>
 
 <div id="stage">
+  <div id="test">TEST MODE / 100% HIT</div>
 
-  <div id="test">
-    TEST MODE / 100% HIT
-  </div>
-
-  <div id="number" data-num="3">
-    3
-  </div>
+  <div id="number" data-num="3">3</div>
 
   <button id="start">
     START
   </button>
-
 </div>
 
-
-<div id="weirdMark">
-  ?
-</div>
+<div id="weirdMark">?</div>
 
 <div id="black"></div>
 
@@ -719,9 +690,7 @@ button{
 
 <div id="flash"></div>
 
-
 <div id="hit">
-
   <div id="glow"></div>
 
   <div id="hitText">
@@ -731,11 +700,7 @@ button{
   <div id="subText">
     CONGRATULATIONS
   </div>
-
 </div>
-
-
-<!-- 宝箱 -->
 
 <div id="treasureScreen">
 
@@ -750,7 +715,6 @@ button{
   <div id="chests">
 
     <button class="chest">
-
       <div class="chestWrap">
         <div class="chestLight"></div>
         <div class="chestLid"></div>
@@ -758,16 +722,10 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
-      <div class="chestNum">
-        CHEST 1
-      </div>
-
+      <div class="chestNum">CHEST 1</div>
     </button>
 
-
     <button class="chest">
-
       <div class="chestWrap">
         <div class="chestLight"></div>
         <div class="chestLid"></div>
@@ -775,16 +733,10 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
-      <div class="chestNum">
-        CHEST 2
-      </div>
-
+      <div class="chestNum">CHEST 2</div>
     </button>
 
-
     <button class="chest">
-
       <div class="chestWrap">
         <div class="chestLight"></div>
         <div class="chestLid"></div>
@@ -792,19 +744,11 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
-      <div class="chestNum">
-        CHEST 3
-      </div>
-
+      <div class="chestNum">CHEST 3</div>
     </button>
 
   </div>
-
 </div>
-
-
-<!-- 等級結果 -->
 
 <div id="prizeBox">
 
@@ -821,46 +765,48 @@ button{
   <button id="next">
     NEXT
   </button>
-
 </div>
-
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260913-2000"
+  src="./hit_music_final.mp3?v=20260913-7000"
   preload="auto"
   playsinline>
 </audio>
 
-
 <script>
 
-const $ =
-  s => document.querySelector(s);
+const $ = s =>
+  document.querySelector(s);
 
-const $$ =
-  s => [...document.querySelectorAll(s)];
+const $$ = s =>
+  [...document.querySelectorAll(s)];
 
-const sleep =
-  ms => new Promise(r => setTimeout(r,ms));
+const sleep = ms =>
+  new Promise(r => setTimeout(r,ms));
 
 
 let busy = false;
+
 let chestBusy = false;
+
 let selectedPrize = null;
+
 
 let audioCtx = null;
 
 let tensionOsc1 = null;
+
 let tensionOsc2 = null;
+
 let tensionGain = null;
+
 let pulseTimer = null;
+
 
 const hitMusic =
   $("#hitMusic");
 
-
-/* ===== AUDIO ===== */
 
 function initAudio(){
 
@@ -875,8 +821,11 @@ function initAudio(){
   }
 
   if(audioCtx.state === "suspended"){
+
     audioCtx.resume();
+
   }
+
 }
 
 
@@ -885,8 +834,11 @@ async function unlockHitMusic(){
   try{
 
     hitMusic.pause();
+
     hitMusic.currentTime = 0;
+
     hitMusic.muted = false;
+
     hitMusic.volume = .001;
 
     await hitMusic.play();
@@ -894,7 +846,9 @@ async function unlockHitMusic(){
     await sleep(60);
 
     hitMusic.pause();
+
     hitMusic.currentTime = 0;
+
     hitMusic.volume = 1;
 
   }catch(e){
@@ -902,10 +856,11 @@ async function unlockHitMusic(){
     hitMusic.volume = 1;
 
   }
+
 }
 
 
-/* ===== 緊張音 ===== */
+/* 緊張音 音量アップ版 */
 
 function startTension(){
 
@@ -913,76 +868,111 @@ function startTension(){
 
   stopTension();
 
+
   const now =
     audioCtx.currentTime;
+
 
   tensionGain =
     audioCtx.createGain();
 
+
   tensionGain.gain
-    .setValueAtTime(.0001,now);
+    .setValueAtTime(
+      .0001,
+      now
+    );
+
 
   tensionGain.gain
     .exponentialRampToValueAtTime(
-      .07,
+      .13,
       now + .8
     );
+
 
   tensionOsc1 =
     audioCtx.createOscillator();
 
+
   tensionOsc2 =
     audioCtx.createOscillator();
+
 
   tensionOsc1.type =
     "sine";
 
+
   tensionOsc2.type =
     "triangle";
+
 
   tensionOsc1.frequency.value =
     52;
 
+
   tensionOsc2.frequency.value =
     78;
 
-  tensionOsc1.connect(tensionGain);
-  tensionOsc2.connect(tensionGain);
+
+  tensionOsc1.connect(
+    tensionGain
+  );
+
+
+  tensionOsc2.connect(
+    tensionGain
+  );
+
 
   tensionGain.connect(
     audioCtx.destination
   );
 
+
   tensionOsc1.start();
+
   tensionOsc2.start();
 
-  pulseTimer =
-    setInterval(() => {
 
-      if(!tensionGain) return;
+  pulseTimer =
+    setInterval(()=>{
+
+      if(!tensionGain){
+        return;
+      }
+
 
       const t =
         audioCtx.currentTime;
 
+
       tensionGain.gain
         .cancelScheduledValues(t);
 
+
       tensionGain.gain
-        .setValueAtTime(.035,t);
+        .setValueAtTime(
+          .07,
+          t
+        );
+
 
       tensionGain.gain
         .exponentialRampToValueAtTime(
-          .11,
+          .20,
           t + .08
         );
 
+
       tensionGain.gain
         .exponentialRampToValueAtTime(
-          .035,
+          .07,
           t + .48
         );
 
     },650);
+
 }
 
 
@@ -990,48 +980,77 @@ function stopTension(){
 
   if(pulseTimer){
 
-    clearInterval(pulseTimer);
+    clearInterval(
+      pulseTimer
+    );
 
-    pulseTimer = null;
+    pulseTimer =
+      null;
+
   }
 
+
   try{
+
     tensionOsc1?.stop();
+
   }catch(e){}
+
 
   try{
+
     tensionOsc2?.stop();
+
   }catch(e){}
 
-  tensionOsc1 = null;
-  tensionOsc2 = null;
-  tensionGain = null;
+
+  tensionOsc1 =
+    null;
+
+
+  tensionOsc2 =
+    null;
+
+
+  tensionGain =
+    null;
+
 }
 
-
-/* ===== カウント音 ===== */
 
 function countSound(n){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
+
   const freq = {
+
     3:115,
+
     2:98,
+
     1:80,
+
     0:62
+
   };
 
-  osc.type = "sine";
+
+  osc.type =
+    "sine";
+
 
   osc.frequency
     .setValueAtTime(
@@ -1039,14 +1058,20 @@ function countSound(n){
       now
     );
 
+
   osc.frequency
     .exponentialRampToValueAtTime(
       44,
       now + .45
     );
 
+
   gain.gain
-    .setValueAtTime(.0001,now);
+    .setValueAtTime(
+      .0001,
+      now
+    );
+
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1054,42 +1079,61 @@ function countSound(n){
       now + .015
     );
 
+
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .55
     );
 
-  osc.connect(gain);
+
+  osc.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
   );
 
+
   osc.start(now);
-  osc.stop(now + .6);
+
+
+  osc.stop(
+    now + .6
+  );
+
 }
 
-
-/* ===== 違和感音 ===== */
 
 function strangeCountSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "triangle";
+
+  osc.type =
+    "triangle";
+
 
   osc.frequency
-    .setValueAtTime(165,now);
+    .setValueAtTime(
+      165,
+      now
+    );
+
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1097,8 +1141,13 @@ function strangeCountSound(){
       now + .55
     );
 
+
   gain.gain
-    .setValueAtTime(.32,now);
+    .setValueAtTime(
+      .32,
+      now
+    );
+
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1106,36 +1155,54 @@ function strangeCountSound(){
       now + .55
     );
 
-  osc.connect(gain);
+
+  osc.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
   );
 
+
   osc.start(now);
-  osc.stop(now + .6);
+
+
+  osc.stop(
+    now + .6
+  );
+
 }
 
-
-/* ===== プチュン ===== */
 
 function puchunSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "square";
+
+  osc.type =
+    "square";
+
 
   osc.frequency
-    .setValueAtTime(280,now);
+    .setValueAtTime(
+      280,
+      now
+    );
+
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1143,8 +1210,13 @@ function puchunSound(){
       now + .12
     );
 
+
   gain.gain
-    .setValueAtTime(.4,now);
+    .setValueAtTime(
+      .4,
+      now
+    );
+
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1152,36 +1224,54 @@ function puchunSound(){
       now + .13
     );
 
-  osc.connect(gain);
+
+  osc.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
   );
 
+
   osc.start(now);
-  osc.stop(now + .14);
+
+
+  osc.stop(
+    now + .14
+  );
+
 }
 
-
-/* ===== 切り裂き ===== */
 
 function slashSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "sawtooth";
+
+  osc.type =
+    "sawtooth";
+
 
   osc.frequency
-    .setValueAtTime(1600,now);
+    .setValueAtTime(
+      1600,
+      now
+    );
+
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1189,8 +1279,13 @@ function slashSound(){
       now + .15
     );
 
+
   gain.gain
-    .setValueAtTime(.32,now);
+    .setValueAtTime(
+      .32,
+      now
+    );
+
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1198,26 +1293,43 @@ function slashSound(){
       now + .18
     );
 
-  osc.connect(gain);
+
+  osc.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
   );
 
+
   osc.start(now);
-  osc.stop(now + .2);
+
+
+  osc.stop(
+    now + .2
+  );
 
 
   const bass =
     audioCtx.createOscillator();
 
+
   const bassGain =
     audioCtx.createGain();
 
-  bass.type = "sine";
+
+  bass.type =
+    "sine";
+
 
   bass.frequency
-    .setValueAtTime(95,now);
+    .setValueAtTime(
+      95,
+      now
+    );
+
 
   bass.frequency
     .exponentialRampToValueAtTime(
@@ -1225,8 +1337,13 @@ function slashSound(){
       now + .5
     );
 
+
   bassGain.gain
-    .setValueAtTime(.75,now);
+    .setValueAtTime(
+      .75,
+      now
+    );
+
 
   bassGain.gain
     .exponentialRampToValueAtTime(
@@ -1234,18 +1351,26 @@ function slashSound(){
       now + .5
     );
 
-  bass.connect(bassGain);
+
+  bass.connect(
+    bassGain
+  );
+
 
   bassGain.connect(
     audioCtx.destination
   );
 
+
   bass.start(now);
-  bass.stop(now + .55);
+
+
+  bass.stop(
+    now + .55
+  );
+
 }
 
-
-/* ===== 当たり曲 ===== */
 
 async function playHitMusic(){
 
@@ -1253,9 +1378,13 @@ async function playHitMusic(){
 
     hitMusic.pause();
 
-    hitMusic.currentTime = 0;
+    hitMusic.currentTime =
+      0;
 
-    hitMusic.volume = 1;
+
+    hitMusic.volume =
+      1;
+
 
     await hitMusic.play();
 
@@ -1264,61 +1393,87 @@ async function playHitMusic(){
     console.log(e);
 
   }
+
 }
 
 
-/* =========================
-   宝箱の等級抽選
-
-   1等 5%
+/* 1等 5%
    2等 20%
    3等 75%
-========================= */
+*/
 
 function drawPrize(){
 
   const r =
     Math.random();
 
+
   if(r < .05){
 
     return{
+
       label:"1等",
+
       className:"first"
+
     };
 
   }
+
 
   if(r < .25){
 
     return{
+
       label:"2等",
+
       className:"second"
+
     };
 
   }
 
+
   return{
+
     label:"3等",
+
     className:"third"
+
   };
+
 }
 
-
-/* ===== 数字 ===== */
 
 function resetNumberStyle(){
 
   const n =
     $("#number");
 
-  n.className = "";
 
-  n.style.opacity = "";
-  n.style.transform = "";
-  n.style.left = "";
-  n.style.top = "";
-  n.style.color = "";
+  n.className =
+    "";
+
+
+  n.style.opacity =
+    "";
+
+
+  n.style.transform =
+    "";
+
+
+  n.style.left =
+    "";
+
+
+  n.style.top =
+    "";
+
+
+  n.style.color =
+    "";
+
 }
 
 
@@ -1329,26 +1484,37 @@ function showNumber(
 
   resetNumberStyle();
 
+
   const n =
     $("#number");
+
 
   n.textContent =
     value;
 
+
   n.dataset.num =
     value;
 
+
   void n.offsetWidth;
 
-  n.classList.add("show");
+
+  n.classList.add(
+    "show"
+  );
+
 
   if(sound){
+
     countSound(value);
+
   }
+
 }
 
 
-/* ===== 違和感約20種類 ===== */
+/* 違和感20種類 */
 
 async function applyWeirdEffect(){
 
@@ -1356,6 +1522,7 @@ async function applyWeirdEffect(){
     Math.floor(
       Math.random() * 20
     );
+
 
   const n =
     $("#number");
@@ -1365,111 +1532,147 @@ async function applyWeirdEffect(){
 
     case 0:
 
-      n.classList.add("red");
+      n.classList.add(
+        "red"
+      );
 
       break;
 
 
     case 1:
 
-      n.classList.add("gold");
+      n.classList.add(
+        "gold"
+      );
 
       break;
 
 
     case 2:
 
-      n.classList.add("small");
+      n.classList.add(
+        "small"
+      );
 
       break;
 
 
     case 3:
 
-      n.classList.add("big");
+      n.classList.add(
+        "big"
+      );
 
       break;
 
 
     case 4:
 
-      n.classList.add("thin");
+      n.classList.add(
+        "thin"
+      );
 
       break;
 
 
     case 5:
 
-      n.classList.add("shiftLeft");
+      n.classList.add(
+        "shiftLeft"
+      );
 
       break;
 
 
     case 6:
 
-      n.classList.add("shiftRight");
+      n.classList.add(
+        "shiftRight"
+      );
 
       break;
 
 
     case 7:
 
-      n.classList.add("shiftUp");
+      n.classList.add(
+        "shiftUp"
+      );
 
       break;
 
 
     case 8:
 
-      n.classList.add("double");
+      n.classList.add(
+        "double"
+      );
 
       break;
 
 
     case 9:
 
-      n.classList.add("mirror");
+      n.classList.add(
+        "mirror"
+      );
 
       break;
 
 
     case 10:
 
-      n.classList.add("flicker");
+      n.classList.add(
+        "flicker"
+      );
 
       break;
 
 
     case 11:
 
-      n.classList.add("ghost");
+      n.classList.add(
+        "ghost"
+      );
 
       break;
 
 
     case 12:
 
-      n.style.opacity = "0";
+      n.style.opacity =
+        "0";
+
 
       await sleep(100);
 
-      n.style.opacity = "1";
+
+      n.style.opacity =
+        "1";
 
       break;
 
 
-    case 13:
+    case 13:{
 
       const old =
         n.textContent;
 
-      n.textContent = "0";
+
+      n.textContent =
+        "0";
+
 
       await sleep(90);
 
-      n.textContent = old;
+
+      n.textContent =
+        old;
+
 
       break;
+
+    }
 
 
     case 14:
@@ -1478,7 +1681,9 @@ async function applyWeirdEffect(){
         .style.display =
         "block";
 
+
       await sleep(90);
+
 
       $("#weirdMark")
         .style.display =
@@ -1493,7 +1698,9 @@ async function applyWeirdEffect(){
         .style.background =
         "radial-gradient(circle,#390000,#000 70%)";
 
+
       await sleep(100);
+
 
       $("#stage")
         .style.background =
@@ -1522,7 +1729,9 @@ async function applyWeirdEffect(){
         .style.display =
         "block";
 
+
       await sleep(100);
+
 
       $("#black")
         .style.display =
@@ -1535,55 +1744,70 @@ async function applyWeirdEffect(){
 
       stopTension();
 
+
       await sleep(550);
+
 
       startTension();
 
       break;
+
   }
+
 }
 
-
-/* ===== フラッシュ ===== */
 
 function flash(){
 
   const f =
     $("#flash");
 
-  f.className = "";
+
+  f.className =
+    "";
+
 
   void f.offsetWidth;
 
-  f.className = "go";
+
+  f.className =
+    "go";
+
 }
 
-
-/* ===== 当たり ===== */
 
 async function slashHit(){
 
   stopTension();
 
+
   await sleep(180);
 
+
   slashSound();
+
 
   $("#slash")
     .className =
     "go";
 
+
   await sleep(170);
+
 
   flash();
 
+
   await sleep(300);
+
 
   $("#slash")
     .className =
     "";
 
+
   await showHit();
+
 }
 
 
@@ -1593,446 +1817,82 @@ async function showHit(){
     .className =
     "show";
 
+
   playHitMusic();
 
+
   await sleep(2200);
+
 
   $("#hit")
     .className =
     "";
 
+
   showTreasure();
+
 }
 
 
-/* ===== プチュン直接当たり ===== */
-
-async function puchunDirect(){
-
-  stopTension();
-
-  puchunSound();
-
-  await sleep(80);
-
-  $("#black")
-    .style.display =
-    "block";
-
-  $("#number")
-    .textContent =
-    "";
-
-  await sleep(
-    1800 +
-    Math.random()*1300
-  );
-
-  $("#black")
-    .style.display =
-    "none";
-
-  await slashHit();
-}
-
-
-/* ===== プチュン→再カウント ===== */
-
-async function puchunRecount(){
-
-  stopTension();
-
-  puchunSound();
-
-  await sleep(80);
-
-  $("#black")
-    .style.display =
-    "block";
-
-  $("#number")
-    .textContent =
-    "";
-
-  await sleep(2200);
-
-  $("#black")
-    .style.display =
-    "none";
-
-  await sleep(600);
-
-  startTension();
-
-  await recountSequence();
-}
-
-
-/* ===== 再カウント ===== */
-
-async function recountSequence(){
-
-  const hitPoint =
-    Math.floor(
-      Math.random()*4
-    );
-
+async function normalHitAt(point){
 
   showNumber(3);
 
-  if(hitPoint === 0){
-
-    await sleep(1250);
-
-    return slashHit();
-  }
-
-  await sleep(1900);
-
-
-  showNumber(2);
-
-  if(hitPoint === 1){
-
-    await sleep(1400);
-
-    return slashHit();
-  }
-
-  await sleep(2050);
-
-
-  showNumber(1);
-
-  if(hitPoint === 2){
-
-    await sleep(1550);
-
-    return slashHit();
-  }
-
-  await sleep(2200);
-
-
-  $("#number")
-    .textContent =
-    "";
-
-  await sleep(900);
-
-  return slashHit();
-}
-
-
-/* ===== 逆戻り ===== */
-
-async function reverseCountdown(){
-
-  showNumber(3);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1900);
-
-  showNumber(1);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1500);
-
-  showNumber(1);
-
-  await sleep(1500);
-
-  return slashHit();
-}
-
-
-/* ===== 0出現 ===== */
-
-async function zeroPremium(){
-
-  showNumber(3);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1900);
-
-  showNumber(1);
-
-  await sleep(1900);
-
-  showNumber(0);
-
-  await sleep(850);
-
-  return slashHit();
-}
-
-
-/* ===== 数字消失 ===== */
-
-async function numberDisappear(){
-
-  showNumber(3);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1800);
-
-  $("#number")
-    .textContent =
-    "";
-
-  stopTension();
-
-  await sleep(2100);
-
-  return slashHit();
-}
-
-
-/* ===== 音だけ停止 ===== */
-
-async function soundStopPattern(){
-
-  showNumber(3);
-
-  await sleep(1750);
-
-  showNumber(2);
-
-  await sleep(1800);
-
-  showNumber(1);
-
-  await sleep(800);
-
-  stopTension();
-
-  await sleep(2200);
-
-  return slashHit();
-}
-
-
-/* ===== 超ロング1 ===== */
-
-async function longOne(){
-
-  showNumber(3);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1900);
-
-  showNumber(1);
-
-  await sleep(3900);
-
-  return slashHit();
-}
-
-
-/* ===== 2フリーズ ===== */
-
-async function freezeTwo(){
-
-  showNumber(3);
-
-  await sleep(1850);
-
-  showNumber(2);
-
-  await sleep(3900);
-
-  return slashHit();
-}
-
-
-/* ===== フェイク切り裂き ===== */
-
-async function fakeSlashPattern(){
-
-  showNumber(3);
-
-  await sleep(1800);
-
-  showNumber(2);
-
-  await sleep(1200);
-
-  slashSound();
-
-  $("#slash")
-    .className =
-    "go";
-
-  await sleep(170);
-
-  $("#slash")
-    .className =
-    "";
-
-  await sleep(700);
-
-  showNumber(1);
-
-  await sleep(2200);
-
-  return slashHit();
-}
-
-
-/* ===== 違和感付き ===== */
-
-async function weirdCountdown(){
-
-  showNumber(3);
-
-  if(Math.random()<.55){
-    await applyWeirdEffect();
-  }
-
-  await sleep(1700);
-
-
-  showNumber(2);
-
-  if(Math.random()<.60){
-    await applyWeirdEffect();
-  }
-
-  await sleep(1900);
-
-
-  showNumber(1);
-
-  if(Math.random()<.70){
-    await applyWeirdEffect();
-  }
-
-  await sleep(2000);
-
-  return slashHit();
-}
-
-
-/* ===== 無音START ===== */
-
-async function silentStart(){
-
-  stopTension();
-
-  showNumber(
-    3,
-    false
-  );
-
-  await sleep(1900);
-
-  startTension();
-
-  showNumber(2);
-
-  await sleep(1900);
-
-  showNumber(1);
-
-  await sleep(1900);
-
-  return slashHit();
-}
-
-
-/* ===== 2周目カウント ===== */
-
-async function doubleCountdown(){
-
-  showNumber(3);
-
-  await sleep(1700);
-
-  showNumber(2);
-
-  await sleep(1800);
-
-  showNumber(1);
-
-  await sleep(1900);
-
-  $("#number")
-    .textContent =
-    "";
-
-  await sleep(1500);
-
-  return recountSequence();
-}
-
-
-/* ===== 通常途中当たり ===== */
-
-async function normalHitAt(
-  point
-){
-
-  showNumber(3);
 
   if(point === 3){
 
     await sleep(1350);
 
     return slashHit();
+
   }
+
 
   await sleep(1900);
 
 
   showNumber(2);
 
+
   if(point === 2){
 
     await sleep(1450);
 
     return slashHit();
+
   }
+
 
   await sleep(2050);
 
 
   showNumber(1);
 
+
   if(point === 1){
 
     await sleep(1650);
 
     return slashHit();
+
   }
 
+
   await sleep(2250);
+
 
   $("#number")
     .textContent =
     "";
 
+
   await sleep(700);
 
+
   return slashHit();
+
 }
 
-
-/* ===== 通常暗転 ===== */
 
 async function normalBlackout(){
 
@@ -2040,52 +1900,501 @@ async function normalBlackout(){
 
   await sleep(1700);
 
+
   showNumber(2);
 
   await sleep(1800);
+
 
   showNumber(1);
 
   await sleep(1800);
 
+
   stopTension();
+
 
   $("#black")
     .style.display =
     "block";
 
+
   await sleep(1400);
+
 
   $("#black")
     .style.display =
     "none";
 
+
   return slashHit();
+
 }
 
 
-/* ===== 宝箱表示 ===== */
+async function freezeTwo(){
+
+  showNumber(3);
+
+  await sleep(1850);
+
+
+  showNumber(2);
+
+  await sleep(3900);
+
+
+  return slashHit();
+
+}
+
+
+async function reverseCountdown(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1900);
+
+
+  showNumber(1);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1500);
+
+
+  showNumber(1);
+
+  await sleep(1500);
+
+
+  return slashHit();
+
+}
+
+
+async function zeroPremium(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1900);
+
+
+  showNumber(1);
+
+  await sleep(1900);
+
+
+  showNumber(0);
+
+  await sleep(850);
+
+
+  return slashHit();
+
+}
+
+
+async function numberDisappear(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1800);
+
+
+  $("#number")
+    .textContent =
+    "";
+
+
+  stopTension();
+
+
+  await sleep(2100);
+
+
+  return slashHit();
+
+}
+
+
+async function soundStopPattern(){
+
+  showNumber(3);
+
+  await sleep(1750);
+
+
+  showNumber(2);
+
+  await sleep(1800);
+
+
+  showNumber(1);
+
+  await sleep(800);
+
+
+  stopTension();
+
+
+  await sleep(2200);
+
+
+  return slashHit();
+
+}
+
+
+async function longOne(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1900);
+
+
+  showNumber(1);
+
+  await sleep(3900);
+
+
+  return slashHit();
+
+}
+
+
+async function recountSequence(){
+
+  const hitPoint =
+    Math.floor(
+      Math.random() * 4
+    );
+
+
+  showNumber(3);
+
+
+  if(hitPoint === 0){
+
+    await sleep(1250);
+
+    return slashHit();
+
+  }
+
+
+  await sleep(1900);
+
+
+  showNumber(2);
+
+
+  if(hitPoint === 1){
+
+    await sleep(1400);
+
+    return slashHit();
+
+  }
+
+
+  await sleep(2050);
+
+
+  showNumber(1);
+
+
+  if(hitPoint === 2){
+
+    await sleep(1550);
+
+    return slashHit();
+
+  }
+
+
+  await sleep(2200);
+
+
+  $("#number")
+    .textContent =
+    "";
+
+
+  await sleep(900);
+
+
+  return slashHit();
+
+}
+
+
+async function doubleCountdown(){
+
+  showNumber(3);
+
+  await sleep(1700);
+
+
+  showNumber(2);
+
+  await sleep(1800);
+
+
+  showNumber(1);
+
+  await sleep(1900);
+
+
+  $("#number")
+    .textContent =
+    "";
+
+
+  await sleep(1500);
+
+
+  return recountSequence();
+
+}
+
+
+async function puchunDirect(){
+
+  stopTension();
+
+
+  puchunSound();
+
+
+  await sleep(80);
+
+
+  $("#black")
+    .style.display =
+    "block";
+
+
+  $("#number")
+    .textContent =
+    "";
+
+
+  await sleep(
+    1800 +
+    Math.random() * 1300
+  );
+
+
+  $("#black")
+    .style.display =
+    "none";
+
+
+  return slashHit();
+
+}
+
+
+async function puchunRecount(){
+
+  stopTension();
+
+
+  puchunSound();
+
+
+  await sleep(80);
+
+
+  $("#black")
+    .style.display =
+    "block";
+
+
+  $("#number")
+    .textContent =
+    "";
+
+
+  await sleep(2200);
+
+
+  $("#black")
+    .style.display =
+    "none";
+
+
+  await sleep(600);
+
+
+  startTension();
+
+
+  return recountSequence();
+
+}
+
+
+async function fakeSlashPattern(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+
+  showNumber(2);
+
+  await sleep(1200);
+
+
+  slashSound();
+
+
+  $("#slash")
+    .className =
+    "go";
+
+
+  await sleep(170);
+
+
+  $("#slash")
+    .className =
+    "";
+
+
+  await sleep(700);
+
+
+  showNumber(1);
+
+
+  await sleep(2200);
+
+
+  return slashHit();
+
+}
+
+
+async function weirdCountdown(){
+
+  showNumber(3);
+
+
+  if(Math.random() < .55){
+
+    await applyWeirdEffect();
+
+  }
+
+
+  await sleep(1700);
+
+
+  showNumber(2);
+
+
+  if(Math.random() < .60){
+
+    await applyWeirdEffect();
+
+  }
+
+
+  await sleep(1900);
+
+
+  showNumber(1);
+
+
+  if(Math.random() < .70){
+
+    await applyWeirdEffect();
+
+  }
+
+
+  await sleep(2000);
+
+
+  return slashHit();
+
+}
+
+
+async function silentStart(){
+
+  stopTension();
+
+
+  showNumber(
+    3,
+    false
+  );
+
+
+  await sleep(1900);
+
+
+  startTension();
+
+
+  showNumber(2);
+
+
+  await sleep(1900);
+
+
+  showNumber(1);
+
+
+  await sleep(1900);
+
+
+  return slashHit();
+
+}
+
 
 function showTreasure(){
-
-  /*
-    ここで等級を1回だけ決定。
-
-    1等 5%
-    2等 20%
-    3等 75%
-  */
 
   selectedPrize =
     drawPrize();
 
+
   chestBusy =
     false;
 
-  $$(".chest")
-    .forEach(chest => {
 
-      chest.classList.remove(
+  $$(".chest")
+    .forEach(c=>{
+
+      c.classList.remove(
         "selected",
         "open",
         "dim",
@@ -2094,29 +2403,32 @@ function showTreasure(){
 
     });
 
+
   $("#treasureScreen")
     .className =
     "show";
+
 }
 
 
-/* ===== 宝箱を選択 ===== */
+async function chooseChest(chest){
 
-async function chooseChest(
-  chest
-){
+  if(chestBusy){
+    return;
+  }
 
-  if(chestBusy) return;
 
-  chestBusy = true;
+  chestBusy =
+    true;
 
 
   $$(".chest")
-    .forEach(c => {
+    .forEach(c=>{
 
       c.classList.add(
         "disabled"
       );
+
 
       if(c !== chest){
 
@@ -2160,10 +2472,9 @@ async function chooseChest(
 
 
   showPrize();
+
 }
 
-
-/* ===== 等級表示 ===== */
 
 function showPrize(){
 
@@ -2171,121 +2482,165 @@ function showPrize(){
     .className =
     "";
 
+
   $("#prizeLabel")
     .textContent =
     selectedPrize.label;
+
 
   $("#prizeBox")
     .className =
     "show " +
     selectedPrize.className;
 
+
   flash();
+
 }
 
 
-/* ===== START ===== */
+/* テスト版なので100%当たり */
 
 async function play(){
 
-  if(busy) return;
+  if(busy){
+    return;
+  }
 
-  busy = true;
+
+  busy =
+    true;
+
 
   initAudio();
 
+
   await unlockHitMusic();
+
 
   $("#start")
     .style.display =
     "none";
 
+
   startTension();
 
 
-  /*
-    TEST MODE
-    現在は100%当たり
-
-    演出18系統から
-    ランダム選択
-  */
-
   const pattern =
     Math.floor(
-      Math.random()*18
+      Math.random() * 18
     );
 
 
   switch(pattern){
 
     case 0:
+
       return normalHitAt(3);
 
+
     case 1:
+
       return normalHitAt(2);
 
+
     case 2:
+
       return normalHitAt(1);
 
+
     case 3:
+
       return normalHitAt(0);
 
+
     case 4:
+
       return normalBlackout();
 
+
     case 5:
+
       return freezeTwo();
 
+
     case 6:
+
       return reverseCountdown();
 
+
     case 7:
+
       return zeroPremium();
 
+
     case 8:
+
       return numberDisappear();
 
+
     case 9:
+
       return soundStopPattern();
 
+
     case 10:
+
       return longOne();
 
+
     case 11:
+
       return recountSequence();
 
+
     case 12:
+
       return doubleCountdown();
 
+
     case 13:
+
       return puchunDirect();
 
+
     case 14:
+
       return puchunRecount();
 
+
     case 15:
+
       return fakeSlashPattern();
 
+
     case 16:
+
       return weirdCountdown();
 
+
     case 17:
+
       return silentStart();
+
   }
+
 }
 
-
-/* ===== RESET ===== */
 
 function reset(){
 
   stopTension();
 
+
   hitMusic.pause();
 
+
   try{
-    hitMusic.currentTime = 0;
+
+    hitMusic.currentTime =
+      0;
+
   }catch(e){}
 
 
@@ -2293,35 +2648,44 @@ function reset(){
     .className =
     "";
 
+
   $("#treasureScreen")
     .className =
     "";
+
 
   $("#prizeBox")
     .className =
     "";
 
+
   $("#slash")
     .className =
     "";
+
 
   $("#black")
     .style.display =
     "none";
 
+
   $("#weirdMark")
     .style.display =
     "none";
+
 
   $("#stage")
     .style.background =
     "";
 
+
   resetNumberStyle();
+
 
   $("#number")
     .textContent =
     "3";
+
 
   $("#number")
     .dataset.num =
@@ -2329,9 +2693,9 @@ function reset(){
 
 
   $$(".chest")
-    .forEach(chest => {
+    .forEach(c=>{
 
-      chest.classList.remove(
+      c.classList.remove(
         "selected",
         "open",
         "dim",
@@ -2346,13 +2710,19 @@ function reset(){
     "block";
 
 
-  selectedPrize = null;
-  chestBusy = false;
-  busy = false;
+  selectedPrize =
+    null;
+
+
+  chestBusy =
+    false;
+
+
+  busy =
+    false;
+
 }
 
-
-/* ===== BUTTONS ===== */
 
 $("#start")
   .addEventListener(
@@ -2362,11 +2732,11 @@ $("#start")
 
 
 $$(".chest")
-  .forEach(chest => {
+  .forEach(c=>{
 
-    chest.addEventListener(
+    c.addEventListener(
       "click",
-      () => chooseChest(chest)
+      ()=>chooseChest(c)
     );
 
   });
