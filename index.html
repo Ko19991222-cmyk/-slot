@@ -1,57 +1,279 @@
-function freezeSound(){
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FREEZE CHANCE</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#050505;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+#screen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at center,#171717 0%,#080808 55%,#000 100%);
+}
+#count{
+  min-height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:clamp(120px,42vw,220px);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-8px;
+  text-shadow:0 0 16px #fff4,0 0 40px #fff2;
+}
+#message{
+  height:36px;
+  font-size:14px;
+  letter-spacing:3px;
+  opacity:.55;
+}
+#start{
+  margin-top:36px;
+  width:min(78vw,340px);
+  padding:20px;
+  border:1px solid #555;
+  border-radius:999px;
+  background:linear-gradient(#242424,#0c0c0c);
+  color:white;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:5px;
+  box-shadow:0 12px 30px #0009,inset 0 1px #ffffff25;
+}
+#start:active{transform:scale(.97)}
+#start:disabled{opacity:.3}
 
+.shake{animation:shake .06s linear 12}
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(-9px,4px)}
+  50%{transform:translate(8px,-5px)}
+  75%{transform:translate(-6px,-3px)}
+  100%{transform:translate(0,0)}
+}
+
+.flash{animation:flash .08s alternate 8}
+@keyframes flash{
+  from{filter:brightness(1)}
+  to{filter:brightness(4)}
+}
+
+#freeze{
+  position:fixed;
+  inset:0;
+  display:none;
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+}
+#freeze.show{
+  display:flex;
+  animation:freezeIn .7s forwards;
+}
+#freezeText{
+  font-size:clamp(50px,17vw,110px);
+  font-weight:1000;
+  letter-spacing:3px;
+  color:#fff;
+  text-shadow:0 0 8px #fff,0 0 30px #fff,0 0 70px #fff;
+}
+@keyframes freezeIn{
+  0%{opacity:0;filter:brightness(7)}
+  20%{opacity:1;filter:brightness(4)}
+  45%{filter:brightness(.2)}
+  60%{filter:brightness(3)}
+  100%{filter:brightness(1)}
+}
+#reset{
+  position:absolute;
+  bottom:60px;
+  border:1px solid #444;
+  background:#111;
+  color:#aaa;
+  border-radius:30px;
+  padding:12px 30px;
+  font-size:13px;
+  letter-spacing:2px;
+}
+</style>
+</head>
+<body>
+
+<div id="screen">
+  <div id="count">3</div>
+  <div id="message">完全抽選 1 / 30</div>
+  <button id="start">START</button>
+</div>
+
+<div id="freeze">
+  <div id="freezeText">FREEZE</div>
+  <button id="reset">NEXT</button>
+</div>
+
+<script>
+const count = document.getElementById("count");
+const start = document.getElementById("start");
+const screen = document.getElementById("screen");
+const freeze = document.getElementById("freeze");
+const reset = document.getElementById("reset");
+const message = document.getElementById("message");
+
+let audioCtx;
+
+function audio(){
+  if(!audioCtx){
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if(audioCtx.state === "suspended"){
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function tone(freq,duration,type="sine",volume=.15){
+  const ctx = audio();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = type;
+  osc.frequency.value = freq;
+
+  gain.gain.setValueAtTime(volume,ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    ctx.currentTime + duration
+  );
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start();
+  osc.stop(ctx.currentTime + duration);
+}
+
+function countdownSound(n){
+  if(n===3) tone(420,.14,"square",.11);
+  if(n===2) tone(540,.14,"square",.11);
+  if(n===1) tone(720,.2,"square",.14);
+}
+
+function freezeSound(){
   const ctx = audio();
   const now = ctx.currentTime;
 
-  // 超低音の落下音
   const sub = ctx.createOscillator();
   const subGain = ctx.createGain();
 
   sub.type = "sine";
-  sub.frequency.setValueAtTime(95, now);
-  sub.frequency.exponentialRampToValueAtTime(32, now + 1.4);
+  sub.frequency.setValueAtTime(95,now);
+  sub.frequency.exponentialRampToValueAtTime(32,now+1.4);
 
-  subGain.gain.setValueAtTime(0.001, now);
-  subGain.gain.exponentialRampToValueAtTime(0.9, now + 0.04);
-  subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+  subGain.gain.setValueAtTime(.001,now);
+  subGain.gain.exponentialRampToValueAtTime(.9,now+.04);
+  subGain.gain.exponentialRampToValueAtTime(.001,now+1.4);
 
   sub.connect(subGain);
   subGain.connect(ctx.destination);
 
   sub.start(now);
-  sub.stop(now + 1.5);
+  sub.stop(now+1.5);
 
-
-  // 最初の「ドンッ」
   const kick = ctx.createOscillator();
   const kickGain = ctx.createGain();
 
   kick.type = "sine";
-  kick.frequency.setValueAtTime(150, now);
-  kick.frequency.exponentialRampToValueAtTime(38, now + 0.35);
+  kick.frequency.setValueAtTime(150,now);
+  kick.frequency.exponentialRampToValueAtTime(38,now+.35);
 
-  kickGain.gain.setValueAtTime(0.9, now);
-  kickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+  kickGain.gain.setValueAtTime(.9,now);
+  kickGain.gain.exponentialRampToValueAtTime(.001,now+.4);
 
   kick.connect(kickGain);
   kickGain.connect(ctx.destination);
 
   kick.start(now);
-  kick.stop(now + 0.45);
+  kick.stop(now+.45);
 
-
-  // 2発目の重低音
-  setTimeout(()=>{
-    tone(48, 0.8, "sine", 0.7);
-  },350);
-
-
-  // FREEZE直前の高音
-  setTimeout(()=>{
-    tone(1100, 0.12, "square", 0.16);
-  },700);
-
-  setTimeout(()=>{
-    tone(1500, 0.2, "square", 0.12);
-  },850);
+  setTimeout(()=>tone(48,.8,"sine",.7),350);
+  setTimeout(()=>tone(1100,.12,"square",.16),700);
+  setTimeout(()=>tone(1500,.2,"square",.12),850);
 }
+
+function sleep(ms){
+  return new Promise(r=>setTimeout(r,ms));
+}
+
+async function play(){
+  start.disabled = true;
+  message.textContent = "";
+  audio();
+
+  for(const n of [3,2,1]){
+    count.textContent = n;
+    countdownSound(n);
+
+    screen.classList.remove("shake");
+    void screen.offsetWidth;
+    screen.classList.add("shake");
+
+    await sleep(850);
+  }
+
+  count.textContent = "";
+  await sleep(350);
+
+  // 1プレイにつき1回だけ、完全1/30抽選
+  const win = Math.floor(Math.random()*30) === 0;
+
+  if(win){
+    await sleep(300);
+
+    screen.classList.add("flash");
+    freezeSound();
+
+    await sleep(420);
+    freeze.classList.add("show");
+
+  }else{
+    await sleep(600);
+
+    count.textContent = "3";
+    message.textContent = "完全抽選 1 / 30";
+    start.disabled = false;
+  }
+}
+
+start.addEventListener("click",play);
+
+reset.addEventListener("click",()=>{
+  freeze.classList.remove("show");
+  screen.classList.remove("flash","shake");
+
+  count.textContent = "3";
+  message.textContent = "完全抽選 1 / 30";
+  start.disabled = false;
+});
+</script>
+
+</body>
+</html>
