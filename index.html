@@ -2,9 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1,viewport-fit=cover">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>COUNTDOWN</title>
 
 <style>
@@ -19,17 +17,13 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#000;
+  color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
 
 body{
-  color:white;
   user-select:none;
 }
-
-/* =========================
-   STAGE
-========================= */
 
 #stage{
   position:fixed;
@@ -37,60 +31,44 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-
   background:
-    radial-gradient(circle at 50% 42%,
-      #111 0%,
-      #050505 45%,
-      #000 75%);
+    radial-gradient(circle at 50% 42%, #141414 0%, #050505 45%, #000 80%);
+  overflow:hidden;
 }
 
-/* subtle background */
 #bgGlow{
   position:absolute;
   width:130vw;
   height:130vw;
   border-radius:50%;
-
   background:
     radial-gradient(circle,
       rgba(255,255,255,.05),
       rgba(255,255,255,.015) 35%,
       transparent 65%);
-
-  animation:bgPulse 2.5s ease-in-out infinite;
+  animation:bgPulse 2.4s ease-in-out infinite;
 }
 
 @keyframes bgPulse{
   0%,100%{
-    transform:scale(.9);
-    opacity:.3;
+    transform:scale(.92);
+    opacity:.35;
   }
   50%{
     transform:scale(1.08);
-    opacity:.7;
+    opacity:.75;
   }
 }
-
-
-/* =========================
-   NUMBER
-========================= */
 
 #number{
   position:relative;
   z-index:5;
-
   font-size:min(60vw,360px);
-  line-height:1;
   font-weight:1000;
-
+  line-height:1;
   text-shadow:
-    0 0 12px white,
-    0 0 35px rgba(255,255,255,.4);
-
-  transform:scale(1);
+    0 0 12px #fff,
+    0 0 35px rgba(255,255,255,.45);
 }
 
 #number.show{
@@ -103,41 +81,27 @@ body{
     transform:scale(1.35);
     filter:blur(8px);
   }
-
   60%{
     opacity:1;
     transform:scale(.97);
     filter:blur(0);
   }
-
   100%{
     transform:scale(1);
   }
 }
 
-
-/* =========================
-   START
-========================= */
-
 #start{
   position:absolute;
   bottom:8%;
   z-index:20;
-
   padding:17px 48px;
-
   border-radius:100px;
-
   border:1px solid rgba(255,255,255,.4);
-
-  background:rgba(0,0,0,.7);
-
-  color:white;
-
+  background:rgba(0,0,0,.72);
+  color:#fff;
   font-size:17px;
   font-weight:900;
-
   letter-spacing:.15em;
 }
 
@@ -145,42 +109,25 @@ body{
   position:absolute;
   top:max(20px,env(safe-area-inset-top));
   z-index:10;
-
   font-size:10px;
   letter-spacing:.2em;
   opacity:.25;
 }
 
-
-/* =========================
-   BLACKOUT
-========================= */
-
 #black{
   position:fixed;
   inset:0;
   z-index:50;
-
   background:#000;
-
   display:none;
 }
-
-
-/* =========================
-   SLASH
-========================= */
 
 #slashLayer{
   position:fixed;
   inset:0;
-
   z-index:70;
-
   pointer-events:none;
-
   display:none;
-
   overflow:hidden;
 }
 
@@ -190,24 +137,16 @@ body{
 
 .slash{
   position:absolute;
-
   left:-30%;
   top:50%;
-
   width:160%;
   height:8px;
-
-  background:white;
-
+  background:#fff;
   box-shadow:
-    0 0 12px white,
-    0 0 30px white,
+    0 0 12px #fff,
+    0 0 30px #fff,
     0 0 70px rgba(255,255,255,.8);
-
-  transform:
-    rotate(-18deg)
-    scaleX(0);
-
+  transform:rotate(-18deg) scaleX(0);
   transform-origin:center;
 }
 
@@ -217,41 +156,24 @@ body{
 
 @keyframes slash{
   0%{
-    transform:
-      rotate(-18deg)
-      scaleX(0);
-
+    transform:rotate(-18deg) scaleX(0);
     opacity:0;
   }
-
   20%{
     opacity:1;
   }
-
   100%{
-    transform:
-      rotate(-18deg)
-      scaleX(1);
-
+    transform:rotate(-18deg) scaleX(1);
     opacity:1;
   }
 }
 
-
-/* =========================
-   FLASH
-========================= */
-
 #flash{
   position:fixed;
   inset:0;
-
   z-index:90;
-
-  background:white;
-
+  background:#fff;
   opacity:0;
-
   pointer-events:none;
 }
 
@@ -267,30 +189,20 @@ body{
   100%{opacity:0;}
 }
 
-
-/* =========================
-   HIT
-========================= */
-
 #hit{
   position:fixed;
   inset:0;
-
   z-index:100;
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
+  overflow:hidden;
   background:
     radial-gradient(circle,
       #7b1600 0%,
       #310000 32%,
       #080000 65%,
       #000 100%);
-
-  overflow:hidden;
 }
 
 #hit.show{
@@ -299,12 +211,9 @@ body{
 
 #hitGlow{
   position:absolute;
-
   width:150vw;
   height:150vw;
-
   border-radius:50%;
-
   background:
     conic-gradient(
       transparent,
@@ -312,7 +221,6 @@ body{
       transparent,
       rgba(255,0,0,.4),
       transparent);
-
   animation:rotate 3s linear infinite;
 }
 
@@ -325,17 +233,12 @@ body{
 #hitText{
   position:relative;
   z-index:5;
-
   font-size:min(24vw,150px);
-
   font-weight:1000;
-
   opacity:0;
-
   transform:scale(.25);
-
   text-shadow:
-    0 0 10px white,
+    0 0 10px #fff,
     0 0 25px #ffdc00,
     0 0 60px #ff4d00,
     0 0 100px red;
@@ -346,41 +249,28 @@ body{
 }
 
 @keyframes hitText{
-
   0%{
     opacity:0;
     transform:scale(.25);
     filter:blur(12px);
   }
-
   65%{
     opacity:1;
     transform:scale(1.18);
     filter:blur(0);
   }
-
   100%{
     opacity:1;
     transform:scale(1);
   }
 }
 
-
-/* =========================
-   CONGRATS
-========================= */
-
 #congrats{
   position:absolute;
-
   bottom:20%;
-
   font-size:15px;
-
   letter-spacing:.25em;
-
   font-weight:800;
-
   opacity:0;
 }
 
@@ -394,34 +284,18 @@ body{
   }
 }
 
-
-/* =========================
-   NEXT
-========================= */
-
 #next{
   position:absolute;
-
   bottom:7%;
-
   z-index:10;
-
   padding:15px 42px;
-
   border-radius:100px;
-
   border:1px solid rgba(255,255,255,.45);
-
   background:rgba(0,0,0,.65);
-
-  color:white;
-
+  color:#fff;
   font-size:15px;
-
   font-weight:900;
-
   opacity:0;
-
   pointer-events:none;
 }
 
@@ -435,11 +309,6 @@ body{
     pointer-events:auto;
   }
 }
-
-
-/* =========================
-   SHAKE
-========================= */
 
 .shake{
   animation:shake .3s linear;
@@ -460,7 +329,6 @@ body{
 <body>
 
 <div id="stage">
-
   <div id="bgGlow"></div>
 
   <div id="test">
@@ -469,26 +337,18 @@ body{
 
   <div id="number">3</div>
 
-  <button id="start">
-    START
-  </button>
-
+  <button id="start">START</button>
 </div>
 
-
 <div id="black"></div>
-
 
 <div id="slashLayer">
   <div class="slash"></div>
 </div>
 
-
 <div id="flash"></div>
 
-
 <div id="hit">
-
   <div id="hitGlow"></div>
 
   <div id="hitText">
@@ -502,43 +362,31 @@ body{
   <button id="next">
     NEXT
   </button>
-
 </div>
 
-
-<!-- ★ 今回の当たり後の音 -->
 <audio
   id="hitMusic"
   src="hit_music.mp3"
-  preload="auto">
-</audio>
-
+  preload="auto"
+></audio>
 
 <script>
-
 const $ = s => document.querySelector(s);
 
 const sleep = ms =>
-  new Promise(resolve => setTimeout(resolve,ms));
+  new Promise(resolve => setTimeout(resolve, ms));
 
 let busy = false;
-
-
-/* =========================
-   HIT MUSIC
-========================= */
 
 const hitMusic = $("#hitMusic");
 
 hitMusic.volume = 1;
 
 
-/*
- iPhone Safari対策。
+/* =========================
+   iPhone音声アンロック
+========================= */
 
- STARTを押した瞬間に一度
- audioを再生可能状態にする。
-*/
 async function unlockHitMusic(){
 
   try{
@@ -562,6 +410,10 @@ async function unlockHitMusic(){
 }
 
 
+/* =========================
+   当たり曲停止
+========================= */
+
 function stopHitMusic(){
 
   hitMusic.pause();
@@ -573,6 +425,10 @@ function stopHitMusic(){
 }
 
 
+/* =========================
+   当たり曲再生
+========================= */
+
 async function playHitMusic(){
 
   stopHitMusic();
@@ -580,6 +436,8 @@ async function playHitMusic(){
   hitMusic.volume = 1;
 
   try{
+
+    hitMusic.currentTime = 0;
 
     await hitMusic.play();
 
@@ -596,11 +454,29 @@ async function playHitMusic(){
 
 
 /* =========================
-   SIMPLE COUNT SOUND
+   当たり確定
+   ★どのパターンも必ずここを通る
+========================= */
+
+async function showHit(){
+
+  $("#hit").className = "show";
+
+  /*
+    当たり画面を出した瞬間に
+    必ず曲を頭から再生
+  */
+
+  await playHitMusic();
+
+}
+
+
+/* =========================
+   仮カウント音
 ========================= */
 
 let audioCtx = null;
-
 
 function startAudio(){
 
@@ -622,13 +498,6 @@ function startAudio(){
 
 }
 
-
-/*
- 今は仮のカウント音。
-
- 後でここを
- 本物の緊張BGMに交換できる。
-*/
 function countSound(n){
 
   if(!audioCtx) return;
@@ -655,7 +524,7 @@ function countSound(n){
   );
 
   gain.gain.setValueAtTime(
-    .12,
+    .10,
     now
   );
 
@@ -672,15 +541,13 @@ function countSound(n){
 
   osc.start(now);
 
-  osc.stop(
-    now + .75
-  );
+  osc.stop(now + .75);
 
 }
 
 
 /* =========================
-   NUMBER
+   数字表示
 ========================= */
 
 function showNumber(n){
@@ -701,7 +568,7 @@ function showNumber(n){
 
 
 /* =========================
-   FLASH
+   フラッシュ
 ========================= */
 
 function flash(){
@@ -718,7 +585,7 @@ function flash(){
 
 
 /* =========================
-   SHAKE
+   揺れ
 ========================= */
 
 function shake(){
@@ -745,58 +612,37 @@ function shake(){
 
 
 /* =========================
-   SLASH HIT
+   切り裂き当たり
 ========================= */
 
 async function slashHit(){
 
-  /*
-   当たり直前は一瞬静かにする。
-  */
-
   await sleep(300);
-
 
   $("#slashLayer").className =
     "show go";
 
-
   await sleep(180);
-
 
   flash();
 
   shake();
 
-
   await sleep(260);
-
 
   $("#slashLayer").className = "";
 
-
   /*
-   ★ 当たり表示
+    ★ここで絶対当たり曲
   */
 
-  $("#hit").className = "show";
-
-
-  /*
-   ★ ここで今回の音をスタート
-
-   当たり表示とほぼ同時。
-  */
-
-  await sleep(120);
-
-  playHitMusic();
+  await showHit();
 
 }
 
 
 /* =========================
-   BLACKOUT HIT
+   暗転当たり
 ========================= */
 
 async function blackoutHit(){
@@ -804,18 +650,10 @@ async function blackoutHit(){
   $("#black").style.display =
     "block";
 
-
-  /*
-   この無音時間を長めにして
-   「え？」を作る。
-  */
-
   await sleep(1400);
-
 
   $("#black").style.display =
     "none";
-
 
   await slashHit();
 
@@ -823,14 +661,10 @@ async function blackoutHit(){
 
 
 /* =========================
-   NORMAL HIT
+   通常当たり
 ========================= */
 
 async function normalHit(){
-
-  /*
-   1の後にちょっと溜める
-  */
 
   await sleep(650);
 
@@ -840,30 +674,22 @@ async function normalHit(){
 
 
 /* =========================
-   REVIVAL HIT
+   復活当たり
 ========================= */
 
 async function revivalHit(){
-
-  /*
-   一回終わったように見せる。
-  */
 
   $("#number").textContent = "";
 
   await sleep(1300);
 
-
   $("#black").style.display =
     "block";
 
-
   await sleep(850);
-
 
   $("#black").style.display =
     "none";
-
 
   await slashHit();
 
@@ -871,7 +697,7 @@ async function revivalHit(){
 
 
 /* =========================
-   PLAY
+   ゲーム開始
 ========================= */
 
 async function play(){
@@ -880,26 +706,31 @@ async function play(){
 
   busy = true;
 
-
   startAudio();
+
+  /*
+    ★STARTを押した瞬間に
+    iPhone用アンロック
+  */
 
   await unlockHitMusic();
 
-
   stopHitMusic();
-
 
   $("#start").style.display =
     "none";
 
-
   $("#hit").className = "";
 
-
   /*
-   今は100%当たり。
+    今は100%当たり。
 
-   当たり方だけランダム。
+    0 = 3の途中
+    1 = 2の途中
+    2 = 1の途中
+    3 = 1の後
+    4 = 暗転
+    5 = 復活
   */
 
   const pattern =
@@ -908,12 +739,9 @@ async function play(){
     );
 
 
-  /* =================
-     3
-  ================= */
+  /* ===== 3 ===== */
 
   showNumber(3);
-
 
   if(pattern === 0){
 
@@ -923,16 +751,12 @@ async function play(){
 
   }
 
-
   await sleep(2100);
 
 
-  /* =================
-     2
-  ================= */
+  /* ===== 2 ===== */
 
   showNumber(2);
-
 
   if(pattern === 1){
 
@@ -942,16 +766,12 @@ async function play(){
 
   }
 
-
   await sleep(2250);
 
 
-  /* =================
-     1
-  ================= */
+  /* ===== 1 ===== */
 
   showNumber(1);
-
 
   if(pattern === 2){
 
@@ -961,16 +781,12 @@ async function play(){
 
   }
 
-
   await sleep(2450);
-
 
   $("#number").textContent = "";
 
 
-  /* =================
-     AFTER 1
-  ================= */
+  /* ===== 1の後 ===== */
 
   if(pattern === 3){
 
@@ -994,13 +810,12 @@ async function play(){
 
 
 /* =========================
-   RESET
+   リセット
 ========================= */
 
 function reset(){
 
   stopHitMusic();
-
 
   $("#hit").className = "";
 
@@ -1029,12 +844,10 @@ $("#start").addEventListener(
   play
 );
 
-
 $("#next").addEventListener(
   "click",
   reset
 );
-
 </script>
 
 </body>
