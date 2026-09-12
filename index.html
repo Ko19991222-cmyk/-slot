@@ -35,12 +35,11 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:radial-gradient(
-    circle at 50% 45%,
-    #171717 0%,
-    #050505 48%,
-    #000 82%
-  );
+  background:
+    radial-gradient(circle at 50% 45%,
+      #171717 0%,
+      #050505 48%,
+      #000 82%);
   transition:background .15s;
 }
 
@@ -71,6 +70,7 @@ button{
     transform:scale(1.32);
     filter:blur(8px);
   }
+
   100%{
     opacity:1;
     transform:scale(1);
@@ -78,37 +78,14 @@ button{
   }
 }
 
-#number.red{
-  color:#ff2828;
-}
-
-#number.gold{
-  color:#ffe16b;
-}
-
-#number.small{
-  transform:scale(.84);
-}
-
-#number.big{
-  transform:scale(1.18);
-}
-
-#number.thin{
-  font-weight:300;
-}
-
-#number.shiftLeft{
-  left:-18px;
-}
-
-#number.shiftRight{
-  left:18px;
-}
-
-#number.shiftUp{
-  top:-13px;
-}
+#number.red{color:#ff2828}
+#number.gold{color:#ffe16b}
+#number.small{transform:scale(.84)}
+#number.big{transform:scale(1.18)}
+#number.thin{font-weight:300}
+#number.shiftLeft{left:-18px}
+#number.shiftRight{left:18px}
+#number.shiftUp{top:-13px}
 
 #number.double{
   text-shadow:
@@ -126,12 +103,8 @@ button{
 }
 
 @keyframes flicker{
-  0%,100%{
-    opacity:1;
-  }
-  50%{
-    opacity:.05;
-  }
+  0%,100%{opacity:1}
+  50%{opacity:.05}
 }
 
 #number.ghost::after{
@@ -254,13 +227,12 @@ button{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:radial-gradient(
-    circle,
-    #8b1a00 0%,
-    #390000 35%,
-    #090000 68%,
-    #000 100%
-  );
+  background:
+    radial-gradient(circle,
+      #8b1a00 0%,
+      #390000 35%,
+      #090000 68%,
+      #000 100%);
 }
 
 #hit.show{
@@ -272,20 +244,18 @@ button{
   width:150vw;
   height:150vw;
   border-radius:50%;
-  background:conic-gradient(
-    transparent,
-    rgba(255,180,0,.35),
-    transparent,
-    rgba(255,0,0,.42),
-    transparent
-  );
+  background:
+    conic-gradient(
+      transparent,
+      rgba(255,180,0,.35),
+      transparent,
+      rgba(255,0,0,.42),
+      transparent);
   animation:spin 3s linear infinite;
 }
 
 @keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+  to{transform:rotate(360deg)}
 }
 
 #hitText{
@@ -308,11 +278,13 @@ button{
     transform:scale(.25);
     filter:blur(10px);
   }
+
   70%{
     opacity:1;
     transform:scale(1.18);
     filter:blur(0);
   }
+
   100%{
     transform:scale(1);
   }
@@ -335,12 +307,11 @@ button{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  background:radial-gradient(
-    circle at 50% 42%,
-    #202020 0%,
-    #090909 48%,
-    #000 100%
-  );
+  background:
+    radial-gradient(circle at 50% 42%,
+      #202020 0%,
+      #090909 48%,
+      #000 100%);
 }
 
 #treasureScreen.show{
@@ -419,12 +390,8 @@ button{
 }
 
 @keyframes chestFloat{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-8px);
-  }
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
 .chestBody{
@@ -434,14 +401,14 @@ button{
   width:80%;
   height:48%;
   border-radius:8px 8px 18px 18px;
-  background:linear-gradient(
-    90deg,
-    #6e2f07,
-    #b75b10 18%,
-    #7d3406 50%,
-    #bf6618 82%,
-    #642905
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #6e2f07,
+      #b75b10 18%,
+      #7d3406 50%,
+      #bf6618 82%,
+      #642905);
   border:4px solid #dca62f;
 }
 
@@ -452,14 +419,14 @@ button{
   width:86%;
   height:34%;
   border-radius:50% 50% 7px 7px;
-  background:linear-gradient(
-    90deg,
-    #6b2a05,
-    #c36813 25%,
-    #813605 55%,
-    #c9741a 82%,
-    #652705
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #6b2a05,
+      #c36813 25%,
+      #813605 55%,
+      #c9741a 82%,
+      #652705);
   border:4px solid #e0ad36;
   transform-origin:50% 100%;
   transition:transform .6s;
@@ -471,11 +438,11 @@ button{
   top:18%;
   width:12%;
   height:64%;
-  background:linear-gradient(
-    #ffe27a,
-    #b37b13,
-    #ffdd65
-  );
+  background:
+    linear-gradient(
+      #ffe27a,
+      #b37b13,
+      #ffdd65);
   border-radius:4px;
   z-index:4;
 }
@@ -487,10 +454,10 @@ button{
   width:20%;
   aspect-ratio:1;
   border-radius:6px;
-  background:linear-gradient(
-    #ffe98a,
-    #a87511
-  );
+  background:
+    linear-gradient(
+      #ffe98a,
+      #a87511);
   border:2px solid #fff1a5;
   z-index:6;
 }
@@ -524,21 +491,11 @@ button{
 }
 
 @keyframes chestShake{
-  0%{
-    transform:translate(-3px,0) rotate(-1deg);
-  }
-  25%{
-    transform:translate(3px,-2px) rotate(1deg);
-  }
-  50%{
-    transform:translate(-2px,2px) rotate(-1deg);
-  }
-  75%{
-    transform:translate(2px,-1px) rotate(1deg);
-  }
-  100%{
-    transform:translate(-3px,0) rotate(-1deg);
-  }
+  0%{transform:translate(-3px,0) rotate(-1deg)}
+  25%{transform:translate(3px,-2px) rotate(1deg)}
+  50%{transform:translate(-2px,2px) rotate(-1deg)}
+  75%{transform:translate(2px,-1px) rotate(1deg)}
+  100%{transform:translate(-3px,0) rotate(-1deg)}
 }
 
 .chest.open .chestWrap{
@@ -564,6 +521,7 @@ button{
     transform:scale(.3);
     opacity:1;
   }
+
   to{
     transform:scale(4.5);
     opacity:0;
@@ -586,33 +544,30 @@ button{
 }
 
 #prizeBox.first{
-  background:radial-gradient(
-    circle,
-    #fff7a0 0%,
-    #d99b00 25%,
-    #5c2500 60%,
-    #000 100%
-  );
+  background:
+    radial-gradient(circle,
+      #fff7a0 0%,
+      #d99b00 25%,
+      #5c2500 60%,
+      #000 100%);
 }
 
 #prizeBox.second{
-  background:radial-gradient(
-    circle,
-    #fff 0%,
-    #a9b2be 28%,
-    #272d35 62%,
-    #000 100%
-  );
+  background:
+    radial-gradient(circle,
+      #fff 0%,
+      #a9b2be 28%,
+      #272d35 62%,
+      #000 100%);
 }
 
 #prizeBox.third{
-  background:radial-gradient(
-    circle,
-    #ffd2a8 0%,
-    #b75a22 30%,
-    #4c1e08 62%,
-    #000 100%
-  );
+  background:
+    radial-gradient(circle,
+      #ffd2a8 0%,
+      #b75a22 30%,
+      #4c1e08 62%,
+      #000 100%);
 }
 
 #prizeBurst{
@@ -620,10 +575,10 @@ button{
   width:160vw;
   height:160vw;
   border-radius:50%;
-  background:repeating-conic-gradient(
-    rgba(255,255,255,.22) 0deg 4deg,
-    transparent 4deg 11deg
-  );
+  background:
+    repeating-conic-gradient(
+      rgba(255,255,255,.22) 0deg 4deg,
+      transparent 4deg 11deg);
   animation:spin 6s linear infinite;
 }
 
@@ -656,11 +611,13 @@ button{
     opacity:0;
     filter:blur(14px);
   }
+
   70%{
     transform:scale(1.18) rotate(2deg);
     opacity:1;
     filter:blur(0);
   }
+
   100%{
     transform:scale(1) rotate(0);
   }
@@ -671,16 +628,24 @@ button{
 <body>
 
 <div id="stage">
-  <div id="test">TEST MODE / 100% HIT</div>
 
-  <div id="number" data-num="3">3</div>
+  <div id="test">
+    TEST MODE / 100% HIT
+  </div>
+
+  <div id="number" data-num="3">
+    3
+  </div>
 
   <button id="start">
     START
   </button>
+
 </div>
 
-<div id="weirdMark">?</div>
+<div id="weirdMark">
+  ?
+</div>
 
 <div id="black"></div>
 
@@ -691,6 +656,7 @@ button{
 <div id="flash"></div>
 
 <div id="hit">
+
   <div id="glow"></div>
 
   <div id="hitText">
@@ -700,6 +666,7 @@ button{
   <div id="subText">
     CONGRATULATIONS
   </div>
+
 </div>
 
 <div id="treasureScreen">
@@ -748,6 +715,7 @@ button{
     </button>
 
   </div>
+
 </div>
 
 <div id="prizeBox">
@@ -765,11 +733,12 @@ button{
   <button id="next">
     NEXT
   </button>
+
 </div>
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260913-7000"
+  src="./hit_music_final.mp3?v=20260913-8000"
   preload="auto"
   playsinline>
 </audio>
@@ -783,7 +752,7 @@ const $$ = s =>
   [...document.querySelectorAll(s)];
 
 const sleep = ms =>
-  new Promise(r => setTimeout(r,ms));
+  new Promise(r=>setTimeout(r,ms));
 
 
 let busy = false;
@@ -798,6 +767,8 @@ let audioCtx = null;
 let tensionOsc1 = null;
 
 let tensionOsc2 = null;
+
+let tensionOsc3 = null;
 
 let tensionGain = null;
 
@@ -860,14 +831,15 @@ async function unlockHitMusic(){
 }
 
 
-/* 緊張音 音量アップ版 */
+/* ==========================
+   緊張感サウンド 強化版
+========================== */
 
 function startTension(){
 
   initAudio();
 
   stopTension();
-
 
   const now =
     audioCtx.currentTime;
@@ -886,41 +858,77 @@ function startTension(){
 
   tensionGain.gain
     .exponentialRampToValueAtTime(
-      .13,
-      now + .8
+      .18,
+      now + .5
     );
 
 
   tensionOsc1 =
     audioCtx.createOscillator();
 
-
   tensionOsc2 =
+    audioCtx.createOscillator();
+
+  tensionOsc3 =
     audioCtx.createOscillator();
 
 
   tensionOsc1.type =
     "sine";
 
-
   tensionOsc2.type =
     "triangle";
 
+  tensionOsc3.type =
+    "sawtooth";
+
 
   tensionOsc1.frequency.value =
-    52;
-
+    55;
 
   tensionOsc2.frequency.value =
-    78;
+    110;
+
+  tensionOsc3.frequency.value =
+    165;
 
 
-  tensionOsc1.connect(
+  const g1 =
+    audioCtx.createGain();
+
+  const g2 =
+    audioCtx.createGain();
+
+  const g3 =
+    audioCtx.createGain();
+
+
+  g1.gain.value =
+    .9;
+
+  g2.gain.value =
+    .45;
+
+  g3.gain.value =
+    .08;
+
+
+  tensionOsc1.connect(g1);
+
+  tensionOsc2.connect(g2);
+
+  tensionOsc3.connect(g3);
+
+
+  g1.connect(
     tensionGain
   );
 
+  g2.connect(
+    tensionGain
+  );
 
-  tensionOsc2.connect(
+  g3.connect(
     tensionGain
   );
 
@@ -933,6 +941,8 @@ function startTension(){
   tensionOsc1.start();
 
   tensionOsc2.start();
+
+  tensionOsc3.start();
 
 
   pulseTimer =
@@ -953,25 +963,25 @@ function startTension(){
 
       tensionGain.gain
         .setValueAtTime(
-          .07,
+          .11,
           t
         );
 
 
       tensionGain.gain
         .exponentialRampToValueAtTime(
-          .20,
-          t + .08
+          .32,
+          t + .055
         );
 
 
       tensionGain.gain
         .exponentialRampToValueAtTime(
-          .07,
-          t + .48
+          .11,
+          t + .34
         );
 
-    },650);
+    },520);
 
 }
 
@@ -991,32 +1001,38 @@ function stopTension(){
 
 
   try{
-
     tensionOsc1?.stop();
-
   }catch(e){}
 
 
   try{
-
     tensionOsc2?.stop();
+  }catch(e){}
 
+
+  try{
+    tensionOsc3?.stop();
   }catch(e){}
 
 
   tensionOsc1 =
     null;
 
-
   tensionOsc2 =
     null;
 
+  tensionOsc3 =
+    null;
 
   tensionGain =
     null;
 
 }
 
+
+/* ==========================
+   COUNT SOUND
+========================== */
 
 function countSound(n){
 
@@ -1036,15 +1052,10 @@ function countSound(n){
 
 
   const freq = {
-
     3:115,
-
     2:98,
-
     1:80,
-
     0:62
-
   };
 
 
@@ -1075,7 +1086,7 @@ function countSound(n){
 
   gain.gain
     .exponentialRampToValueAtTime(
-      .5,
+      .55,
       now + .015
     );
 
@@ -1098,7 +1109,6 @@ function countSound(n){
 
 
   osc.start(now);
-
 
   osc.stop(
     now + .6
@@ -1144,7 +1154,7 @@ function strangeCountSound(){
 
   gain.gain
     .setValueAtTime(
-      .32,
+      .35,
       now
     );
 
@@ -1156,10 +1166,7 @@ function strangeCountSound(){
     );
 
 
-  osc.connect(
-    gain
-  );
-
+  osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
@@ -1168,13 +1175,16 @@ function strangeCountSound(){
 
   osc.start(now);
 
-
   osc.stop(
     now + .6
   );
 
 }
 
+
+/* ==========================
+   プチュン
+========================== */
 
 function puchunSound(){
 
@@ -1213,7 +1223,7 @@ function puchunSound(){
 
   gain.gain
     .setValueAtTime(
-      .4,
+      .45,
       now
     );
 
@@ -1225,10 +1235,7 @@ function puchunSound(){
     );
 
 
-  osc.connect(
-    gain
-  );
-
+  osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
@@ -1237,13 +1244,16 @@ function puchunSound(){
 
   osc.start(now);
 
-
   osc.stop(
     now + .14
   );
 
 }
 
+
+/* ==========================
+   切り裂き
+========================== */
 
 function slashSound(){
 
@@ -1282,7 +1292,7 @@ function slashSound(){
 
   gain.gain
     .setValueAtTime(
-      .32,
+      .38,
       now
     );
 
@@ -1294,10 +1304,7 @@ function slashSound(){
     );
 
 
-  osc.connect(
-    gain
-  );
-
+  osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
@@ -1305,7 +1312,6 @@ function slashSound(){
 
 
   osc.start(now);
-
 
   osc.stop(
     now + .2
@@ -1340,7 +1346,7 @@ function slashSound(){
 
   bassGain.gain
     .setValueAtTime(
-      .75,
+      .82,
       now
     );
 
@@ -1364,13 +1370,16 @@ function slashSound(){
 
   bass.start(now);
 
-
   bass.stop(
     now + .55
   );
 
 }
 
+
+/* ==========================
+   当たりBGM
+========================== */
 
 async function playHitMusic(){
 
@@ -1397,10 +1406,12 @@ async function playHitMusic(){
 }
 
 
-/* 1等 5%
+/* ==========================
+   景品
+   1等 5%
    2等 20%
    3等 75%
-*/
+========================== */
 
 function drawPrize(){
 
@@ -1411,11 +1422,8 @@ function drawPrize(){
   if(r < .05){
 
     return{
-
       label:"1等",
-
       className:"first"
-
     };
 
   }
@@ -1424,26 +1432,24 @@ function drawPrize(){
   if(r < .25){
 
     return{
-
       label:"2等",
-
       className:"second"
-
     };
 
   }
 
 
   return{
-
     label:"3等",
-
     className:"third"
-
   };
 
 }
 
+
+/* ==========================
+   NUMBER
+========================== */
 
 function resetNumberStyle(){
 
@@ -1451,28 +1457,17 @@ function resetNumberStyle(){
     $("#number");
 
 
-  n.className =
-    "";
+  n.className = "";
 
+  n.style.opacity = "";
 
-  n.style.opacity =
-    "";
+  n.style.transform = "";
 
+  n.style.left = "";
 
-  n.style.transform =
-    "";
+  n.style.top = "";
 
-
-  n.style.left =
-    "";
-
-
-  n.style.top =
-    "";
-
-
-  n.style.color =
-    "";
+  n.style.color = "";
 
 }
 
@@ -1514,7 +1509,9 @@ function showNumber(
 }
 
 
-/* 違和感20種類 */
+/* ==========================
+   違和感20種類
+========================== */
 
 async function applyWeirdEffect(){
 
@@ -1531,110 +1528,62 @@ async function applyWeirdEffect(){
   switch(type){
 
     case 0:
-
-      n.classList.add(
-        "red"
-      );
-
+      n.classList.add("red");
       break;
 
 
     case 1:
-
-      n.classList.add(
-        "gold"
-      );
-
+      n.classList.add("gold");
       break;
 
 
     case 2:
-
-      n.classList.add(
-        "small"
-      );
-
+      n.classList.add("small");
       break;
 
 
     case 3:
-
-      n.classList.add(
-        "big"
-      );
-
+      n.classList.add("big");
       break;
 
 
     case 4:
-
-      n.classList.add(
-        "thin"
-      );
-
+      n.classList.add("thin");
       break;
 
 
     case 5:
-
-      n.classList.add(
-        "shiftLeft"
-      );
-
+      n.classList.add("shiftLeft");
       break;
 
 
     case 6:
-
-      n.classList.add(
-        "shiftRight"
-      );
-
+      n.classList.add("shiftRight");
       break;
 
 
     case 7:
-
-      n.classList.add(
-        "shiftUp"
-      );
-
+      n.classList.add("shiftUp");
       break;
 
 
     case 8:
-
-      n.classList.add(
-        "double"
-      );
-
+      n.classList.add("double");
       break;
 
 
     case 9:
-
-      n.classList.add(
-        "mirror"
-      );
-
+      n.classList.add("mirror");
       break;
 
 
     case 10:
-
-      n.classList.add(
-        "flicker"
-      );
-
+      n.classList.add("flicker");
       break;
 
 
     case 11:
-
-      n.classList.add(
-        "ghost"
-      );
-
+      n.classList.add("ghost");
       break;
 
 
@@ -1643,9 +1592,7 @@ async function applyWeirdEffect(){
       n.style.opacity =
         "0";
 
-
       await sleep(100);
-
 
       n.style.opacity =
         "1";
@@ -1668,7 +1615,6 @@ async function applyWeirdEffect(){
 
       n.textContent =
         old;
-
 
       break;
 
@@ -1744,9 +1690,7 @@ async function applyWeirdEffect(){
 
       stopTension();
 
-
       await sleep(550);
-
 
       startTension();
 
@@ -1756,6 +1700,10 @@ async function applyWeirdEffect(){
 
 }
 
+
+/* ==========================
+   FLASH
+========================== */
 
 function flash(){
 
@@ -1775,6 +1723,10 @@ function flash(){
 
 }
 
+
+/* ==========================
+   HIT
+========================== */
 
 async function slashHit(){
 
@@ -1833,6 +1785,10 @@ async function showHit(){
 
 }
 
+
+/* ==========================
+   各演出
+========================== */
 
 async function normalHitAt(point){
 
@@ -2381,6 +2337,10 @@ async function silentStart(){
 }
 
 
+/* ==========================
+   宝箱
+========================== */
+
 function showTreasure(){
 
   selectedPrize =
@@ -2499,7 +2459,9 @@ function showPrize(){
 }
 
 
-/* テスト版なので100%当たり */
+/* ==========================
+   START
+========================== */
 
 async function play(){
 
@@ -2535,98 +2497,67 @@ async function play(){
   switch(pattern){
 
     case 0:
-
       return normalHitAt(3);
 
-
     case 1:
-
       return normalHitAt(2);
 
-
     case 2:
-
       return normalHitAt(1);
 
-
     case 3:
-
       return normalHitAt(0);
 
-
     case 4:
-
       return normalBlackout();
 
-
     case 5:
-
       return freezeTwo();
 
-
     case 6:
-
       return reverseCountdown();
 
-
     case 7:
-
       return zeroPremium();
 
-
     case 8:
-
       return numberDisappear();
 
-
     case 9:
-
       return soundStopPattern();
 
-
     case 10:
-
       return longOne();
 
-
     case 11:
-
       return recountSequence();
 
-
     case 12:
-
       return doubleCountdown();
 
-
     case 13:
-
       return puchunDirect();
 
-
     case 14:
-
       return puchunRecount();
 
-
     case 15:
-
       return fakeSlashPattern();
 
-
     case 16:
-
       return weirdCountdown();
 
-
     case 17:
-
       return silentStart();
 
   }
 
 }
 
+
+/* ==========================
+   RESET
+========================== */
 
 function reset(){
 
@@ -2723,6 +2654,10 @@ function reset(){
 
 }
 
+
+/* ==========================
+   EVENTS
+========================== */
 
 $("#start")
   .addEventListener(
