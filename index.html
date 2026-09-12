@@ -29,9 +29,7 @@ button{
   font-family:inherit;
 }
 
-/* =========================
-   STAGE
-========================= */
+/* ===== STAGE ===== */
 
 #stage{
   position:fixed;
@@ -39,30 +37,23 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-
   background:
     radial-gradient(circle at 50% 45%,
     #171717 0%,
     #050505 48%,
     #000 82%);
-
-  transition:
-    background .15s,
-    filter .15s;
+  transition:background .15s,filter .15s;
 }
 
 #number{
   position:relative;
   z-index:5;
-
   font-size:min(60vw,360px);
   font-weight:1000;
   line-height:1;
-
   text-shadow:
     0 0 15px #fff,
     0 0 40px rgba(255,255,255,.45);
-
   transition:
     color .15s,
     transform .15s,
@@ -89,7 +80,7 @@ button{
   }
 }
 
-/* 違和感 */
+/* ===== 違和感 ===== */
 
 #number.red{
   color:#ff2828;
@@ -160,23 +151,17 @@ button{
   filter:blur(1px);
 }
 
-/* =========================
-   UI
-========================= */
+/* ===== UI ===== */
 
 #start,#next{
   position:absolute;
   bottom:8%;
   z-index:400;
-
   padding:17px 46px;
-
   border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
-
   background:rgba(0,0,0,.75);
   color:#fff;
-
   font-size:17px;
   font-weight:900;
   letter-spacing:.12em;
@@ -186,7 +171,6 @@ button{
   position:absolute;
   z-index:10;
   top:max(25px,env(safe-area-inset-top));
-
   font-size:10px;
   letter-spacing:.2em;
   opacity:.28;
@@ -197,44 +181,33 @@ button{
   z-index:30;
   left:50%;
   top:50%;
-
   transform:translate(-50%,-50%);
-
   font-size:min(18vw,100px);
   font-weight:1000;
-
   display:none;
-
   text-shadow:
     0 0 15px #fff,
     0 0 40px #fff;
 }
 
-/* =========================
-   BLACKOUT
-========================= */
+/* ===== BLACKOUT ===== */
 
 #black{
   position:fixed;
   inset:0;
   z-index:80;
-
   display:none;
   background:#000;
 }
 
-/* =========================
-   SLASH
-========================= */
+/* ===== SLASH ===== */
 
 #slash{
   position:fixed;
   inset:0;
   z-index:100;
-
   display:none;
   overflow:hidden;
-
   pointer-events:none;
 }
 
@@ -244,23 +217,16 @@ button{
 
 #line{
   position:absolute;
-
   left:-30%;
   top:50%;
-
   width:160%;
   height:9px;
-
   background:#fff;
-
   box-shadow:
     0 0 15px #fff,
     0 0 40px #fff,
     0 0 90px #fff;
-
-  transform:
-    rotate(-18deg)
-    scaleX(0);
+  transform:rotate(-18deg) scaleX(0);
 }
 
 #slash.go #line{
@@ -269,23 +235,17 @@ button{
 
 @keyframes slashAnim{
   to{
-    transform:
-      rotate(-18deg)
-      scaleX(1);
+    transform:rotate(-18deg) scaleX(1);
   }
 }
 
-/* =========================
-   FLASH
-========================= */
+/* ===== FLASH ===== */
 
 #flash{
   position:fixed;
   inset:0;
   z-index:350;
-
   background:#fff;
-
   opacity:0;
   pointer-events:none;
 }
@@ -302,22 +262,16 @@ button{
   100%{opacity:0}
 }
 
-/* =========================
-   HIT
-========================= */
+/* ===== HIT ===== */
 
 #hit{
   position:fixed;
   inset:0;
   z-index:140;
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
   overflow:hidden;
-
   background:
     radial-gradient(circle,
     #8b1a00 0%,
@@ -332,12 +286,9 @@ button{
 
 #glow{
   position:absolute;
-
   width:150vw;
   height:150vw;
-
   border-radius:50%;
-
   background:
     conic-gradient(
       transparent,
@@ -346,7 +297,6 @@ button{
       rgba(255,0,0,.42),
       transparent
     );
-
   animation:spin 3s linear infinite;
 }
 
@@ -357,18 +307,14 @@ button{
 #hitText{
   position:relative;
   z-index:5;
-
   font-size:min(24vw,150px);
   font-weight:1000;
-
   text-align:center;
-
   text-shadow:
     0 0 12px #fff,
     0 0 30px #ffe100,
     0 0 70px #ff4500,
     0 0 110px red;
-
   animation:hitIn .55s cubic-bezier(.05,1.4,.2,1);
 }
 
@@ -376,10 +322,8 @@ button{
   position:absolute;
   bottom:25%;
   z-index:5;
-
   font-size:15px;
   font-weight:900;
-
   letter-spacing:.16em;
 }
 
@@ -399,21 +343,16 @@ button{
   }
 }
 
-/* =========================
-   TREASURE
-========================= */
+/* ===== TREASURE ===== */
 
 #treasureScreen{
   position:fixed;
   inset:0;
   z-index:180;
-
   display:none;
-
   flex-direction:column;
   align-items:center;
   justify-content:center;
-
   background:
     radial-gradient(circle at 50% 42%,
     #202020 0%,
@@ -427,18 +366,12 @@ button{
 
 #treasureTitle{
   position:absolute;
-
   top:12%;
-
   width:100%;
-
   text-align:center;
-
   font-size:clamp(24px,8vw,48px);
   font-weight:1000;
-
   letter-spacing:.14em;
-
   text-shadow:
     0 0 12px #fff,
     0 0 30px rgba(255,255,255,.35);
@@ -446,45 +379,31 @@ button{
 
 #treasureSub{
   position:absolute;
-
   top:20%;
-
   width:100%;
-
   text-align:center;
-
   font-size:13px;
   letter-spacing:.14em;
-
   opacity:.72;
 }
 
 #chests{
   width:min(94vw,700px);
-
   display:flex;
-
   justify-content:space-between;
   align-items:flex-end;
-
   gap:10px;
-
   padding:0 10px;
 }
 
 .chest{
   appearance:none;
-
   border:none;
   background:transparent;
-
   width:31%;
   padding:0;
-
   color:#fff;
-
   position:relative;
-
   transition:
     transform .18s,
     filter .18s,
@@ -501,13 +420,9 @@ button{
 
 .chestWrap{
   position:relative;
-
   width:100%;
   aspect-ratio:1/.88;
-
-  animation:
-    chestFloat 1.5s
-    ease-in-out infinite;
+  animation:chestFloat 1.5s ease-in-out infinite;
 }
 
 .chest:nth-child(2) .chestWrap{
@@ -525,16 +440,11 @@ button{
 
 .chestBody{
   position:absolute;
-
   left:10%;
   bottom:7%;
-
   width:80%;
   height:48%;
-
-  border-radius:
-    8px 8px 18px 18px;
-
+  border-radius:8px 8px 18px 18px;
   background:
     linear-gradient(
       90deg,
@@ -544,9 +454,7 @@ button{
       #bf6618 82%,
       #642905 100%
     );
-
   border:4px solid #dca62f;
-
   box-shadow:
     inset 0 0 18px rgba(0,0,0,.5),
     0 12px 22px rgba(0,0,0,.7),
@@ -555,16 +463,11 @@ button{
 
 .chestLid{
   position:absolute;
-
   left:7%;
   top:22%;
-
   width:86%;
   height:34%;
-
-  border-radius:
-    50% 50% 7px 7px;
-
+  border-radius:50% 50% 7px 7px;
   background:
     linear-gradient(
       90deg,
@@ -574,15 +477,9 @@ button{
       #c9741a 82%,
       #652705
     );
-
   border:4px solid #e0ad36;
-
   transform-origin:50% 100%;
-
-  transition:
-    transform .6s
-    cubic-bezier(.2,.9,.2,1);
-
+  transition:transform .6s cubic-bezier(.2,.9,.2,1);
   box-shadow:
     inset 0 0 15px rgba(0,0,0,.45),
     0 0 18px rgba(255,184,43,.22);
@@ -590,95 +487,55 @@ button{
 
 .chestBand{
   position:absolute;
-
   left:44%;
   top:18%;
-
   width:12%;
   height:64%;
-
   background:
     linear-gradient(
       #ffe27a,
       #b37b13,
       #ffdd65
     );
-
   border-radius:4px;
-
   z-index:4;
-
-  box-shadow:
-    0 0 8px
-    rgba(255,220,90,.5);
+  box-shadow:0 0 8px rgba(255,220,90,.5);
 }
 
 .chestLock{
   position:absolute;
-
   left:40%;
   bottom:26%;
-
   width:20%;
   aspect-ratio:1;
-
   border-radius:6px;
-
   background:
     linear-gradient(
       #ffe98a,
       #a87511
     );
-
-  border:
-    2px solid #fff1a5;
-
+  border:2px solid #fff1a5;
   z-index:6;
 }
 
 .chestNum{
   margin-top:8px;
-
   font-size:12px;
   font-weight:900;
-
   letter-spacing:.12em;
-
   opacity:.75;
 }
 
 .chest.selected .chestWrap{
-  animation:
-    chestShake .12s
-    linear infinite;
+  animation:chestShake .12s linear infinite;
 }
 
 @keyframes chestShake{
-  0%{
-    transform:
-      translate(-3px,0)
-      rotate(-1deg);
-  }
-  25%{
-    transform:
-      translate(3px,-2px)
-      rotate(1deg);
-  }
-  50%{
-    transform:
-      translate(-2px,2px)
-      rotate(-1deg);
-  }
-  75%{
-    transform:
-      translate(2px,-1px)
-      rotate(1deg);
-  }
-  100%{
-    transform:
-      translate(-3px,0)
-      rotate(-1deg);
-  }
+  0%{transform:translate(-3px,0) rotate(-1deg)}
+  25%{transform:translate(3px,-2px) rotate(1deg)}
+  50%{transform:translate(-2px,2px) rotate(-1deg)}
+  75%{transform:translate(2px,-1px) rotate(1deg)}
+  100%{transform:translate(-3px,0) rotate(-1deg)}
 }
 
 .chest.open .chestWrap{
@@ -686,9 +543,7 @@ button{
 }
 
 .chest.open .chestLid{
-  transform:
-    rotateX(145deg)
-    translateY(-4px);
+  transform:rotateX(145deg) translateY(-4px);
 }
 
 .chest.open{
@@ -703,33 +558,23 @@ button{
 
 .chestLight{
   position:absolute;
-
   left:26%;
   bottom:26%;
-
   width:48%;
   height:15%;
-
   opacity:0;
-
   border-radius:50%;
-
   background:#fff;
-
   box-shadow:
     0 0 20px #fff,
     0 0 50px #ffe66a,
     0 0 100px #ffb300;
-
   z-index:2;
 }
 
 .chest.open .chestLight{
   opacity:1;
-
-  animation:
-    lightBurst .7s
-    ease-out forwards;
+  animation:lightBurst .7s ease-out forwards;
 }
 
 @keyframes lightBurst{
@@ -743,22 +588,16 @@ button{
   }
 }
 
-/* =========================
-   PRIZE
-========================= */
+/* ===== PRIZE ===== */
 
 #prizeBox{
   position:fixed;
   inset:0;
   z-index:230;
-
   display:none;
-
   align-items:center;
   justify-content:center;
-
   flex-direction:column;
-
   overflow:hidden;
 }
 
@@ -795,83 +634,55 @@ button{
 
 #prizeBurst{
   position:absolute;
-
   width:160vw;
   height:160vw;
-
   border-radius:50%;
-
   background:
     repeating-conic-gradient(
-      rgba(255,255,255,.22)
-      0deg 4deg,
-      transparent
-      4deg 11deg
+      rgba(255,255,255,.22) 0deg 4deg,
+      transparent 4deg 11deg
     );
-
   animation:spin 6s linear infinite;
 }
 
 #prizeLabel{
   position:relative;
   z-index:3;
-
-  font-size:
-    clamp(72px,28vw,180px);
-
+  font-size:clamp(72px,28vw,180px);
   font-weight:1000;
-
   line-height:1;
-
   text-align:center;
-
   text-shadow:
     0 0 12px #fff,
     0 0 40px rgba(255,255,255,.7),
     0 0 90px rgba(255,180,0,.7);
-
-  animation:
-    prizeIn .7s
-    cubic-bezier(.05,1.5,.2,1);
+  animation:prizeIn .7s cubic-bezier(.05,1.5,.2,1);
 }
 
 #prizeWon{
   position:relative;
   z-index:3;
-
   margin-top:20px;
-
-  font-size:
-    clamp(20px,6vw,38px);
-
+  font-size:clamp(20px,6vw,38px);
   font-weight:1000;
-
   letter-spacing:.15em;
 }
 
 @keyframes prizeIn{
   0%{
-    transform:
-      scale(.15)
-      rotate(-8deg);
-
+    transform:scale(.15) rotate(-8deg);
     opacity:0;
     filter:blur(14px);
   }
 
   70%{
-    transform:
-      scale(1.18)
-      rotate(2deg);
-
+    transform:scale(1.18) rotate(2deg);
     opacity:1;
     filter:blur(0);
   }
 
   100%{
-    transform:
-      scale(1)
-      rotate(0);
+    transform:scale(1) rotate(0);
   }
 }
 </style>
@@ -885,9 +696,7 @@ button{
     TEST MODE / 100% HIT
   </div>
 
-  <div
-    id="number"
-    data-num="3">
+  <div id="number" data-num="3">
     3
   </div>
 
@@ -902,14 +711,11 @@ button{
   ?
 </div>
 
-
 <div id="black"></div>
-
 
 <div id="slash">
   <div id="line"></div>
 </div>
-
 
 <div id="flash"></div>
 
@@ -946,13 +752,11 @@ button{
     <button class="chest">
 
       <div class="chestWrap">
-
         <div class="chestLight"></div>
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestBand"></div>
         <div class="chestLock"></div>
-
       </div>
 
       <div class="chestNum">
@@ -965,13 +769,11 @@ button{
     <button class="chest">
 
       <div class="chestWrap">
-
         <div class="chestLight"></div>
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestBand"></div>
         <div class="chestLock"></div>
-
       </div>
 
       <div class="chestNum">
@@ -984,13 +786,11 @@ button{
     <button class="chest">
 
       <div class="chestWrap">
-
         <div class="chestLight"></div>
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestBand"></div>
         <div class="chestLock"></div>
-
       </div>
 
       <div class="chestNum">
@@ -1027,17 +827,13 @@ button{
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260913-1000"
+  src="./hit_music_final.mp3?v=20260913-2000"
   preload="auto"
   playsinline>
 </audio>
 
 
 <script>
-
-/* =========================
-   基本
-========================= */
 
 const $ =
   s => document.querySelector(s);
@@ -1046,14 +842,11 @@ const $$ =
   s => [...document.querySelectorAll(s)];
 
 const sleep =
-  ms => new Promise(
-    r => setTimeout(r,ms)
-  );
+  ms => new Promise(r => setTimeout(r,ms));
 
 
 let busy = false;
 let chestBusy = false;
-
 let selectedPrize = null;
 
 let audioCtx = null;
@@ -1063,15 +856,11 @@ let tensionOsc2 = null;
 let tensionGain = null;
 let pulseTimer = null;
 
-let tensionEnabled = false;
-
 const hitMusic =
   $("#hitMusic");
 
 
-/* =========================
-   AUDIO
-========================= */
+/* ===== AUDIO ===== */
 
 function initAudio(){
 
@@ -1085,10 +874,7 @@ function initAudio(){
 
   }
 
-  if(
-    audioCtx.state ===
-    "suspended"
-  ){
+  if(audioCtx.state === "suspended"){
     audioCtx.resume();
   }
 }
@@ -1099,11 +885,8 @@ async function unlockHitMusic(){
   try{
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.muted = false;
-
     hitMusic.volume = .001;
 
     await hitMusic.play();
@@ -1111,9 +894,7 @@ async function unlockHitMusic(){
     await sleep(60);
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.volume = 1;
 
   }catch(e){
@@ -1124,17 +905,13 @@ async function unlockHitMusic(){
 }
 
 
-/* =========================
-   緊張音
-========================= */
+/* ===== 緊張音 ===== */
 
 function startTension(){
 
   initAudio();
 
   stopTension();
-
-  tensionEnabled = true;
 
   const now =
     audioCtx.currentTime;
@@ -1143,10 +920,7 @@ function startTension(){
     audioCtx.createGain();
 
   tensionGain.gain
-    .setValueAtTime(
-      .0001,
-      now
-    );
+    .setValueAtTime(.0001,now);
 
   tensionGain.gain
     .exponentialRampToValueAtTime(
@@ -1154,13 +928,11 @@ function startTension(){
       now + .8
     );
 
-
   tensionOsc1 =
     audioCtx.createOscillator();
 
   tensionOsc2 =
     audioCtx.createOscillator();
-
 
   tensionOsc1.type =
     "sine";
@@ -1168,30 +940,21 @@ function startTension(){
   tensionOsc2.type =
     "triangle";
 
-
   tensionOsc1.frequency.value =
     52;
 
   tensionOsc2.frequency.value =
     78;
 
-
-  tensionOsc1.connect(
-    tensionGain
-  );
-
-  tensionOsc2.connect(
-    tensionGain
-  );
+  tensionOsc1.connect(tensionGain);
+  tensionOsc2.connect(tensionGain);
 
   tensionGain.connect(
     audioCtx.destination
   );
 
-
   tensionOsc1.start();
   tensionOsc2.start();
-
 
   pulseTimer =
     setInterval(() => {
@@ -1205,10 +968,7 @@ function startTension(){
         .cancelScheduledValues(t);
 
       tensionGain.gain
-        .setValueAtTime(
-          .035,
-          t
-        );
+        .setValueAtTime(.035,t);
 
       tensionGain.gain
         .exponentialRampToValueAtTime(
@@ -1228,13 +988,9 @@ function startTension(){
 
 function stopTension(){
 
-  tensionEnabled = false;
-
   if(pulseTimer){
 
-    clearInterval(
-      pulseTimer
-    );
+    clearInterval(pulseTimer);
 
     pulseTimer = null;
   }
@@ -1253,9 +1009,7 @@ function stopTension(){
 }
 
 
-/* =========================
-   カウント音
-========================= */
+/* ===== カウント音 ===== */
 
 function countSound(n){
 
@@ -1277,8 +1031,7 @@ function countSound(n){
     0:62
   };
 
-  osc.type =
-    "sine";
+  osc.type = "sine";
 
   osc.frequency
     .setValueAtTime(
@@ -1293,10 +1046,7 @@ function countSound(n){
     );
 
   gain.gain
-    .setValueAtTime(
-      .0001,
-      now
-    );
+    .setValueAtTime(.0001,now);
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1317,14 +1067,11 @@ function countSound(n){
   );
 
   osc.start(now);
-
-  osc.stop(
-    now + .6
-  );
+  osc.stop(now + .6);
 }
 
 
-/* 音違い */
+/* ===== 違和感音 ===== */
 
 function strangeCountSound(){
 
@@ -1339,14 +1086,10 @@ function strangeCountSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "triangle";
+  osc.type = "triangle";
 
   osc.frequency
-    .setValueAtTime(
-      165,
-      now
-    );
+    .setValueAtTime(165,now);
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1355,10 +1098,7 @@ function strangeCountSound(){
     );
 
   gain.gain
-    .setValueAtTime(
-      .32,
-      now
-    );
+    .setValueAtTime(.32,now);
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1373,16 +1113,11 @@ function strangeCountSound(){
   );
 
   osc.start(now);
-
-  osc.stop(
-    now + .6
-  );
+  osc.stop(now + .6);
 }
 
 
-/* =========================
-   プチュン
-========================= */
+/* ===== プチュン ===== */
 
 function puchunSound(){
 
@@ -1397,14 +1132,10 @@ function puchunSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "square";
+  osc.type = "square";
 
   osc.frequency
-    .setValueAtTime(
-      280,
-      now
-    );
+    .setValueAtTime(280,now);
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1413,10 +1144,7 @@ function puchunSound(){
     );
 
   gain.gain
-    .setValueAtTime(
-      .4,
-      now
-    );
+    .setValueAtTime(.4,now);
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1431,16 +1159,11 @@ function puchunSound(){
   );
 
   osc.start(now);
-
-  osc.stop(
-    now + .14
-  );
+  osc.stop(now + .14);
 }
 
 
-/* =========================
-   切り裂き
-========================= */
+/* ===== 切り裂き ===== */
 
 function slashSound(){
 
@@ -1449,23 +1172,16 @@ function slashSound(){
   const now =
     audioCtx.currentTime;
 
-
   const osc =
     audioCtx.createOscillator();
 
   const gain =
     audioCtx.createGain();
 
-
-  osc.type =
-    "sawtooth";
-
+  osc.type = "sawtooth";
 
   osc.frequency
-    .setValueAtTime(
-      1600,
-      now
-    );
+    .setValueAtTime(1600,now);
 
   osc.frequency
     .exponentialRampToValueAtTime(
@@ -1473,19 +1189,14 @@ function slashSound(){
       now + .15
     );
 
-
   gain.gain
-    .setValueAtTime(
-      .32,
-      now
-    );
+    .setValueAtTime(.32,now);
 
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .18
     );
-
 
   osc.connect(gain);
 
@@ -1494,10 +1205,7 @@ function slashSound(){
   );
 
   osc.start(now);
-
-  osc.stop(
-    now + .2
-  );
+  osc.stop(now + .2);
 
 
   const bass =
@@ -1506,16 +1214,10 @@ function slashSound(){
   const bassGain =
     audioCtx.createGain();
 
-
-  bass.type =
-    "sine";
-
+  bass.type = "sine";
 
   bass.frequency
-    .setValueAtTime(
-      95,
-      now
-    );
+    .setValueAtTime(95,now);
 
   bass.frequency
     .exponentialRampToValueAtTime(
@@ -1523,12 +1225,8 @@ function slashSound(){
       now + .5
     );
 
-
   bassGain.gain
-    .setValueAtTime(
-      .75,
-      now
-    );
+    .setValueAtTime(.75,now);
 
   bassGain.gain
     .exponentialRampToValueAtTime(
@@ -1536,26 +1234,18 @@ function slashSound(){
       now + .5
     );
 
-
-  bass.connect(
-    bassGain
-  );
+  bass.connect(bassGain);
 
   bassGain.connect(
     audioCtx.destination
   );
 
   bass.start(now);
-
-  bass.stop(
-    now + .55
-  );
+  bass.stop(now + .55);
 }
 
 
-/* =========================
-   当たり曲
-========================= */
+/* ===== 当たり曲 ===== */
 
 async function playHitMusic(){
 
@@ -1578,7 +1268,11 @@ async function playHitMusic(){
 
 
 /* =========================
-   等級抽選
+   宝箱の等級抽選
+
+   1等 5%
+   2等 20%
+   3等 75%
 ========================= */
 
 function drawPrize(){
@@ -1586,7 +1280,7 @@ function drawPrize(){
   const r =
     Math.random();
 
-  if(r < .10){
+  if(r < .05){
 
     return{
       label:"1等",
@@ -1595,7 +1289,7 @@ function drawPrize(){
 
   }
 
-  if(r < .40){
+  if(r < .25){
 
     return{
       label:"2等",
@@ -1611,9 +1305,7 @@ function drawPrize(){
 }
 
 
-/* =========================
-   数字
-========================= */
+/* ===== 数字 ===== */
 
 function resetNumberStyle(){
 
@@ -1648,9 +1340,7 @@ function showNumber(
 
   void n.offsetWidth;
 
-  n.classList.add(
-    "show"
-  );
+  n.classList.add("show");
 
   if(sound){
     countSound(value);
@@ -1658,15 +1348,9 @@ function showNumber(
 }
 
 
-/* =========================
-   違和感
-========================= */
+/* ===== 違和感約20種類 ===== */
 
 async function applyWeirdEffect(){
-
-  /*
-    約20種類
-  */
 
   const type =
     Math.floor(
@@ -1681,117 +1365,89 @@ async function applyWeirdEffect(){
 
     case 0:
 
-      n.classList.add(
-        "red"
-      );
+      n.classList.add("red");
 
       break;
 
 
     case 1:
 
-      n.classList.add(
-        "gold"
-      );
+      n.classList.add("gold");
 
       break;
 
 
     case 2:
 
-      n.classList.add(
-        "small"
-      );
+      n.classList.add("small");
 
       break;
 
 
     case 3:
 
-      n.classList.add(
-        "big"
-      );
+      n.classList.add("big");
 
       break;
 
 
     case 4:
 
-      n.classList.add(
-        "thin"
-      );
+      n.classList.add("thin");
 
       break;
 
 
     case 5:
 
-      n.classList.add(
-        "shiftLeft"
-      );
+      n.classList.add("shiftLeft");
 
       break;
 
 
     case 6:
 
-      n.classList.add(
-        "shiftRight"
-      );
+      n.classList.add("shiftRight");
 
       break;
 
 
     case 7:
 
-      n.classList.add(
-        "shiftUp"
-      );
+      n.classList.add("shiftUp");
 
       break;
 
 
     case 8:
 
-      n.classList.add(
-        "double"
-      );
+      n.classList.add("double");
 
       break;
 
 
     case 9:
 
-      n.classList.add(
-        "mirror"
-      );
+      n.classList.add("mirror");
 
       break;
 
 
     case 10:
 
-      n.classList.add(
-        "flicker"
-      );
+      n.classList.add("flicker");
 
       break;
 
 
     case 11:
 
-      n.classList.add(
-        "ghost"
-      );
+      n.classList.add("ghost");
 
       break;
 
 
     case 12:
-
-      /*
-        数字一瞬消える
-      */
 
       n.style.opacity = "0";
 
@@ -1804,29 +1460,19 @@ async function applyWeirdEffect(){
 
     case 13:
 
-      /*
-        一瞬0
-      */
-
       const old =
         n.textContent;
 
-      n.textContent =
-        "0";
+      n.textContent = "0";
 
       await sleep(90);
 
-      n.textContent =
-        old;
+      n.textContent = old;
 
       break;
 
 
     case 14:
-
-      /*
-        ?
-      */
 
       $("#weirdMark")
         .style.display =
@@ -1843,10 +1489,6 @@ async function applyWeirdEffect(){
 
     case 15:
 
-      /*
-        背景赤
-      */
-
       $("#stage")
         .style.background =
         "radial-gradient(circle,#390000,#000 70%)";
@@ -1862,10 +1504,6 @@ async function applyWeirdEffect(){
 
     case 16:
 
-      /*
-        白フラッシュ弱
-      */
-
       flash();
 
       break;
@@ -1873,20 +1511,12 @@ async function applyWeirdEffect(){
 
     case 17:
 
-      /*
-        音違い
-      */
-
       strangeCountSound();
 
       break;
 
 
     case 18:
-
-      /*
-        超短時間暗転
-      */
 
       $("#black")
         .style.display =
@@ -1903,10 +1533,6 @@ async function applyWeirdEffect(){
 
     case 19:
 
-      /*
-        完全無音の違和感
-      */
-
       stopTension();
 
       await sleep(550);
@@ -1918,9 +1544,7 @@ async function applyWeirdEffect(){
 }
 
 
-/* =========================
-   フラッシュ
-========================= */
+/* ===== フラッシュ ===== */
 
 function flash(){
 
@@ -1931,14 +1555,11 @@ function flash(){
 
   void f.offsetWidth;
 
-  f.className =
-    "go";
+  f.className = "go";
 }
 
 
-/* =========================
-   当たり
-========================= */
+/* ===== 当たり ===== */
 
 async function slashHit(){
 
@@ -1984,9 +1605,7 @@ async function showHit(){
 }
 
 
-/* =========================
-   プチュン暗転
-========================= */
+/* ===== プチュン直接当たり ===== */
 
 async function puchunDirect(){
 
@@ -2016,6 +1635,8 @@ async function puchunDirect(){
   await slashHit();
 }
 
+
+/* ===== プチュン→再カウント ===== */
 
 async function puchunRecount(){
 
@@ -2047,9 +1668,7 @@ async function puchunRecount(){
 }
 
 
-/* =========================
-   再カウント
-========================= */
+/* ===== 再カウント ===== */
 
 async function recountSequence(){
 
@@ -2105,9 +1724,7 @@ async function recountSequence(){
 }
 
 
-/* =========================
-   逆戻り
-========================= */
+/* ===== 逆戻り ===== */
 
 async function reverseCountdown(){
 
@@ -2123,10 +1740,6 @@ async function reverseCountdown(){
 
   await sleep(1800);
 
-  /*
-    まさかの2へ戻る
-  */
-
   showNumber(2);
 
   await sleep(1500);
@@ -2139,9 +1752,7 @@ async function reverseCountdown(){
 }
 
 
-/* =========================
-   0演出
-========================= */
+/* ===== 0出現 ===== */
 
 async function zeroPremium(){
 
@@ -2165,9 +1776,7 @@ async function zeroPremium(){
 }
 
 
-/* =========================
-   数字消失
-========================= */
+/* ===== 数字消失 ===== */
 
 async function numberDisappear(){
 
@@ -2191,9 +1800,7 @@ async function numberDisappear(){
 }
 
 
-/* =========================
-   音だけ停止
-========================= */
+/* ===== 音だけ停止 ===== */
 
 async function soundStopPattern(){
 
@@ -2217,9 +1824,7 @@ async function soundStopPattern(){
 }
 
 
-/* =========================
-   超ロング1
-========================= */
+/* ===== 超ロング1 ===== */
 
 async function longOne(){
 
@@ -2239,9 +1844,7 @@ async function longOne(){
 }
 
 
-/* =========================
-   フリーズ
-========================= */
+/* ===== 2フリーズ ===== */
 
 async function freezeTwo(){
 
@@ -2251,19 +1854,13 @@ async function freezeTwo(){
 
   showNumber(2);
 
-  /*
-    異常に長い2
-  */
-
   await sleep(3900);
 
   return slashHit();
 }
 
 
-/* =========================
-   フェイク切り裂き
-========================= */
+/* ===== フェイク切り裂き ===== */
 
 async function fakeSlashPattern(){
 
@@ -2287,10 +1884,6 @@ async function fakeSlashPattern(){
     .className =
     "";
 
-  /*
-    当たらず戻る
-  */
-
   await sleep(700);
 
   showNumber(1);
@@ -2301,9 +1894,7 @@ async function fakeSlashPattern(){
 }
 
 
-/* =========================
-   違和感付き通常
-========================= */
+/* ===== 違和感付き ===== */
 
 async function weirdCountdown(){
 
@@ -2318,7 +1909,7 @@ async function weirdCountdown(){
 
   showNumber(2);
 
-  if(Math.random()<.6){
+  if(Math.random()<.60){
     await applyWeirdEffect();
   }
 
@@ -2327,7 +1918,7 @@ async function weirdCountdown(){
 
   showNumber(1);
 
-  if(Math.random()<.7){
+  if(Math.random()<.70){
     await applyWeirdEffect();
   }
 
@@ -2337,9 +1928,7 @@ async function weirdCountdown(){
 }
 
 
-/* =========================
-   無音スタート
-========================= */
+/* ===== 無音START ===== */
 
 async function silentStart(){
 
@@ -2366,9 +1955,7 @@ async function silentStart(){
 }
 
 
-/* =========================
-   二周目
-========================= */
+/* ===== 2周目カウント ===== */
 
 async function doubleCountdown(){
 
@@ -2390,18 +1977,11 @@ async function doubleCountdown(){
 
   await sleep(1500);
 
-  /*
-    終わったと思わせて
-    もう一周
-  */
-
   return recountSequence();
 }
 
 
-/* =========================
-   普通の途中当たり
-========================= */
+/* ===== 通常途中当たり ===== */
 
 async function normalHitAt(
   point
@@ -2452,9 +2032,7 @@ async function normalHitAt(
 }
 
 
-/* =========================
-   通常暗転
-========================= */
+/* ===== 通常暗転 ===== */
 
 async function normalBlackout(){
 
@@ -2486,11 +2064,17 @@ async function normalBlackout(){
 }
 
 
-/* =========================
-   宝箱
-========================= */
+/* ===== 宝箱表示 ===== */
 
 function showTreasure(){
+
+  /*
+    ここで等級を1回だけ決定。
+
+    1等 5%
+    2等 20%
+    3等 75%
+  */
 
   selectedPrize =
     drawPrize();
@@ -2515,6 +2099,8 @@ function showTreasure(){
     "show";
 }
 
+
+/* ===== 宝箱を選択 ===== */
 
 async function chooseChest(
   chest
@@ -2577,6 +2163,8 @@ async function chooseChest(
 }
 
 
+/* ===== 等級表示 ===== */
+
 function showPrize(){
 
   $("#treasureScreen")
@@ -2596,9 +2184,7 @@ function showPrize(){
 }
 
 
-/* =========================
-   START
-========================= */
+/* ===== START ===== */
 
 async function play(){
 
@@ -2618,9 +2204,11 @@ async function play(){
 
 
   /*
-    現在は100%当たりテスト。
+    TEST MODE
+    現在は100%当たり
 
-    下の演出をランダム選択。
+    演出18系統から
+    ランダム選択
   */
 
   const pattern =
@@ -2688,9 +2276,7 @@ async function play(){
 }
 
 
-/* =========================
-   RESET
-========================= */
+/* ===== RESET ===== */
 
 function reset(){
 
@@ -2761,16 +2347,12 @@ function reset(){
 
 
   selectedPrize = null;
-
   chestBusy = false;
-
   busy = false;
 }
 
 
-/* =========================
-   BUTTONS
-========================= */
+/* ===== BUTTONS ===== */
 
 $("#start")
   .addEventListener(
@@ -2784,8 +2366,7 @@ $$(".chest")
 
     chest.addEventListener(
       "click",
-      () =>
-        chooseChest(chest)
+      () => chooseChest(chest)
     );
 
   });
