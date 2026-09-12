@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>完全抽選 SLOT</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center;
+  background:radial-gradient(circle at 50% 20%,#25304a 0,#101522 42%,#070a10 100%);
+  color:#fff; font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  overflow:hidden;
+}
+.app{width:min(94vw,430px); text-align:center}
+h1{font-size:28px; letter-spacing:4px; margin:0 0 6px}
+.sub{opacity:.65;font-size:12px;margin-bottom:18px}
+.machine{
+  padding:18px 14px 22px; border:1px solid #46506a; border-radius:24px;
+  background:linear-gradient(180deg,#1c2333,#0d111b);
+  box-shadow:0 20px 60px #0008,inset 0 1px #ffffff18;
+}
+.count{height:54px;font-size:44px;font-weight:900;line-height:54px;color:#ffd84a;text-shadow:0 0 18px #ffd84a88}
+.reels{display:flex;gap:8px;justify-content:center;margin:10px 0 18px}
+.reel{
+  width:30%;height:92px;display:flex;align-items:center;justify-content:center;
+  border-radius:14px;background:linear-gradient(#f5f5f5,#c8c8c8);
+  color:#111;font-size:42px;font-weight:900;box-shadow:inset 0 0 0 3px #555,0 7px 18px #0008;
+}
+.status{min-height:42px;font-size:17px;font-weight:800}
+button{
+  width:100%;padding:17px;border:0;border-radius:14px;background:#ffcc35;color:#111;
+  font-size:18px;font-weight:900;letter-spacing:2px;box-shadow:0 8px 20px #0006;
+}
+button:active{transform:scale(.98)}
+.note{font-size:11px;opacity:.5;margin-top:12px}
+.flash{animation:flash .16s 5 alternate}
+.shake{animation:shake .08s 10}
+@keyframes flash{to{filter:brightness(2.5);background:#fff}}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.freeze{animation:freeze .9s forwards}
+@keyframes freeze{0%{filter:none}45%{filter:brightness(2)}100%{filter:brightness(1.5);box-shadow:0 0 45px #fff}}
+.win{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:#000b;z-index:5;animation:appear .25s ease-out
+}
+.winbox{padding:35px 28px;border:2px solid #ffd84a;border-radius:24px;background:#101522;text-align:center;box-shadow:0 0 70px #ffd84a88}
+.winbox b{display:block;font-size:48px;color:#ffd84a;letter-spacing:3px}
+.winbox span{display:block;margin-top:10px;font-size:16px}
+@keyframes appear{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>完全抽選 SLOT</h1>
+  <div class="sub">1 PLAY / 当選確率 1/30</div>
+  <div class="machine" id="machine">
+    <div class="count" id="count">READY</div>
+    <div class="reels">
+      <div class="reel" id="r1">7</div><div class="reel" id="r2">7</div><div class="reel" id="r3">7</div>
+    </div>
+    <div class="status" id="status">STARTを押して抽選</div>
+    <button id="start">START</button>
+    <div class="note">※1回のPLAYにつき抽選は1回。3回転は当選時の演出位置です。</div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let busy=false;
+
+const symbols=["7","BAR","★","🍒","🔔","◆"];
+const patterns=[
+  ["雷フリーズ","⚡"],["爆発フリーズ","💥"],["虹フリーズ","🌈"],["ゴールドフリーズ","👑"],
+  ["逆回転フリーズ","↩"],["時間停止フリーズ","⏱"],["ノイズフリーズ","▧"],["リールフリーズ","❄"],
+  ["フェイントフリーズ","!"]
+];
+
+async function countdown(){
+  for(const n of ["3","2","1"]){
+    $("count").textContent=n;
+    await sleep(550);
+  }
+  $("count").textContent="";
+}
+
+function spinSymbols(){
+  $("r1").textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  $("r2").textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  $("r3").textContent=symbols[Math.floor(Math.random()*symbols.length)];
+}
+
+async function doFreeze(pattern){
+  const [name,icon]=pattern;
+  const m=$("machine");
+  $("status").textContent=name+"…";
+  if(name==="雷フリーズ"){m.classList.add("flash","shake")}
+  if(name==="爆発フリーズ"){m.classList.add("shake"); await sleep(250); m.classList.add("flash")}
+  if(name==="虹フリーズ"){m.style.filter="hue-rotate(0deg)"; let h=0; for(let i=0;i<8;i++){h+=45;m.style.filter=`hue-rotate(${h}deg)`;await sleep(90)}}
+  if(name==="ゴールドフリーズ"){m.style.boxShadow="0 0 55px #ffd84a"}
+  if(name==="逆回転フリーズ"){for(let i=0;i<5;i++){spinSymbols();await sleep(80)}}
+  if(name==="時間停止フリーズ"){await sleep(700)}
+  if(name==="ノイズフリーズ"){for(let i=0;i<8;i++){spinSymbols();await sleep(55)}}
+  if(name==="リールフリーズ"){document.querySelectorAll(".reel").forEach(x=>x.classList.add("freeze"))}
+  if(name==="フェイントフリーズ"){await sleep(300); spinSymbols(); await sleep(180)}
+  $("count").textContent=icon;
+  $("status").textContent=name+"！";
+  await sleep(550);
+  showWin(name);
+  m.className="machine"; m.style="";
+  document.querySelectorAll(".reel").forEach(x=>x.classList.remove("freeze"));
+}
+
+function showWin(name){
+  const w=document.createElement("div"); w.className="win";
+  w.innerHTML=`<div class="winbox"><b>FREEZE!</b><span>${name}<br>🎉 当たり 🎉</span></div>`;
+  w.addEventListener("click",()=>w.remove());
+  document.body.appendChild(w);
+}
+
+$("start").addEventListener("click",async()=>{
+  if(busy)return; busy=true; $("start").disabled=true;
+  $("status").textContent="抽選中…";
+  await countdown();
+
+  const win = Math.floor(Math.random()*30)===0;
+  const freezeAt = 1+Math.floor(Math.random()*3);
+
+  for(let i=1;i<=3;i++){
+    $("status").textContent=`SPIN ${i}/3`;
+    for(let j=0;j<7;j++){spinSymbols();await sleep(55)}
+    await sleep(120);
+    if(win && i===freezeAt){
+      const p=patterns[Math.floor(Math.random()*patterns.length)];
+      await doFreeze(p);
+      break;
+    }
+  }
+
+  if(!win){
+    $("count").textContent="—";
+    $("status").textContent="ハズレ";
+    $("r1").textContent="×";$("r2").textContent="×";$("r3").textContent="×";
+  }
+  $("start").disabled=false;busy=false;
+});
+</script>
+</body>
+</html>
