@@ -1,9 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>COUNTDOWN CHANCE</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>COUNTDOWN</title>
 
 <style>
 *{
@@ -17,293 +19,440 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#000;
-  color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
 
 body{
+  color:white;
   user-select:none;
 }
+
+/* =========================
+   STAGE
+========================= */
 
 #stage{
   position:fixed;
   inset:0;
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
+
   background:
-    radial-gradient(circle at 50% 45%,#241212 0%,#090909 42%,#000 78%);
+    radial-gradient(circle at 50% 42%,
+      #111 0%,
+      #050505 45%,
+      #000 75%);
 }
 
-#energy{
+/* subtle background */
+#bgGlow{
   position:absolute;
-  inset:-25%;
-  opacity:.18;
-  transform:scale(1);
+  width:130vw;
+  height:130vw;
+  border-radius:50%;
+
   background:
-    radial-gradient(circle at center,
-    rgba(180,0,0,.28),
-    rgba(70,0,0,.12) 28%,
-    transparent 62%);
-  transition:1s ease;
+    radial-gradient(circle,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.015) 35%,
+      transparent 65%);
+
+  animation:bgPulse 2.5s ease-in-out infinite;
 }
+
+@keyframes bgPulse{
+  0%,100%{
+    transform:scale(.9);
+    opacity:.3;
+  }
+  50%{
+    transform:scale(1.08);
+    opacity:.7;
+  }
+}
+
+
+/* =========================
+   NUMBER
+========================= */
 
 #number{
   position:relative;
-  z-index:3;
-  font-size:min(49vw,300px);
+  z-index:5;
+
+  font-size:min(60vw,360px);
+  line-height:1;
   font-weight:1000;
-  line-height:.9;
+
   text-shadow:
-    0 0 18px rgba(255,255,255,.22),
-    0 0 55px rgba(255,0,0,.16);
-  transition:.25s;
+    0 0 12px white,
+    0 0 35px rgba(255,255,255,.4);
+
+  transform:scale(1);
 }
 
-#number.hot{
-  transform:scale(1.06);
-  text-shadow:
-    0 0 20px #ffffff66,
-    0 0 60px #ff000055;
+#number.show{
+  animation:numberShow .5s cubic-bezier(.1,1,.2,1);
 }
 
-#status{
-  position:absolute;
-  bottom:15%;
-  font-size:11px;
-  letter-spacing:.28em;
-  opacity:.28;
+@keyframes numberShow{
+  0%{
+    opacity:0;
+    transform:scale(1.35);
+    filter:blur(8px);
+  }
+
+  60%{
+    opacity:1;
+    transform:scale(.97);
+    filter:blur(0);
+  }
+
+  100%{
+    transform:scale(1);
+  }
 }
 
-button{
-  border:1px solid #ffffff55;
-  color:#fff;
-  background:#111;
-  border-radius:999px;
-  padding:16px 42px;
-  font-size:16px;
-  font-weight:900;
-  letter-spacing:.14em;
-}
+
+/* =========================
+   START
+========================= */
 
 #start{
   position:absolute;
-  bottom:7%;
-  z-index:10;
-}
-
-/* ===== FX ===== */
-
-#fx{
-  position:fixed;
-  inset:0;
+  bottom:8%;
   z-index:20;
-  display:none;
-  overflow:hidden;
-  background:#000;
+
+  padding:17px 48px;
+
+  border-radius:100px;
+
+  border:1px solid rgba(255,255,255,.4);
+
+  background:rgba(0,0,0,.7);
+
+  color:white;
+
+  font-size:17px;
+  font-weight:900;
+
+  letter-spacing:.15em;
 }
 
-#fx.show{
-  display:block;
-}
-
-#fire{
+#test{
   position:absolute;
-  inset:-25%;
-  opacity:0;
-  background:
-    radial-gradient(circle at center,
-    #fff 0%,
-    #ffe469 5%,
-    #ff6a00 14%,
-    #a50000 32%,
-    #210000 58%,
-    #000 80%);
+  top:max(20px,env(safe-area-inset-top));
+  z-index:10;
+
+  font-size:10px;
+  letter-spacing:.2em;
+  opacity:.25;
 }
 
-#fire.burst{
-  animation:fireBurst 1.2s ease-out forwards;
-}
 
-@keyframes fireBurst{
-  0%{opacity:0;transform:scale(.7)}
-  12%{opacity:1;transform:scale(.9)}
-  45%{opacity:.9;transform:scale(1.08)}
-  100%{opacity:.4;transform:scale(1.25)}
-}
+/* =========================
+   BLACKOUT
+========================= */
 
-#slash{
-  position:absolute;
-  left:-30%;
-  top:48%;
-  width:160%;
-  height:18px;
-  z-index:9;
-  opacity:0;
-  transform:rotate(-16deg) scaleX(.02);
-  transform-origin:left center;
-  background:#fff;
-  box-shadow:
-    0 0 16px #fff,
-    0 0 40px #fff,
-    0 0 80px #ff7b00,
-    0 0 130px #ff0000;
-}
-
-#slash.go{
-  animation:slashGo .2s ease-out forwards;
-}
-
-@keyframes slashGo{
-  0%{
-    opacity:0;
-    transform:rotate(-16deg) scaleX(.02);
-  }
-  20%{opacity:1}
-  100%{
-    opacity:1;
-    transform:rotate(-16deg) scaleX(1);
-  }
-}
-
-#topPanel,#bottomPanel{
-  position:absolute;
-  inset:-12%;
-  z-index:7;
-  background:
-    radial-gradient(circle,#181818,#050505 60%,#000);
-  transition:.6s cubic-bezier(.1,.85,.15,1);
-}
-
-#topPanel{
-  clip-path:polygon(0 0,100% 0,100% 42%,0 68%);
-}
-
-#bottomPanel{
-  clip-path:polygon(0 68%,100% 42%,100% 100%,0 100%);
-}
-
-#fx.torn #topPanel{
-  transform:translate(-12%,-16%) rotate(-2deg);
-}
-
-#fx.torn #bottomPanel{
-  transform:translate(12%,16%) rotate(2deg);
-}
-
-#hit{
-  position:absolute;
-  inset:0;
-  z-index:6;
-  display:grid;
-  place-items:center;
-  opacity:0;
-  transform:scale(.4);
-  font-size:min(24vw,165px);
-  font-weight:1000;
-  text-shadow:
-    0 0 15px #fff,
-    0 0 45px #ff9500,
-    0 0 85px #ff0000;
-}
-
-#hit.show{
-  animation:hitPop .65s cubic-bezier(.08,1.3,.18,1) forwards;
-}
-
-@keyframes hitPop{
-  0%{opacity:0;transform:scale(.4)}
-  55%{opacity:1;transform:scale(1.18)}
-  100%{opacity:1;transform:scale(1)}
-}
-
-#white{
+#black{
   position:fixed;
   inset:0;
   z-index:50;
-  pointer-events:none;
-  background:#fff;
-  opacity:0;
-}
 
-#white.flash{
-  animation:whiteFlash .28s ease-out;
-}
-
-@keyframes whiteFlash{
-  0%{opacity:0}
-  12%{opacity:1}
-  100%{opacity:0}
-}
-
-#blackout{
-  position:fixed;
-  inset:0;
-  z-index:40;
-  display:none;
   background:#000;
+
+  display:none;
 }
 
-.shake{
-  animation:shake .32s linear;
-}
 
-@keyframes shake{
-  0%{transform:translate(0,0)}
-  16%{transform:translate(-9px,4px)}
-  32%{transform:translate(10px,-5px)}
-  48%{transform:translate(-8px,-2px)}
-  64%{transform:translate(7px,5px)}
-  80%{transform:translate(-4px,-3px)}
-  100%{transform:translate(0,0)}
-}
+/* =========================
+   SLASH
+========================= */
 
-/* ===== WIN ===== */
-
-#win{
+#slashLayer{
   position:fixed;
   inset:0;
-  z-index:60;
+
+  z-index:70;
+
+  pointer-events:none;
+
   display:none;
-  place-items:center;
-  text-align:center;
-  background:
-    radial-gradient(circle,#4b1600 0%,#130000 38%,#000 78%);
+
+  overflow:hidden;
 }
 
-#winInner{
+#slashLayer.show{
+  display:block;
+}
+
+.slash{
+  position:absolute;
+
+  left:-30%;
+  top:50%;
+
+  width:160%;
+  height:8px;
+
+  background:white;
+
+  box-shadow:
+    0 0 12px white,
+    0 0 30px white,
+    0 0 70px rgba(255,255,255,.8);
+
+  transform:
+    rotate(-18deg)
+    scaleX(0);
+
+  transform-origin:center;
+}
+
+#slashLayer.go .slash{
+  animation:slash .22s ease-out forwards;
+}
+
+@keyframes slash{
+  0%{
+    transform:
+      rotate(-18deg)
+      scaleX(0);
+
+    opacity:0;
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      rotate(-18deg)
+      scaleX(1);
+
+    opacity:1;
+  }
+}
+
+
+/* =========================
+   FLASH
+========================= */
+
+#flash{
+  position:fixed;
+  inset:0;
+
+  z-index:90;
+
+  background:white;
+
   opacity:0;
-  transform:scale(.6);
+
+  pointer-events:none;
 }
 
-#win.show #winInner{
-  animation:winIn .8s cubic-bezier(.1,1.25,.2,1) forwards;
+#flash.go{
+  animation:flash .5s ease-out;
 }
 
-@keyframes winIn{
+@keyframes flash{
+  0%{opacity:0;}
+  8%{opacity:1;}
+  20%{opacity:.25;}
+  32%{opacity:1;}
+  100%{opacity:0;}
+}
+
+
+/* =========================
+   HIT
+========================= */
+
+#hit{
+  position:fixed;
+  inset:0;
+
+  z-index:100;
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  background:
+    radial-gradient(circle,
+      #7b1600 0%,
+      #310000 32%,
+      #080000 65%,
+      #000 100%);
+
+  overflow:hidden;
+}
+
+#hit.show{
+  display:flex;
+}
+
+#hitGlow{
+  position:absolute;
+
+  width:150vw;
+  height:150vw;
+
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      transparent,
+      rgba(255,150,0,.35),
+      transparent,
+      rgba(255,0,0,.4),
+      transparent);
+
+  animation:rotate 3s linear infinite;
+}
+
+@keyframes rotate{
   to{
+    transform:rotate(360deg);
+  }
+}
+
+#hitText{
+  position:relative;
+  z-index:5;
+
+  font-size:min(24vw,150px);
+
+  font-weight:1000;
+
+  opacity:0;
+
+  transform:scale(.25);
+
+  text-shadow:
+    0 0 10px white,
+    0 0 25px #ffdc00,
+    0 0 60px #ff4d00,
+    0 0 100px red;
+}
+
+#hit.show #hitText{
+  animation:hitText .65s cubic-bezier(.05,1.4,.2,1) forwards;
+}
+
+@keyframes hitText{
+
+  0%{
+    opacity:0;
+    transform:scale(.25);
+    filter:blur(12px);
+  }
+
+  65%{
+    opacity:1;
+    transform:scale(1.18);
+    filter:blur(0);
+  }
+
+  100%{
     opacity:1;
     transform:scale(1);
   }
 }
 
-#winTitle{
-  font-size:min(13vw,88px);
-  font-weight:1000;
-  text-shadow:
-    0 0 18px #ffffffaa,
-    0 0 50px #ff990088;
+
+/* =========================
+   CONGRATS
+========================= */
+
+#congrats{
+  position:absolute;
+
+  bottom:20%;
+
+  font-size:15px;
+
+  letter-spacing:.25em;
+
+  font-weight:800;
+
+  opacity:0;
 }
 
-#winSub{
-  margin-top:18px;
-  font-size:min(7vw,38px);
-  font-weight:900;
+#hit.show #congrats{
+  animation:congrats 1s 1s forwards;
 }
+
+@keyframes congrats{
+  to{
+    opacity:.9;
+  }
+}
+
+
+/* =========================
+   NEXT
+========================= */
 
 #next{
   position:absolute;
+
   bottom:7%;
+
+  z-index:10;
+
+  padding:15px 42px;
+
+  border-radius:100px;
+
+  border:1px solid rgba(255,255,255,.45);
+
+  background:rgba(0,0,0,.65);
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:900;
+
+  opacity:0;
+
+  pointer-events:none;
+}
+
+#hit.show #next{
+  animation:nextShow .5s 2.5s forwards;
+}
+
+@keyframes nextShow{
+  to{
+    opacity:1;
+    pointer-events:auto;
+  }
+}
+
+
+/* =========================
+   SHAKE
+========================= */
+
+.shake{
+  animation:shake .3s linear;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0);}
+  15%{transform:translate(-9px,5px);}
+  30%{transform:translate(10px,-6px);}
+  45%{transform:translate(-7px,-5px);}
+  60%{transform:translate(8px,6px);}
+  80%{transform:translate(-4px,2px);}
+  100%{transform:translate(0,0);}
 }
 </style>
 </head>
@@ -311,720 +460,580 @@ button{
 <body>
 
 <div id="stage">
-  <div id="energy"></div>
-  <div id="number">3</div>
-  <div id="status">TEST MODE / 100% HIT</div>
-  <button id="start">START</button>
-</div>
 
-<div id="fx">
-  <div id="fire"></div>
-  <div id="hit">当たり</div>
-  <div id="topPanel"></div>
-  <div id="bottomPanel"></div>
-  <div id="slash"></div>
-</div>
+  <div id="bgGlow"></div>
 
-<div id="blackout"></div>
-<div id="white"></div>
-
-<div id="win">
-  <div id="winInner">
-    <div id="winTitle">CONGRATULATIONS</div>
-    <div id="winSub">おめでとうございます</div>
+  <div id="test">
+    TEST MODE / 100% HIT
   </div>
-  <button id="next">NEXT</button>
+
+  <div id="number">3</div>
+
+  <button id="start">
+    START
+  </button>
+
 </div>
+
+
+<div id="black"></div>
+
+
+<div id="slashLayer">
+  <div class="slash"></div>
+</div>
+
+
+<div id="flash"></div>
+
+
+<div id="hit">
+
+  <div id="hitGlow"></div>
+
+  <div id="hitText">
+    当たり
+  </div>
+
+  <div id="congrats">
+    CONGRATULATIONS
+  </div>
+
+  <button id="next">
+    NEXT
+  </button>
+
+</div>
+
+
+<!-- ★ 今回の当たり後の音 -->
+<audio
+  id="hitMusic"
+  src="hit_music.mp3"
+  preload="auto">
+</audio>
+
 
 <script>
+
 const $ = s => document.querySelector(s);
-const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
-let ctx;
-let busy=false;
-let bgm=[];
+const sleep = ms =>
+  new Promise(resolve => setTimeout(resolve,ms));
+
+let busy = false;
 
 
-/* ======================
-   AUDIO CORE
-====================== */
+/* =========================
+   HIT MUSIC
+========================= */
 
-function initAudio(){
+const hitMusic = $("#hitMusic");
 
-  if(!ctx){
-    ctx=new (window.AudioContext||window.webkitAudioContext)();
+hitMusic.volume = 1;
+
+
+/*
+ iPhone Safari対策。
+
+ STARTを押した瞬間に一度
+ audioを再生可能状態にする。
+*/
+async function unlockHitMusic(){
+
+  try{
+
+    hitMusic.muted = true;
+
+    await hitMusic.play();
+
+    hitMusic.pause();
+
+    hitMusic.currentTime = 0;
+
+    hitMusic.muted = false;
+
+  }catch(e){
+
+    hitMusic.muted = false;
+
   }
 
-  if(ctx.state==="suspended"){
-    ctx.resume();
+}
+
+
+function stopHitMusic(){
+
+  hitMusic.pause();
+
+  try{
+    hitMusic.currentTime = 0;
+  }catch(e){}
+
+}
+
+
+async function playHitMusic(){
+
+  stopHitMusic();
+
+  hitMusic.volume = 1;
+
+  try{
+
+    await hitMusic.play();
+
+  }catch(e){
+
+    console.log(
+      "hit music play error",
+      e
+    );
+
   }
+
 }
 
-function tone(
-  freq,
-  duration=.3,
-  volume=.1,
-  type="sine",
-  delay=0
-){
 
-  const o=ctx.createOscillator();
-  const g=ctx.createGain();
+/* =========================
+   SIMPLE COUNT SOUND
+========================= */
 
-  const t=ctx.currentTime+delay;
+let audioCtx = null;
 
-  o.type=type;
-  o.frequency.setValueAtTime(freq,t);
 
-  g.gain.setValueAtTime(Math.max(volume,.0001),t);
-  g.gain.exponentialRampToValueAtTime(.0001,t+duration);
+function startAudio(){
 
-  o.connect(g);
-  g.connect(ctx.destination);
+  if(!audioCtx){
 
-  o.start(t);
-  o.stop(t+duration+.05);
+    audioCtx =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+  }
+
+  if(audioCtx.state === "suspended"){
+
+    audioCtx.resume();
+
+  }
+
 }
 
-function noise(duration=.12,volume=.12){
 
-  const length=Math.floor(ctx.sampleRate*duration);
+/*
+ 今は仮のカウント音。
 
-  const buffer=ctx.createBuffer(
-    1,
-    length,
-    ctx.sampleRate
+ 後でここを
+ 本物の緊張BGMに交換できる。
+*/
+function countSound(n){
+
+  if(!audioCtx) return;
+
+  const osc =
+    audioCtx.createOscillator();
+
+  const gain =
+    audioCtx.createGain();
+
+  const now =
+    audioCtx.currentTime;
+
+  const frequency =
+    n === 3 ? 82 :
+    n === 2 ? 73 :
+              65;
+
+  osc.type = "sine";
+
+  osc.frequency.setValueAtTime(
+    frequency,
+    now
   );
 
-  const data=buffer.getChannelData(0);
-
-  for(let i=0;i<length;i++){
-    data[i]=Math.random()*2-1;
-  }
-
-  const src=ctx.createBufferSource();
-  const filter=ctx.createBiquadFilter();
-  const gain=ctx.createGain();
-
-  src.buffer=buffer;
-
-  filter.type="bandpass";
-  filter.frequency.value=1450;
-  filter.Q.value=.8;
-
-  gain.gain.value=volume;
+  gain.gain.setValueAtTime(
+    .12,
+    now
+  );
 
   gain.gain.exponentialRampToValueAtTime(
     .0001,
-    ctx.currentTime+duration
+    now + .7
   );
 
-  src.connect(filter);
-  filter.connect(gain);
-  gain.connect(ctx.destination);
+  osc.connect(gain);
 
-  src.start();
-}
-
-
-/* ======================
-   ACTUAL TENSION BGM
-====================== */
-
-function startBGM(){
-
-  stopBGM();
-
-  const master=ctx.createGain();
-
-  master.gain.value=.055;
-  master.connect(ctx.destination);
-
-  bgm.push(master);
-
-  /*
-   Dark repeating chord / melody
-  */
-
-  const notes=[
-    55,
-    65.4,
-    73.4,
-    82.4
-  ];
-
-  let step=0;
-
-  function loop(){
-
-    if(!bgm.length)return;
-
-    const root=notes[step%notes.length];
-
-    const bass=ctx.createOscillator();
-    const bassGain=ctx.createGain();
-
-    bass.type="sine";
-    bass.frequency.value=root;
-
-    bassGain.gain.setValueAtTime(
-      .24,
-      ctx.currentTime
-    );
-
-    bassGain.gain.exponentialRampToValueAtTime(
-      .001,
-      ctx.currentTime+.75
-    );
-
-    bass.connect(bassGain);
-    bassGain.connect(master);
-
-    bass.start();
-    bass.stop(ctx.currentTime+.8);
-
-    /* dark upper tone */
-
-    const pad=ctx.createOscillator();
-    const padGain=ctx.createGain();
-
-    pad.type="triangle";
-    pad.frequency.value=root*2;
-
-    padGain.gain.setValueAtTime(
-      .035,
-      ctx.currentTime
-    );
-
-    padGain.gain.exponentialRampToValueAtTime(
-      .001,
-      ctx.currentTime+.75
-    );
-
-    pad.connect(padGain);
-    padGain.connect(master);
-
-    pad.start();
-    pad.stop(ctx.currentTime+.8);
-
-    step++;
-
-    bgm.timer=setTimeout(loop,780);
-  }
-
-  loop();
-}
-
-function increaseBGM(level){
-
-  const master=bgm[0];
-
-  if(!master)return;
-
-  const target=
-    level===1 ? .055 :
-    level===2 ? .075 :
-    .10;
-
-  master.gain.linearRampToValueAtTime(
-    target,
-    ctx.currentTime+.35
-  );
-}
-
-function stopBGM(){
-
-  if(bgm.timer){
-    clearTimeout(bgm.timer);
-  }
-
-  if(bgm[0]){
-    try{
-      bgm[0].gain.linearRampToValueAtTime(
-        .0001,
-        ctx.currentTime+.05
-      );
-    }catch(e){}
-  }
-
-  bgm=[];
-}
-
-
-/* ======================
-   COUNT SOUNDS
-====================== */
-
-function countSound(n){
-
-  const f=
-    n===3 ? 58 :
-    n===2 ? 66 :
-    76;
-
-  tone(f,.42,.22,"sine");
-  tone(f*2,.16,.04,"triangle");
-
-  setTimeout(()=>{
-    tone(f-8,.22,.11,"sine");
-  },210);
-}
-
-
-/* ======================
-   SLASH SOUND
-====================== */
-
-function slashSound(){
-
-  noise(.13,.24);
-
-  tone(1300,.09,.1,"sawtooth");
-  tone(840,.15,.08,"sawtooth",.03);
-
-  setTimeout(()=>{
-    tone(54,.7,.5,"sine");
-    tone(108,.35,.08,"triangle");
-  },55);
-}
-
-
-/* ======================
-   ORIGINAL CONFIRM SOUND
-====================== */
-
-function confirmSound(){
-
-  /*
-    Original "big win" style sound.
-    Not copied from any machine.
-  */
-
-  const now=ctx.currentTime;
-
-  const o=ctx.createOscillator();
-  const g=ctx.createGain();
-
-  o.type="sine";
-
-  o.frequency.setValueAtTime(480,now);
-  o.frequency.exponentialRampToValueAtTime(
-    1400,
-    now+.20
-  );
-  o.frequency.exponentialRampToValueAtTime(
-    2600,
-    now+.55
+  gain.connect(
+    audioCtx.destination
   );
 
-  g.gain.setValueAtTime(.001,now);
-  g.gain.linearRampToValueAtTime(.22,now+.04);
-  g.gain.exponentialRampToValueAtTime(.001,now+.72);
+  osc.start(now);
 
-  o.connect(g);
-  g.connect(ctx.destination);
-
-  o.start();
-  o.stop(now+.75);
-
-  /* sparkle sequence */
-
-  const notes=[
-    1200,
-    1450,
-    1700,
-    2000,
-    2350
-  ];
-
-  notes.forEach((f,i)=>{
-    tone(
-      f,
-      .12,
-      .075,
-      "triangle",
-      .20+i*.075
-    );
-  });
-
-  /* final punch */
-
-  tone(72,.65,.36,"sine",.12);
-}
-
-
-/* ======================
-   WIN JINGLE
-====================== */
-
-function winJingle(){
-
-  const notes=[
-    523,
-    659,
-    784,
-    1046
-  ];
-
-  notes.forEach((n,i)=>{
-    tone(
-      n,
-      .42,
-      .13,
-      "triangle",
-      i*.18
-    );
-  });
-
-  tone(
-    130,
-    1.0,
-    .12,
-    "sine",
-    .15
+  osc.stop(
+    now + .75
   );
+
 }
 
 
-/* ======================
-   VISUALS
-====================== */
+/* =========================
+   NUMBER
+========================= */
 
-function flash(){
+function showNumber(n){
 
-  const f=$("#white");
+  const el = $("#number");
 
-  f.classList.remove("flash");
+  el.className = "";
 
-  void f.offsetWidth;
+  el.textContent = n;
 
-  f.classList.add("flash");
-}
+  void el.offsetWidth;
 
-function shake(){
-
-  document.body.classList.remove("shake");
-
-  void document.body.offsetWidth;
-
-  document.body.classList.add("shake");
-
-  setTimeout(()=>{
-    document.body.classList.remove("shake");
-  },350);
-}
-
-function resetFX(){
-
-  $("#fx").className="";
-  $("#slash").className="";
-  $("#fire").className="";
-  $("#hit").className="";
-  $("#blackout").style.display="none";
-}
-
-
-/* ======================
-   HIT FX
-====================== */
-
-async function cutHit(){
-
-  stopBGM();
-
-  /*
-   This silence is intentional.
-  */
-
-  await sleep(330);
-
-  $("#fx").className="show";
-
-  await sleep(110);
-
-  $("#slash").className="go";
-
-  slashSound();
-
-  await sleep(115);
-
-  flash();
-
-  $("#fx").classList.add("torn");
-  $("#fire").className="burst";
-
-  shake();
-
-  await sleep(260);
-
-  $("#hit").className="show";
-
-  /*
-    Delay after impact.
-    Then confirmation sound.
-  */
-
-  await sleep(160);
-
-  confirmSound();
-
-  await sleep(1500);
-}
-
-
-/* ======================
-   COUNTDOWN
-====================== */
-
-async function showCount(n,level){
-
-  const number=$("#number");
-
-  number.textContent=n;
-  number.className="hot";
-
-  increaseBGM(level);
-
-  $("#energy").style.opacity=
-    level===1 ? ".25" :
-    level===2 ? ".42" :
-    ".62";
-
-  $("#energy").style.transform=
-    `scale(${1+level*.08})`;
+  el.className = "show";
 
   countSound(n);
 
-  const hold=
-    n===3 ? 1500 :
-    n===2 ? 1650 :
-    1850;
-
-  await sleep(hold);
-
-  number.className="";
-
-  await sleep(420);
 }
 
 
-/* ======================
-   OTHER HIT TYPES
-====================== */
+/* =========================
+   FLASH
+========================= */
+
+function flash(){
+
+  const el = $("#flash");
+
+  el.className = "";
+
+  void el.offsetWidth;
+
+  el.className = "go";
+
+}
+
+
+/* =========================
+   SHAKE
+========================= */
+
+function shake(){
+
+  document.body.classList.remove(
+    "shake"
+  );
+
+  void document.body.offsetWidth;
+
+  document.body.classList.add(
+    "shake"
+  );
+
+  setTimeout(()=>{
+
+    document.body.classList.remove(
+      "shake"
+    );
+
+  },350);
+
+}
+
+
+/* =========================
+   SLASH HIT
+========================= */
+
+async function slashHit(){
+
+  /*
+   当たり直前は一瞬静かにする。
+  */
+
+  await sleep(300);
+
+
+  $("#slashLayer").className =
+    "show go";
+
+
+  await sleep(180);
+
+
+  flash();
+
+  shake();
+
+
+  await sleep(260);
+
+
+  $("#slashLayer").className = "";
+
+
+  /*
+   ★ 当たり表示
+  */
+
+  $("#hit").className = "show";
+
+
+  /*
+   ★ ここで今回の音をスタート
+
+   当たり表示とほぼ同時。
+  */
+
+  await sleep(120);
+
+  playHitMusic();
+
+}
+
+
+/* =========================
+   BLACKOUT HIT
+========================= */
 
 async function blackoutHit(){
 
-  stopBGM();
+  $("#black").style.display =
+    "block";
 
-  $("#blackout").style.display="block";
+
+  /*
+   この無音時間を長めにして
+   「え？」を作る。
+  */
 
   await sleep(1400);
 
-  tone(34,.8,.18,"sine");
 
-  await sleep(500);
+  $("#black").style.display =
+    "none";
 
-  $("#blackout").style.display="none";
 
-  await cutHit();
+  await slashHit();
+
 }
 
-async function silenceHit(){
 
-  stopBGM();
+/* =========================
+   NORMAL HIT
+========================= */
 
-  $("#number").textContent="";
+async function normalHit(){
 
-  await sleep(2100);
-
-  await cutHit();
-}
-
-async function revivalHit(){
-
-  stopBGM();
-
-  $("#number").textContent="";
-
-  $("#start").style.display="block";
-
-  await sleep(1900);
-
-  $("#start").style.display="none";
-
-  $("#blackout").style.display="block";
+  /*
+   1の後にちょっと溜める
+  */
 
   await sleep(650);
 
-  tone(42,.35,.18,"sine");
+  await slashHit();
 
-  await sleep(500);
-
-  $("#blackout").style.display="none";
-
-  await cutHit();
 }
 
 
-/* ======================
-   MAIN
-====================== */
+/* =========================
+   REVIVAL HIT
+========================= */
+
+async function revivalHit(){
+
+  /*
+   一回終わったように見せる。
+  */
+
+  $("#number").textContent = "";
+
+  await sleep(1300);
+
+
+  $("#black").style.display =
+    "block";
+
+
+  await sleep(850);
+
+
+  $("#black").style.display =
+    "none";
+
+
+  await slashHit();
+
+}
+
+
+/* =========================
+   PLAY
+========================= */
 
 async function play(){
 
-  if(busy)return;
+  if(busy) return;
 
-  busy=true;
+  busy = true;
 
-  initAudio();
 
-  resetFX();
+  startAudio();
 
-  $("#start").style.display="none";
+  await unlockHitMusic();
 
-  $("#win").style.display="none";
-  $("#win").className="";
 
-  startBGM();
+  stopHitMusic();
+
+
+  $("#start").style.display =
+    "none";
+
+
+  $("#hit").className = "";
+
 
   /*
-   TEST MODE: 100% HIT
+   今は100%当たり。
 
-   0 = hit during 3
-   1 = hit during 2
-   2 = hit during 1
-   3 = blackout after 1
-   4 = silence after 1
-   5 = revival
+   当たり方だけランダム。
   */
 
-  const event=Math.floor(Math.random()*6);
+  const pattern =
+    Math.floor(
+      Math.random() * 6
+    );
 
 
-  /* 3 */
+  /* =================
+     3
+  ================= */
 
-  if(event===0){
+  showNumber(3);
 
-    $("#number").textContent="3";
 
-    increaseBGM(1);
-    countSound(3);
+  if(pattern === 0){
 
-    await sleep(1200);
+    await sleep(1450);
 
-    await cutHit();
+    return slashHit();
 
-    return finishWin();
   }
 
-  await showCount(3,1);
+
+  await sleep(2100);
 
 
-  /* 2 */
+  /* =================
+     2
+  ================= */
 
-  if(event===1){
+  showNumber(2);
 
-    $("#number").textContent="2";
 
-    increaseBGM(2);
-    countSound(2);
+  if(pattern === 1){
 
-    await sleep(1350);
+    await sleep(1550);
 
-    await cutHit();
+    return slashHit();
 
-    return finishWin();
   }
 
-  await showCount(2,2);
+
+  await sleep(2250);
 
 
-  /* 1 */
+  /* =================
+     1
+  ================= */
 
-  if(event===2){
+  showNumber(1);
 
-    $("#number").textContent="1";
 
-    increaseBGM(3);
-    countSound(1);
+  if(pattern === 2){
 
-    await sleep(1500);
+    await sleep(1750);
 
-    await cutHit();
+    return slashHit();
 
-    return finishWin();
   }
 
-  await showCount(1,3);
+
+  await sleep(2450);
 
 
-  $("#number").textContent="";
+  $("#number").textContent = "";
 
 
-  if(event===3){
+  /* =================
+     AFTER 1
+  ================= */
+
+  if(pattern === 3){
+
+    await normalHit();
+
+  }
+
+  else if(pattern === 4){
 
     await blackoutHit();
 
-  }else if(event===4){
-
-    await silenceHit();
-
-  }else{
-
-    await revivalHit();
   }
 
+  else{
 
-  finishWin();
+    await revivalHit();
+
+  }
+
 }
 
 
-/* ======================
-   FINISH
-====================== */
-
-async function finishWin(){
-
-  await sleep(600);
-
-  resetFX();
-
-  $("#win").style.display="grid";
-
-  requestAnimationFrame(()=>{
-    $("#win").classList.add("show");
-  });
-
-  winJingle();
-}
-
-
-/* ======================
+/* =========================
    RESET
-====================== */
+========================= */
 
 function reset(){
 
-  stopBGM();
+  stopHitMusic();
 
-  $("#win").style.display="none";
-  $("#win").className="";
 
-  resetFX();
+  $("#hit").className = "";
 
-  $("#number").textContent="3";
-  $("#number").className="";
+  $("#black").style.display =
+    "none";
 
-  $("#energy").style.opacity=".18";
-  $("#energy").style.transform="scale(1)";
+  $("#slashLayer").className =
+    "";
 
-  $("#start").style.display="block";
+  $("#number").textContent =
+    "3";
 
-  busy=false;
+  $("#number").className =
+    "";
+
+  $("#start").style.display =
+    "block";
+
+  busy = false;
+
 }
 
-$("#start").onclick=play;
-$("#next").onclick=reset;
+
+$("#start").addEventListener(
+  "click",
+  play
+);
+
+
+$("#next").addEventListener(
+  "click",
+  reset
+);
 
 </script>
 
