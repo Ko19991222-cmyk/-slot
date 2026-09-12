@@ -7,21 +7,21 @@
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-
 html,body{
   margin:0;width:100%;height:100%;overflow:hidden;
   background:#000;color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
+body{display:flex;align-items:center;justify-content:center}
 
-#main,#freeze{
+#main,#fx,#congrats{
   position:fixed;inset:0;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
 }
 
 #main{
-  background:radial-gradient(circle,#171717 0%,#050505 60%,#000 100%);
+  background:radial-gradient(circle,#181818 0%,#070707 58%,#000 100%);
 }
 
 #number{
@@ -30,8 +30,16 @@ html,body{
   line-height:1;
 }
 
+#status{
+  min-height:28px;
+  margin-top:15px;
+  opacity:.55;
+  letter-spacing:3px;
+  font-size:14px;
+}
+
 #start{
-  margin-top:60px;
+  margin-top:45px;
   width:min(78vw,340px);
   padding:20px;
   border:1px solid #555;
@@ -42,108 +50,89 @@ html,body{
   font-weight:900;
   letter-spacing:5px;
 }
-
 #start:active{transform:scale(.97)}
-#start:disabled{opacity:.25}
+#start:disabled{opacity:.2}
 
-#freeze{
+#fx{
   display:none;
   z-index:20;
   background:#000;
+  overflow:hidden;
 }
 
-#freeze.show{display:flex}
+#fx.show{display:flex}
+
+#fxText{
+  position:relative;
+  z-index:5;
+  font-size:clamp(54px,18vw,110px);
+  font-weight:1000;
+  letter-spacing:3px;
+  text-align:center;
+  opacity:0;
+}
+
+#subText{
+  position:relative;
+  z-index:5;
+  margin-top:18px;
+  font-size:18px;
+  letter-spacing:4px;
+  opacity:0;
+}
 
 #noise{
+  position:absolute;inset:-20px;
+  opacity:0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 3px,
+      rgba(255,255,255,.16) 4px
+    );
+}
+
+#light{
   position:absolute;inset:0;
   opacity:0;
-  pointer-events:none;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 3px,
-    rgba(255,255,255,.14) 4px
-  );
-}
-
-#freeze.show #noise{
-  animation:noise .08s 15 alternate;
-}
-
-@keyframes noise{
-  from{opacity:.05;transform:translateX(-5px)}
-  to{opacity:.65;transform:translateX(5px)}
-}
-
-#freezeText{
-  opacity:0;
-  font-size:clamp(55px,18vw,110px);
-  font-weight:1000;
-  letter-spacing:2px;
-  text-shadow:0 0 10px #fff,0 0 40px #fff;
-}
-
-#freezeText.go{
-  animation:freezeText 1.1s forwards;
-}
-
-@keyframes freezeText{
-  0%{
-    opacity:0;
-    transform:scale(.15);
-    filter:blur(15px);
-  }
-  35%{
-    opacity:1;
-    transform:scale(1.4);
-    filter:blur(0);
-  }
-  50%{transform:scale(.9)}
-  65%{transform:scale(1.1)}
-  100%{
-    opacity:1;
-    transform:scale(1);
-    text-shadow:0 0 15px #fff,0 0 60px #fff;
-  }
-}
-
-.flash{
-  animation:flash .08s 8 alternate;
-}
-
-@keyframes flash{
-  from{background:#000}
-  to{background:#fff}
-}
-
-.shake{
-  animation:shake .055s 14;
-}
-
-@keyframes shake{
-  0%{transform:translate(0)}
-  25%{transform:translate(-12px,4px)}
-  50%{transform:translate(10px,-5px)}
-  75%{transform:translate(-7px,-3px)}
-  100%{transform:translate(0)}
+  background:#fff;
 }
 
 #congrats{
   display:none;
-  position:absolute;
-  inset:0;
-  z-index:40;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
+  z-index:50;
   text-align:center;
   background:
-    radial-gradient(circle,#541000 0%,#160000 48%,#000 100%);
+    radial-gradient(circle,#5c1700 0%,#180000 48%,#000 100%);
 }
 
 #congrats.show{
   display:flex;
-  animation:congratsIn .7s ease-out;
+  animation:congratsIn .65s ease-out;
+}
+
+#congrats .big{
+  font-size:clamp(36px,11vw,68px);
+  font-weight:1000;
+  letter-spacing:2px;
+  text-shadow:0 0 12px #fff,0 0 30px #ffb000,0 0 70px #ff3b00;
+}
+
+#congrats .jp{
+  margin-top:20px;
+  font-size:clamp(24px,7vw,38px);
+  font-weight:900;
+}
+
+#next{
+  margin-top:50px;
+  padding:15px 40px;
+  border:1px solid #777;
+  border-radius:100px;
+  background:#111;
+  color:#fff;
+  font-size:15px;
 }
 
 @keyframes congratsIn{
@@ -151,30 +140,53 @@ html,body{
   to{opacity:1;transform:scale(1)}
 }
 
-#congrats .big{
-  font-size:clamp(38px,11vw,70px);
-  font-weight:1000;
-  letter-spacing:2px;
-  text-shadow:
-    0 0 10px #fff,
-    0 0 25px #ffb000,
-    0 0 60px #ff3b00;
+.boom{
+  animation:boom 1.2s forwards;
+}
+@keyframes boom{
+  0%{opacity:0;transform:scale(.15);filter:blur(14px)}
+  35%{opacity:1;transform:scale(1.55);filter:blur(0)}
+  55%{transform:scale(.9)}
+  75%{transform:scale(1.08)}
+  100%{opacity:1;transform:scale(1)}
 }
 
-#congrats .jp{
-  margin-top:22px;
-  font-size:clamp(25px,8vw,42px);
-  font-weight:900;
+.shake{
+  animation:shake .055s 18;
+}
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(-12px,5px)}
+  50%{transform:translate(11px,-6px)}
+  75%{transform:translate(-8px,-4px)}
+  100%{transform:translate(0,0)}
 }
 
-#next{
-  margin-top:55px;
-  padding:15px 40px;
-  border:1px solid #ffffff55;
-  border-radius:100px;
-  background:#111;
-  color:#fff;
-  font-size:15px;
+.flash{
+  animation:flash .08s 9 alternate;
+}
+@keyframes flash{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.red{
+  background:radial-gradient(circle,#8a0000 0%,#260000 55%,#000 100%)!important;
+}
+
+.gold{
+  background:radial-gradient(circle,#9c6500 0%,#3d2100 50%,#000 100%)!important;
+}
+
+.glitch{
+  animation:glitch .07s 18;
+}
+@keyframes glitch{
+  0%{transform:translate(0)}
+  25%{transform:translate(-10px,3px)}
+  50%{transform:translate(8px,-4px)}
+  75%{transform:translate(-5px,2px)}
+  100%{transform:translate(0)}
 }
 </style>
 </head>
@@ -183,12 +195,15 @@ html,body{
 
 <div id="main">
   <div id="number">3</div>
+  <div id="status">TEST MODE</div>
   <button id="start">START</button>
 </div>
 
-<div id="freeze">
+<div id="fx">
   <div id="noise"></div>
-  <div id="freezeText">FREEZE</div>
+  <div id="light"></div>
+  <div id="fxText">FREEZE</div>
+  <div id="subText"></div>
 </div>
 
 <div id="congrats">
@@ -198,26 +213,37 @@ html,body{
 </div>
 
 <script>
-const number = document.getElementById("number");
-const start = document.getElementById("start");
 const main = document.getElementById("main");
-const freeze = document.getElementById("freeze");
-const freezeText = document.getElementById("freezeText");
+const number = document.getElementById("number");
+const status = document.getElementById("status");
+const start = document.getElementById("start");
+
+const fx = document.getElementById("fx");
+const fxText = document.getElementById("fxText");
+const subText = document.getElementById("subText");
+const noise = document.getElementById("noise");
+const light = document.getElementById("light");
+
 const congrats = document.getElementById("congrats");
 const next = document.getElementById("next");
 
 let ctx;
+let busy=false;
 
-function getAudio(){
+function sleep(ms){
+  return new Promise(r=>setTimeout(r,ms));
+}
+
+function audio(){
   if(!ctx){
-    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
   }
-  if(ctx.state==="suspended") ctx.resume();
+  if(ctx.state==="suspended")ctx.resume();
   return ctx;
 }
 
 function tone(freq,duration,volume=.2,type="sine"){
-  const c=getAudio();
+  const c=audio();
   const o=c.createOscillator();
   const g=c.createGain();
 
@@ -234,122 +260,465 @@ function tone(freq,duration,volume=.2,type="sine"){
   o.stop(c.currentTime+duration);
 }
 
-function speak(text,rate=.85,pitch=.8){
-  return new Promise(resolve=>{
-    speechSynthesis.cancel();
+function speak(text,rate=.8,pitch=.85){
+  if(!("speechSynthesis" in window))return;
 
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang="ja-JP";
-    u.rate=rate;
-    u.pitch=pitch;
-    u.volume=1;
+  speechSynthesis.cancel();
 
-    u.onend=resolve;
-    u.onerror=resolve;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="ja-JP";
+  u.rate=rate;
+  u.pitch=pitch;
+  u.volume=1;
 
-    speechSynthesis.speak(u);
-  });
+  speechSynthesis.speak(u);
 }
 
-function sleep(ms){
-  return new Promise(r=>setTimeout(r,ms));
+function resetFX(){
+  fx.className="";
+  fx.style="";
+  fxText.className="";
+  fxText.style="";
+  fxText.textContent="FREEZE";
+  subText.style="";
+  subText.textContent="";
+  noise.style="";
+  light.style="";
 }
 
-async function countdown(){
-  for(const n of [3,2,1]){
-    number.textContent=n;
-
-    /* 数字は動かさず声だけ */
-    speak(String(n),.75,.75);
-
-    await sleep(1000);
-  }
-}
-
-function deepFreezeSound(){
-  const c=getAudio();
+function deepSound(){
+  const c=audio();
   const now=c.currentTime;
 
-  /* ゴゴゴ…系の低音 */
   const sub=c.createOscillator();
-  const gain=c.createGain();
+  const g=c.createGain();
 
-  sub.type="sawtooth";
-  sub.frequency.setValueAtTime(75,now);
+  sub.type="sine";
+  sub.frequency.setValueAtTime(90,now);
   sub.frequency.exponentialRampToValueAtTime(28,now+2);
 
-  gain.gain.setValueAtTime(.001,now);
-  gain.gain.exponentialRampToValueAtTime(.45,now+.08);
-  gain.gain.exponentialRampToValueAtTime(.001,now+2);
+  g.gain.setValueAtTime(.001,now);
+  g.gain.exponentialRampToValueAtTime(.8,now+.05);
+  g.gain.exponentialRampToValueAtTime(.001,now+2);
 
-  sub.connect(gain);
-  gain.connect(c.destination);
+  sub.connect(g);
+  g.connect(c.destination);
 
-  sub.start(now);
+  sub.start();
   sub.stop(now+2.1);
 
-  /* ドンッ */
-  setTimeout(()=>tone(55,.8,.9,"sine"),500);
-  setTimeout(()=>tone(38,1,.8,"sine"),900);
-
-  /* FREEZE確定音 */
-  setTimeout(()=>tone(850,.18,.25,"square"),1300);
-  setTimeout(()=>tone(1250,.22,.22,"square"),1500);
+  setTimeout(()=>tone(48,.7,.8),450);
+  setTimeout(()=>tone(36,1,.7),850);
 }
 
-async function freezeEffect(){
-  /* 一瞬の完全停止 */
-  number.textContent="";
-  await sleep(650);
+async function showFreeze(title="FREEZE"){
+  fxText.textContent=title;
+  fxText.classList.add("boom");
+  await sleep(1400);
+}
 
-  /* ブラックアウト */
-  main.style.display="none";
-  freeze.classList.add("show");
-
-  await sleep(450);
-
-  deepFreezeSound();
-
-  freeze.classList.add("shake");
-
-  await sleep(650);
-
-  freeze.classList.add("flash");
-
-  await sleep(350);
-
-  freezeText.classList.add("go");
-
-  await sleep(2300);
+async function finishWin(){
+  await sleep(700);
 
   congrats.classList.add("show");
 
-  tone(523,.25,.18);
-  setTimeout(()=>tone(659,.25,.18),200);
-  setTimeout(()=>tone(784,.5,.2),400);
+  tone(523,.25,.16);
+  setTimeout(()=>tone(659,.25,.16),180);
+  setTimeout(()=>tone(784,.5,.2),360);
 
-  await sleep(600);
-
+  await sleep(550);
   speak("おめでとうございます",.82,1);
 }
 
-async function play(){
-  start.disabled=true;
-  getAudio();
+/* 1 ブラックアウト */
+async function blackoutFreeze(){
+  resetFX();
+  main.style.display="none";
+  fx.classList.add("show");
 
-  await countdown();
+  await sleep(700);
+  deepSound();
+  await sleep(500);
+
+  await showFreeze();
+}
+
+/* 2 雷 */
+async function lightningFreeze(){
+  resetFX();
+  main.style.display="none";
+  fx.classList.add("show");
+
+  for(let i=0;i<5;i++){
+    light.style.opacity="1";
+    tone(900+Math.random()*700,.05,.12,"square");
+    await sleep(70);
+
+    light.style.opacity="0";
+    await sleep(100);
+  }
+
+  deepSound();
+  fx.classList.add("shake");
+
+  await showFreeze("FREEZE");
+}
+
+/* 3 赤 */
+async function redFreeze(){
+  resetFX();
+  main.style.display="none";
+  fx.classList.add("show","red");
+
+  for(let i=0;i<4;i++){
+    tone(60,.22,.5);
+    await sleep(500);
+  }
+
+  deepSound();
+  await showFreeze("FREEZE");
+}
+
+/* 4 ノイズ */
+async function noiseFreeze(){
+  resetFX();
+  main.style.display="none";
+  fx.classList.add("show","glitch");
+
+  noise.style.opacity=".7";
+
+  for(let i=0;i<10;i++){
+    tone(150+Math.random()*900,.06,.08,"square");
+    await sleep(80);
+  }
+
+  noise.style.opacity=".15";
+
+  deepSound();
+  await showFreeze("FREEZE");
+}
+
+/* 5 逆転 */
+async function reverseFreeze(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+  start.style.opacity=".25";
+
+  await sleep(900);
+
+  number.textContent="1";
+  await sleep(300);
+  number.textContent="2";
+  await sleep(300);
+  number.textContent="3";
+
+  tone(700,.2,.18,"square");
+
+  await sleep(450);
+
+  main.style.display="none";
+  fx.classList.add("show");
+  deepSound();
+
+  await showFreeze("FREEZE");
+}
+
+/* 6 無音 */
+async function silentFreeze(){
+  resetFX();
+
+  number.textContent="";
+  status.textContent="";
+
+  await sleep(2200);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  light.style.opacity="1";
+  await sleep(90);
+  light.style.opacity="0";
+
+  await showFreeze();
+}
+
+/* 7 金 */
+async function goldFreeze(){
+  resetFX();
+  main.style.display="none";
+  fx.classList.add("show","gold");
+
+  tone(880,.2,.18,"square");
+  await sleep(180);
+  tone(1100,.2,.18,"square");
+  await sleep(180);
+  tone(1500,.5,.18,"square");
+
+  deepSound();
+
+  fxText.style.color="#ffd84a";
+  fxText.style.textShadow="0 0 15px #fff,0 0 40px #ffd84a,0 0 80px #ff9800";
+
+  await showFreeze("GOLD FREEZE");
+}
+
+/* 8 超ロング */
+async function longFreeze(){
+  resetFX();
+
+  number.textContent="";
+  status.textContent="";
+
+  await sleep(900);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+
+  for(let i=0;i<4;i++){
+    light.style.opacity=".5";
+    await sleep(130);
+    light.style.opacity="0";
+    await sleep(700);
+  }
+
+  noise.style.opacity=".3";
+  fx.classList.add("shake");
+
+  await sleep(700);
+
+  await showFreeze("LONG FREEZE");
+}
+
+/* 9 フェイント */
+async function feintFreeze(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+  start.disabled=false;
+
+  await sleep(1300);
+
+  start.disabled=true;
+
+  tone(45,.7,.8);
+
+  await sleep(250);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  await showFreeze();
+}
+
+/* 10 通常復活 */
+async function revivalNormal(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+  start.disabled=false;
+
+  await sleep(1200);
+
+  status.textContent="…";
+
+  await sleep(500);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  await showFreeze("REVIVAL");
+}
+
+/* 11 遅れ復活 */
+async function revivalDelay(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+  start.disabled=false;
+
+  await sleep(2700);
+
+  tone(40,.8,.8);
+
+  await sleep(300);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  await showFreeze("REVIVAL");
+}
+
+/* 12 声復活 */
+async function revivalVoice(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+  start.disabled=false;
+
+  await sleep(1400);
+
+  speak("まだだ",.65,.6);
+
+  await sleep(1000);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  await showFreeze("REVIVAL");
+}
+
+/* 13 逆転復活 */
+async function revivalReverse(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+
+  await sleep(1000);
+
+  number.textContent="1";
+  await sleep(300);
+
+  number.textContent="2";
+  await sleep(300);
+
+  number.textContent="3";
+
+  tone(1000,.15,.18,"square");
+
+  await sleep(350);
+
+  main.style.display="none";
+  fx.classList.add("show");
+
+  deepSound();
+  await showFreeze("REVIVAL");
+}
+
+/* 14 金復活 */
+async function revivalGold(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+
+  await sleep(1400);
+
+  main.style.background=
+    "radial-gradient(circle,#ffd84a 0%,#6b3d00 25%,#000 70%)";
+
+  tone(1200,.4,.2,"square");
+
+  await sleep(700);
+
+  main.style.display="none";
+
+  fx.classList.add("show","gold");
+
+  deepSound();
+
+  fxText.style.color="#ffd84a";
+
+  await showFreeze("GOLD REVIVAL");
+}
+
+/* 15 二段階復活 */
+async function revivalDouble(){
+  resetFX();
+
+  number.textContent="3";
+  status.textContent="";
+
+  await sleep(1200);
+
+  status.textContent="…";
+
+  await sleep(700);
+
+  status.textContent="";
+  number.textContent="3";
+
+  await sleep(1300);
+
+  tone(38,.8,.9);
+
+  await sleep(300);
+
+  main.style.display="none";
+  fx.classList.add("show","shake");
+
+  deepSound();
+
+  await showFreeze("DOUBLE REVIVAL");
+}
+
+const patterns=[
+  blackoutFreeze,
+  lightningFreeze,
+  redFreeze,
+  noiseFreeze,
+  reverseFreeze,
+  silentFreeze,
+  goldFreeze,
+  longFreeze,
+  feintFreeze,
+  revivalNormal,
+  revivalDelay,
+  revivalVoice,
+  revivalReverse,
+  revivalGold,
+  revivalDouble
+];
+
+async function play(){
+  if(busy)return;
+
+  busy=true;
+  start.disabled=true;
+
+  audio();
+  status.textContent="";
+
+  for(const n of [3,2,1]){
+    number.textContent=n;
+    speak(String(n),.75,.75);
+    await sleep(1000);
+  }
+
+  number.textContent="";
 
   /*
-    ★★★ 確認モード ★★★
-    今は必ず当たります
+    確認モード
+    現在は必ず当たり
   */
-  const win = true;
+  const win=true;
 
   if(win){
-    await freezeEffect();
+    await sleep(300);
+
+    const pattern=
+      patterns[Math.floor(Math.random()*patterns.length)];
+
+    await pattern();
+    await finishWin();
+
   }else{
     number.textContent="3";
     start.disabled=false;
+    busy=false;
   }
 }
 
@@ -359,12 +728,19 @@ next.addEventListener("click",()=>{
   speechSynthesis.cancel();
 
   congrats.classList.remove("show");
-  freeze.classList.remove("show","shake","flash");
-  freezeText.classList.remove("go");
+
+  resetFX();
 
   main.style.display="flex";
+  main.style.background=
+    "radial-gradient(circle,#181818 0%,#070707 58%,#000 100%)";
+
   number.textContent="3";
+  status.textContent="TEST MODE";
+
+  start.style.opacity="";
   start.disabled=false;
+  busy=false;
 });
 </script>
 
