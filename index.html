@@ -21,13 +21,8 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
 
-body{
-  user-select:none;
-}
-
-button{
-  font-family:inherit;
-}
+body{user-select:none}
+button{font-family:inherit}
 
 #stage{
   position:fixed;
@@ -69,7 +64,6 @@ button{
     transform:scale(1.32);
     filter:blur(8px);
   }
-
   100%{
     opacity:1;
     transform:scale(1);
@@ -133,13 +127,12 @@ button{
   display:none;
 }
 
-#test{
-  position:absolute;
-  z-index:10;
-  top:max(25px,env(safe-area-inset-top));
-  font-size:10px;
-  letter-spacing:.2em;
-  opacity:.28;
+#black{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:none;
+  background:#000;
 }
 
 #weirdMark{
@@ -154,14 +147,6 @@ button{
   text-shadow:
     0 0 15px #fff,
     0 0 40px #fff;
-}
-
-#black{
-  position:fixed;
-  inset:0;
-  z-index:80;
-  display:none;
-  background:#000;
 }
 
 #slash{
@@ -281,13 +266,11 @@ button{
     transform:scale(.25);
     filter:blur(10px);
   }
-
   70%{
     opacity:1;
     transform:scale(1.18);
     filter:blur(0);
   }
-
   100%{
     transform:scale(1);
   }
@@ -302,9 +285,7 @@ button{
   letter-spacing:.16em;
 }
 
-/* =========================
-   宝箱
-========================= */
+/* 宝箱 */
 
 #treasureScreen{
   position:fixed;
@@ -507,17 +488,9 @@ button{
   transform:scale(1);
 }
 
-.chestResult.first{
-  color:#ffe35e;
-}
-
-.chestResult.second{
-  color:#e8efff;
-}
-
-.chestResult.third{
-  color:#ff9b55;
-}
+.chestResult.first{color:#ffe35e}
+.chestResult.second{color:#e8efff}
+.chestResult.third{color:#ff9b55}
 
 .chest.selected .chestWrap{
   animation:chestShake .12s linear infinite;
@@ -554,16 +527,13 @@ button{
     transform:scale(.3);
     opacity:1;
   }
-
   to{
     transform:scale(4.5);
     opacity:0;
   }
 }
 
-/* =========================
-   選んだ景品の大発表
-========================= */
+/* 選択した景品の大発表 */
 
 #prizeBox{
   position:fixed;
@@ -648,13 +618,11 @@ button{
     opacity:0;
     filter:blur(14px);
   }
-
   70%{
     transform:scale(1.18) rotate(2deg);
     opacity:1;
     filter:blur(0);
   }
-
   100%{
     transform:scale(1);
   }
@@ -665,23 +633,11 @@ button{
 <body>
 
 <div id="stage">
-
-  <div id="test">
-    TEST MODE / 100% HIT
-  </div>
-
-  <div id="number" data-num="3">
-    3
-  </div>
-
-  <button id="start">
-    START
-  </button>
-
+  <div id="number" data-num="3">3</div>
+  <button id="start">START</button>
 </div>
 
 <div id="weirdMark">?</div>
-
 <div id="black"></div>
 
 <div id="slash">
@@ -691,17 +647,9 @@ button{
 <div id="flash"></div>
 
 <div id="hit">
-
   <div id="glow"></div>
-
-  <div id="hitText">
-    当たり
-  </div>
-
-  <div id="subText">
-    CONGRATULATIONS
-  </div>
-
+  <div id="hitText">当たり</div>
+  <div id="subText">CONGRATULATIONS</div>
 </div>
 
 <div id="treasureScreen">
@@ -724,7 +672,6 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
       <div class="chestNum">CHEST 1</div>
       <div class="chestResult"></div>
     </button>
@@ -737,7 +684,6 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
       <div class="chestNum">CHEST 2</div>
       <div class="chestResult"></div>
     </button>
@@ -750,7 +696,6 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-
       <div class="chestNum">CHEST 3</div>
       <div class="chestResult"></div>
     </button>
@@ -764,50 +709,28 @@ button{
 </div>
 
 <div id="prizeBox">
-
   <div id="prizeBurst"></div>
-
-  <div id="prizeLabel">
-    3等
-  </div>
-
-  <div id="prizeWon">
-    当選！
-  </div>
-
+  <div id="prizeLabel">3等</div>
+  <div id="prizeWon">当選！</div>
 </div>
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260913-10000"
+  src="./hit_music_final.mp3?v=20260914-1"
   preload="auto"
   playsinline>
 </audio>
 
 <script>
 
-const $ = s =>
-  document.querySelector(s);
-
-const $$ = s =>
-  [...document.querySelectorAll(s)];
-
-const sleep = ms =>
-  new Promise(r=>setTimeout(r,ms));
-
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
 let busy = false;
-
 let chestBusy = false;
-
 let selectedPrize = null;
-
 let chestResults = [];
-
-
-/* =========================
-   AUDIO
-========================= */
 
 let audioCtx = null;
 
@@ -818,15 +741,15 @@ let tensionOsc4 = null;
 
 let tensionGain = null;
 let tensionCompressor = null;
-
 let pulseTimer = null;
-
 let tensionLevel = 1;
 
+const hitMusic = $("#hitMusic");
 
-const hitMusic =
-  $("#hitMusic");
 
+/* =========================
+   AUDIO
+========================= */
 
 function initAudio(){
 
@@ -841,9 +764,7 @@ function initAudio(){
   }
 
   if(audioCtx.state === "suspended"){
-
     audioCtx.resume();
-
   }
 
 }
@@ -854,21 +775,15 @@ async function unlockHitMusic(){
   try{
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.muted = false;
-
     hitMusic.volume = .001;
 
     await hitMusic.play();
-
     await sleep(60);
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.volume = 1;
 
   }catch(e){
@@ -881,58 +796,38 @@ async function unlockHitMusic(){
 
 
 /* =========================
-   緊張音 強化版
+   緊張音
 ========================= */
 
 function startTension(){
 
   initAudio();
-
   stopTension();
 
   tensionLevel = 1;
 
-  const now =
-    audioCtx.currentTime;
-
+  const now = audioCtx.currentTime;
 
   tensionGain =
     audioCtx.createGain();
 
-
   tensionCompressor =
     audioCtx.createDynamicsCompressor();
 
-
-  tensionCompressor.threshold.value =
-    -14;
-
-  tensionCompressor.knee.value =
-    12;
-
-  tensionCompressor.ratio.value =
-    5;
-
-  tensionCompressor.attack.value =
-    .005;
-
-  tensionCompressor.release.value =
-    .18;
-
+  tensionCompressor.threshold.value = -14;
+  tensionCompressor.knee.value = 12;
+  tensionCompressor.ratio.value = 5;
+  tensionCompressor.attack.value = .005;
+  tensionCompressor.release.value = .18;
 
   tensionGain.gain
-    .setValueAtTime(
-      .0001,
-      now
-    );
-
+    .setValueAtTime(.0001,now);
 
   tensionGain.gain
     .exponentialRampToValueAtTime(
       .17,
       now + .35
     );
-
 
   tensionOsc1 =
     audioCtx.createOscillator();
@@ -946,79 +841,48 @@ function startTension(){
   tensionOsc4 =
     audioCtx.createOscillator();
 
+  tensionOsc1.type = "sine";
+  tensionOsc2.type = "triangle";
+  tensionOsc3.type = "sawtooth";
+  tensionOsc4.type = "triangle";
 
-  tensionOsc1.type =
-    "sine";
+  tensionOsc1.frequency.value = 92;
+  tensionOsc2.frequency.value = 184;
+  tensionOsc3.frequency.value = 276;
+  tensionOsc4.frequency.value = 368;
 
-  tensionOsc2.type =
-    "triangle";
-
-  tensionOsc3.type =
-    "sawtooth";
-
-  tensionOsc4.type =
-    "triangle";
-
-
-  tensionOsc1.frequency.value =
-    92;
-
-  tensionOsc2.frequency.value =
-    184;
-
-  tensionOsc3.frequency.value =
-    276;
-
-  tensionOsc4.frequency.value =
-    368;
-
-
-  const g1 =
-    audioCtx.createGain();
-
-  const g2 =
-    audioCtx.createGain();
-
-  const g3 =
-    audioCtx.createGain();
-
-  const g4 =
-    audioCtx.createGain();
-
+  const g1 = audioCtx.createGain();
+  const g2 = audioCtx.createGain();
+  const g3 = audioCtx.createGain();
+  const g4 = audioCtx.createGain();
 
   g1.gain.value = .72;
   g2.gain.value = .34;
   g3.gain.value = .055;
   g4.gain.value = .035;
 
-
   tensionOsc1.connect(g1);
   tensionOsc2.connect(g2);
   tensionOsc3.connect(g3);
   tensionOsc4.connect(g4);
-
 
   g1.connect(tensionGain);
   g2.connect(tensionGain);
   g3.connect(tensionGain);
   g4.connect(tensionGain);
 
-
   tensionGain.connect(
     tensionCompressor
   );
-
 
   tensionCompressor.connect(
     audioCtx.destination
   );
 
-
   tensionOsc1.start();
   tensionOsc2.start();
   tensionOsc3.start();
   tensionOsc4.start();
-
 
   startPulse();
 
@@ -1028,13 +892,8 @@ function startTension(){
 function startPulse(){
 
   if(pulseTimer){
-
-    clearTimeout(
-      pulseTimer
-    );
-
+    clearTimeout(pulseTimer);
   }
-
 
   function pulse(){
 
@@ -1042,49 +901,30 @@ function startPulse(){
       return;
     }
 
-
     const t =
       audioCtx.currentTime;
 
-
-    let base =
-      .12;
-
-    let peak =
-      .34;
-
-    let speed =
-      620;
-
+    let base = .12;
+    let peak = .34;
+    let speed = 620;
 
     if(tensionLevel === 2){
-
       base = .14;
       peak = .40;
       speed = 500;
-
     }
 
-
     if(tensionLevel === 3){
-
       base = .16;
       peak = .48;
       speed = 390;
-
     }
-
 
     tensionGain.gain
       .cancelScheduledValues(t);
 
-
     tensionGain.gain
-      .setValueAtTime(
-        base,
-        t
-      );
-
+      .setValueAtTime(base,t);
 
     tensionGain.gain
       .exponentialRampToValueAtTime(
@@ -1092,13 +932,11 @@ function startPulse(){
         t + .045
       );
 
-
     tensionGain.gain
       .exponentialRampToValueAtTime(
         base,
         t + .25
       );
-
 
     pulseTimer =
       setTimeout(
@@ -1108,7 +946,6 @@ function startPulse(){
 
   }
 
-
   pulse();
 
 }
@@ -1116,30 +953,26 @@ function startPulse(){
 
 function raiseTension(level){
 
-  tensionLevel =
-    level;
-
+  tensionLevel = level;
 
   if(!audioCtx){
     return;
   }
 
-
   const t =
     audioCtx.currentTime;
-
 
   try{
 
     if(level === 1){
 
-      tensionOsc1.frequency
+      tensionOsc1?.frequency
         .linearRampToValueAtTime(
           92,
           t + .3
         );
 
-      tensionOsc2.frequency
+      tensionOsc2?.frequency
         .linearRampToValueAtTime(
           184,
           t + .3
@@ -1147,16 +980,15 @@ function raiseTension(level){
 
     }
 
-
     if(level === 2){
 
-      tensionOsc1.frequency
+      tensionOsc1?.frequency
         .linearRampToValueAtTime(
           104,
           t + .3
         );
 
-      tensionOsc2.frequency
+      tensionOsc2?.frequency
         .linearRampToValueAtTime(
           208,
           t + .3
@@ -1164,16 +996,15 @@ function raiseTension(level){
 
     }
 
-
     if(level === 3){
 
-      tensionOsc1.frequency
+      tensionOsc1?.frequency
         .linearRampToValueAtTime(
           118,
           t + .3
         );
 
-      tensionOsc2.frequency
+      tensionOsc2?.frequency
         .linearRampToValueAtTime(
           236,
           t + .3
@@ -1190,21 +1021,15 @@ function stopTension(){
 
   if(pulseTimer){
 
-    clearTimeout(
-      pulseTimer
-    );
-
-    pulseTimer =
-      null;
+    clearTimeout(pulseTimer);
+    pulseTimer = null;
 
   }
-
 
   try{tensionOsc1?.stop()}catch(e){}
   try{tensionOsc2?.stop()}catch(e){}
   try{tensionOsc3?.stop()}catch(e){}
   try{tensionOsc4?.stop()}catch(e){}
-
 
   tensionOsc1 = null;
   tensionOsc2 = null;
@@ -1218,25 +1043,21 @@ function stopTension(){
 
 
 /* =========================
-   COUNT SOUND
+   カウント音
 ========================= */
 
 function countSound(n){
 
   initAudio();
 
-
   const now =
     audioCtx.currentTime;
-
 
   const osc =
     audioCtx.createOscillator();
 
-
   const gain =
     audioCtx.createGain();
-
 
   const freq = {
     3:160,
@@ -1245,10 +1066,7 @@ function countSound(n){
     0:110
   };
 
-
-  osc.type =
-    "triangle";
-
+  osc.type = "triangle";
 
   osc.frequency
     .setValueAtTime(
@@ -1256,13 +1074,11 @@ function countSound(n){
       now
     );
 
-
   osc.frequency
     .exponentialRampToValueAtTime(
       65,
       now + .45
     );
-
 
   gain.gain
     .setValueAtTime(
@@ -1270,13 +1086,11 @@ function countSound(n){
       now
     );
 
-
   gain.gain
     .exponentialRampToValueAtTime(
       .72,
       now + .012
     );
-
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1284,19 +1098,11 @@ function countSound(n){
       now + .52
     );
 
-
   osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
-
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-
-  osc.stop(
-    now + .55
-  );
+  osc.stop(now + .55);
 
 }
 
@@ -1314,8 +1120,7 @@ function strangeCountSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "sawtooth";
+  osc.type = "sawtooth";
 
   osc.frequency
     .setValueAtTime(
@@ -1342,16 +1147,10 @@ function strangeCountSound(){
     );
 
   osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-
-  osc.stop(
-    now + .55
-  );
+  osc.stop(now + .55);
 
 }
 
@@ -1373,8 +1172,7 @@ function puchunSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "square";
+  osc.type = "square";
 
   osc.frequency
     .setValueAtTime(
@@ -1401,22 +1199,16 @@ function puchunSound(){
     );
 
   osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-
-  osc.stop(
-    now + .14
-  );
+  osc.stop(now + .14);
 
 }
 
 
 /* =========================
-   切り裂き
+   切り裂き音
 ========================= */
 
 function slashSound(){
@@ -1432,8 +1224,7 @@ function slashSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "sawtooth";
+  osc.type = "sawtooth";
 
   osc.frequency
     .setValueAtTime(
@@ -1460,17 +1251,10 @@ function slashSound(){
     );
 
   osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-
-  osc.stop(
-    now + .2
-  );
-
+  osc.stop(now + .2);
 
   const bass =
     audioCtx.createOscillator();
@@ -1478,8 +1262,7 @@ function slashSound(){
   const bassGain =
     audioCtx.createGain();
 
-  bass.type =
-    "triangle";
+  bass.type = "triangle";
 
   bass.frequency
     .setValueAtTime(
@@ -1505,19 +1288,11 @@ function slashSound(){
       now + .5
     );
 
-  bass.connect(
-    bassGain
-  );
-
-  bassGain.connect(
-    audioCtx.destination
-  );
+  bass.connect(bassGain);
+  bassGain.connect(audioCtx.destination);
 
   bass.start(now);
-
-  bass.stop(
-    now + .55
-  );
+  bass.stop(now + .55);
 
 }
 
@@ -1539,8 +1314,7 @@ function chestOpenSound(){
   const gain =
     audioCtx.createGain();
 
-  osc.type =
-    "triangle";
+  osc.type = "triangle";
 
   osc.frequency
     .setValueAtTime(
@@ -1567,16 +1341,10 @@ function chestOpenSound(){
     );
 
   osc.connect(gain);
-
-  gain.connect(
-    audioCtx.destination
-  );
+  gain.connect(audioCtx.destination);
 
   osc.start(now);
-
-  osc.stop(
-    now + .28
-  );
+  osc.stop(now + .28);
 
 }
 
@@ -1590,9 +1358,7 @@ async function playHitMusic(){
   try{
 
     hitMusic.pause();
-
     hitMusic.currentTime = 0;
-
     hitMusic.volume = 1;
 
     await hitMusic.play();
@@ -1608,6 +1374,9 @@ async function playHitMusic(){
 
 /* =========================
    景品抽選
+
+   当たり後に1回だけ抽選
+
    1等 5%
    2等 20%
    3等 75%
@@ -1618,7 +1387,6 @@ function drawPrize(){
   const r =
     Math.random();
 
-
   if(r < .05){
 
     return{
@@ -1628,7 +1396,6 @@ function drawPrize(){
 
   }
 
-
   if(r < .25){
 
     return{
@@ -1637,7 +1404,6 @@ function drawPrize(){
     };
 
   }
-
 
   return{
     label:"3等",
@@ -1663,14 +1429,19 @@ function classForPrize(label){
 
 
 /* =========================
-   選んだ箱＋残り2箱の中身
+   宝箱3個の結果を作る
+
+   選んだ箱 = 当選等級
+
+   残り2個 = 残りの等級
 ========================= */
 
-function buildChestResults(selectedIndex){
+function buildChestResults(
+  selectedIndex
+){
 
   const all =
     ["1等","2等","3等"];
-
 
   const remaining =
     all.filter(
@@ -1678,21 +1449,17 @@ function buildChestResults(selectedIndex){
         x !== selectedPrize.label
     );
 
-
   if(Math.random() < .5){
-
     remaining.reverse();
-
   }
-
 
   chestResults =
     new Array(3);
 
-
-  chestResults[selectedIndex] =
+  chestResults[
+    selectedIndex
+  ] =
     selectedPrize.label;
-
 
   const otherIndexes =
     [0,1,2].filter(
@@ -1700,12 +1467,10 @@ function buildChestResults(selectedIndex){
         i !== selectedIndex
     );
 
-
   chestResults[
     otherIndexes[0]
   ] =
     remaining[0];
-
 
   chestResults[
     otherIndexes[1]
@@ -1725,15 +1490,10 @@ function resetNumberStyle(){
     $("#number");
 
   n.className = "";
-
   n.style.opacity = "";
-
   n.style.transform = "";
-
   n.style.left = "";
-
   n.style.top = "";
-
   n.style.color = "";
 
 }
@@ -1761,7 +1521,6 @@ function showNumber(
     "show"
   );
 
-
   if(value === 3){
     raiseTension(1);
   }
@@ -1774,18 +1533,15 @@ function showNumber(
     raiseTension(3);
   }
 
-
   if(sound){
-
     countSound(value);
-
   }
 
 }
 
 
 /* =========================
-   違和感
+   違和感20種類
 ========================= */
 
 async function applyWeirdEffect(){
@@ -1797,7 +1553,6 @@ async function applyWeirdEffect(){
 
   const n =
     $("#number");
-
 
   switch(type){
 
@@ -1851,34 +1606,28 @@ async function applyWeirdEffect(){
 
     case 12:
 
-      n.style.opacity =
-        "0";
+      n.style.opacity = "0";
 
       await sleep(100);
 
-      n.style.opacity =
-        "1";
+      n.style.opacity = "1";
 
       break;
-
 
     case 13:{
 
       const old =
         n.textContent;
 
-      n.textContent =
-        "0";
+      n.textContent = "0";
 
       await sleep(90);
 
-      n.textContent =
-        old;
+      n.textContent = old;
 
       break;
 
     }
-
 
     case 14:
 
@@ -1894,7 +1643,6 @@ async function applyWeirdEffect(){
 
       break;
 
-
     case 15:
 
       $("#stage")
@@ -1909,20 +1657,17 @@ async function applyWeirdEffect(){
 
       break;
 
-
     case 16:
 
       flash();
 
       break;
 
-
     case 17:
 
       strangeCountSound();
 
       break;
-
 
     case 18:
 
@@ -1937,7 +1682,6 @@ async function applyWeirdEffect(){
         "none";
 
       break;
-
 
     case 19:
 
@@ -1967,8 +1711,7 @@ function flash(){
 
   void f.offsetWidth;
 
-  f.className =
-    "go";
+  f.className = "go";
 
 }
 
@@ -2024,7 +1767,40 @@ async function showHit(){
 
 
 /* =========================
-   各パターン
+   通常ハズレ
+
+   「ハズレ」の文字は出さない
+========================= */
+
+async function normalMiss(){
+
+  showNumber(3);
+
+  await sleep(1800);
+
+  showNumber(2);
+
+  await sleep(1900);
+
+  showNumber(1);
+
+  await sleep(2200);
+
+  stopTension();
+
+  $("#number")
+    .textContent =
+    "";
+
+  await sleep(850);
+
+  reset();
+
+}
+
+
+/* =========================
+   当たり演出18種類
 ========================= */
 
 async function normalHitAt(point){
@@ -2450,7 +2226,7 @@ async function silentStart(){
 
 
 /* =========================
-   宝箱表示
+   宝箱
 ========================= */
 
 function showTreasure(){
@@ -2458,27 +2234,20 @@ function showTreasure(){
   selectedPrize =
     drawPrize();
 
-  chestBusy =
-    false;
-
-  chestResults =
-    [];
-
+  chestBusy = false;
+  chestResults = [];
 
   $("#treasureTitle")
     .textContent =
     "宝箱を1つ選べ！";
 
-
   $("#treasureSub")
     .textContent =
     "タップして宝箱を開けてください";
 
-
   $("#treasureNext")
     .style.display =
     "none";
-
 
   $$(".chest")
     .forEach(c=>{
@@ -2490,22 +2259,15 @@ function showTreasure(){
         "disabled"
       );
 
-
       const r =
         c.querySelector(
           ".chestResult"
         );
 
-
-      r.textContent =
-        "";
-
-
-      r.className =
-        "chestResult";
+      r.textContent = "";
+      r.className = "chestResult";
 
     });
-
 
   $("#treasureScreen")
     .className =
@@ -2514,40 +2276,29 @@ function showTreasure(){
 }
 
 
-/* =========================
-   選択
-========================= */
-
 async function chooseChest(chest){
 
   if(chestBusy){
     return;
   }
 
-
-  chestBusy =
-    true;
-
+  chestBusy = true;
 
   const chests =
     $$(".chest");
 
-
   const selectedIndex =
     chests.indexOf(chest);
-
 
   buildChestResults(
     selectedIndex
   );
-
 
   chests.forEach(c=>{
 
     c.classList.add(
       "disabled"
     );
-
 
     if(c !== chest){
 
@@ -2559,61 +2310,45 @@ async function chooseChest(chest){
 
   });
 
-
   chest.classList.add(
     "selected"
   );
 
-
   await sleep(1000);
-
 
   chest.classList.remove(
     "selected"
   );
 
-
   chest.classList.add(
     "open"
   );
 
-
   chestOpenSound();
-
   flash();
-
 
   showChestResult(
     chest,
     selectedPrize.label
   );
 
-
   await sleep(750);
-
 
   await showSelectedPrize();
 
-
   await sleep(300);
-
 
   $("#treasureTitle")
     .textContent =
     "残りの宝箱は…";
 
-
   $("#treasureSub")
     .textContent =
     "選ばなかった箱もオープン";
 
-
   chests.forEach(c=>
-    c.classList.remove(
-      "dim"
-    )
+    c.classList.remove("dim")
   );
-
 
   const others =
     chests
@@ -2626,9 +2361,7 @@ async function chooseChest(chest){
           x.index !== selectedIndex
       );
 
-
   await sleep(500);
-
 
   for(const item of others){
 
@@ -2636,11 +2369,8 @@ async function chooseChest(chest){
       "open"
     );
 
-
     chestOpenSound();
-
     flash();
-
 
     showChestResult(
       item.chest,
@@ -2649,22 +2379,18 @@ async function chooseChest(chest){
       ]
     );
 
-
     await sleep(950);
 
   }
-
 
   $("#treasureTitle")
     .textContent =
     selectedPrize.label +
     " 当選！";
 
-
   $("#treasureSub")
     .textContent =
     "3つの宝箱の結果";
-
 
   $("#treasureNext")
     .style.display =
@@ -2672,10 +2398,6 @@ async function chooseChest(chest){
 
 }
 
-
-/* =========================
-   宝箱の等級表示
-========================= */
 
 function showChestResult(
   chest,
@@ -2687,18 +2409,14 @@ function showChestResult(
       ".chestResult"
     );
 
-
   result.textContent =
     label;
-
 
   result.className =
     "chestResult " +
     classForPrize(label);
 
-
   void result.offsetWidth;
-
 
   result.classList.add(
     "show"
@@ -2707,28 +2425,20 @@ function showChestResult(
 }
 
 
-/* =========================
-   選んだ景品だけ大発表
-========================= */
-
 async function showSelectedPrize(){
 
   $("#prizeLabel")
     .textContent =
     selectedPrize.label;
 
-
   $("#prizeBox")
     .className =
     "show " +
     selectedPrize.className;
 
-
   flash();
 
-
   await sleep(1550);
-
 
   $("#prizeBox")
     .className =
@@ -2739,6 +2449,13 @@ async function showSelectedPrize(){
 
 /* =========================
    START
+
+   ★ 完全独立抽選 1/30 ★
+
+   STARTを押すたびに
+   毎回1回だけ新しく抽選。
+
+   過去の結果は一切関係なし。
 ========================= */
 
 async function play(){
@@ -2747,24 +2464,38 @@ async function play(){
     return;
   }
 
-
-  busy =
-    true;
-
+  busy = true;
 
   initAudio();
 
-
   await unlockHitMusic();
-
 
   $("#start")
     .style.display =
     "none";
 
-
   startTension();
 
+
+  /* ★ 完全確率 1/30 ★ */
+
+  const win =
+    Math.random() < (1 / 30);
+
+
+  /* ハズレ */
+
+  if(!win){
+
+    await normalMiss();
+
+    return;
+
+  }
+
+
+  /* 当たりの場合のみ
+     18種類から演出を選択 */
 
   const pattern =
     Math.floor(
@@ -2841,70 +2572,42 @@ function reset(){
 
   stopTension();
 
-
   hitMusic.pause();
 
-
   try{
-
-    hitMusic.currentTime =
-      0;
-
+    hitMusic.currentTime = 0;
   }catch(e){}
 
-
-  $("#hit")
-    .className =
-    "";
-
-
-  $("#treasureScreen")
-    .className =
-    "";
-
-
-  $("#prizeBox")
-    .className =
-    "";
-
-
-  $("#slash")
-    .className =
-    "";
-
+  $("#hit").className = "";
+  $("#treasureScreen").className = "";
+  $("#prizeBox").className = "";
+  $("#slash").className = "";
 
   $("#black")
     .style.display =
     "none";
 
-
   $("#weirdMark")
     .style.display =
     "none";
-
 
   $("#stage")
     .style.background =
     "";
 
-
   $("#treasureNext")
     .style.display =
     "none";
 
-
   resetNumberStyle();
-
 
   $("#number")
     .textContent =
     "3";
 
-
   $("#number")
     .dataset.num =
     "3";
-
 
   $$(".chest")
     .forEach(c=>{
@@ -2916,41 +2619,24 @@ function reset(){
         "disabled"
       );
 
-
       const r =
         c.querySelector(
           ".chestResult"
         );
 
-
-      r.textContent =
-        "";
-
-      r.className =
-        "chestResult";
+      r.textContent = "";
+      r.className = "chestResult";
 
     });
-
 
   $("#start")
     .style.display =
     "block";
 
-
-  selectedPrize =
-    null;
-
-
-  chestResults =
-    [];
-
-
-  chestBusy =
-    false;
-
-
-  busy =
-    false;
+  selectedPrize = null;
+  chestResults = [];
+  chestBusy = false;
+  busy = false;
 
 }
 
