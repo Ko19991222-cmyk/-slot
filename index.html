@@ -40,7 +40,6 @@ button{
       #171717 0%,
       #050505 48%,
       #000 82%);
-  transition:background .15s;
 }
 
 #number{
@@ -116,18 +115,22 @@ button{
 }
 
 #start,
-#next{
+#treasureNext{
   position:absolute;
   bottom:8%;
   z-index:400;
   padding:17px 46px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.75);
+  background:rgba(0,0,0,.78);
   color:#fff;
   font-size:17px;
   font-weight:900;
   letter-spacing:.12em;
+}
+
+#treasureNext{
+  display:none;
 }
 
 #test{
@@ -299,6 +302,10 @@ button{
   letter-spacing:.16em;
 }
 
+/* =========================
+   宝箱
+========================= */
+
 #treasureScreen{
   position:fixed;
   inset:0;
@@ -320,20 +327,17 @@ button{
 
 #treasureTitle{
   position:absolute;
-  top:12%;
+  top:10%;
   width:100%;
   text-align:center;
   font-size:clamp(24px,8vw,48px);
   font-weight:1000;
-  letter-spacing:.14em;
-  text-shadow:
-    0 0 12px #fff,
-    0 0 30px rgba(255,255,255,.35);
+  letter-spacing:.12em;
 }
 
 #treasureSub{
   position:absolute;
-  top:20%;
+  top:18%;
   width:100%;
   text-align:center;
   font-size:13px;
@@ -342,23 +346,23 @@ button{
 }
 
 #chests{
-  width:min(94vw,700px);
+  width:min(96vw,700px);
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
-  gap:10px;
-  padding:0 10px;
+  gap:7px;
+  padding:0 7px;
 }
 
 .chest{
   appearance:none;
   border:none;
   background:transparent;
-  width:31%;
+  width:32%;
   padding:0;
   color:#fff;
   position:relative;
-  transition:.18s;
+  transition:.25s;
 }
 
 .chest:active{
@@ -370,8 +374,7 @@ button{
 }
 
 .chest.dim{
-  opacity:.3;
-  filter:grayscale(.8);
+  opacity:.38;
 }
 
 .chestWrap{
@@ -479,11 +482,41 @@ button{
 }
 
 .chestNum{
-  margin-top:8px;
-  font-size:12px;
+  margin-top:4px;
+  font-size:11px;
   font-weight:900;
-  letter-spacing:.12em;
-  opacity:.75;
+  letter-spacing:.08em;
+  opacity:.6;
+}
+
+.chestResult{
+  min-height:34px;
+  margin-top:7px;
+  font-size:clamp(20px,7vw,38px);
+  font-weight:1000;
+  opacity:0;
+  transform:scale(.4);
+  transition:.4s cubic-bezier(.1,1.5,.2,1);
+  text-shadow:
+    0 0 10px #fff,
+    0 0 25px currentColor;
+}
+
+.chestResult.show{
+  opacity:1;
+  transform:scale(1);
+}
+
+.chestResult.first{
+  color:#ffe35e;
+}
+
+.chestResult.second{
+  color:#e8efff;
+}
+
+.chestResult.third{
+  color:#ff9b55;
 }
 
 .chest.selected .chestWrap{
@@ -507,8 +540,8 @@ button{
 }
 
 .chest.open{
-  transform:scale(1.15);
-  filter:brightness(1.35);
+  transform:scale(1.08);
+  filter:brightness(1.25);
 }
 
 .chest.open .chestLight{
@@ -527,6 +560,10 @@ button{
     opacity:0;
   }
 }
+
+/* =========================
+   選んだ景品の大発表
+========================= */
 
 #prizeBox{
   position:fixed;
@@ -619,7 +656,7 @@ button{
   }
 
   100%{
-    transform:scale(1) rotate(0);
+    transform:scale(1);
   }
 }
 </style>
@@ -643,9 +680,7 @@ button{
 
 </div>
 
-<div id="weirdMark">
-  ?
-</div>
+<div id="weirdMark">?</div>
 
 <div id="black"></div>
 
@@ -689,7 +724,9 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
+
       <div class="chestNum">CHEST 1</div>
+      <div class="chestResult"></div>
     </button>
 
     <button class="chest">
@@ -700,7 +737,9 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
+
       <div class="chestNum">CHEST 2</div>
+      <div class="chestResult"></div>
     </button>
 
     <button class="chest">
@@ -711,10 +750,16 @@ button{
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
+
       <div class="chestNum">CHEST 3</div>
+      <div class="chestResult"></div>
     </button>
 
   </div>
+
+  <button id="treasureNext">
+    NEXT
+  </button>
 
 </div>
 
@@ -730,15 +775,11 @@ button{
     当選！
   </div>
 
-  <button id="next">
-    NEXT
-  </button>
-
 </div>
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260913-8000"
+  src="./hit_music_final.mp3?v=20260913-10000"
   preload="auto"
   playsinline>
 </audio>
@@ -761,18 +802,26 @@ let chestBusy = false;
 
 let selectedPrize = null;
 
+let chestResults = [];
+
+
+/* =========================
+   AUDIO
+========================= */
 
 let audioCtx = null;
 
 let tensionOsc1 = null;
-
 let tensionOsc2 = null;
-
 let tensionOsc3 = null;
+let tensionOsc4 = null;
 
 let tensionGain = null;
+let tensionCompressor = null;
 
 let pulseTimer = null;
+
+let tensionLevel = 1;
 
 
 const hitMusic =
@@ -831,9 +880,9 @@ async function unlockHitMusic(){
 }
 
 
-/* ==========================
-   緊張感サウンド 強化版
-========================== */
+/* =========================
+   緊張音 強化版
+========================= */
 
 function startTension(){
 
@@ -841,12 +890,34 @@ function startTension(){
 
   stopTension();
 
+  tensionLevel = 1;
+
   const now =
     audioCtx.currentTime;
 
 
   tensionGain =
     audioCtx.createGain();
+
+
+  tensionCompressor =
+    audioCtx.createDynamicsCompressor();
+
+
+  tensionCompressor.threshold.value =
+    -14;
+
+  tensionCompressor.knee.value =
+    12;
+
+  tensionCompressor.ratio.value =
+    5;
+
+  tensionCompressor.attack.value =
+    .005;
+
+  tensionCompressor.release.value =
+    .18;
 
 
   tensionGain.gain
@@ -858,8 +929,8 @@ function startTension(){
 
   tensionGain.gain
     .exponentialRampToValueAtTime(
-      .18,
-      now + .5
+      .17,
+      now + .35
     );
 
 
@@ -870,6 +941,9 @@ function startTension(){
     audioCtx.createOscillator();
 
   tensionOsc3 =
+    audioCtx.createOscillator();
+
+  tensionOsc4 =
     audioCtx.createOscillator();
 
 
@@ -882,15 +956,21 @@ function startTension(){
   tensionOsc3.type =
     "sawtooth";
 
+  tensionOsc4.type =
+    "triangle";
+
 
   tensionOsc1.frequency.value =
-    55;
+    92;
 
   tensionOsc2.frequency.value =
-    110;
+    184;
 
   tensionOsc3.frequency.value =
-    165;
+    276;
+
+  tensionOsc4.frequency.value =
+    368;
 
 
   const g1 =
@@ -902,86 +982,206 @@ function startTension(){
   const g3 =
     audioCtx.createGain();
 
+  const g4 =
+    audioCtx.createGain();
 
-  g1.gain.value =
-    .9;
 
-  g2.gain.value =
-    .45;
-
-  g3.gain.value =
-    .08;
+  g1.gain.value = .72;
+  g2.gain.value = .34;
+  g3.gain.value = .055;
+  g4.gain.value = .035;
 
 
   tensionOsc1.connect(g1);
-
   tensionOsc2.connect(g2);
-
   tensionOsc3.connect(g3);
+  tensionOsc4.connect(g4);
 
 
-  g1.connect(
-    tensionGain
-  );
-
-  g2.connect(
-    tensionGain
-  );
-
-  g3.connect(
-    tensionGain
-  );
+  g1.connect(tensionGain);
+  g2.connect(tensionGain);
+  g3.connect(tensionGain);
+  g4.connect(tensionGain);
 
 
   tensionGain.connect(
+    tensionCompressor
+  );
+
+
+  tensionCompressor.connect(
     audioCtx.destination
   );
 
 
   tensionOsc1.start();
-
   tensionOsc2.start();
-
   tensionOsc3.start();
+  tensionOsc4.start();
 
 
-  pulseTimer =
-    setInterval(()=>{
+  startPulse();
 
-      if(!tensionGain){
-        return;
-      }
+}
 
 
-      const t =
-        audioCtx.currentTime;
+function startPulse(){
+
+  if(pulseTimer){
+
+    clearTimeout(
+      pulseTimer
+    );
+
+  }
 
 
-      tensionGain.gain
-        .cancelScheduledValues(t);
+  function pulse(){
+
+    if(!tensionGain){
+      return;
+    }
 
 
-      tensionGain.gain
-        .setValueAtTime(
-          .11,
-          t
+    const t =
+      audioCtx.currentTime;
+
+
+    let base =
+      .12;
+
+    let peak =
+      .34;
+
+    let speed =
+      620;
+
+
+    if(tensionLevel === 2){
+
+      base = .14;
+      peak = .40;
+      speed = 500;
+
+    }
+
+
+    if(tensionLevel === 3){
+
+      base = .16;
+      peak = .48;
+      speed = 390;
+
+    }
+
+
+    tensionGain.gain
+      .cancelScheduledValues(t);
+
+
+    tensionGain.gain
+      .setValueAtTime(
+        base,
+        t
+      );
+
+
+    tensionGain.gain
+      .exponentialRampToValueAtTime(
+        peak,
+        t + .045
+      );
+
+
+    tensionGain.gain
+      .exponentialRampToValueAtTime(
+        base,
+        t + .25
+      );
+
+
+    pulseTimer =
+      setTimeout(
+        pulse,
+        speed
+      );
+
+  }
+
+
+  pulse();
+
+}
+
+
+function raiseTension(level){
+
+  tensionLevel =
+    level;
+
+
+  if(!audioCtx){
+    return;
+  }
+
+
+  const t =
+    audioCtx.currentTime;
+
+
+  try{
+
+    if(level === 1){
+
+      tensionOsc1.frequency
+        .linearRampToValueAtTime(
+          92,
+          t + .3
         );
 
-
-      tensionGain.gain
-        .exponentialRampToValueAtTime(
-          .32,
-          t + .055
+      tensionOsc2.frequency
+        .linearRampToValueAtTime(
+          184,
+          t + .3
         );
 
+    }
 
-      tensionGain.gain
-        .exponentialRampToValueAtTime(
-          .11,
-          t + .34
+
+    if(level === 2){
+
+      tensionOsc1.frequency
+        .linearRampToValueAtTime(
+          104,
+          t + .3
         );
 
-    },520);
+      tensionOsc2.frequency
+        .linearRampToValueAtTime(
+          208,
+          t + .3
+        );
+
+    }
+
+
+    if(level === 3){
+
+      tensionOsc1.frequency
+        .linearRampToValueAtTime(
+          118,
+          t + .3
+        );
+
+      tensionOsc2.frequency
+        .linearRampToValueAtTime(
+          236,
+          t + .3
+        );
+
+    }
+
+  }catch(e){}
 
 }
 
@@ -990,7 +1190,7 @@ function stopTension(){
 
   if(pulseTimer){
 
-    clearInterval(
+    clearTimeout(
       pulseTimer
     );
 
@@ -1000,39 +1200,26 @@ function stopTension(){
   }
 
 
-  try{
-    tensionOsc1?.stop();
-  }catch(e){}
+  try{tensionOsc1?.stop()}catch(e){}
+  try{tensionOsc2?.stop()}catch(e){}
+  try{tensionOsc3?.stop()}catch(e){}
+  try{tensionOsc4?.stop()}catch(e){}
 
 
-  try{
-    tensionOsc2?.stop();
-  }catch(e){}
+  tensionOsc1 = null;
+  tensionOsc2 = null;
+  tensionOsc3 = null;
+  tensionOsc4 = null;
 
-
-  try{
-    tensionOsc3?.stop();
-  }catch(e){}
-
-
-  tensionOsc1 =
-    null;
-
-  tensionOsc2 =
-    null;
-
-  tensionOsc3 =
-    null;
-
-  tensionGain =
-    null;
+  tensionGain = null;
+  tensionCompressor = null;
 
 }
 
 
-/* ==========================
+/* =========================
    COUNT SOUND
-========================== */
+========================= */
 
 function countSound(n){
 
@@ -1052,27 +1239,27 @@ function countSound(n){
 
 
   const freq = {
-    3:115,
-    2:98,
-    1:80,
-    0:62
+    3:160,
+    2:145,
+    1:128,
+    0:110
   };
 
 
   osc.type =
-    "sine";
+    "triangle";
 
 
   osc.frequency
     .setValueAtTime(
-      freq[n] || 90,
+      freq[n] || 140,
       now
     );
 
 
   osc.frequency
     .exponentialRampToValueAtTime(
-      44,
+      65,
       now + .45
     );
 
@@ -1086,22 +1273,19 @@ function countSound(n){
 
   gain.gain
     .exponentialRampToValueAtTime(
-      .55,
-      now + .015
+      .72,
+      now + .012
     );
 
 
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
-      now + .55
+      now + .52
     );
 
 
-  osc.connect(
-    gain
-  );
-
+  osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
@@ -1111,7 +1295,7 @@ function countSound(n){
   osc.start(now);
 
   osc.stop(
-    now + .6
+    now + .55
   );
 
 }
@@ -1121,50 +1305,41 @@ function strangeCountSound(){
 
   initAudio();
 
-
   const now =
     audioCtx.currentTime;
-
 
   const osc =
     audioCtx.createOscillator();
 
-
   const gain =
     audioCtx.createGain();
 
-
   osc.type =
-    "triangle";
-
+    "sawtooth";
 
   osc.frequency
     .setValueAtTime(
-      165,
+      240,
       now
     );
-
 
   osc.frequency
     .exponentialRampToValueAtTime(
-      55,
-      now + .55
+      70,
+      now + .5
     );
-
 
   gain.gain
     .setValueAtTime(
-      .35,
+      .32,
       now
     );
-
 
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
-      now + .55
+      now + .5
     );
-
 
   osc.connect(gain);
 
@@ -1172,61 +1347,52 @@ function strangeCountSound(){
     audioCtx.destination
   );
 
-
   osc.start(now);
 
   osc.stop(
-    now + .6
+    now + .55
   );
 
 }
 
 
-/* ==========================
+/* =========================
    プチュン
-========================== */
+========================= */
 
 function puchunSound(){
 
   initAudio();
 
-
   const now =
     audioCtx.currentTime;
-
 
   const osc =
     audioCtx.createOscillator();
 
-
   const gain =
     audioCtx.createGain();
-
 
   osc.type =
     "square";
 
-
   osc.frequency
     .setValueAtTime(
-      280,
+      330,
       now
     );
-
 
   osc.frequency
     .exponentialRampToValueAtTime(
-      28,
+      32,
       now + .12
     );
 
-
   gain.gain
     .setValueAtTime(
-      .45,
+      .5,
       now
     );
-
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1234,13 +1400,11 @@ function puchunSound(){
       now + .13
     );
 
-
   osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
   );
-
 
   osc.start(now);
 
@@ -1251,51 +1415,43 @@ function puchunSound(){
 }
 
 
-/* ==========================
+/* =========================
    切り裂き
-========================== */
+========================= */
 
 function slashSound(){
 
   initAudio();
 
-
   const now =
     audioCtx.currentTime;
-
 
   const osc =
     audioCtx.createOscillator();
 
-
   const gain =
     audioCtx.createGain();
-
 
   osc.type =
     "sawtooth";
 
-
   osc.frequency
     .setValueAtTime(
-      1600,
+      1800,
       now
     );
-
 
   osc.frequency
     .exponentialRampToValueAtTime(
-      170,
+      180,
       now + .15
     );
 
-
   gain.gain
     .setValueAtTime(
-      .38,
+      .45,
       now
     );
-
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1303,13 +1459,11 @@ function slashSound(){
       now + .18
     );
 
-
   osc.connect(gain);
 
   gain.connect(
     audioCtx.destination
   );
-
 
   osc.start(now);
 
@@ -1321,35 +1475,29 @@ function slashSound(){
   const bass =
     audioCtx.createOscillator();
 
-
   const bassGain =
     audioCtx.createGain();
 
-
   bass.type =
-    "sine";
-
+    "triangle";
 
   bass.frequency
     .setValueAtTime(
-      95,
+      120,
       now
     );
-
 
   bass.frequency
     .exponentialRampToValueAtTime(
-      32,
+      42,
       now + .5
     );
 
-
   bassGain.gain
     .setValueAtTime(
-      .82,
+      .9,
       now
     );
-
 
   bassGain.gain
     .exponentialRampToValueAtTime(
@@ -1357,16 +1505,13 @@ function slashSound(){
       now + .5
     );
 
-
   bass.connect(
     bassGain
   );
 
-
   bassGain.connect(
     audioCtx.destination
   );
-
 
   bass.start(now);
 
@@ -1377,9 +1522,68 @@ function slashSound(){
 }
 
 
-/* ==========================
+/* =========================
+   宝箱オープン音
+========================= */
+
+function chestOpenSound(){
+
+  initAudio();
+
+  const now =
+    audioCtx.currentTime;
+
+  const osc =
+    audioCtx.createOscillator();
+
+  const gain =
+    audioCtx.createGain();
+
+  osc.type =
+    "triangle";
+
+  osc.frequency
+    .setValueAtTime(
+      420,
+      now
+    );
+
+  osc.frequency
+    .exponentialRampToValueAtTime(
+      850,
+      now + .18
+    );
+
+  gain.gain
+    .setValueAtTime(
+      .26,
+      now
+    );
+
+  gain.gain
+    .exponentialRampToValueAtTime(
+      .0001,
+      now + .25
+    );
+
+  osc.connect(gain);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
+  osc.start(now);
+
+  osc.stop(
+    now + .28
+  );
+
+}
+
+
+/* =========================
    当たりBGM
-========================== */
+========================= */
 
 async function playHitMusic(){
 
@@ -1387,13 +1591,9 @@ async function playHitMusic(){
 
     hitMusic.pause();
 
-    hitMusic.currentTime =
-      0;
+    hitMusic.currentTime = 0;
 
-
-    hitMusic.volume =
-      1;
-
+    hitMusic.volume = 1;
 
     await hitMusic.play();
 
@@ -1406,12 +1606,12 @@ async function playHitMusic(){
 }
 
 
-/* ==========================
-   景品
+/* =========================
+   景品抽選
    1等 5%
    2等 20%
    3等 75%
-========================== */
+========================= */
 
 function drawPrize(){
 
@@ -1447,15 +1647,82 @@ function drawPrize(){
 }
 
 
-/* ==========================
+function classForPrize(label){
+
+  if(label === "1等"){
+    return "first";
+  }
+
+  if(label === "2等"){
+    return "second";
+  }
+
+  return "third";
+
+}
+
+
+/* =========================
+   選んだ箱＋残り2箱の中身
+========================= */
+
+function buildChestResults(selectedIndex){
+
+  const all =
+    ["1等","2等","3等"];
+
+
+  const remaining =
+    all.filter(
+      x =>
+        x !== selectedPrize.label
+    );
+
+
+  if(Math.random() < .5){
+
+    remaining.reverse();
+
+  }
+
+
+  chestResults =
+    new Array(3);
+
+
+  chestResults[selectedIndex] =
+    selectedPrize.label;
+
+
+  const otherIndexes =
+    [0,1,2].filter(
+      i =>
+        i !== selectedIndex
+    );
+
+
+  chestResults[
+    otherIndexes[0]
+  ] =
+    remaining[0];
+
+
+  chestResults[
+    otherIndexes[1]
+  ] =
+    remaining[1];
+
+}
+
+
+/* =========================
    NUMBER
-========================== */
+========================= */
 
 function resetNumberStyle(){
 
   const n =
     $("#number");
-
 
   n.className = "";
 
@@ -1479,25 +1746,33 @@ function showNumber(
 
   resetNumberStyle();
 
-
   const n =
     $("#number");
-
 
   n.textContent =
     value;
 
-
   n.dataset.num =
     value;
 
-
   void n.offsetWidth;
-
 
   n.classList.add(
     "show"
   );
+
+
+  if(value === 3){
+    raiseTension(1);
+  }
+
+  if(value === 2){
+    raiseTension(2);
+  }
+
+  if(value === 1){
+    raiseTension(3);
+  }
 
 
   if(sound){
@@ -1509,9 +1784,9 @@ function showNumber(
 }
 
 
-/* ==========================
-   違和感20種類
-========================== */
+/* =========================
+   違和感
+========================= */
 
 async function applyWeirdEffect(){
 
@@ -1519,7 +1794,6 @@ async function applyWeirdEffect(){
     Math.floor(
       Math.random() * 20
     );
-
 
   const n =
     $("#number");
@@ -1531,61 +1805,49 @@ async function applyWeirdEffect(){
       n.classList.add("red");
       break;
 
-
     case 1:
       n.classList.add("gold");
       break;
-
 
     case 2:
       n.classList.add("small");
       break;
 
-
     case 3:
       n.classList.add("big");
       break;
-
 
     case 4:
       n.classList.add("thin");
       break;
 
-
     case 5:
       n.classList.add("shiftLeft");
       break;
-
 
     case 6:
       n.classList.add("shiftRight");
       break;
 
-
     case 7:
       n.classList.add("shiftUp");
       break;
-
 
     case 8:
       n.classList.add("double");
       break;
 
-
     case 9:
       n.classList.add("mirror");
       break;
-
 
     case 10:
       n.classList.add("flicker");
       break;
 
-
     case 11:
       n.classList.add("ghost");
       break;
-
 
     case 12:
 
@@ -1605,13 +1867,10 @@ async function applyWeirdEffect(){
       const old =
         n.textContent;
 
-
       n.textContent =
         "0";
 
-
       await sleep(90);
-
 
       n.textContent =
         old;
@@ -1627,9 +1886,7 @@ async function applyWeirdEffect(){
         .style.display =
         "block";
 
-
       await sleep(90);
-
 
       $("#weirdMark")
         .style.display =
@@ -1644,9 +1901,7 @@ async function applyWeirdEffect(){
         .style.background =
         "radial-gradient(circle,#390000,#000 70%)";
 
-
       await sleep(100);
-
 
       $("#stage")
         .style.background =
@@ -1675,9 +1930,7 @@ async function applyWeirdEffect(){
         .style.display =
         "block";
 
-
       await sleep(100);
-
 
       $("#black")
         .style.display =
@@ -1701,22 +1954,18 @@ async function applyWeirdEffect(){
 }
 
 
-/* ==========================
+/* =========================
    FLASH
-========================== */
+========================= */
 
 function flash(){
 
   const f =
     $("#flash");
 
-
-  f.className =
-    "";
-
+  f.className = "";
 
   void f.offsetWidth;
-
 
   f.className =
     "go";
@@ -1724,39 +1973,31 @@ function flash(){
 }
 
 
-/* ==========================
+/* =========================
    HIT
-========================== */
+========================= */
 
 async function slashHit(){
 
   stopTension();
 
-
   await sleep(180);
 
-
   slashSound();
-
 
   $("#slash")
     .className =
     "go";
 
-
   await sleep(170);
-
 
   flash();
 
-
   await sleep(300);
-
 
   $("#slash")
     .className =
     "";
-
 
   await showHit();
 
@@ -1769,81 +2010,57 @@ async function showHit(){
     .className =
     "show";
 
-
   playHitMusic();
 
-
   await sleep(2200);
-
 
   $("#hit")
     .className =
     "";
-
 
   showTreasure();
 
 }
 
 
-/* ==========================
-   各演出
-========================== */
+/* =========================
+   各パターン
+========================= */
 
 async function normalHitAt(point){
 
   showNumber(3);
 
-
   if(point === 3){
-
     await sleep(1350);
-
     return slashHit();
-
   }
-
 
   await sleep(1900);
 
-
   showNumber(2);
 
-
   if(point === 2){
-
     await sleep(1450);
-
     return slashHit();
-
   }
-
 
   await sleep(2050);
 
-
   showNumber(1);
 
-
   if(point === 1){
-
     await sleep(1650);
-
     return slashHit();
-
   }
 
-
   await sleep(2250);
-
 
   $("#number")
     .textContent =
     "";
 
-
   await sleep(700);
-
 
   return slashHit();
 
@@ -1856,32 +2073,25 @@ async function normalBlackout(){
 
   await sleep(1700);
 
-
   showNumber(2);
 
   await sleep(1800);
-
 
   showNumber(1);
 
   await sleep(1800);
 
-
   stopTension();
-
 
   $("#black")
     .style.display =
     "block";
 
-
   await sleep(1400);
-
 
   $("#black")
     .style.display =
     "none";
-
 
   return slashHit();
 
@@ -1894,11 +2104,9 @@ async function freezeTwo(){
 
   await sleep(1850);
 
-
   showNumber(2);
 
   await sleep(3900);
-
 
   return slashHit();
 
@@ -1911,26 +2119,21 @@ async function reverseCountdown(){
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1900);
-
 
   showNumber(1);
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1500);
 
-
   showNumber(1);
 
   await sleep(1500);
-
 
   return slashHit();
 
@@ -1943,21 +2146,17 @@ async function zeroPremium(){
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1900);
-
 
   showNumber(1);
 
   await sleep(1900);
 
-
   showNumber(0);
 
   await sleep(850);
-
 
   return slashHit();
 
@@ -1970,22 +2169,17 @@ async function numberDisappear(){
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1800);
-
 
   $("#number")
     .textContent =
     "";
 
-
   stopTension();
 
-
   await sleep(2100);
-
 
   return slashHit();
 
@@ -1998,22 +2192,17 @@ async function soundStopPattern(){
 
   await sleep(1750);
 
-
   showNumber(2);
 
   await sleep(1800);
-
 
   showNumber(1);
 
   await sleep(800);
 
-
   stopTension();
 
-
   await sleep(2200);
-
 
   return slashHit();
 
@@ -2026,16 +2215,13 @@ async function longOne(){
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1900);
 
-
   showNumber(1);
 
   await sleep(3900);
-
 
   return slashHit();
 
@@ -2049,59 +2235,38 @@ async function recountSequence(){
       Math.random() * 4
     );
 
-
   showNumber(3);
 
-
   if(hitPoint === 0){
-
     await sleep(1250);
-
     return slashHit();
-
   }
-
 
   await sleep(1900);
 
-
   showNumber(2);
 
-
   if(hitPoint === 1){
-
     await sleep(1400);
-
     return slashHit();
-
   }
-
 
   await sleep(2050);
 
-
   showNumber(1);
 
-
   if(hitPoint === 2){
-
     await sleep(1550);
-
     return slashHit();
-
   }
 
-
   await sleep(2200);
-
 
   $("#number")
     .textContent =
     "";
 
-
   await sleep(900);
-
 
   return slashHit();
 
@@ -2114,24 +2279,19 @@ async function doubleCountdown(){
 
   await sleep(1700);
 
-
   showNumber(2);
 
   await sleep(1800);
-
 
   showNumber(1);
 
   await sleep(1900);
 
-
   $("#number")
     .textContent =
     "";
 
-
   await sleep(1500);
-
 
   return recountSequence();
 
@@ -2142,33 +2302,26 @@ async function puchunDirect(){
 
   stopTension();
 
-
   puchunSound();
 
-
   await sleep(80);
-
 
   $("#black")
     .style.display =
     "block";
 
-
   $("#number")
     .textContent =
     "";
-
 
   await sleep(
     1800 +
     Math.random() * 1300
   );
 
-
   $("#black")
     .style.display =
     "none";
-
 
   return slashHit();
 
@@ -2179,36 +2332,27 @@ async function puchunRecount(){
 
   stopTension();
 
-
   puchunSound();
 
-
   await sleep(80);
-
 
   $("#black")
     .style.display =
     "block";
 
-
   $("#number")
     .textContent =
     "";
 
-
   await sleep(2200);
-
 
   $("#black")
     .style.display =
     "none";
 
-
   await sleep(600);
 
-
   startTension();
-
 
   return recountSequence();
 
@@ -2221,36 +2365,27 @@ async function fakeSlashPattern(){
 
   await sleep(1800);
 
-
   showNumber(2);
 
   await sleep(1200);
 
-
   slashSound();
-
 
   $("#slash")
     .className =
     "go";
 
-
   await sleep(170);
-
 
   $("#slash")
     .className =
     "";
 
-
   await sleep(700);
-
 
   showNumber(1);
 
-
   await sleep(2200);
-
 
   return slashHit();
 
@@ -2261,42 +2396,27 @@ async function weirdCountdown(){
 
   showNumber(3);
 
-
   if(Math.random() < .55){
-
     await applyWeirdEffect();
-
   }
-
 
   await sleep(1700);
 
-
   showNumber(2);
 
-
   if(Math.random() < .60){
-
     await applyWeirdEffect();
-
   }
-
 
   await sleep(1900);
 
-
   showNumber(1);
 
-
   if(Math.random() < .70){
-
     await applyWeirdEffect();
-
   }
 
-
   await sleep(2000);
-
 
   return slashHit();
 
@@ -2307,48 +2427,57 @@ async function silentStart(){
 
   stopTension();
 
-
   showNumber(
     3,
     false
   );
 
-
   await sleep(1900);
-
 
   startTension();
 
-
   showNumber(2);
 
-
   await sleep(1900);
-
 
   showNumber(1);
 
-
   await sleep(1900);
-
 
   return slashHit();
 
 }
 
 
-/* ==========================
-   宝箱
-========================== */
+/* =========================
+   宝箱表示
+========================= */
 
 function showTreasure(){
 
   selectedPrize =
     drawPrize();
 
-
   chestBusy =
     false;
+
+  chestResults =
+    [];
+
+
+  $("#treasureTitle")
+    .textContent =
+    "宝箱を1つ選べ！";
+
+
+  $("#treasureSub")
+    .textContent =
+    "タップして宝箱を開けてください";
+
+
+  $("#treasureNext")
+    .style.display =
+    "none";
 
 
   $$(".chest")
@@ -2361,6 +2490,20 @@ function showTreasure(){
         "disabled"
       );
 
+
+      const r =
+        c.querySelector(
+          ".chestResult"
+        );
+
+
+      r.textContent =
+        "";
+
+
+      r.className =
+        "chestResult";
+
     });
 
 
@@ -2370,6 +2513,10 @@ function showTreasure(){
 
 }
 
+
+/* =========================
+   選択
+========================= */
 
 async function chooseChest(chest){
 
@@ -2382,23 +2529,35 @@ async function chooseChest(chest){
     true;
 
 
-  $$(".chest")
-    .forEach(c=>{
+  const chests =
+    $$(".chest");
+
+
+  const selectedIndex =
+    chests.indexOf(chest);
+
+
+  buildChestResults(
+    selectedIndex
+  );
+
+
+  chests.forEach(c=>{
+
+    c.classList.add(
+      "disabled"
+    );
+
+
+    if(c !== chest){
 
       c.classList.add(
-        "disabled"
+        "dim"
       );
 
+    }
 
-      if(c !== chest){
-
-        c.classList.add(
-          "dim"
-        );
-
-      }
-
-    });
+  });
 
 
   chest.classList.add(
@@ -2406,7 +2565,7 @@ async function chooseChest(chest){
   );
 
 
-  await sleep(1100);
+  await sleep(1000);
 
 
   chest.classList.remove(
@@ -2414,34 +2573,145 @@ async function chooseChest(chest){
   );
 
 
-  await sleep(350);
-
-
   chest.classList.add(
     "open"
   );
 
 
-  await sleep(350);
-
+  chestOpenSound();
 
   flash();
 
 
-  await sleep(600);
+  showChestResult(
+    chest,
+    selectedPrize.label
+  );
 
 
-  showPrize();
+  await sleep(750);
+
+
+  await showSelectedPrize();
+
+
+  await sleep(300);
+
+
+  $("#treasureTitle")
+    .textContent =
+    "残りの宝箱は…";
+
+
+  $("#treasureSub")
+    .textContent =
+    "選ばなかった箱もオープン";
+
+
+  chests.forEach(c=>
+    c.classList.remove(
+      "dim"
+    )
+  );
+
+
+  const others =
+    chests
+      .map((c,i)=>({
+        chest:c,
+        index:i
+      }))
+      .filter(
+        x =>
+          x.index !== selectedIndex
+      );
+
+
+  await sleep(500);
+
+
+  for(const item of others){
+
+    item.chest.classList.add(
+      "open"
+    );
+
+
+    chestOpenSound();
+
+    flash();
+
+
+    showChestResult(
+      item.chest,
+      chestResults[
+        item.index
+      ]
+    );
+
+
+    await sleep(950);
+
+  }
+
+
+  $("#treasureTitle")
+    .textContent =
+    selectedPrize.label +
+    " 当選！";
+
+
+  $("#treasureSub")
+    .textContent =
+    "3つの宝箱の結果";
+
+
+  $("#treasureNext")
+    .style.display =
+    "block";
 
 }
 
 
-function showPrize(){
+/* =========================
+   宝箱の等級表示
+========================= */
 
-  $("#treasureScreen")
-    .className =
-    "";
+function showChestResult(
+  chest,
+  label
+){
 
+  const result =
+    chest.querySelector(
+      ".chestResult"
+    );
+
+
+  result.textContent =
+    label;
+
+
+  result.className =
+    "chestResult " +
+    classForPrize(label);
+
+
+  void result.offsetWidth;
+
+
+  result.classList.add(
+    "show"
+  );
+
+}
+
+
+/* =========================
+   選んだ景品だけ大発表
+========================= */
+
+async function showSelectedPrize(){
 
   $("#prizeLabel")
     .textContent =
@@ -2456,12 +2726,20 @@ function showPrize(){
 
   flash();
 
+
+  await sleep(1550);
+
+
+  $("#prizeBox")
+    .className =
+    "";
+
 }
 
 
-/* ==========================
+/* =========================
    START
-========================== */
+========================= */
 
 async function play(){
 
@@ -2555,9 +2833,9 @@ async function play(){
 }
 
 
-/* ==========================
+/* =========================
    RESET
-========================== */
+========================= */
 
 function reset(){
 
@@ -2610,6 +2888,11 @@ function reset(){
     "";
 
 
+  $("#treasureNext")
+    .style.display =
+    "none";
+
+
   resetNumberStyle();
 
 
@@ -2633,6 +2916,19 @@ function reset(){
         "disabled"
       );
 
+
+      const r =
+        c.querySelector(
+          ".chestResult"
+        );
+
+
+      r.textContent =
+        "";
+
+      r.className =
+        "chestResult";
+
     });
 
 
@@ -2645,6 +2941,10 @@ function reset(){
     null;
 
 
+  chestResults =
+    [];
+
+
   chestBusy =
     false;
 
@@ -2655,9 +2955,9 @@ function reset(){
 }
 
 
-/* ==========================
+/* =========================
    EVENTS
-========================== */
+========================= */
 
 $("#start")
   .addEventListener(
@@ -2677,7 +2977,7 @@ $$(".chest")
   });
 
 
-$("#next")
+$("#treasureNext")
   .addEventListener(
     "click",
     reset
