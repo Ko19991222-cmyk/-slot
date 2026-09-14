@@ -285,7 +285,10 @@ button{font-family:inherit}
   letter-spacing:.16em;
 }
 
-/* 宝箱 */
+
+/* =========================
+   宝箱
+========================= */
 
 #treasureScreen{
   position:fixed;
@@ -533,7 +536,10 @@ button{font-family:inherit}
   }
 }
 
-/* 選択した景品の大発表 */
+
+/* =========================
+   景品大発表
+========================= */
 
 #prizeBox{
   position:fixed;
@@ -716,7 +722,7 @@ button{font-family:inherit}
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260914-1"
+  src="./hit_music_final.mp3?v=20260914-2"
   preload="auto"
   playsinline>
 </audio>
@@ -1156,7 +1162,7 @@ function strangeCountSound(){
 
 
 /* =========================
-   プチュン
+   プチュン音
 ========================= */
 
 function puchunSound(){
@@ -1298,7 +1304,7 @@ function slashSound(){
 
 
 /* =========================
-   宝箱オープン音
+   宝箱音
 ========================= */
 
 function chestOpenSound(){
@@ -1374,12 +1380,6 @@ async function playHitMusic(){
 
 /* =========================
    景品抽選
-
-   当たり後に1回だけ抽選
-
-   1等 5%
-   2等 20%
-   3等 75%
 ========================= */
 
 function drawPrize(){
@@ -1429,11 +1429,7 @@ function classForPrize(label){
 
 
 /* =========================
-   宝箱3個の結果を作る
-
-   選んだ箱 = 当選等級
-
-   残り2個 = 残りの等級
+   宝箱結果
 ========================= */
 
 function buildChestResults(
@@ -1481,7 +1477,7 @@ function buildChestResults(
 
 
 /* =========================
-   NUMBER
+   数字
 ========================= */
 
 function resetNumberStyle(){
@@ -1767,12 +1763,41 @@ async function showHit(){
 
 
 /* =========================
-   通常ハズレ
+   ハズレ抽選
 
-   「ハズレ」の文字は出さない
+   ハズレだった場合のみ
+   75% 普通
+   20% 弱ガセ
+   5% 強ガセ
 ========================= */
 
 async function normalMiss(){
+
+  const r =
+    Math.random();
+
+  if(r < .75){
+
+    return missNormal();
+
+  }
+
+  if(r < .95){
+
+    return missWeakFake();
+
+  }
+
+  return missStrongFake();
+
+}
+
+
+/* =========================
+   普通ハズレ
+========================= */
+
+async function missNormal(){
 
   showNumber(3);
 
@@ -1793,6 +1818,299 @@ async function normalMiss(){
     "";
 
   await sleep(850);
+
+  reset();
+
+}
+
+
+/* =========================
+   弱ガセ
+========================= */
+
+async function missWeakFake(){
+
+  const type =
+    Math.floor(
+      Math.random() * 5
+    );
+
+
+  /* 2フリーズ */
+
+  if(type === 0){
+
+    showNumber(3);
+
+    await sleep(1800);
+
+    showNumber(2);
+
+    await sleep(3100);
+
+    showNumber(1);
+
+    await sleep(1900);
+
+  }
+
+
+  /* 1長溜め */
+
+  else if(type === 1){
+
+    showNumber(3);
+
+    await sleep(1700);
+
+    showNumber(2);
+
+    await sleep(1850);
+
+    showNumber(1);
+
+    await sleep(3500);
+
+  }
+
+
+  /* 赤違和感 */
+
+  else if(type === 2){
+
+    showNumber(3);
+
+    await sleep(1750);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(700);
+
+    $("#number")
+      .classList
+      .add("red");
+
+    await sleep(180);
+
+    $("#number")
+      .classList
+      .remove("red");
+
+    await sleep(1600);
+
+  }
+
+
+  /* 無音ガセ */
+
+  else if(type === 3){
+
+    showNumber(3);
+
+    await sleep(1750);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(650);
+
+    stopTension();
+
+    await sleep(850);
+
+    startTension();
+    raiseTension(3);
+
+    await sleep(1250);
+
+  }
+
+
+  /* 一瞬暗転 */
+
+  else{
+
+    showNumber(3);
+
+    await sleep(1750);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(850);
+
+    stopTension();
+
+    $("#black")
+      .style.display =
+      "block";
+
+    await sleep(420);
+
+    $("#black")
+      .style.display =
+      "none";
+
+    startTension();
+    raiseTension(3);
+
+    await sleep(1200);
+
+  }
+
+
+  stopTension();
+
+  $("#number")
+    .textContent =
+    "";
+
+  await sleep(900);
+
+  reset();
+
+}
+
+
+/* =========================
+   強ガセ
+========================= */
+
+async function missStrongFake(){
+
+  const type =
+    Math.floor(
+      Math.random() * 3
+    );
+
+
+  /* フェイク切り裂き */
+
+  if(type === 0){
+
+    showNumber(3);
+
+    await sleep(1750);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(1450);
+
+    stopTension();
+
+    slashSound();
+
+    $("#slash")
+      .className =
+      "go";
+
+    await sleep(180);
+
+    $("#slash")
+      .className =
+      "";
+
+    await sleep(1500);
+
+  }
+
+
+  /* プチュン風暗転 */
+
+  else if(type === 1){
+
+    showNumber(3);
+
+    await sleep(1700);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(1300);
+
+    stopTension();
+
+    puchunSound();
+
+    await sleep(80);
+
+    $("#black")
+      .style.display =
+      "block";
+
+    $("#number")
+      .textContent =
+      "";
+
+    await sleep(
+      1800 +
+      Math.random() * 900
+    );
+
+    $("#black")
+      .style.display =
+      "none";
+
+    await sleep(700);
+
+  }
+
+
+  /* 金色ガセ */
+
+  else{
+
+    showNumber(3);
+
+    await sleep(1700);
+
+    showNumber(2);
+
+    await sleep(1800);
+
+    showNumber(1);
+
+    await sleep(700);
+
+    $("#number")
+      .classList
+      .add("gold");
+
+    await sleep(350);
+
+    $("#number")
+      .classList
+      .remove("gold");
+
+    await sleep(2700);
+
+  }
+
+
+  stopTension();
+
+  $("#number")
+    .textContent =
+    "";
+
+  await sleep(1200);
 
   reset();
 
@@ -2450,12 +2768,9 @@ async function showSelectedPrize(){
 /* =========================
    START
 
-   ★ 完全独立抽選 1/30 ★
+   完全独立 1/30
 
-   STARTを押すたびに
-   毎回1回だけ新しく抽選。
-
-   過去の結果は一切関係なし。
+   毎回1回だけ抽選
 ========================= */
 
 async function play(){
@@ -2477,7 +2792,7 @@ async function play(){
   startTension();
 
 
-  /* ★ 完全確率 1/30 ★ */
+  /* 完全独立 1/30 */
 
   const win =
     Math.random() < (1 / 30);
@@ -2494,8 +2809,7 @@ async function play(){
   }
 
 
-  /* 当たりの場合のみ
-     18種類から演出を選択 */
+  /* 当たり */
 
   const pattern =
     Math.floor(
