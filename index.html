@@ -71,6 +71,33 @@ button{font-family:inherit;}
 #number.gold{color:#ffe16b;}
 #number.small{transform:scale(.84);}
 
+#startInfo{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:18%;
+  z-index:300;
+  text-align:center;
+  pointer-events:none;
+}
+
+#oddsText{
+  font-size:clamp(24px,7vw,42px);
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-shadow:
+    0 0 10px rgba(255,255,255,.7),
+    0 0 24px rgba(255,255,255,.25);
+}
+
+#independentText{
+  margin-top:8px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.16em;
+  opacity:.6;
+}
+
 #start{
   position:absolute;
   bottom:8%;
@@ -222,6 +249,42 @@ button{font-family:inherit;}
   letter-spacing:.16em;
 }
 
+#preTreasure{
+  position:fixed;
+  inset:0;
+  z-index:175;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+}
+
+#preTreasure.show{
+  display:flex;
+}
+
+#preTreasureText{
+  font-size:clamp(34px,11vw,70px);
+  font-weight:1000;
+  letter-spacing:.08em;
+  text-align:center;
+  text-shadow:
+    0 0 12px rgba(255,255,255,.85),
+    0 0 30px rgba(255,255,255,.25);
+  animation:preTreasureIn .45s ease-out;
+}
+
+@keyframes preTreasureIn{
+  0%{
+    opacity:0;
+    transform:scale(.8);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
 #treasureScreen{
   position:fixed;
   inset:0;
@@ -243,7 +306,7 @@ button{font-family:inherit;}
   text-align:center;
   font-size:clamp(24px,8vw,48px);
   font-weight:1000;
-  letter-spacing:.12em;
+  letter-spacing:.08em;
 }
 
 #treasureSub{
@@ -252,7 +315,7 @@ button{font-family:inherit;}
   width:100%;
   text-align:center;
   font-size:13px;
-  letter-spacing:.14em;
+  letter-spacing:.12em;
   opacity:.72;
 }
 
@@ -527,6 +590,12 @@ button{font-family:inherit;}
 
 <div id="stage">
   <div id="number">3</div>
+
+  <div id="startInfo">
+    <div id="oddsText">完全抽選 1/30</div>
+    <div id="independentText">毎回独立抽選</div>
+  </div>
+
   <button id="start">START</button>
 </div>
 
@@ -544,9 +613,13 @@ button{font-family:inherit;}
   <div id="subText">CONGRATULATIONS</div>
 </div>
 
+<div id="preTreasure">
+  <div id="preTreasureText">ここからが本番。</div>
+</div>
+
 <div id="treasureScreen">
-  <div id="treasureTitle">宝箱を1つ選べ！</div>
-  <div id="treasureSub">タップして宝箱を開けてください</div>
+  <div id="treasureTitle">運命の宝箱を選べ！</div>
+  <div id="treasureSub">この一箱が、結果を決める。</div>
 
   <div id="chests">
 
@@ -599,7 +672,7 @@ button{font-family:inherit;}
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260914-production"
+  src="./hit_music_final.mp3?v=20260914-production2"
   preload="auto"
   playsinline>
 </audio>
@@ -795,30 +868,18 @@ function raiseTension(level){
   try{
 
     if(level === 1){
-
-      tensionOsc1?.frequency
-        .linearRampToValueAtTime(92,t+.3);
-
-      tensionOsc2?.frequency
-        .linearRampToValueAtTime(184,t+.3);
+      tensionOsc1?.frequency.linearRampToValueAtTime(92,t+.3);
+      tensionOsc2?.frequency.linearRampToValueAtTime(184,t+.3);
     }
 
     if(level === 2){
-
-      tensionOsc1?.frequency
-        .linearRampToValueAtTime(104,t+.3);
-
-      tensionOsc2?.frequency
-        .linearRampToValueAtTime(208,t+.3);
+      tensionOsc1?.frequency.linearRampToValueAtTime(104,t+.3);
+      tensionOsc2?.frequency.linearRampToValueAtTime(208,t+.3);
     }
 
     if(level === 3){
-
-      tensionOsc1?.frequency
-        .linearRampToValueAtTime(118,t+.3);
-
-      tensionOsc2?.frequency
-        .linearRampToValueAtTime(236,t+.3);
+      tensionOsc1?.frequency.linearRampToValueAtTime(118,t+.3);
+      tensionOsc2?.frequency.linearRampToValueAtTime(236,t+.3);
     }
 
   }catch(e){}
@@ -958,7 +1019,6 @@ function slashSound(){
 
   osc.start(now);
   osc.stop(now+.2);
-
 
   const bass = audioCtx.createOscillator();
   const bassGain = audioCtx.createGain();
@@ -1196,13 +1256,15 @@ async function showHit(){
 
   $("#hit").className = "";
 
+  $("#preTreasure").className = "show";
+
+  await sleep(1300);
+
+  $("#preTreasure").className = "";
+
   showTreasure();
 }
 
-
-/* =========================
-   通常ハズレ
-========================= */
 
 async function missNormal(){
 
@@ -1224,10 +1286,6 @@ async function missNormal(){
   reset();
 }
 
-
-/* =========================
-   弱ガセ 10種類
-========================= */
 
 async function missWeakFake(){
 
@@ -1330,15 +1388,12 @@ async function missWeakFake(){
   else if(type === 5){
 
     showNumber(3);
-
     await sleep(3300);
 
     showNumber(2);
-
     await sleep(1700);
 
     showNumber(1);
-
     await sleep(1900);
   }
 
@@ -1436,10 +1491,6 @@ async function missWeakFake(){
   reset();
 }
 
-
-/* =========================
-   強ガセ 6種類
-========================= */
 
 async function missStrongFake(){
 
@@ -1612,13 +1663,6 @@ async function missStrongFake(){
 }
 
 
-/* =========================
-   ハズレ振り分け
-   通常50%
-   弱25%
-   強25%
-========================= */
-
 async function normalMiss(){
 
   const r = Math.random();
@@ -1634,10 +1678,6 @@ async function normalMiss(){
   return missStrongFake();
 }
 
-
-/* =========================
-   当たり演出
-========================= */
 
 async function normalHitAt(point){
 
@@ -1984,10 +2024,6 @@ async function silentStart(){
 }
 
 
-/* =========================
-   当たり18パターン
-========================= */
-
 async function runRandomHit(){
 
   const pattern =
@@ -2052,10 +2088,6 @@ async function runRandomHit(){
 }
 
 
-/* =========================
-   宝箱
-========================= */
-
 function showTreasure(){
 
   selectedPrize = drawPrize();
@@ -2064,10 +2096,10 @@ function showTreasure(){
   chestResults = [];
 
   $("#treasureTitle").textContent =
-    "宝箱を1つ選べ！";
+    "運命の宝箱を選べ！";
 
   $("#treasureSub").textContent =
-    "タップして宝箱を開けてください";
+    "この一箱が、結果を決める。";
 
   $("#treasureNext").style.display =
     "none";
@@ -2219,12 +2251,6 @@ async function showSelectedPrize(){
 }
 
 
-/* =========================
-   本番抽選
-
-   毎回完全独立 1/30
-========================= */
-
 async function productionPlay(){
 
   if(busy) return;
@@ -2234,18 +2260,17 @@ async function productionPlay(){
   $("#start").style.display =
     "none";
 
+  $("#startInfo").style.display =
+    "none";
+
   initAudio();
 
   await unlockHitMusic();
 
   startTension();
 
-
-  /* ★ 抽選はここで1回だけ ★ */
-
   const win =
     Math.random() < (1/30);
-
 
   if(!win){
 
@@ -2254,14 +2279,9 @@ async function productionPlay(){
     return;
   }
 
-
   await runRandomHit();
 }
 
-
-/* =========================
-   RESET
-========================= */
 
 function reset(){
 
@@ -2274,6 +2294,7 @@ function reset(){
   }catch(e){}
 
   $("#hit").className = "";
+  $("#preTreasure").className = "";
   $("#treasureScreen").className = "";
   $("#prizeBox").className = "";
   $("#slash").className = "";
@@ -2310,14 +2331,13 @@ function reset(){
   chestBusy = false;
   busy = false;
 
+  $("#startInfo").style.display =
+    "block";
+
   $("#start").style.display =
     "block";
 }
 
-
-/* =========================
-   EVENTS
-========================= */
 
 $("#start").addEventListener(
   "click",
