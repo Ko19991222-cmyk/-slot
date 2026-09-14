@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>COUNTDOWN</title>
+<title>COUNTDOWN TEST</title>
 
 <style>
 *{
@@ -21,8 +21,13 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
 
-body{user-select:none}
-button{font-family:inherit}
+body{
+  user-select:none;
+}
+
+button{
+  font-family:inherit;
+}
 
 #stage{
   position:fixed;
@@ -108,11 +113,82 @@ button{font-family:inherit}
   opacity:.15;
 }
 
-#start,
-#treasureNext{
+
+/* =========================
+   テストメニュー
+========================= */
+
+#testPanel{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:4%;
+  z-index:500;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  padding:0 14px;
+}
+
+#testTitle{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.15em;
+  opacity:.55;
+}
+
+#testButtons{
+  width:min(94vw,520px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.testBtn{
+  min-height:52px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.3);
+  color:#fff;
+  font-weight:900;
+  font-size:15px;
+  background:rgba(20,20,20,.92);
+}
+
+.testBtn:active{
+  transform:scale(.96);
+}
+
+#btnNormal{
+  border-color:#777;
+}
+
+#btnWeak{
+  border-color:#8ca3ff;
+}
+
+#btnStrong{
+  border-color:#ff9b44;
+}
+
+#btnHit{
+  border-color:#ff4747;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(130,0,0,.95),
+      rgba(50,0,0,.95)
+    );
+}
+
+
+/* 本番ボタン */
+
+#start{
   position:absolute;
   bottom:8%;
   z-index:400;
+  display:none;
   padding:17px 46px;
   border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
@@ -123,9 +199,6 @@ button{font-family:inherit}
   letter-spacing:.12em;
 }
 
-#treasureNext{
-  display:none;
-}
 
 #black{
   position:fixed;
@@ -536,9 +609,24 @@ button{font-family:inherit}
   }
 }
 
+#treasureNext{
+  position:absolute;
+  bottom:8%;
+  z-index:400;
+  display:none;
+  padding:17px 46px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.4);
+  background:rgba(0,0,0,.78);
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+
 
 /* =========================
-   景品大発表
+   景品発表
 ========================= */
 
 #prizeBox{
@@ -606,7 +694,6 @@ button{font-family:inherit}
     0 0 12px #fff,
     0 0 40px rgba(255,255,255,.7),
     0 0 90px rgba(255,180,0,.7);
-  animation:prizeIn .7s cubic-bezier(.05,1.5,.2,1);
 }
 
 #prizeWon{
@@ -618,21 +705,6 @@ button{font-family:inherit}
   letter-spacing:.15em;
 }
 
-@keyframes prizeIn{
-  0%{
-    transform:scale(.15) rotate(-8deg);
-    opacity:0;
-    filter:blur(14px);
-  }
-  70%{
-    transform:scale(1.18) rotate(2deg);
-    opacity:1;
-    filter:blur(0);
-  }
-  100%{
-    transform:scale(1);
-  }
-}
 </style>
 </head>
 
@@ -643,6 +715,44 @@ button{font-family:inherit}
   <button id="start">START</button>
 </div>
 
+
+<div id="testPanel">
+
+  <div id="testTitle">
+    TEST MODE
+  </div>
+
+  <div id="testButtons">
+
+    <button
+      class="testBtn"
+      id="btnNormal">
+      通常ハズレ
+    </button>
+
+    <button
+      class="testBtn"
+      id="btnWeak">
+      弱ガセ
+    </button>
+
+    <button
+      class="testBtn"
+      id="btnStrong">
+      強ガセ
+    </button>
+
+    <button
+      class="testBtn"
+      id="btnHit">
+      当たり
+    </button>
+
+  </div>
+
+</div>
+
+
 <div id="weirdMark">?</div>
 <div id="black"></div>
 
@@ -652,11 +762,21 @@ button{font-family:inherit}
 
 <div id="flash"></div>
 
+
 <div id="hit">
+
   <div id="glow"></div>
-  <div id="hitText">当たり</div>
-  <div id="subText">CONGRATULATIONS</div>
+
+  <div id="hitText">
+    当たり
+  </div>
+
+  <div id="subText">
+    CONGRATULATIONS
+  </div>
+
 </div>
+
 
 <div id="treasureScreen">
 
@@ -671,6 +791,7 @@ button{font-family:inherit}
   <div id="chests">
 
     <button class="chest">
+
       <div class="chestWrap">
         <div class="chestLight"></div>
         <div class="chestLid"></div>
@@ -678,23 +799,18 @@ button{font-family:inherit}
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-      <div class="chestNum">CHEST 1</div>
+
+      <div class="chestNum">
+        CHEST 1
+      </div>
+
       <div class="chestResult"></div>
+
     </button>
 
-    <button class="chest">
-      <div class="chestWrap">
-        <div class="chestLight"></div>
-        <div class="chestLid"></div>
-        <div class="chestBody"></div>
-        <div class="chestBand"></div>
-        <div class="chestLock"></div>
-      </div>
-      <div class="chestNum">CHEST 2</div>
-      <div class="chestResult"></div>
-    </button>
 
     <button class="chest">
+
       <div class="chestWrap">
         <div class="chestLight"></div>
         <div class="chestLid"></div>
@@ -702,8 +818,32 @@ button{font-family:inherit}
         <div class="chestBand"></div>
         <div class="chestLock"></div>
       </div>
-      <div class="chestNum">CHEST 3</div>
+
+      <div class="chestNum">
+        CHEST 2
+      </div>
+
       <div class="chestResult"></div>
+
+    </button>
+
+
+    <button class="chest">
+
+      <div class="chestWrap">
+        <div class="chestLight"></div>
+        <div class="chestLid"></div>
+        <div class="chestBody"></div>
+        <div class="chestBand"></div>
+        <div class="chestLock"></div>
+      </div>
+
+      <div class="chestNum">
+        CHEST 3
+      </div>
+
+      <div class="chestResult"></div>
+
     </button>
 
   </div>
@@ -714,28 +854,60 @@ button{font-family:inherit}
 
 </div>
 
+
 <div id="prizeBox">
+
   <div id="prizeBurst"></div>
-  <div id="prizeLabel">3等</div>
-  <div id="prizeWon">当選！</div>
+
+  <div id="prizeLabel">
+    3等
+  </div>
+
+  <div id="prizeWon">
+    当選！
+  </div>
+
 </div>
+
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260914-2"
+  src="./hit_music_final.mp3?v=20260914-test1"
   preload="auto"
   playsinline>
 </audio>
 
+
 <script>
 
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const sleep = ms => new Promise(r=>setTimeout(r,ms));
+/* =========================
+   ★ テスト設定 ★
+
+   true  = 4ボタンテスト
+   false = 本番1/30
+========================= */
+
+const TEST_MODE = true;
+
+
+const $ =
+  s => document.querySelector(s);
+
+const $$ =
+  s => [...document.querySelectorAll(s)];
+
+const sleep =
+  ms => new Promise(
+    r => setTimeout(r,ms)
+  );
+
 
 let busy = false;
+
 let chestBusy = false;
+
 let selectedPrize = null;
+
 let chestResults = [];
 
 let audioCtx = null;
@@ -746,11 +918,46 @@ let tensionOsc3 = null;
 let tensionOsc4 = null;
 
 let tensionGain = null;
+
 let tensionCompressor = null;
+
 let pulseTimer = null;
+
 let tensionLevel = 1;
 
-const hitMusic = $("#hitMusic");
+const hitMusic =
+  $("#hitMusic");
+
+
+/* =========================
+   MODE表示
+========================= */
+
+function setupMode(){
+
+  if(TEST_MODE){
+
+    $("#testPanel")
+      .style.display =
+      "flex";
+
+    $("#start")
+      .style.display =
+      "none";
+
+  }else{
+
+    $("#testPanel")
+      .style.display =
+      "none";
+
+    $("#start")
+      .style.display =
+      "block";
+
+  }
+
+}
 
 
 /* =========================
@@ -769,8 +976,13 @@ function initAudio(){
 
   }
 
-  if(audioCtx.state === "suspended"){
+  if(
+    audioCtx.state ===
+    "suspended"
+  ){
+
     audioCtx.resume();
+
   }
 
 }
@@ -781,15 +993,21 @@ async function unlockHitMusic(){
   try{
 
     hitMusic.pause();
+
     hitMusic.currentTime = 0;
+
     hitMusic.muted = false;
+
     hitMusic.volume = .001;
 
     await hitMusic.play();
+
     await sleep(60);
 
     hitMusic.pause();
+
     hitMusic.currentTime = 0;
+
     hitMusic.volume = 1;
 
   }catch(e){
@@ -808,11 +1026,13 @@ async function unlockHitMusic(){
 function startTension(){
 
   initAudio();
+
   stopTension();
 
   tensionLevel = 1;
 
-  const now = audioCtx.currentTime;
+  const now =
+    audioCtx.currentTime;
 
   tensionGain =
     audioCtx.createGain();
@@ -820,20 +1040,21 @@ function startTension(){
   tensionCompressor =
     audioCtx.createDynamicsCompressor();
 
-  tensionCompressor.threshold.value = -14;
-  tensionCompressor.knee.value = 12;
-  tensionCompressor.ratio.value = 5;
-  tensionCompressor.attack.value = .005;
-  tensionCompressor.release.value = .18;
+  tensionCompressor.threshold.value =
+    -14;
 
-  tensionGain.gain
-    .setValueAtTime(.0001,now);
+  tensionCompressor.knee.value =
+    12;
 
-  tensionGain.gain
-    .exponentialRampToValueAtTime(
-      .17,
-      now + .35
-    );
+  tensionCompressor.ratio.value =
+    5;
+
+  tensionCompressor.attack.value =
+    .005;
+
+  tensionCompressor.release.value =
+    .18;
+
 
   tensionOsc1 =
     audioCtx.createOscillator();
@@ -847,35 +1068,63 @@ function startTension(){
   tensionOsc4 =
     audioCtx.createOscillator();
 
-  tensionOsc1.type = "sine";
-  tensionOsc2.type = "triangle";
-  tensionOsc3.type = "sawtooth";
-  tensionOsc4.type = "triangle";
 
-  tensionOsc1.frequency.value = 92;
-  tensionOsc2.frequency.value = 184;
-  tensionOsc3.frequency.value = 276;
-  tensionOsc4.frequency.value = 368;
+  tensionOsc1.type =
+    "sine";
 
-  const g1 = audioCtx.createGain();
-  const g2 = audioCtx.createGain();
-  const g3 = audioCtx.createGain();
-  const g4 = audioCtx.createGain();
+  tensionOsc2.type =
+    "triangle";
+
+  tensionOsc3.type =
+    "sawtooth";
+
+  tensionOsc4.type =
+    "triangle";
+
+
+  tensionOsc1.frequency.value =
+    92;
+
+  tensionOsc2.frequency.value =
+    184;
+
+  tensionOsc3.frequency.value =
+    276;
+
+  tensionOsc4.frequency.value =
+    368;
+
+
+  const g1 =
+    audioCtx.createGain();
+
+  const g2 =
+    audioCtx.createGain();
+
+  const g3 =
+    audioCtx.createGain();
+
+  const g4 =
+    audioCtx.createGain();
+
 
   g1.gain.value = .72;
   g2.gain.value = .34;
   g3.gain.value = .055;
   g4.gain.value = .035;
 
+
   tensionOsc1.connect(g1);
   tensionOsc2.connect(g2);
   tensionOsc3.connect(g3);
   tensionOsc4.connect(g4);
 
+
   g1.connect(tensionGain);
   g2.connect(tensionGain);
   g3.connect(tensionGain);
   g4.connect(tensionGain);
+
 
   tensionGain.connect(
     tensionCompressor
@@ -885,10 +1134,12 @@ function startTension(){
     audioCtx.destination
   );
 
+
   tensionOsc1.start();
   tensionOsc2.start();
   tensionOsc3.start();
   tensionOsc4.start();
+
 
   startPulse();
 
@@ -898,8 +1149,13 @@ function startTension(){
 function startPulse(){
 
   if(pulseTimer){
-    clearTimeout(pulseTimer);
+
+    clearTimeout(
+      pulseTimer
+    );
+
   }
+
 
   function pulse(){
 
@@ -907,30 +1163,46 @@ function startPulse(){
       return;
     }
 
+
     const t =
       audioCtx.currentTime;
 
+
     let base = .12;
+
     let peak = .34;
+
     let speed = 620;
 
+
     if(tensionLevel === 2){
+
       base = .14;
       peak = .40;
       speed = 500;
+
     }
 
+
     if(tensionLevel === 3){
+
       base = .16;
       peak = .48;
       speed = 390;
+
     }
+
 
     tensionGain.gain
       .cancelScheduledValues(t);
 
+
     tensionGain.gain
-      .setValueAtTime(base,t);
+      .setValueAtTime(
+        base,
+        t
+      );
+
 
     tensionGain.gain
       .exponentialRampToValueAtTime(
@@ -938,11 +1210,13 @@ function startPulse(){
         t + .045
       );
 
+
     tensionGain.gain
       .exponentialRampToValueAtTime(
         base,
         t + .25
       );
+
 
     pulseTimer =
       setTimeout(
@@ -952,6 +1226,7 @@ function startPulse(){
 
   }
 
+
   pulse();
 
 }
@@ -959,26 +1234,32 @@ function startPulse(){
 
 function raiseTension(level){
 
-  tensionLevel = level;
+  tensionLevel =
+    level;
+
 
   if(!audioCtx){
     return;
   }
 
+
   const t =
     audioCtx.currentTime;
+
 
   try{
 
     if(level === 1){
 
-      tensionOsc1?.frequency
+      tensionOsc1
+        ?.frequency
         .linearRampToValueAtTime(
           92,
           t + .3
         );
 
-      tensionOsc2?.frequency
+      tensionOsc2
+        ?.frequency
         .linearRampToValueAtTime(
           184,
           t + .3
@@ -986,15 +1267,18 @@ function raiseTension(level){
 
     }
 
+
     if(level === 2){
 
-      tensionOsc1?.frequency
+      tensionOsc1
+        ?.frequency
         .linearRampToValueAtTime(
           104,
           t + .3
         );
 
-      tensionOsc2?.frequency
+      tensionOsc2
+        ?.frequency
         .linearRampToValueAtTime(
           208,
           t + .3
@@ -1002,15 +1286,18 @@ function raiseTension(level){
 
     }
 
+
     if(level === 3){
 
-      tensionOsc1?.frequency
+      tensionOsc1
+        ?.frequency
         .linearRampToValueAtTime(
           118,
           t + .3
         );
 
-      tensionOsc2?.frequency
+      tensionOsc2
+        ?.frequency
         .linearRampToValueAtTime(
           236,
           t + .3
@@ -1027,15 +1314,34 @@ function stopTension(){
 
   if(pulseTimer){
 
-    clearTimeout(pulseTimer);
+    clearTimeout(
+      pulseTimer
+    );
+
     pulseTimer = null;
 
   }
 
-  try{tensionOsc1?.stop()}catch(e){}
-  try{tensionOsc2?.stop()}catch(e){}
-  try{tensionOsc3?.stop()}catch(e){}
-  try{tensionOsc4?.stop()}catch(e){}
+
+  try{
+    tensionOsc1?.stop();
+  }catch(e){}
+
+
+  try{
+    tensionOsc2?.stop();
+  }catch(e){}
+
+
+  try{
+    tensionOsc3?.stop();
+  }catch(e){}
+
+
+  try{
+    tensionOsc4?.stop();
+  }catch(e){}
+
 
   tensionOsc1 = null;
   tensionOsc2 = null;
@@ -1056,14 +1362,18 @@ function countSound(n){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
+
 
   const freq = {
     3:160,
@@ -1072,7 +1382,10 @@ function countSound(n){
     0:110
   };
 
-  osc.type = "triangle";
+
+  osc.type =
+    "triangle";
+
 
   osc.frequency
     .setValueAtTime(
@@ -1080,17 +1393,20 @@ function countSound(n){
       now
     );
 
+
   osc.frequency
     .exponentialRampToValueAtTime(
       65,
       now + .45
     );
 
+
   gain.gain
     .setValueAtTime(
       .0001,
       now
     );
+
 
   gain.gain
     .exponentialRampToValueAtTime(
@@ -1098,87 +1414,54 @@ function countSound(n){
       now + .012
     );
 
+
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .52
     );
 
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  osc.start(now);
-  osc.stop(now + .55);
-
-}
-
-
-function strangeCountSound(){
-
-  initAudio();
-
-  const now =
-    audioCtx.currentTime;
-
-  const osc =
-    audioCtx.createOscillator();
-
-  const gain =
-    audioCtx.createGain();
-
-  osc.type = "sawtooth";
-
-  osc.frequency
-    .setValueAtTime(
-      240,
-      now
-    );
-
-  osc.frequency
-    .exponentialRampToValueAtTime(
-      70,
-      now + .5
-    );
-
-  gain.gain
-    .setValueAtTime(
-      .32,
-      now
-    );
-
-  gain.gain
-    .exponentialRampToValueAtTime(
-      .0001,
-      now + .5
-    );
 
   osc.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
 
   osc.start(now);
-  osc.stop(now + .55);
+
+  osc.stop(
+    now + .55
+  );
 
 }
 
 
 /* =========================
-   プチュン音
+   プチュン
 ========================= */
 
 function puchunSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "square";
+
+  osc.type =
+    "square";
+
 
   osc.frequency
     .setValueAtTime(
@@ -1186,11 +1469,13 @@ function puchunSound(){
       now
     );
 
+
   osc.frequency
     .exponentialRampToValueAtTime(
       32,
       now + .12
     );
+
 
   gain.gain
     .setValueAtTime(
@@ -1198,17 +1483,26 @@ function puchunSound(){
       now
     );
 
+
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .13
     );
 
+
   osc.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
 
   osc.start(now);
-  osc.stop(now + .14);
+
+  osc.stop(
+    now + .14
+  );
 
 }
 
@@ -1221,16 +1515,22 @@ function slashSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "sawtooth";
+
+  osc.type =
+    "sawtooth";
+
 
   osc.frequency
     .setValueAtTime(
@@ -1238,11 +1538,13 @@ function slashSound(){
       now
     );
 
+
   osc.frequency
     .exponentialRampToValueAtTime(
       180,
       now + .15
     );
+
 
   gain.gain
     .setValueAtTime(
@@ -1250,25 +1552,39 @@ function slashSound(){
       now
     );
 
+
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .18
     );
 
+
   osc.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
 
   osc.start(now);
-  osc.stop(now + .2);
+
+  osc.stop(
+    now + .2
+  );
+
 
   const bass =
     audioCtx.createOscillator();
 
+
   const bassGain =
     audioCtx.createGain();
 
-  bass.type = "triangle";
+
+  bass.type =
+    "triangle";
+
 
   bass.frequency
     .setValueAtTime(
@@ -1276,11 +1592,13 @@ function slashSound(){
       now
     );
 
+
   bass.frequency
     .exponentialRampToValueAtTime(
       42,
       now + .5
     );
+
 
   bassGain.gain
     .setValueAtTime(
@@ -1288,17 +1606,29 @@ function slashSound(){
       now
     );
 
+
   bassGain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .5
     );
 
-  bass.connect(bassGain);
-  bassGain.connect(audioCtx.destination);
+
+  bass.connect(
+    bassGain
+  );
+
+
+  bassGain.connect(
+    audioCtx.destination
+  );
+
 
   bass.start(now);
-  bass.stop(now + .55);
+
+  bass.stop(
+    now + .55
+  );
 
 }
 
@@ -1311,16 +1641,22 @@ function chestOpenSound(){
 
   initAudio();
 
+
   const now =
     audioCtx.currentTime;
+
 
   const osc =
     audioCtx.createOscillator();
 
+
   const gain =
     audioCtx.createGain();
 
-  osc.type = "triangle";
+
+  osc.type =
+    "triangle";
+
 
   osc.frequency
     .setValueAtTime(
@@ -1328,11 +1664,13 @@ function chestOpenSound(){
       now
     );
 
+
   osc.frequency
     .exponentialRampToValueAtTime(
       850,
       now + .18
     );
+
 
   gain.gain
     .setValueAtTime(
@@ -1340,17 +1678,26 @@ function chestOpenSound(){
       now
     );
 
+
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
       now + .25
     );
 
+
   osc.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
 
   osc.start(now);
-  osc.stop(now + .28);
+
+  osc.stop(
+    now + .28
+  );
 
 }
 
@@ -1364,8 +1711,12 @@ async function playHitMusic(){
   try{
 
     hitMusic.pause();
-    hitMusic.currentTime = 0;
-    hitMusic.volume = 1;
+
+    hitMusic.currentTime =
+      0;
+
+    hitMusic.volume =
+      1;
 
     await hitMusic.play();
 
@@ -1380,12 +1731,17 @@ async function playHitMusic(){
 
 /* =========================
    景品抽選
+
+   1等 5%
+   2等 20%
+   3等 75%
 ========================= */
 
 function drawPrize(){
 
   const r =
     Math.random();
+
 
   if(r < .05){
 
@@ -1396,6 +1752,7 @@ function drawPrize(){
 
   }
 
+
   if(r < .25){
 
     return{
@@ -1404,6 +1761,7 @@ function drawPrize(){
     };
 
   }
+
 
   return{
     label:"3等",
@@ -1437,36 +1795,55 @@ function buildChestResults(
 ){
 
   const all =
-    ["1等","2等","3等"];
+    [
+      "1等",
+      "2等",
+      "3等"
+    ];
+
 
   const remaining =
     all.filter(
       x =>
-        x !== selectedPrize.label
+        x !==
+        selectedPrize.label
     );
 
-  if(Math.random() < .5){
+
+  if(
+    Math.random() <
+    .5
+  ){
+
     remaining.reverse();
+
   }
+
 
   chestResults =
     new Array(3);
+
 
   chestResults[
     selectedIndex
   ] =
     selectedPrize.label;
 
+
   const otherIndexes =
-    [0,1,2].filter(
-      i =>
-        i !== selectedIndex
-    );
+    [0,1,2]
+      .filter(
+        i =>
+          i !==
+          selectedIndex
+      );
+
 
   chestResults[
     otherIndexes[0]
   ] =
     remaining[0];
+
 
   chestResults[
     otherIndexes[1]
@@ -1477,7 +1854,7 @@ function buildChestResults(
 
 
 /* =========================
-   数字
+   NUMBER
 ========================= */
 
 function resetNumberStyle(){
@@ -1485,11 +1862,17 @@ function resetNumberStyle(){
   const n =
     $("#number");
 
+
   n.className = "";
+
   n.style.opacity = "";
+
   n.style.transform = "";
+
   n.style.left = "";
+
   n.style.top = "";
+
   n.style.color = "";
 
 }
@@ -1502,192 +1885,51 @@ function showNumber(
 
   resetNumberStyle();
 
+
   const n =
     $("#number");
+
 
   n.textContent =
     value;
 
+
   n.dataset.num =
     value;
 
+
   void n.offsetWidth;
+
 
   n.classList.add(
     "show"
   );
 
+
   if(value === 3){
+
     raiseTension(1);
+
   }
+
 
   if(value === 2){
+
     raiseTension(2);
+
   }
+
 
   if(value === 1){
+
     raiseTension(3);
+
   }
+
 
   if(sound){
+
     countSound(value);
-  }
-
-}
-
-
-/* =========================
-   違和感20種類
-========================= */
-
-async function applyWeirdEffect(){
-
-  const type =
-    Math.floor(
-      Math.random() * 20
-    );
-
-  const n =
-    $("#number");
-
-  switch(type){
-
-    case 0:
-      n.classList.add("red");
-      break;
-
-    case 1:
-      n.classList.add("gold");
-      break;
-
-    case 2:
-      n.classList.add("small");
-      break;
-
-    case 3:
-      n.classList.add("big");
-      break;
-
-    case 4:
-      n.classList.add("thin");
-      break;
-
-    case 5:
-      n.classList.add("shiftLeft");
-      break;
-
-    case 6:
-      n.classList.add("shiftRight");
-      break;
-
-    case 7:
-      n.classList.add("shiftUp");
-      break;
-
-    case 8:
-      n.classList.add("double");
-      break;
-
-    case 9:
-      n.classList.add("mirror");
-      break;
-
-    case 10:
-      n.classList.add("flicker");
-      break;
-
-    case 11:
-      n.classList.add("ghost");
-      break;
-
-    case 12:
-
-      n.style.opacity = "0";
-
-      await sleep(100);
-
-      n.style.opacity = "1";
-
-      break;
-
-    case 13:{
-
-      const old =
-        n.textContent;
-
-      n.textContent = "0";
-
-      await sleep(90);
-
-      n.textContent = old;
-
-      break;
-
-    }
-
-    case 14:
-
-      $("#weirdMark")
-        .style.display =
-        "block";
-
-      await sleep(90);
-
-      $("#weirdMark")
-        .style.display =
-        "none";
-
-      break;
-
-    case 15:
-
-      $("#stage")
-        .style.background =
-        "radial-gradient(circle,#390000,#000 70%)";
-
-      await sleep(100);
-
-      $("#stage")
-        .style.background =
-        "";
-
-      break;
-
-    case 16:
-
-      flash();
-
-      break;
-
-    case 17:
-
-      strangeCountSound();
-
-      break;
-
-    case 18:
-
-      $("#black")
-        .style.display =
-        "block";
-
-      await sleep(100);
-
-      $("#black")
-        .style.display =
-        "none";
-
-      break;
-
-    case 19:
-
-      stopTension();
-
-      await sleep(550);
-
-      startTension();
-
-      break;
 
   }
 
@@ -1703,40 +1945,52 @@ function flash(){
   const f =
     $("#flash");
 
+
   f.className = "";
+
 
   void f.offsetWidth;
 
-  f.className = "go";
+
+  f.className =
+    "go";
 
 }
 
 
 /* =========================
-   HIT
+   当たり
 ========================= */
 
 async function slashHit(){
 
   stopTension();
 
+
   await sleep(180);
 
+
   slashSound();
+
 
   $("#slash")
     .className =
     "go";
 
+
   await sleep(170);
+
 
   flash();
 
+
   await sleep(300);
+
 
   $("#slash")
     .className =
     "";
+
 
   await showHit();
 
@@ -1749,13 +2003,17 @@ async function showHit(){
     .className =
     "show";
 
+
   playHitMusic();
 
+
   await sleep(2200);
+
 
   $("#hit")
     .className =
     "";
+
 
   showTreasure();
 
@@ -1763,38 +2021,7 @@ async function showHit(){
 
 
 /* =========================
-   ハズレ抽選
-
-   ハズレだった場合のみ
-   75% 普通
-   20% 弱ガセ
-   5% 強ガセ
-========================= */
-
-async function normalMiss(){
-
-  const r =
-    Math.random();
-
-  if(r < .75){
-
-    return missNormal();
-
-  }
-
-  if(r < .95){
-
-    return missWeakFake();
-
-  }
-
-  return missStrongFake();
-
-}
-
-
-/* =========================
-   普通ハズレ
+   通常ハズレ
 ========================= */
 
 async function missNormal(){
@@ -1803,21 +2030,27 @@ async function missNormal(){
 
   await sleep(1800);
 
+
   showNumber(2);
 
   await sleep(1900);
+
 
   showNumber(1);
 
   await sleep(2200);
 
+
   stopTension();
+
 
   $("#number")
     .textContent =
     "";
 
+
   await sleep(850);
+
 
   reset();
 
@@ -1874,7 +2107,7 @@ async function missWeakFake(){
   }
 
 
-  /* 赤違和感 */
+  /* 赤 */
 
   else if(type === 2){
 
@@ -1890,22 +2123,26 @@ async function missWeakFake(){
 
     await sleep(700);
 
+
     $("#number")
       .classList
       .add("red");
 
+
     await sleep(180);
+
 
     $("#number")
       .classList
       .remove("red");
+
 
     await sleep(1600);
 
   }
 
 
-  /* 無音ガセ */
+  /* 無音 */
 
   else if(type === 3){
 
@@ -1921,12 +2158,17 @@ async function missWeakFake(){
 
     await sleep(650);
 
+
     stopTension();
+
 
     await sleep(850);
 
+
     startTension();
+
     raiseTension(3);
+
 
     await sleep(1250);
 
@@ -1949,20 +2191,27 @@ async function missWeakFake(){
 
     await sleep(850);
 
+
     stopTension();
+
 
     $("#black")
       .style.display =
       "block";
 
+
     await sleep(420);
+
 
     $("#black")
       .style.display =
       "none";
 
+
     startTension();
+
     raiseTension(3);
+
 
     await sleep(1200);
 
@@ -1971,11 +2220,14 @@ async function missWeakFake(){
 
   stopTension();
 
+
   $("#number")
     .textContent =
     "";
 
+
   await sleep(900);
+
 
   reset();
 
@@ -2002,34 +2254,42 @@ async function missStrongFake(){
 
     await sleep(1750);
 
+
     showNumber(2);
 
     await sleep(1800);
+
 
     showNumber(1);
 
     await sleep(1450);
 
+
     stopTension();
 
+
     slashSound();
+
 
     $("#slash")
       .className =
       "go";
 
+
     await sleep(180);
+
 
     $("#slash")
       .className =
       "";
+
 
     await sleep(1500);
 
   }
 
 
-  /* プチュン風暗転 */
+  /* プチュン暗転ガセ */
 
   else if(type === 1){
 
@@ -2037,43 +2297,54 @@ async function missStrongFake(){
 
     await sleep(1700);
 
+
     showNumber(2);
 
     await sleep(1800);
+
 
     showNumber(1);
 
     await sleep(1300);
 
+
     stopTension();
+
 
     puchunSound();
 
+
     await sleep(80);
+
 
     $("#black")
       .style.display =
       "block";
 
+
     $("#number")
       .textContent =
       "";
 
+
     await sleep(
       1800 +
-      Math.random() * 900
+      Math.random() *
+      900
     );
+
 
     $("#black")
       .style.display =
       "none";
+
 
     await sleep(700);
 
   }
 
 
-  /* 金色ガセ */
+  /* 金ガセ */
 
   else{
 
@@ -2081,23 +2352,29 @@ async function missStrongFake(){
 
     await sleep(1700);
 
+
     showNumber(2);
 
     await sleep(1800);
+
 
     showNumber(1);
 
     await sleep(700);
 
+
     $("#number")
       .classList
       .add("gold");
 
+
     await sleep(350);
+
 
     $("#number")
       .classList
       .remove("gold");
+
 
     await sleep(2700);
 
@@ -2106,11 +2383,14 @@ async function missStrongFake(){
 
   stopTension();
 
+
   $("#number")
     .textContent =
     "";
 
+
   await sleep(1200);
+
 
   reset();
 
@@ -2118,43 +2398,96 @@ async function missStrongFake(){
 
 
 /* =========================
-   当たり演出18種類
+   本番ハズレ振り分け
+
+   75% 通常
+   20% 弱ガセ
+   5% 強ガセ
+========================= */
+
+async function normalMiss(){
+
+  const r =
+    Math.random();
+
+
+  if(r < .75){
+
+    return missNormal();
+
+  }
+
+
+  if(r < .95){
+
+    return missWeakFake();
+
+  }
+
+
+  return missStrongFake();
+
+}
+
+
+/* =========================
+   当たり演出
 ========================= */
 
 async function normalHitAt(point){
 
   showNumber(3);
 
+
   if(point === 3){
+
     await sleep(1350);
+
     return slashHit();
+
   }
+
 
   await sleep(1900);
 
+
   showNumber(2);
 
+
   if(point === 2){
+
     await sleep(1450);
+
     return slashHit();
+
   }
+
 
   await sleep(2050);
 
+
   showNumber(1);
 
+
   if(point === 1){
+
     await sleep(1650);
+
     return slashHit();
+
   }
 
+
   await sleep(2250);
+
 
   $("#number")
     .textContent =
     "";
 
+
   await sleep(700);
+
 
   return slashHit();
 
@@ -2175,17 +2508,22 @@ async function normalBlackout(){
 
   await sleep(1800);
 
+
   stopTension();
+
 
   $("#black")
     .style.display =
     "block";
 
+
   await sleep(1400);
+
 
   $("#black")
     .style.display =
     "none";
+
 
   return slashHit();
 
@@ -2267,13 +2605,17 @@ async function numberDisappear(){
 
   await sleep(1800);
 
+
   $("#number")
     .textContent =
     "";
 
+
   stopTension();
 
+
   await sleep(2100);
+
 
   return slashHit();
 
@@ -2294,9 +2636,12 @@ async function soundStopPattern(){
 
   await sleep(800);
 
+
   stopTension();
 
+
   await sleep(2200);
+
 
   return slashHit();
 
@@ -2329,38 +2674,59 @@ async function recountSequence(){
       Math.random() * 4
     );
 
+
   showNumber(3);
 
+
   if(hitPoint === 0){
+
     await sleep(1250);
+
     return slashHit();
+
   }
+
 
   await sleep(1900);
 
+
   showNumber(2);
 
+
   if(hitPoint === 1){
+
     await sleep(1400);
+
     return slashHit();
+
   }
+
 
   await sleep(2050);
 
+
   showNumber(1);
 
+
   if(hitPoint === 2){
+
     await sleep(1550);
+
     return slashHit();
+
   }
 
+
   await sleep(2200);
+
 
   $("#number")
     .textContent =
     "";
 
+
   await sleep(900);
+
 
   return slashHit();
 
@@ -2381,11 +2747,14 @@ async function doubleCountdown(){
 
   await sleep(1900);
 
+
   $("#number")
     .textContent =
     "";
 
+
   await sleep(1500);
+
 
   return recountSequence();
 
@@ -2396,26 +2765,34 @@ async function puchunDirect(){
 
   stopTension();
 
+
   puchunSound();
 
+
   await sleep(80);
+
 
   $("#black")
     .style.display =
     "block";
 
+
   $("#number")
     .textContent =
     "";
 
+
   await sleep(
     1800 +
-    Math.random() * 1300
+    Math.random() *
+    1300
   );
+
 
   $("#black")
     .style.display =
     "none";
+
 
   return slashHit();
 
@@ -2426,27 +2803,36 @@ async function puchunRecount(){
 
   stopTension();
 
+
   puchunSound();
 
+
   await sleep(80);
+
 
   $("#black")
     .style.display =
     "block";
 
+
   $("#number")
     .textContent =
     "";
 
+
   await sleep(2200);
+
 
   $("#black")
     .style.display =
     "none";
 
+
   await sleep(600);
 
+
   startTension();
+
 
   return recountSequence();
 
@@ -2459,27 +2845,36 @@ async function fakeSlashPattern(){
 
   await sleep(1800);
 
+
   showNumber(2);
 
   await sleep(1200);
 
+
   slashSound();
+
 
   $("#slash")
     .className =
     "go";
 
+
   await sleep(170);
+
 
   $("#slash")
     .className =
     "";
 
+
   await sleep(700);
+
 
   showNumber(1);
 
+
   await sleep(2200);
+
 
   return slashHit();
 
@@ -2490,27 +2885,36 @@ async function weirdCountdown(){
 
   showNumber(3);
 
-  if(Math.random() < .55){
-    await applyWeirdEffect();
+  await sleep(1700);
+
+
+  if(Math.random() < .5){
+
+    $("#number")
+      .classList
+      .add("red");
+
   }
 
-  await sleep(1700);
 
   showNumber(2);
 
-  if(Math.random() < .60){
-    await applyWeirdEffect();
+  await sleep(1900);
+
+
+  if(Math.random() < .5){
+
+    $("#number")
+      .classList
+      .add("gold");
+
   }
 
-  await sleep(1900);
 
   showNumber(1);
 
-  if(Math.random() < .70){
-    await applyWeirdEffect();
-  }
-
   await sleep(2000);
+
 
   return slashHit();
 
@@ -2521,22 +2925,30 @@ async function silentStart(){
 
   stopTension();
 
+
   showNumber(
     3,
     false
   );
 
+
   await sleep(1900);
+
 
   startTension();
 
+
   showNumber(2);
 
+
   await sleep(1900);
+
 
   showNumber(1);
 
+
   await sleep(1900);
+
 
   return slashHit();
 
@@ -2544,272 +2956,10 @@ async function silentStart(){
 
 
 /* =========================
-   宝箱
+   当たり18種類から選択
 ========================= */
 
-function showTreasure(){
-
-  selectedPrize =
-    drawPrize();
-
-  chestBusy = false;
-  chestResults = [];
-
-  $("#treasureTitle")
-    .textContent =
-    "宝箱を1つ選べ！";
-
-  $("#treasureSub")
-    .textContent =
-    "タップして宝箱を開けてください";
-
-  $("#treasureNext")
-    .style.display =
-    "none";
-
-  $$(".chest")
-    .forEach(c=>{
-
-      c.classList.remove(
-        "selected",
-        "open",
-        "dim",
-        "disabled"
-      );
-
-      const r =
-        c.querySelector(
-          ".chestResult"
-        );
-
-      r.textContent = "";
-      r.className = "chestResult";
-
-    });
-
-  $("#treasureScreen")
-    .className =
-    "show";
-
-}
-
-
-async function chooseChest(chest){
-
-  if(chestBusy){
-    return;
-  }
-
-  chestBusy = true;
-
-  const chests =
-    $$(".chest");
-
-  const selectedIndex =
-    chests.indexOf(chest);
-
-  buildChestResults(
-    selectedIndex
-  );
-
-  chests.forEach(c=>{
-
-    c.classList.add(
-      "disabled"
-    );
-
-    if(c !== chest){
-
-      c.classList.add(
-        "dim"
-      );
-
-    }
-
-  });
-
-  chest.classList.add(
-    "selected"
-  );
-
-  await sleep(1000);
-
-  chest.classList.remove(
-    "selected"
-  );
-
-  chest.classList.add(
-    "open"
-  );
-
-  chestOpenSound();
-  flash();
-
-  showChestResult(
-    chest,
-    selectedPrize.label
-  );
-
-  await sleep(750);
-
-  await showSelectedPrize();
-
-  await sleep(300);
-
-  $("#treasureTitle")
-    .textContent =
-    "残りの宝箱は…";
-
-  $("#treasureSub")
-    .textContent =
-    "選ばなかった箱もオープン";
-
-  chests.forEach(c=>
-    c.classList.remove("dim")
-  );
-
-  const others =
-    chests
-      .map((c,i)=>({
-        chest:c,
-        index:i
-      }))
-      .filter(
-        x =>
-          x.index !== selectedIndex
-      );
-
-  await sleep(500);
-
-  for(const item of others){
-
-    item.chest.classList.add(
-      "open"
-    );
-
-    chestOpenSound();
-    flash();
-
-    showChestResult(
-      item.chest,
-      chestResults[
-        item.index
-      ]
-    );
-
-    await sleep(950);
-
-  }
-
-  $("#treasureTitle")
-    .textContent =
-    selectedPrize.label +
-    " 当選！";
-
-  $("#treasureSub")
-    .textContent =
-    "3つの宝箱の結果";
-
-  $("#treasureNext")
-    .style.display =
-    "block";
-
-}
-
-
-function showChestResult(
-  chest,
-  label
-){
-
-  const result =
-    chest.querySelector(
-      ".chestResult"
-    );
-
-  result.textContent =
-    label;
-
-  result.className =
-    "chestResult " +
-    classForPrize(label);
-
-  void result.offsetWidth;
-
-  result.classList.add(
-    "show"
-  );
-
-}
-
-
-async function showSelectedPrize(){
-
-  $("#prizeLabel")
-    .textContent =
-    selectedPrize.label;
-
-  $("#prizeBox")
-    .className =
-    "show " +
-    selectedPrize.className;
-
-  flash();
-
-  await sleep(1550);
-
-  $("#prizeBox")
-    .className =
-    "";
-
-}
-
-
-/* =========================
-   START
-
-   完全独立 1/30
-
-   毎回1回だけ抽選
-========================= */
-
-async function play(){
-
-  if(busy){
-    return;
-  }
-
-  busy = true;
-
-  initAudio();
-
-  await unlockHitMusic();
-
-  $("#start")
-    .style.display =
-    "none";
-
-  startTension();
-
-
-  /* 完全独立 1/30 */
-
-  const win =
-    Math.random() < (1 / 30);
-
-
-  /* ハズレ */
-
-  if(!win){
-
-    await normalMiss();
-
-    return;
-
-  }
-
-
-  /* 当たり */
+async function runRandomHit(){
 
   const pattern =
     Math.floor(
@@ -2879,49 +3029,37 @@ async function play(){
 
 
 /* =========================
-   RESET
+   宝箱
 ========================= */
 
-function reset(){
+function showTreasure(){
 
-  stopTension();
+  selectedPrize =
+    drawPrize();
 
-  hitMusic.pause();
 
-  try{
-    hitMusic.currentTime = 0;
-  }catch(e){}
+  chestBusy =
+    false;
 
-  $("#hit").className = "";
-  $("#treasureScreen").className = "";
-  $("#prizeBox").className = "";
-  $("#slash").className = "";
 
-  $("#black")
-    .style.display =
-    "none";
+  chestResults =
+    [];
 
-  $("#weirdMark")
-    .style.display =
-    "none";
 
-  $("#stage")
-    .style.background =
-    "";
+  $("#treasureTitle")
+    .textContent =
+    "宝箱を1つ選べ！";
+
+
+  $("#treasureSub")
+    .textContent =
+    "タップして宝箱を開けてください";
+
 
   $("#treasureNext")
     .style.display =
     "none";
 
-  resetNumberStyle();
-
-  $("#number")
-    .textContent =
-    "3";
-
-  $("#number")
-    .dataset.num =
-    "3";
 
   $$(".chest")
     .forEach(c=>{
@@ -2933,24 +3071,513 @@ function reset(){
         "disabled"
       );
 
+
       const r =
         c.querySelector(
           ".chestResult"
         );
 
-      r.textContent = "";
-      r.className = "chestResult";
+
+      r.textContent =
+        "";
+
+
+      r.className =
+        "chestResult";
 
     });
 
-  $("#start")
+
+  $("#treasureScreen")
+    .className =
+    "show";
+
+}
+
+
+async function chooseChest(chest){
+
+  if(chestBusy){
+    return;
+  }
+
+
+  chestBusy =
+    true;
+
+
+  const chests =
+    $$(".chest");
+
+
+  const selectedIndex =
+    chests.indexOf(chest);
+
+
+  buildChestResults(
+    selectedIndex
+  );
+
+
+  chests.forEach(c=>{
+
+    c.classList.add(
+      "disabled"
+    );
+
+
+    if(c !== chest){
+
+      c.classList.add(
+        "dim"
+      );
+
+    }
+
+  });
+
+
+  chest.classList.add(
+    "selected"
+  );
+
+
+  await sleep(1000);
+
+
+  chest.classList.remove(
+    "selected"
+  );
+
+
+  chest.classList.add(
+    "open"
+  );
+
+
+  chestOpenSound();
+
+  flash();
+
+
+  showChestResult(
+    chest,
+    selectedPrize.label
+  );
+
+
+  await sleep(750);
+
+
+  await showSelectedPrize();
+
+
+  await sleep(300);
+
+
+  $("#treasureTitle")
+    .textContent =
+    "残りの宝箱は…";
+
+
+  $("#treasureSub")
+    .textContent =
+    "選ばなかった箱もオープン";
+
+
+  chests.forEach(
+    c =>
+      c.classList.remove(
+        "dim"
+      )
+  );
+
+
+  const others =
+    chests
+      .map(
+        (c,i)=>({
+          chest:c,
+          index:i
+        })
+      )
+      .filter(
+        x =>
+          x.index !==
+          selectedIndex
+      );
+
+
+  await sleep(500);
+
+
+  for(
+    const item
+    of others
+  ){
+
+    item.chest
+      .classList
+      .add(
+        "open"
+      );
+
+
+    chestOpenSound();
+
+    flash();
+
+
+    showChestResult(
+      item.chest,
+      chestResults[
+        item.index
+      ]
+    );
+
+
+    await sleep(950);
+
+  }
+
+
+  $("#treasureTitle")
+    .textContent =
+    selectedPrize.label +
+    " 当選！";
+
+
+  $("#treasureSub")
+    .textContent =
+    "3つの宝箱の結果";
+
+
+  $("#treasureNext")
     .style.display =
     "block";
 
-  selectedPrize = null;
-  chestResults = [];
-  chestBusy = false;
-  busy = false;
+}
+
+
+function showChestResult(
+  chest,
+  label
+){
+
+  const result =
+    chest.querySelector(
+      ".chestResult"
+    );
+
+
+  result.textContent =
+    label;
+
+
+  result.className =
+    "chestResult " +
+    classForPrize(label);
+
+
+  void result.offsetWidth;
+
+
+  result.classList.add(
+    "show"
+  );
+
+}
+
+
+async function showSelectedPrize(){
+
+  $("#prizeLabel")
+    .textContent =
+    selectedPrize.label;
+
+
+  $("#prizeBox")
+    .className =
+    "show " +
+    selectedPrize.className;
+
+
+  flash();
+
+
+  await sleep(1550);
+
+
+  $("#prizeBox")
+    .className =
+    "";
+
+}
+
+
+/* =========================
+   テスト開始共通
+========================= */
+
+async function prepareTest(){
+
+  if(busy){
+    return false;
+  }
+
+
+  busy =
+    true;
+
+
+  $("#testPanel")
+    .style.display =
+    "none";
+
+
+  initAudio();
+
+
+  await unlockHitMusic();
+
+
+  startTension();
+
+
+  return true;
+
+}
+
+
+/* =========================
+   テストボタン
+========================= */
+
+async function testNormal(){
+
+  if(
+    !await prepareTest()
+  ){
+    return;
+  }
+
+
+  await missNormal();
+
+}
+
+
+async function testWeak(){
+
+  if(
+    !await prepareTest()
+  ){
+    return;
+  }
+
+
+  await missWeakFake();
+
+}
+
+
+async function testStrong(){
+
+  if(
+    !await prepareTest()
+  ){
+    return;
+  }
+
+
+  await missStrongFake();
+
+}
+
+
+async function testHit(){
+
+  if(
+    !await prepareTest()
+  ){
+    return;
+  }
+
+
+  await runRandomHit();
+
+}
+
+
+/* =========================
+   本番
+
+   完全独立1/30
+========================= */
+
+async function productionPlay(){
+
+  if(busy){
+    return;
+  }
+
+
+  busy =
+    true;
+
+
+  initAudio();
+
+
+  await unlockHitMusic();
+
+
+  $("#start")
+    .style.display =
+    "none";
+
+
+  startTension();
+
+
+  /* ★ 毎回完全独立 1/30 ★ */
+
+  const win =
+    Math.random() <
+    (1 / 30);
+
+
+  if(!win){
+
+    await normalMiss();
+
+    return;
+
+  }
+
+
+  await runRandomHit();
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function reset(){
+
+  stopTension();
+
+
+  hitMusic.pause();
+
+
+  try{
+
+    hitMusic.currentTime =
+      0;
+
+  }catch(e){}
+
+
+  $("#hit")
+    .className =
+    "";
+
+
+  $("#treasureScreen")
+    .className =
+    "";
+
+
+  $("#prizeBox")
+    .className =
+    "";
+
+
+  $("#slash")
+    .className =
+    "";
+
+
+  $("#black")
+    .style.display =
+    "none";
+
+
+  $("#weirdMark")
+    .style.display =
+    "none";
+
+
+  $("#stage")
+    .style.background =
+    "";
+
+
+  $("#treasureNext")
+    .style.display =
+    "none";
+
+
+  resetNumberStyle();
+
+
+  $("#number")
+    .textContent =
+    "3";
+
+
+  $("#number")
+    .dataset.num =
+    "3";
+
+
+  $$(".chest")
+    .forEach(c=>{
+
+      c.classList.remove(
+        "selected",
+        "open",
+        "dim",
+        "disabled"
+      );
+
+
+      const r =
+        c.querySelector(
+          ".chestResult"
+        );
+
+
+      r.textContent =
+        "";
+
+
+      r.className =
+        "chestResult";
+
+    });
+
+
+  selectedPrize =
+    null;
+
+
+  chestResults =
+    [];
+
+
+  chestBusy =
+    false;
+
+
+  busy =
+    false;
+
+
+  setupMode();
 
 }
 
@@ -2959,10 +3586,38 @@ function reset(){
    EVENTS
 ========================= */
 
+$("#btnNormal")
+  .addEventListener(
+    "click",
+    testNormal
+  );
+
+
+$("#btnWeak")
+  .addEventListener(
+    "click",
+    testWeak
+  );
+
+
+$("#btnStrong")
+  .addEventListener(
+    "click",
+    testStrong
+  );
+
+
+$("#btnHit")
+  .addEventListener(
+    "click",
+    testHit
+  );
+
+
 $("#start")
   .addEventListener(
     "click",
-    play
+    productionPlay
   );
 
 
@@ -2971,7 +3626,8 @@ $$(".chest")
 
     c.addEventListener(
       "click",
-      ()=>chooseChest(c)
+      () =>
+        chooseChest(c)
     );
 
   });
@@ -2982,6 +3638,11 @@ $("#treasureNext")
     "click",
     reset
   );
+
+
+/* 起動 */
+
+setupMode();
 
 </script>
 
