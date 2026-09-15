@@ -23,6 +23,7 @@ body{
   position:fixed;
   inset:0;
 }
+
 #game{
   position:absolute;
   inset:0;
@@ -34,9 +35,7 @@ body{
   background-color:#120008;
 }
 
-/* =========================
-   START
-========================= */
+/* START */
 #startScreen{
   position:absolute;
   inset:0;
@@ -74,9 +73,7 @@ body{
   text-shadow:0 2px 5px #000;
 }
 
-/* =========================
-   COUNTDOWN
-========================= */
+/* COUNTDOWN */
 #number{
   position:absolute;
   z-index:30;
@@ -95,13 +92,11 @@ body{
   display:none;
   pointer-events:none;
 }
-.numberPop{
-  animation:numberPop .20s ease-out;
-}
+.numberPop{animation:numberPop .20s ease-out}
 @keyframes numberPop{
-  0%{transform:translate(-50%,-50%) scale(.78);}
-  70%{transform:translate(-50%,-50%) scale(1.07);}
-  100%{transform:translate(-50%,-50%) scale(1);}
+  0%{transform:translate(-50%,-50%) scale(.78)}
+  70%{transform:translate(-50%,-50%) scale(1.07)}
+  100%{transform:translate(-50%,-50%) scale(1)}
 }
 #message{
   position:absolute;
@@ -119,17 +114,15 @@ body{
   display:none;
 }
 .goldNumber{
-  color:#fff6bd !important;
-  -webkit-text-stroke-color:#f0ad00 !important;
+  color:#fff6bd!important;
+  -webkit-text-stroke-color:#f0ad00!important;
 }
 .redNumber{
-  color:#fff !important;
-  -webkit-text-stroke-color:#ff1717 !important;
+  color:#fff!important;
+  -webkit-text-stroke-color:#ff1717!important;
 }
 
-/* =========================
-   SHOOTING STARS
-========================= */
+/* STARS */
 #starLayer{
   position:absolute;
   inset:0;
@@ -171,17 +164,15 @@ body{
     opacity:0;
     transform:translate3d(0,0,0) rotate(var(--angle)) scale(.4);
   }
-  8%{opacity:1;}
-  70%{opacity:1;}
+  8%,70%{opacity:1}
   100%{
     opacity:0;
-    transform:translate3d(var(--travelX),var(--travelY),0) rotate(var(--angle)) scale(.7);
+    transform:translate3d(var(--travelX),var(--travelY),0)
+      rotate(var(--angle)) scale(.7);
   }
 }
 
-/* =========================
-   HIT
-========================= */
+/* HIT */
 #blackout{
   position:absolute;
   inset:0;
@@ -261,18 +252,18 @@ body{
   animation-delay:.08s;
 }
 @keyframes slashImpact{
-  0%{opacity:0;transform:rotate(-18deg) scaleX(.01);}
-  8%{opacity:1;}
-  30%{opacity:1;transform:rotate(-18deg) scaleX(1);}
-  65%{opacity:1;transform:rotate(-18deg) scaleX(1.03);}
-  100%{opacity:0;transform:rotate(-18deg) scaleX(1.08);}
+  0%{opacity:0;transform:rotate(-18deg) scaleX(.01)}
+  8%{opacity:1}
+  30%{opacity:1;transform:rotate(-18deg) scaleX(1)}
+  65%{opacity:1;transform:rotate(-18deg) scaleX(1.03)}
+  100%{opacity:0;transform:rotate(-18deg) scaleX(1.08)}
 }
 @keyframes slashImpact2{
-  0%{opacity:0;transform:rotate(19deg) scaleX(.01);}
-  8%{opacity:1;}
-  30%{opacity:1;transform:rotate(19deg) scaleX(1);}
-  65%{opacity:1;transform:rotate(19deg) scaleX(1.03);}
-  100%{opacity:0;transform:rotate(19deg) scaleX(1.08);}
+  0%{opacity:0;transform:rotate(19deg) scaleX(.01)}
+  8%{opacity:1}
+  30%{opacity:1;transform:rotate(19deg) scaleX(1)}
+  65%{opacity:1;transform:rotate(19deg) scaleX(1.03)}
+  100%{opacity:0;transform:rotate(19deg) scaleX(1.08)}
 }
 #flash{
   position:absolute;
@@ -282,15 +273,12 @@ body{
   opacity:0;
   pointer-events:none;
 }
-.flashExplosion{
-  animation:flashExplosion .55s ease-out forwards;
-}
+.flashExplosion{animation:flashExplosion .55s ease-out forwards}
 @keyframes flashExplosion{
-  0%{opacity:0;}
-  8%{opacity:1;}
-  25%{opacity:1;}
-  55%{opacity:.7;}
-  100%{opacity:0;}
+  0%{opacity:0}
+  8%,25%{opacity:1}
+  55%{opacity:.7}
+  100%{opacity:0}
 }
 #hitText{
   position:absolute;
@@ -330,50 +318,44 @@ body{
     transform:translate(-50%,-50%) scale(.72);
     filter:brightness(1.7) blur(0);
   }
-  38%{transform:translate(-50%,-50%) scale(1.22);}
-  55%{transform:translate(-50%,-50%) scale(.94);}
-  72%{transform:translate(-50%,-50%) scale(1.08);}
+  38%{transform:translate(-50%,-50%) scale(1.22)}
+  55%{transform:translate(-50%,-50%) scale(.94)}
+  72%{transform:translate(-50%,-50%) scale(1.08)}
   100%{
     opacity:1;
     transform:translate(-50%,-50%) scale(1);
     filter:brightness(1);
   }
 }
-.hitTextPulse{
-  animation:hitTextPulse .36s ease-out;
-}
+.hitTextPulse{animation:hitTextPulse .36s ease-out}
 @keyframes hitTextPulse{
-  0%{transform:translate(-50%,-50%) scale(1);}
-  35%{transform:translate(-50%,-50%) scale(1.18);}
-  100%{transform:translate(-50%,-50%) scale(1);}
+  0%{transform:translate(-50%,-50%) scale(1)}
+  35%{transform:translate(-50%,-50%) scale(1.18)}
+  100%{transform:translate(-50%,-50%) scale(1)}
 }
-.hitShake{
-  animation:hitShake .48s linear;
-}
+.hitShake{animation:hitShake .48s linear}
 @keyframes hitShake{
-  0%{transform:translate(0,0) scale(1);}
-  8%{transform:translate(-20px,12px) scale(1.025);}
-  16%{transform:translate(18px,-11px) scale(1.03);}
-  25%{transform:translate(-15px,-9px) scale(1.025);}
-  34%{transform:translate(13px,10px) scale(1.02);}
-  44%{transform:translate(-10px,7px) scale(1.015);}
-  55%{transform:translate(8px,-6px) scale(1.01);}
-  68%{transform:translate(-5px,4px) scale(1.005);}
-  82%{transform:translate(3px,-2px) scale(1);}
-  100%{transform:translate(0,0) scale(1);}
+  0%{transform:translate(0,0) scale(1)}
+  8%{transform:translate(-20px,12px) scale(1.025)}
+  16%{transform:translate(18px,-11px) scale(1.03)}
+  25%{transform:translate(-15px,-9px) scale(1.025)}
+  34%{transform:translate(13px,10px) scale(1.02)}
+  44%{transform:translate(-10px,7px) scale(1.015)}
+  55%{transform:translate(8px,-6px) scale(1.01)}
+  68%{transform:translate(-5px,4px) scale(1.005)}
+  82%{transform:translate(3px,-2px) scale(1)}
+  100%{transform:translate(0,0) scale(1)}
 }
-.hitZoom{
-  animation:hitZoom .65s ease-out;
-}
+.hitZoom{animation:hitZoom .65s ease-out}
 @keyframes hitZoom{
-  0%{background-size:auto 100%;}
-  20%{background-size:auto 108%;}
-  100%{background-size:auto 100%;}
+  0%{background-size:auto 100%}
+  20%{background-size:auto 108%}
+  100%{background-size:auto 100%}
 }
 
-/* =========================
+/* =================================================
    TREASURE
-========================= */
+================================================= */
 #treasure{
   position:absolute;
   inset:0;
@@ -404,88 +386,136 @@ body{
   gap:8px;
 }
 
-/* 箱全体 */
+/* 宝箱 */
 .chest{
   width:30%;
-  aspect-ratio:1 / 1.05;
+  height:150px;
   border:0;
   padding:0;
   background:transparent;
   position:relative;
-  color:#fff;
   overflow:visible;
 }
 
-/* 箱本体 */
+/*
+  箱本体
+*/
 .chestBody{
   position:absolute;
-  left:5%;
-  bottom:8%;
-  width:90%;
-  height:57%;
+  left:4%;
+  bottom:5px;
+  width:92%;
+  height:74px;
+  border:4px solid #ffe8f3;
   border-radius:8px 8px 18px 18px;
   background:linear-gradient(
     180deg,
-    #ff87bd 0%,
-    #dc2b7b 45%,
-    #a80d58 100%
+    #ff88bd 0%,
+    #df347f 45%,
+    #a90b58 100%
   );
-  border:4px solid #ffe3f0;
   box-shadow:
     inset 0 8px 8px rgba(255,255,255,.25),
-    inset 0 -10px 12px rgba(87,0,38,.28),
-    0 8px 0 #690033,
-    0 14px 20px rgba(0,0,0,.5);
-  z-index:2;
+    inset 0 -10px 12px rgba(80,0,35,.28),
+    0 8px 0 #6b0035,
+    0 13px 17px rgba(0,0,0,.5);
+  z-index:5;
 }
+
+/* 中の暗い穴 */
+.chestInside{
+  position:absolute;
+  left:8%;
+  bottom:62px;
+  width:84%;
+  height:31px;
+  border-radius:50%;
+  background:radial-gradient(
+    ellipse,
+    #6d123f 0%,
+    #340018 65%,
+    #170009 100%
+  );
+  border:3px solid #ffb9d8;
+  opacity:0;
+  z-index:4;
+  transition:opacity .15s;
+}
+.chest.open .chestInside{
+  opacity:1;
+}
+
+/* 本体の金帯 */
 .chestBand{
   position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%);
-  width:20%;
-  height:100%;
-  background:linear-gradient(90deg,#ffcf5a,#fff2a6,#d88c00);
-  border-left:2px solid #9e6500;
-  border-right:2px solid #9e6500;
+  left:41%;
+  top:-4px;
+  width:18%;
+  height:calc(100% + 8px);
+  background:linear-gradient(90deg,#c77800,#fff0a0,#ffbd24,#a75c00);
+  border-left:2px solid #8b5200;
+  border-right:2px solid #8b5200;
 }
 
-/* ========================================
-   フタ
+/* =================================================
+   フタ＋鍵を完全に1パーツ化
+================================================= */
 
-   rotateXは一切使わない。
-   2Dの translate + rotate のみ。
-======================================== */
+.lidGroup{
+  position:absolute;
+
+  /*
+    閉じた時のフタ位置
+  */
+  left:3%;
+  bottom:65px;
+
+  width:94%;
+  height:58px;
+
+  z-index:8;
+
+  /*
+    中央の後ろ側を蝶番として扱う
+  */
+  transform-origin:50% 100%;
+
+  /*
+    閉じた状態
+  */
+  transform:
+    translateY(0)
+    rotate(0deg);
+
+  transition:
+    transform .48s cubic-bezier(.15,.8,.22,1.12),
+    filter .2s;
+
+  pointer-events:none;
+}
+
+/* ピンクのフタ本体 */
 .chestLid{
   position:absolute;
-  left:3%;
-  top:17%;
-  width:94%;
-  height:38%;
-  border-radius:30px 30px 8px 8px;
+  inset:0;
+
+  border:4px solid #fff0f7;
+  border-radius:32px 32px 9px 9px;
+
   background:linear-gradient(
     180deg,
-    #ffc0dc 0%,
-    #f45d9e 45%,
-    #c71869 100%
+    #ffc2dd 0%,
+    #f45c9e 43%,
+    #c81769 100%
   );
-  border:4px solid #fff0f7;
+
   box-shadow:
     inset 0 8px 8px rgba(255,255,255,.35),
     0 5px 0 #8e0045,
     0 8px 12px rgba(0,0,0,.4);
-  z-index:6;
-
-  transform-origin:88% 92%;
-  transform:translate(0,0) rotate(0deg);
-
-  transition:
-    transform .48s cubic-bezier(.18,.85,.22,1.15),
-    filter .25s,
-    opacity .25s;
 }
 
-/* フタの金バンド */
+/* フタの金帯 */
 .chestLid::after{
   content:"";
   position:absolute;
@@ -493,158 +523,161 @@ body{
   top:-4px;
   width:20%;
   height:calc(100% + 8px);
-  background:linear-gradient(90deg,#d88c00,#fff2a6,#d88c00);
-  border-left:2px solid #986000;
-  border-right:2px solid #986000;
+  background:linear-gradient(
+    90deg,
+    #c77800,
+    #fff0a0,
+    #ffbd24,
+    #a75c00
+  );
+  border-left:2px solid #8b5200;
+  border-right:2px solid #8b5200;
 }
 
 /*
-  ★ 2D開封 ★
+  鍵
 
-  上に持ち上げながら、
-  少し右奥方向へ動かして傾ける。
-
-  裏返らない。
-  潰れない。
+  lidGroupの中にあるので
+  フタと絶対に離れない
 */
-.chest.open .chestLid{
-  transform:
-    translate(8%,-82%)
-    rotate(18deg);
-  filter:brightness(1.15);
-}
-
-/* 鍵 */
 .chestLock{
   position:absolute;
+  z-index:4;
   left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:26%;
-  height:28%;
+  bottom:-12px;
+  transform:translateX(-50%);
+  width:27%;
+  height:28px;
   border-radius:6px;
   background:linear-gradient(
     145deg,
-    #fff0a0,
+    #fff5ae,
     #ffca35 48%,
     #b86c00
   );
   border:3px solid #8b5200;
   box-shadow:
-    inset 0 3px 4px rgba(255,255,255,.6),
+    inset 0 3px 4px rgba(255,255,255,.65),
     0 3px 5px rgba(0,0,0,.45);
-  z-index:8;
-  transition:
-    filter .25s,
-    transform .25s,
-    opacity .25s;
-}
-
-.chest.unlocking .chestLock{
-  filter:
-    brightness(2)
-    drop-shadow(0 0 8px #fff)
-    drop-shadow(0 0 18px #ffd850);
-  transform:
-    translate(-50%,-50%)
-    scale(1.15);
 }
 
 /*
-  フタが開いたら鍵も
-  フタと一緒に上へ移動。
+  鍵発光
 */
-.chest.open .chestLock{
+.chest.unlocking .lidGroup{
+  filter:
+    brightness(1.3)
+    drop-shadow(0 0 8px rgba(255,225,100,.8));
+}
+
+.chest.unlocking .chestLock{
+  animation:lockPulse .5s ease-in-out infinite alternate;
+}
+@keyframes lockPulse{
+  from{
+    filter:brightness(1);
+  }
+  to{
+    filter:
+      brightness(2.1)
+      drop-shadow(0 0 8px #fff)
+      drop-shadow(0 0 15px #ffd850);
+  }
+}
+
+/* =================================================
+   ★ 開いた状態 ★
+
+   横方向には一切移動しない。
+
+   フタ＋鍵が一緒に、
+   真上・真後ろへ開いたように見せる。
+================================================= */
+.chest.open .lidGroup{
   transform:
-    translate(-20%,-330%)
-    rotate(18deg)
-    scale(.95);
-  opacity:.7;
+    translateY(-42px)
+    rotate(-13deg);
+
+  filter:brightness(1.12);
 }
 
-/* 箱内部 */
-.chestInside{
-  position:absolute;
-  left:10%;
-  top:46%;
-  width:80%;
-  height:29%;
-  border-radius:50%;
-  background:#4c0026;
-  box-shadow:
-    inset 0 5px 12px rgba(0,0,0,.9),
-    0 0 0 3px rgba(255,210,232,.5);
-  opacity:0;
-  z-index:3;
-}
-.chest.open .chestInside{
-  opacity:1;
+/*
+  開いた時にフタの下側を少し細く見せて
+  「立ち上がった感」を出す。
+*/
+.chest.open .chestLid{
+  border-radius:28px 28px 12px 12px;
 }
 
-/* 箱から出る光 */
+/* 中から出る光 */
 .chestGlow{
   position:absolute;
+  z-index:7;
   left:50%;
-  top:48%;
-  width:95%;
-  height:75%;
-  transform:translate(-50%,-50%) scale(.15);
+  bottom:38px;
+  width:105%;
+  height:105px;
+  transform:translateX(-50%) scale(.15);
+  transform-origin:50% 100%;
   border-radius:50%;
   opacity:0;
+  pointer-events:none;
+
   background:radial-gradient(
-    circle,
+    ellipse at center bottom,
     rgba(255,255,255,1) 0%,
-    rgba(255,248,182,.98) 16%,
-    rgba(255,124,188,.72) 43%,
+    rgba(255,248,183,.98) 17%,
+    rgba(255,135,193,.72) 44%,
     rgba(255,0,115,0) 74%
   );
+
   filter:blur(6px);
-  z-index:5;
-  pointer-events:none;
 }
+
 .chest.open .chestGlow{
-  animation:chestGlowBurst 1s ease-out forwards;
+  animation:chestGlowBurst .9s ease-out forwards;
 }
+
 @keyframes chestGlowBurst{
   0%{
     opacity:0;
-    transform:translate(-50%,-50%) scale(.15);
+    transform:translateX(-50%) scale(.15);
   }
-  20%{
+  22%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1.5);
+    transform:translateX(-50%) scale(1.35);
   }
   55%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1.15);
+    transform:translateX(-50%) scale(1.1);
   }
   100%{
-    opacity:.6;
-    transform:translate(-50%,-50%) scale(1);
+    opacity:.55;
+    transform:translateX(-50%) scale(1);
   }
 }
 
-/* ブルブル */
+/* 選択時のブルブル */
 .chest.shake{
   animation:chestShake .62s linear;
 }
 @keyframes chestShake{
-  0%,100%{transform:translate(0,0) rotate(0);}
-  12%{transform:translate(-8px,1px) rotate(-3deg);}
-  24%{transform:translate(8px,-1px) rotate(3deg);}
-  36%{transform:translate(-7px,0) rotate(-2deg);}
-  48%{transform:translate(7px,0) rotate(2deg);}
-  60%{transform:translate(-5px,0) rotate(-1.5deg);}
-  72%{transform:translate(5px,0) rotate(1.5deg);}
-  84%{transform:translate(-2px,0) rotate(-.5deg);}
+  0%,100%{transform:translate(0,0)}
+  12%{transform:translateX(-8px)}
+  24%{transform:translateX(8px)}
+  36%{transform:translateX(-7px)}
+  48%{transform:translateX(7px)}
+  60%{transform:translateX(-5px)}
+  72%{transform:translateX(5px)}
+  84%{transform:translateX(-2px)}
 }
 
-/* 等級 */
+/* ランク */
 .rankLabel{
   position:absolute;
-  z-index:15;
+  z-index:20;
   left:50%;
-  bottom:-30px;
+  bottom:-33px;
   transform:translateX(-50%);
   white-space:nowrap;
   font-size:25px;
@@ -652,12 +685,12 @@ body{
   text-shadow:0 2px 5px #000;
   display:none;
 }
-.rank1{color:#ffd84e;}
-.rank2{color:#e9eef7;}
-.rank3{color:#e99a4c;}
+.rank1{color:#ffd84e}
+.rank2{color:#e9eef7}
+.rank3{color:#e99a4c}
 
 #prizeResult{
-  margin-top:48px;
+  margin-top:50px;
   min-height:70px;
   text-align:center;
   font-size:42px;
@@ -695,6 +728,7 @@ body{
 
   <div id="startScreen">
     <button id="startButton">START</button>
+
     <div id="probability">
       完全抽選 1/30<br>
       毎回独立抽選
@@ -712,6 +746,7 @@ body{
     <div id="chests">
 
       <button class="chest" data-index="0">
+
         <div class="chestInside"></div>
         <div class="chestGlow"></div>
 
@@ -719,12 +754,16 @@ body{
           <div class="chestBand"></div>
         </div>
 
-        <div class="chestLid"></div>
-        <div class="chestLock"></div>
+        <div class="lidGroup">
+          <div class="chestLid"></div>
+          <div class="chestLock"></div>
+        </div>
+
         <div class="rankLabel"></div>
       </button>
 
       <button class="chest" data-index="1">
+
         <div class="chestInside"></div>
         <div class="chestGlow"></div>
 
@@ -732,12 +771,16 @@ body{
           <div class="chestBand"></div>
         </div>
 
-        <div class="chestLid"></div>
-        <div class="chestLock"></div>
+        <div class="lidGroup">
+          <div class="chestLid"></div>
+          <div class="chestLock"></div>
+        </div>
+
         <div class="rankLabel"></div>
       </button>
 
       <button class="chest" data-index="2">
+
         <div class="chestInside"></div>
         <div class="chestGlow"></div>
 
@@ -745,18 +788,21 @@ body{
           <div class="chestBand"></div>
         </div>
 
-        <div class="chestLid"></div>
-        <div class="chestLock"></div>
+        <div class="lidGroup">
+          <div class="chestLid"></div>
+          <div class="chestLock"></div>
+        </div>
+
         <div class="rankLabel"></div>
       </button>
 
     </div>
 
     <div id="prizeResult"></div>
+
     <button id="nextButton">NEXT</button>
 
   </div>
-
 </div>
 
 <script>
@@ -784,10 +830,7 @@ let playing=false;
 let playToken=0;
 let starTimers=[];
 
-/* =========================
-   AUDIO
-========================= */
-
+/* AUDIO */
 let audioCtx=null;
 let tensionBuffer=null;
 let hitBuffer=null;
@@ -805,6 +848,7 @@ function ensureAudioContext(){
 
 async function prepareAudio(){
   ensureAudioContext();
+
   if(!audioCtx)return;
   if(tensionBuffer&&hitBuffer)return;
 
@@ -871,21 +915,21 @@ function startTension(){
 
 function stopTension(){
   if(tensionSource){
-    try{tensionSource.stop();}catch(e){}
-    try{tensionSource.disconnect();}catch(e){}
+    try{tensionSource.stop()}catch(e){}
+    try{tensionSource.disconnect()}catch(e){}
     tensionSource=null;
   }
 
   if(tensionGain){
-    try{tensionGain.disconnect();}catch(e){}
+    try{tensionGain.disconnect()}catch(e){}
     tensionGain=null;
   }
 }
 
 function stopHitMusic(){
   if(hitSource){
-    try{hitSource.stop();}catch(e){}
-    try{hitSource.disconnect();}catch(e){}
+    try{hitSource.stop()}catch(e){}
+    try{hitSource.disconnect()}catch(e){}
     hitSource=null;
   }
 }
@@ -907,10 +951,7 @@ function playHitMusic(){
   hitSource.start(0);
 }
 
-/* =========================
-   COUNTDOWN
-========================= */
-
+/* NUMBER */
 function showNumber(n){
   message.style.display="none";
 
@@ -954,10 +995,7 @@ async function normalCount(){
   await sleep(2100);
 }
 
-/* =========================
-   STARS
-========================= */
-
+/* STARS */
 function clearStarTimers(){
   starTimers.forEach(clearTimeout);
   starTimers=[];
@@ -1022,7 +1060,7 @@ function randomMeteorCount(){
 function scheduleStars(){
   const token=playToken;
 
-  /* 約73%は流れ星なし */
+  /* 約73%は星なし */
   if(Math.random()>.27)return;
 
   let timer=setTimeout(()=>{
@@ -1042,10 +1080,7 @@ function scheduleStars(){
   }
 }
 
-/* =========================
-   EFFECTS
-========================= */
-
+/* EFFECT */
 async function doBlackout(duration=250){
   blackout.style.opacity="1";
   await sleep(duration);
@@ -1096,10 +1131,7 @@ function doHitZoom(){
   },700);
 }
 
-/* =========================
-   HIT
-========================= */
-
+/* REAL HIT */
 async function HIT(options={}){
   hideNumber();
   message.style.display="none";
@@ -1162,10 +1194,7 @@ async function HIT(options={}){
   await showTreasure();
 }
 
-/* =========================
-   32 HIT ROUTES
-========================= */
-
+/* HIT ROUTES */
 async function normalHitAt(stage){
   showNumber("3");
 
@@ -1192,7 +1221,6 @@ async function normalHitAt(stage){
 
   await sleep(2100);
   hideNumber();
-
   await sleep(700);
 
   return HIT();
@@ -1220,20 +1248,11 @@ async function freezeTwo(){
 }
 
 async function reverseCountdown(){
-  showNumber("3");
-  await sleep(1500);
-
-  showNumber("2");
-  await sleep(1500);
-
-  showNumber("3");
-  await sleep(1200);
-
-  showNumber("2");
-  await sleep(1200);
-
-  showNumber("1");
-  await sleep(1500);
+  showNumber("3"); await sleep(1500);
+  showNumber("2"); await sleep(1500);
+  showNumber("3"); await sleep(1200);
+  showNumber("2"); await sleep(1200);
+  showNumber("1"); await sleep(1500);
 
   return HIT();
 }
@@ -1250,11 +1269,8 @@ async function zeroPremium(){
 }
 
 async function numberDisappear(){
-  showNumber("3");
-  await sleep(1700);
-
-  showNumber("2");
-  await sleep(1700);
+  showNumber("3"); await sleep(1700);
+  showNumber("2"); await sleep(1700);
 
   hideNumber();
   await sleep(1700);
@@ -1263,29 +1279,20 @@ async function numberDisappear(){
 }
 
 async function soundStopPattern(){
-  showNumber("3");
-  await sleep(1600);
-
-  showNumber("2");
-  await sleep(1700);
+  showNumber("3"); await sleep(1600);
+  showNumber("2"); await sleep(1700);
 
   stopTension();
 
-  showNumber("1");
-  await sleep(3000);
+  showNumber("1"); await sleep(3000);
 
   return HIT();
 }
 
 async function longOne(){
-  showNumber("3");
-  await sleep(1700);
-
-  showNumber("2");
-  await sleep(1800);
-
-  showNumber("1");
-  await sleep(4300);
+  showNumber("3"); await sleep(1700);
+  showNumber("2"); await sleep(1800);
+  showNumber("1"); await sleep(4300);
 
   return HIT();
 }
@@ -1296,49 +1303,29 @@ async function recountSequence(){
   hideNumber();
   await sleep(700);
 
-  showNumber("3");
-  await sleep(800);
-
-  showNumber("2");
-  await sleep(800);
-
-  showNumber("1");
-  await sleep(1000);
+  showNumber("3"); await sleep(800);
+  showNumber("2"); await sleep(800);
+  showNumber("1"); await sleep(1000);
 
   return HIT({doubleSlash:true});
 }
 
 async function doubleCountdown(){
-  showNumber("3");
-  await sleep(1000);
+  showNumber("3"); await sleep(1000);
+  showNumber("2"); await sleep(1000);
+  showNumber("1"); await sleep(1100);
 
-  showNumber("2");
-  await sleep(1000);
-
-  showNumber("1");
-  await sleep(1100);
-
-  showNumber("3");
-  await sleep(900);
-
-  showNumber("2");
-  await sleep(900);
-
-  showNumber("1");
-  await sleep(1200);
+  showNumber("3"); await sleep(900);
+  showNumber("2"); await sleep(900);
+  showNumber("1"); await sleep(1200);
 
   return HIT();
 }
 
 async function puchunDirect(){
-  showNumber("3");
-  await sleep(1600);
-
-  showNumber("2");
-  await sleep(1700);
-
-  showNumber("1");
-  await sleep(1600);
+  showNumber("3"); await sleep(1600);
+  showNumber("2"); await sleep(1700);
+  showNumber("1"); await sleep(1600);
 
   stopTension();
 
@@ -1361,14 +1348,9 @@ async function puchunRecount(){
   await sleep(1600);
   blackout.style.opacity="0";
 
-  showNumber("3");
-  await sleep(750);
-
-  showNumber("2");
-  await sleep(750);
-
-  showNumber("1");
-  await sleep(1100);
+  showNumber("3"); await sleep(750);
+  showNumber("2"); await sleep(750);
+  showNumber("1"); await sleep(1100);
 
   return HIT({doubleSlash:true});
 }
@@ -1390,17 +1372,10 @@ async function fakeSlashPattern(){
 }
 
 async function weirdCountdown(){
-  showNumber("3");
-  await sleep(1500);
-
-  showNumber("1");
-  await sleep(1500);
-
-  showNumber("2");
-  await sleep(1500);
-
-  showNumber("1");
-  await sleep(1600);
+  showNumber("3"); await sleep(1500);
+  showNumber("1"); await sleep(1500);
+  showNumber("2"); await sleep(1500);
+  showNumber("1"); await sleep(1600);
 
   return HIT();
 }
@@ -1408,14 +1383,9 @@ async function weirdCountdown(){
 async function silentStart(){
   stopTension();
 
-  showNumber("3");
-  await sleep(1900);
-
-  showNumber("2");
-  await sleep(2000);
-
-  showNumber("1");
-  await sleep(2500);
+  showNumber("3"); await sleep(1900);
+  showNumber("2"); await sleep(2000);
+  showNumber("1"); await sleep(2500);
 
   return HIT({silence:800});
 }
@@ -1427,7 +1397,6 @@ async function classicRevival(){
   stopTension();
 
   await showDots(1700);
-
   await sleep(900);
 
   showNumber("1");
@@ -1437,24 +1406,16 @@ async function classicRevival(){
 }
 
 async function skipCountHit(){
-  showNumber("3");
-  await sleep(1700);
-
-  showNumber("1");
-  await sleep(1700);
+  showNumber("3"); await sleep(1700);
+  showNumber("1"); await sleep(1700);
 
   return HIT();
 }
 
 async function oneVanishHit(){
-  showNumber("3");
-  await sleep(1600);
-
-  showNumber("2");
-  await sleep(1700);
-
-  showNumber("1");
-  await sleep(1300);
+  showNumber("3"); await sleep(1600);
+  showNumber("2"); await sleep(1700);
+  showNumber("1"); await sleep(1300);
 
   hideNumber();
   await sleep(1800);
@@ -1463,33 +1424,19 @@ async function oneVanishHit(){
 }
 
 async function oneBackToTwoHit(){
-  showNumber("3");
-  await sleep(1500);
-
-  showNumber("2");
-  await sleep(1500);
-
-  showNumber("1");
-  await sleep(1700);
-
-  showNumber("2");
-  await sleep(1000);
-
-  showNumber("1");
-  await sleep(1200);
+  showNumber("3"); await sleep(1500);
+  showNumber("2"); await sleep(1500);
+  showNumber("1"); await sleep(1700);
+  showNumber("2"); await sleep(1000);
+  showNumber("1"); await sleep(1200);
 
   return HIT();
 }
 
 async function speedCountHit(){
-  showNumber("3");
-  await sleep(500);
-
-  showNumber("2");
-  await sleep(500);
-
-  showNumber("1");
-  await sleep(700);
+  showNumber("3"); await sleep(500);
+  showNumber("2"); await sleep(500);
+  showNumber("1"); await sleep(700);
 
   await sleep(1000);
 
@@ -1506,17 +1453,13 @@ async function doubleSlashHit(){
 }
 
 async function silentOddityHit(){
-  showNumber("3");
-  await sleep(1500);
+  showNumber("3"); await sleep(1500);
 
   stopTension();
   await sleep(1000);
 
-  showNumber("2");
-  await sleep(1900);
-
-  showNumber("1");
-  await sleep(2400);
+  showNumber("2"); await sleep(1900);
+  showNumber("1"); await sleep(2400);
 
   return HIT({silence:900});
 }
@@ -1583,7 +1526,6 @@ async function dotsBlackoutHit(){
 
   await showDots(1500);
   await doBlackout(1000);
-
   await sleep(500);
 
   return HIT({
@@ -1610,7 +1552,6 @@ async function dotsLongSilenceHit(){
   stopTension();
 
   await showDots(1700);
-
   await sleep(2200);
 
   return HIT({
@@ -1654,10 +1595,7 @@ const hitRoutes=[
   dotsLongSilenceHit
 ];
 
-/* =========================
-   MISS
-========================= */
-
+/* MISS */
 async function normalMiss(){
   await normalCount();
   hideNumber();
@@ -1678,119 +1616,80 @@ async function finishWeakFake(){
 }
 
 async function weakFake1(){
-  showNumber("3"); await sleep(1700);
-  showNumber("2"); await sleep(3100);
-  showNumber("1"); await sleep(1900);
+  showNumber("3");await sleep(1700);
+  showNumber("2");await sleep(3100);
+  showNumber("1");await sleep(1900);
   return finishWeakFake();
 }
-
 async function weakFake2(){
-  showNumber("3"); await sleep(1700);
-  showNumber("2"); await sleep(1800);
-  showNumber("1"); await sleep(3500);
+  showNumber("3");await sleep(1700);
+  showNumber("2");await sleep(1800);
+  showNumber("1");await sleep(3500);
   return finishWeakFake();
 }
-
 async function weakFake3(){
   await normalCount();
-
   number.classList.add("redNumber");
   await sleep(500);
   number.classList.remove("redNumber");
-
   await sleep(700);
-
   return finishWeakFake();
 }
-
 async function weakFake4(){
-  showNumber("3"); await sleep(1700);
-  showNumber("2"); await sleep(1800);
-
+  showNumber("3");await sleep(1700);
+  showNumber("2");await sleep(1800);
   stopTension();
-
-  showNumber("1"); await sleep(2600);
-
+  showNumber("1");await sleep(2600);
   return finishWeakFake();
 }
-
 async function weakFake5(){
   await normalCount();
-
   hideNumber();
-
   await doBlackout(450);
-
   showNumber("1");
   await sleep(1500);
-
   return finishWeakFake();
 }
-
 async function weakFake6(){
-  showNumber("3"); await sleep(3600);
-  showNumber("2"); await sleep(1700);
-  showNumber("1"); await sleep(1800);
-
+  showNumber("3");await sleep(3600);
+  showNumber("2");await sleep(1700);
+  showNumber("1");await sleep(1800);
   return finishWeakFake();
 }
-
 async function weakFake7(){
-  showNumber("3"); await sleep(1700);
-
+  showNumber("3");await sleep(1700);
   showNumber("2");
   number.classList.add("redNumber");
-
   await sleep(550);
-
   number.classList.remove("redNumber");
-
   await sleep(1500);
-
-  showNumber("1");
-  await sleep(1900);
-
+  showNumber("1");await sleep(1900);
   return finishWeakFake();
 }
-
 async function weakFake8(){
-  showNumber("3"); await sleep(1600);
-  showNumber("2"); await sleep(1700);
-  showNumber("0"); await sleep(450);
-  showNumber("1"); await sleep(2000);
-
+  showNumber("3");await sleep(1600);
+  showNumber("2");await sleep(1700);
+  showNumber("0");await sleep(450);
+  showNumber("1");await sleep(2000);
   return finishWeakFake();
 }
-
 async function weakFake9(){
   await normalCount();
-
   number.style.fontSize="min(43vw,210px)";
   await sleep(1300);
   number.style.fontSize="";
-
   return finishWeakFake();
 }
-
 async function weakFake10(){
-  showNumber("3"); await sleep(600);
-  showNumber("2"); await sleep(650);
-  showNumber("1"); await sleep(2300);
-
+  showNumber("3");await sleep(600);
+  showNumber("2");await sleep(650);
+  showNumber("1");await sleep(2300);
   return finishWeakFake();
 }
 
 const weakFakes=[
-  weakFake1,
-  weakFake2,
-  weakFake3,
-  weakFake4,
-  weakFake5,
-  weakFake6,
-  weakFake7,
-  weakFake8,
-  weakFake9,
-  weakFake10
+  weakFake1,weakFake2,weakFake3,weakFake4,weakFake5,
+  weakFake6,weakFake7,weakFake8,weakFake9,weakFake10
 ];
 
 async function finishStrongFake(){
@@ -1810,98 +1709,62 @@ async function finishStrongFake(){
 
 async function strongFake1(){
   await normalCount();
-
   hideNumber();
   createSlash(false);
-
   await sleep(1700);
-
   return finishStrongFake();
 }
-
 async function strongFake2(){
   await normalCount();
-
   hideNumber();
   stopTension();
-
   await doBlackout(1500);
   await sleep(900);
-
   return finishStrongFake();
 }
-
 async function strongFake3(){
   await normalCount();
-
   number.classList.add("goldNumber");
   await sleep(2900);
   number.classList.remove("goldNumber");
-
   return finishStrongFake();
 }
-
 async function strongFake4(){
   await normalCount();
-
   hideNumber();
-
   createSlash(false);
-
   await sleep(100);
-
   doFlash();
-
   await sleep(1900);
-
   return finishStrongFake();
 }
-
 async function strongFake5(){
   await normalCount();
-
   hideNumber();
-
   await doBlackout(1100);
-
   showNumber("1");
-
   await sleep(2600);
-
   return finishStrongFake();
 }
-
 async function strongFake6(){
   await normalCount();
-
   number.classList.add("goldNumber");
-
   await sleep(650);
-
   stopTension();
-
   await sleep(3300);
-
   number.classList.remove("goldNumber");
-
   return finishStrongFake();
 }
 
 const strongFakes=[
-  strongFake1,
-  strongFake2,
-  strongFake3,
-  strongFake4,
-  strongFake5,
-  strongFake6
+  strongFake1,strongFake2,strongFake3,
+  strongFake4,strongFake5,strongFake6
 ];
 
 async function playMiss(){
   const r=Math.random();
 
-  if(r<.50){
-    return normalMiss();
-  }
+  if(r<.50)return normalMiss();
 
   if(r<.75){
     return weakFakes[
@@ -1914,14 +1777,11 @@ async function playMiss(){
   ]();
 }
 
-/* =========================
-   PRIZE
-
+/* PRIZE
    1等 2%
    2等 20%
    3等 78%
-========================= */
-
+*/
 function drawPrize(){
   const r=Math.random();
 
@@ -1947,8 +1807,7 @@ function resetChests(){
       "unlocking"
     );
 
-    const label=
-      chest.querySelector(".rankLabel");
+    const label=chest.querySelector(".rankLabel");
 
     label.style.display="none";
     label.textContent="";
@@ -1956,10 +1815,7 @@ function resetChests(){
   });
 }
 
-/* =========================
-   TREASURE
-========================= */
-
+/* TREASURE */
 async function showTreasure(){
   clearStarTimers();
 
@@ -1972,15 +1828,10 @@ async function showTreasure(){
 
   prizeResult.textContent="";
   prizeResult.className="";
-
   nextButton.style.display="none";
 
   resetChests();
 
-  /*
-    タップする前に
-    当選等級を1回だけ抽選
-  */
   const selectedRank=drawPrize();
 
   let chosen=false;
@@ -1991,99 +1842,61 @@ async function showTreasure(){
     chosen=true;
 
     chests.forEach(c=>{
-      c.removeEventListener(
-        "click",
-        chooseHandler
-      );
+      c.removeEventListener("click",chooseHandler);
     });
 
     const chest=e.currentTarget;
-    const chosenIndex=Number(
-      chest.dataset.index
-    );
+    const chosenIndex=Number(chest.dataset.index);
 
-    /*
-      残り2箱には
-      残り2種類の等級を配置
-    */
-    const otherRanks=
-      [1,2,3].filter(
-        r=>r!==selectedRank
-      );
+    const otherRanks=[1,2,3].filter(
+      r=>r!==selectedRank
+    );
 
     if(Math.random()<.5){
       otherRanks.reverse();
     }
 
-    const assignments=
-      new Array(3);
+    const assignments=new Array(3);
+    assignments[chosenIndex]=selectedRank;
 
-    assignments[chosenIndex]=
-      selectedRank;
-
-    const otherIndexes=
-      [0,1,2].filter(
-        i=>i!==chosenIndex
-      );
-
-    assignments[otherIndexes[0]]=
-      otherRanks[0];
-
-    assignments[otherIndexes[1]]=
-      otherRanks[1];
-
-    /* ① ブルブル */
-    chest.classList.add("shake");
-
-    await sleep(650);
-
-    chest.classList.remove("shake");
-
-    /* ② 鍵が光る */
-    chest.classList.add("unlocking");
-
-    await sleep(550);
-
-    /* ③ 溜め */
-    await sleep(250);
-
-    /*
-      ④ パカッ
-
-      ここが今回の変更点。
-      3D回転なし。
-    */
-    chest.classList.add("open");
-
-    /*
-      フタの動きを
-      先に見せる
-    */
-    await sleep(400);
-
-    /* ⑤ 箱の中が光る */
-    doFlash();
-
-    await sleep(350);
-
-    /* ⑥ 選択結果 */
-    const label=
-      chest.querySelector(".rankLabel");
-
-    label.textContent=
-      rankText(selectedRank);
-
-    label.classList.add(
-      rankClass(selectedRank)
+    const otherIndexes=[0,1,2].filter(
+      i=>i!==chosenIndex
     );
 
+    assignments[otherIndexes[0]]=otherRanks[0];
+    assignments[otherIndexes[1]]=otherRanks[1];
+
+    /* 選択した箱 */
+
+    chest.classList.add("shake");
+    await sleep(650);
+    chest.classList.remove("shake");
+
+    /* フタ＋鍵が一緒に発光 */
+    chest.classList.add("unlocking");
+    await sleep(550);
+
+    /* 溜め */
+    await sleep(250);
+
+    /* 開封 */
+    chest.classList.add("open");
+
+    /* フタの動きを見せる */
+    await sleep(480);
+
+    doFlash();
+
+    await sleep(320);
+
+    const label=chest.querySelector(".rankLabel");
+
+    label.textContent=rankText(selectedRank);
+    label.classList.add(rankClass(selectedRank));
     label.style.display="block";
 
-    prizeResult.className=
-      rankClass(selectedRank);
-
-    prizeResult.textContent=
-      selectedRank+"等 当選！";
+    prizeResult.className=rankClass(selectedRank);
+    prizeResult.textContent=selectedRank+"等 当選！";
 
     await sleep(2200);
 
@@ -2097,40 +1910,26 @@ async function showTreasure(){
       otherIndexes.reverse();
     }
 
-    /*
-      残り2箱も
-      同じ2D開封
-    */
+    /* 残り2箱 */
     for(const idx of otherIndexes){
       const c=chests[idx];
 
       c.classList.add("shake");
-
-      await sleep(400);
-
+      await sleep(380);
       c.classList.remove("shake");
 
       c.classList.add("unlocking");
-
-      await sleep(350);
+      await sleep(320);
 
       c.classList.add("open");
 
-      await sleep(480);
+      await sleep(500);
 
-      const l=
-        c.querySelector(".rankLabel");
+      const l=c.querySelector(".rankLabel");
+      const rank=assignments[idx];
 
-      const rank=
-        assignments[idx];
-
-      l.textContent=
-        rankText(rank);
-
-      l.classList.add(
-        rankClass(rank)
-      );
-
+      l.textContent=rankText(rank);
+      l.classList.add(rankClass(rank));
       l.style.display="block";
 
       await sleep(700);
@@ -2142,22 +1941,15 @@ async function showTreasure(){
   };
 
   chests.forEach(chest=>{
-    chest.addEventListener(
-      "click",
-      chooseHandler
-    );
+    chest.addEventListener("click",chooseHandler);
   });
 }
 
-/* =========================
-   RESET
-========================= */
-
+/* RESET */
 function resetGame(){
   playToken++;
 
   clearStarTimers();
-
   stopTension();
 
   hideNumber();
@@ -2166,7 +1958,6 @@ function resetGame(){
   message.style.fontSize="";
 
   number.style.fontSize="";
-
   number.classList.remove(
     "goldNumber",
     "redNumber",
@@ -2178,15 +1969,12 @@ function resetGame(){
 
   slashLayer.innerHTML="";
 
-  flash.classList.remove(
-    "flashExplosion"
-  );
+  flash.classList.remove("flashExplosion");
 
   hitText.classList.remove(
     "hitTextImpact",
     "hitTextPulse"
   );
-
   hitText.style.opacity="0";
 
   game.classList.remove(
@@ -2195,83 +1983,61 @@ function resetGame(){
   );
 
   playing=false;
-
   startScreen.style.display="flex";
 }
 
-/* =========================
-   START
+/* START */
+startButton.addEventListener("click",async()=>{
+  if(playing)return;
 
-   現在は100%当たりテスト
-========================= */
+  playing=true;
+  playToken++;
 
-startButton.addEventListener(
-  "click",
-  async()=>{
-    if(playing)return;
+  clearStarTimers();
 
-    playing=true;
-    playToken++;
+  startScreen.style.display="none";
 
-    clearStarTimers();
+  await unlockAudio();
 
-    startScreen.style.display="none";
+  startTension();
 
-    await unlockAudio();
+  scheduleStars();
 
-    startTension();
+  /*
+    ★ 現在は宝箱確認用の強制当たり ★
+  */
+  const win=true;
 
-    scheduleStars();
+  /*
+    本番はこれに戻す：
 
-    /*
-      ★ 今だけ強制当たり ★
-    */
-    const win=true;
+    const win = Math.random() < (1/30);
+  */
 
-    /*
-      本番に戻す時は
+  if(win){
+    const route=
+      hitRoutes[
+        Math.floor(Math.random()*hitRoutes.length)
+      ];
 
-      const win =
-        Math.random() < (1/30);
-
-      に変更。
-    */
-
-    if(win){
-      const route=
-        hitRoutes[
-          Math.floor(
-            Math.random()*
-            hitRoutes.length
-          )
-        ];
-
-      await route();
-
-    }else{
-      await playMiss();
-    }
+    await route();
+  }else{
+    await playMiss();
   }
-);
+});
 
-/* =========================
-   NEXT
-========================= */
+/* NEXT */
+nextButton.addEventListener("click",()=>{
+  treasure.style.display="none";
 
-nextButton.addEventListener(
-  "click",
-  ()=>{
-    treasure.style.display="none";
+  stopHitMusic();
 
-    stopHitMusic();
-
-    resetGame();
-  }
-);
+  resetGame();
+});
 
 /* 音源先読み */
 prepareAudio();
-
 </script>
+
 </body>
 </html>
