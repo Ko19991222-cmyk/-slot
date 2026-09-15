@@ -23,6 +23,9 @@ body{
   position:fixed;
   inset:0;
 }
+button{
+  font:inherit;
+}
 
 #game{
   position:absolute;
@@ -35,7 +38,9 @@ body{
   background-color:#120008;
 }
 
-/* START */
+/* =========================
+   START
+========================= */
 #startScreen{
   position:absolute;
   inset:0;
@@ -47,6 +52,7 @@ body{
   padding-bottom:max(9vh,55px);
   background:rgba(20,0,10,.16);
 }
+
 #startButton{
   width:min(78vw,390px);
   padding:20px;
@@ -57,12 +63,18 @@ body{
   font-size:32px;
   font-weight:900;
   letter-spacing:.1em;
-  box-shadow:0 7px 0 #8f0045,0 12px 25px rgba(0,0,0,.45);
+  box-shadow:
+    0 7px 0 #8f0045,
+    0 12px 25px rgba(0,0,0,.45);
 }
+
 #startButton:active{
   transform:translateY(5px);
-  box-shadow:0 2px 0 #8f0045,0 7px 15px rgba(0,0,0,.35);
+  box-shadow:
+    0 2px 0 #8f0045,
+    0 7px 15px rgba(0,0,0,.35);
 }
+
 #probability{
   margin-top:20px;
   color:#fff;
@@ -73,7 +85,9 @@ body{
   text-shadow:0 2px 5px #000;
 }
 
-/* COUNTDOWN */
+/* =========================
+   COUNTDOWN
+========================= */
 #number{
   position:absolute;
   z-index:30;
@@ -92,12 +106,23 @@ body{
   display:none;
   pointer-events:none;
 }
-.numberPop{animation:numberPop .20s ease-out}
-@keyframes numberPop{
-  0%{transform:translate(-50%,-50%) scale(.78)}
-  70%{transform:translate(-50%,-50%) scale(1.07)}
-  100%{transform:translate(-50%,-50%) scale(1)}
+
+.numberPop{
+  animation:numberPop .20s ease-out;
 }
+
+@keyframes numberPop{
+  0%{
+    transform:translate(-50%,-50%) scale(.78);
+  }
+  70%{
+    transform:translate(-50%,-50%) scale(1.07);
+  }
+  100%{
+    transform:translate(-50%,-50%) scale(1);
+  }
+}
+
 #message{
   position:absolute;
   z-index:35;
@@ -110,19 +135,25 @@ body{
   font-size:90px;
   font-weight:1000;
   -webkit-text-stroke:3px #ff4b9d;
-  text-shadow:0 5px 0 #c8186b,0 10px 12px rgba(0,0,0,.7);
+  text-shadow:
+    0 5px 0 #c8186b,
+    0 10px 12px rgba(0,0,0,.7);
   display:none;
 }
+
 .goldNumber{
   color:#fff6bd!important;
   -webkit-text-stroke-color:#f0ad00!important;
 }
+
 .redNumber{
   color:#fff!important;
   -webkit-text-stroke-color:#ff1717!important;
 }
 
-/* STARS */
+/* =========================
+   SHOOTING STARS
+========================= */
 #starLayer{
   position:absolute;
   inset:0;
@@ -130,6 +161,7 @@ body{
   overflow:hidden;
   pointer-events:none;
 }
+
 .shootingStar{
   position:absolute;
   width:13px;
@@ -137,9 +169,15 @@ body{
   border-radius:50%;
   background:#fff;
   opacity:0;
-  filter:drop-shadow(0 0 7px #fff) drop-shadow(0 0 17px #ffcce5);
-  animation:shoot var(--duration) cubic-bezier(.12,.65,.25,1) forwards;
+  filter:
+    drop-shadow(0 0 7px #fff)
+    drop-shadow(0 0 17px #ffcce5);
+  animation:
+    shoot var(--duration)
+    cubic-bezier(.12,.65,.25,1)
+    forwards;
 }
+
 .shootingStar::before{
   content:"";
   position:absolute;
@@ -148,9 +186,16 @@ body{
   width:var(--tail);
   height:5px;
   transform:translateY(-50%);
-  background:linear-gradient(90deg,transparent,rgba(255,230,246,.4),#fff);
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,230,246,.4),
+      #fff
+    );
   border-radius:100%;
 }
+
 .shootingStar::after{
   content:"";
   position:absolute;
@@ -159,20 +204,37 @@ body{
   background:rgba(255,255,255,.5);
   filter:blur(7px);
 }
+
 @keyframes shoot{
   0%{
     opacity:0;
-    transform:translate3d(0,0,0) rotate(var(--angle)) scale(.4);
+    transform:
+      translate3d(0,0,0)
+      rotate(var(--angle))
+      scale(.4);
   }
-  8%,70%{opacity:1}
+  8%{
+    opacity:1;
+  }
+  70%{
+    opacity:1;
+  }
   100%{
     opacity:0;
-    transform:translate3d(var(--travelX),var(--travelY),0)
-      rotate(var(--angle)) scale(.7);
+    transform:
+      translate3d(
+        var(--travelX),
+        var(--travelY),
+        0
+      )
+      rotate(var(--angle))
+      scale(.7);
   }
 }
 
-/* HIT */
+/* =========================
+   HIT
+========================= */
 #blackout{
   position:absolute;
   inset:0;
@@ -181,17 +243,22 @@ body{
   opacity:0;
   pointer-events:none;
 }
+
 #hitDark{
   position:absolute;
   inset:0;
   z-index:55;
   opacity:0;
   pointer-events:none;
-  background:radial-gradient(circle at center,
-    rgba(0,0,0,.12) 0%,
-    rgba(0,0,0,.72) 65%,
-    rgba(0,0,0,.98) 100%);
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,.12) 0%,
+      rgba(0,0,0,.72) 65%,
+      rgba(0,0,0,.98) 100%
+    );
 }
+
 #slashLayer{
   position:absolute;
   inset:0;
@@ -199,6 +266,7 @@ body{
   overflow:hidden;
   pointer-events:none;
 }
+
 .slash{
   position:absolute;
   left:-35%;
@@ -207,24 +275,31 @@ body{
   height:28px;
   opacity:0;
   border-radius:100%;
-  background:linear-gradient(
-    90deg,
-    transparent 0%,
-    #ff2d91 12%,
-    #fff 35%,
-    #fff 65%,
-    #ff2d91 88%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      #ff2d91 12%,
+      #fff 35%,
+      #fff 65%,
+      #ff2d91 88%,
+      transparent 100%
+    );
   box-shadow:
     0 0 8px #fff,
     0 0 20px #fff,
     0 0 42px #ff54a6,
     0 0 85px #ff0077,
     0 0 130px rgba(255,0,119,.75);
-  transform:rotate(-18deg) scaleX(.02);
-  animation:slashImpact .72s cubic-bezier(.05,.82,.12,1) forwards;
+  transform:
+    rotate(-18deg)
+    scaleX(.02);
+  animation:
+    slashImpact .72s
+    cubic-bezier(.05,.82,.12,1)
+    forwards;
 }
+
 .slash::before{
   content:"";
   position:absolute;
@@ -232,9 +307,15 @@ body{
   right:5%;
   top:-25px;
   height:78px;
-  background:linear-gradient(transparent,rgba(255,255,255,.8),transparent);
+  background:
+    linear-gradient(
+      transparent,
+      rgba(255,255,255,.8),
+      transparent
+    );
   filter:blur(14px);
 }
+
 .slash::after{
   content:"";
   position:absolute;
@@ -244,27 +325,61 @@ body{
   height:5px;
   transform:translateY(-50%);
   background:#fff;
-  box-shadow:0 0 12px #fff,0 0 25px #fff;
+  box-shadow:
+    0 0 12px #fff,
+    0 0 25px #fff;
 }
+
 .slash.second{
   top:53%;
   animation-name:slashImpact2;
   animation-delay:.08s;
 }
+
 @keyframes slashImpact{
-  0%{opacity:0;transform:rotate(-18deg) scaleX(.01)}
-  8%{opacity:1}
-  30%{opacity:1;transform:rotate(-18deg) scaleX(1)}
-  65%{opacity:1;transform:rotate(-18deg) scaleX(1.03)}
-  100%{opacity:0;transform:rotate(-18deg) scaleX(1.08)}
+  0%{
+    opacity:0;
+    transform:rotate(-18deg) scaleX(.01);
+  }
+  8%{
+    opacity:1;
+  }
+  30%{
+    opacity:1;
+    transform:rotate(-18deg) scaleX(1);
+  }
+  65%{
+    opacity:1;
+    transform:rotate(-18deg) scaleX(1.03);
+  }
+  100%{
+    opacity:0;
+    transform:rotate(-18deg) scaleX(1.08);
+  }
 }
+
 @keyframes slashImpact2{
-  0%{opacity:0;transform:rotate(19deg) scaleX(.01)}
-  8%{opacity:1}
-  30%{opacity:1;transform:rotate(19deg) scaleX(1)}
-  65%{opacity:1;transform:rotate(19deg) scaleX(1.03)}
-  100%{opacity:0;transform:rotate(19deg) scaleX(1.08)}
+  0%{
+    opacity:0;
+    transform:rotate(19deg) scaleX(.01);
+  }
+  8%{
+    opacity:1;
+  }
+  30%{
+    opacity:1;
+    transform:rotate(19deg) scaleX(1);
+  }
+  65%{
+    opacity:1;
+    transform:rotate(19deg) scaleX(1.03);
+  }
+  100%{
+    opacity:0;
+    transform:rotate(19deg) scaleX(1.08);
+  }
 }
+
 #flash{
   position:absolute;
   inset:0;
@@ -273,13 +388,19 @@ body{
   opacity:0;
   pointer-events:none;
 }
-.flashExplosion{animation:flashExplosion .55s ease-out forwards}
-@keyframes flashExplosion{
-  0%{opacity:0}
-  8%,25%{opacity:1}
-  55%{opacity:.7}
-  100%{opacity:0}
+
+.flashExplosion{
+  animation:flashExplosion .55s ease-out forwards;
 }
+
+@keyframes flashExplosion{
+  0%{opacity:0;}
+  8%{opacity:1;}
+  25%{opacity:1;}
+  55%{opacity:.7;}
+  100%{opacity:0;}
+}
+
 #hitText{
   position:absolute;
   z-index:85;
@@ -292,7 +413,9 @@ body{
   line-height:.9;
   font-weight:1000;
   letter-spacing:-.08em;
-  -webkit-text-stroke:clamp(7px,2.4vw,13px) #ff0877;
+  -webkit-text-stroke:
+    clamp(7px,2.4vw,13px)
+    #ff0877;
   text-shadow:
     0 8px 0 #d00060,
     0 17px 0 #730035,
@@ -301,61 +424,110 @@ body{
     0 0 55px #ff48a0,
     0 0 100px #ff0073;
   opacity:0;
-  transform:translate(-50%,-50%) scale(1);
+  transform:
+    translate(-50%,-50%)
+    scale(1);
   pointer-events:none;
 }
+
 .hitTextImpact{
-  animation:hitTextImpact .82s cubic-bezier(.12,.9,.18,1.12) forwards;
+  animation:
+    hitTextImpact .82s
+    cubic-bezier(.12,.9,.18,1.12)
+    forwards;
 }
+
 @keyframes hitTextImpact{
   0%{
     opacity:0;
-    transform:translate(-50%,-50%) scale(4.2);
+    transform:
+      translate(-50%,-50%)
+      scale(4.2);
     filter:brightness(4) blur(5px);
   }
   18%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(.72);
+    transform:
+      translate(-50%,-50%)
+      scale(.72);
     filter:brightness(1.7) blur(0);
   }
-  38%{transform:translate(-50%,-50%) scale(1.22)}
-  55%{transform:translate(-50%,-50%) scale(.94)}
-  72%{transform:translate(-50%,-50%) scale(1.08)}
+  38%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.22);
+  }
+  55%{
+    transform:
+      translate(-50%,-50%)
+      scale(.94);
+  }
+  72%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.08);
+  }
   100%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1);
+    transform:
+      translate(-50%,-50%)
+      scale(1);
     filter:brightness(1);
   }
 }
-.hitTextPulse{animation:hitTextPulse .36s ease-out}
-@keyframes hitTextPulse{
-  0%{transform:translate(-50%,-50%) scale(1)}
-  35%{transform:translate(-50%,-50%) scale(1.18)}
-  100%{transform:translate(-50%,-50%) scale(1)}
-}
-.hitShake{animation:hitShake .48s linear}
-@keyframes hitShake{
-  0%{transform:translate(0,0) scale(1)}
-  8%{transform:translate(-20px,12px) scale(1.025)}
-  16%{transform:translate(18px,-11px) scale(1.03)}
-  25%{transform:translate(-15px,-9px) scale(1.025)}
-  34%{transform:translate(13px,10px) scale(1.02)}
-  44%{transform:translate(-10px,7px) scale(1.015)}
-  55%{transform:translate(8px,-6px) scale(1.01)}
-  68%{transform:translate(-5px,4px) scale(1.005)}
-  82%{transform:translate(3px,-2px) scale(1)}
-  100%{transform:translate(0,0) scale(1)}
-}
-.hitZoom{animation:hitZoom .65s ease-out}
-@keyframes hitZoom{
-  0%{background-size:auto 100%}
-  20%{background-size:auto 108%}
-  100%{background-size:auto 100%}
+
+.hitTextPulse{
+  animation:hitTextPulse .36s ease-out;
 }
 
-/* =================================================
+@keyframes hitTextPulse{
+  0%{
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+  35%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.18);
+  }
+  100%{
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+}
+
+.hitShake{
+  animation:hitShake .48s linear;
+}
+
+@keyframes hitShake{
+  0%{transform:translate(0,0) scale(1);}
+  8%{transform:translate(-20px,12px) scale(1.025);}
+  16%{transform:translate(18px,-11px) scale(1.03);}
+  25%{transform:translate(-15px,-9px) scale(1.025);}
+  34%{transform:translate(13px,10px) scale(1.02);}
+  44%{transform:translate(-10px,7px) scale(1.015);}
+  55%{transform:translate(8px,-6px) scale(1.01);}
+  68%{transform:translate(-5px,4px) scale(1.005);}
+  82%{transform:translate(3px,-2px) scale(1);}
+  100%{transform:translate(0,0) scale(1);}
+}
+
+.hitZoom{
+  animation:hitZoom .65s ease-out;
+}
+
+@keyframes hitZoom{
+  0%{background-size:auto 100%;}
+  20%{background-size:auto 108%;}
+  100%{background-size:auto 100%;}
+}
+
+/* =========================
    TREASURE
-================================================= */
+========================= */
 #treasure{
   position:absolute;
   inset:0;
@@ -369,14 +541,16 @@ body{
   color:#fff;
   padding:20px;
 }
+
 #treasureTitle{
   text-align:center;
   font-size:24px;
   line-height:1.55;
   font-weight:900;
   text-shadow:0 2px 10px #000;
-  margin-bottom:32px;
+  margin-bottom:30px;
 }
+
 #chests{
   display:flex;
   width:100%;
@@ -386,7 +560,6 @@ body{
   gap:8px;
 }
 
-/* 宝箱 */
 .chest{
   width:30%;
   height:150px;
@@ -395,11 +568,12 @@ body{
   background:transparent;
   position:relative;
   overflow:visible;
+  transition:
+    opacity .35s ease,
+    filter .35s ease;
 }
 
-/*
-  箱本体
-*/
+/* 箱本体 */
 .chestBody{
   position:absolute;
   left:4%;
@@ -408,12 +582,13 @@ body{
   height:74px;
   border:4px solid #ffe8f3;
   border-radius:8px 8px 18px 18px;
-  background:linear-gradient(
-    180deg,
-    #ff88bd 0%,
-    #df347f 45%,
-    #a90b58 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      #ff88bd 0%,
+      #df347f 45%,
+      #a90b58 100%
+    );
   box-shadow:
     inset 0 8px 8px rgba(255,255,255,.25),
     inset 0 -10px 12px rgba(80,0,35,.28),
@@ -422,7 +597,7 @@ body{
   z-index:5;
 }
 
-/* 中の暗い穴 */
+/* 箱の中 */
 .chestInside{
   position:absolute;
   left:8%;
@@ -430,17 +605,19 @@ body{
   width:84%;
   height:31px;
   border-radius:50%;
-  background:radial-gradient(
-    ellipse,
-    #6d123f 0%,
-    #340018 65%,
-    #170009 100%
-  );
+  background:
+    radial-gradient(
+      ellipse,
+      #6d123f 0%,
+      #340018 65%,
+      #170009 100%
+    );
   border:3px solid #ffb9d8;
   opacity:0;
   z-index:4;
   transition:opacity .15s;
 }
+
 .chest.open .chestInside{
   opacity:1;
 }
@@ -452,70 +629,57 @@ body{
   top:-4px;
   width:18%;
   height:calc(100% + 8px);
-  background:linear-gradient(90deg,#c77800,#fff0a0,#ffbd24,#a75c00);
+  background:
+    linear-gradient(
+      90deg,
+      #c77800,
+      #fff0a0,
+      #ffbd24,
+      #a75c00
+    );
   border-left:2px solid #8b5200;
   border-right:2px solid #8b5200;
 }
 
-/* =================================================
-   フタ＋鍵を完全に1パーツ化
-================================================= */
-
+/* =========================
+   フタ＋鍵
+========================= */
 .lidGroup{
   position:absolute;
-
-  /*
-    閉じた時のフタ位置
-  */
   left:3%;
   bottom:65px;
-
   width:94%;
   height:58px;
-
   z-index:8;
-
-  /*
-    中央の後ろ側を蝶番として扱う
-  */
   transform-origin:50% 100%;
-
-  /*
-    閉じた状態
-  */
   transform:
     translateY(0)
     rotate(0deg);
-
   transition:
-    transform .48s cubic-bezier(.15,.8,.22,1.12),
+    transform .48s
+      cubic-bezier(.15,.8,.22,1.12),
     filter .2s;
-
   pointer-events:none;
 }
 
-/* ピンクのフタ本体 */
 .chestLid{
   position:absolute;
   inset:0;
-
   border:4px solid #fff0f7;
   border-radius:32px 32px 9px 9px;
-
-  background:linear-gradient(
-    180deg,
-    #ffc2dd 0%,
-    #f45c9e 43%,
-    #c81769 100%
-  );
-
+  background:
+    linear-gradient(
+      180deg,
+      #ffc2dd 0%,
+      #f45c9e 43%,
+      #c81769 100%
+    );
   box-shadow:
     inset 0 8px 8px rgba(255,255,255,.35),
     0 5px 0 #8e0045,
     0 8px 12px rgba(0,0,0,.4);
 }
 
-/* フタの金帯 */
 .chestLid::after{
   content:"";
   position:absolute;
@@ -523,23 +687,18 @@ body{
   top:-4px;
   width:20%;
   height:calc(100% + 8px);
-  background:linear-gradient(
-    90deg,
-    #c77800,
-    #fff0a0,
-    #ffbd24,
-    #a75c00
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #c77800,
+      #fff0a0,
+      #ffbd24,
+      #a75c00
+    );
   border-left:2px solid #8b5200;
   border-right:2px solid #8b5200;
 }
 
-/*
-  鍵
-
-  lidGroupの中にあるので
-  フタと絶対に離れない
-*/
 .chestLock{
   position:absolute;
   z-index:4;
@@ -549,30 +708,35 @@ body{
   width:27%;
   height:28px;
   border-radius:6px;
-  background:linear-gradient(
-    145deg,
-    #fff5ae,
-    #ffca35 48%,
-    #b86c00
-  );
+  background:
+    linear-gradient(
+      145deg,
+      #fff5ae,
+      #ffca35 48%,
+      #b86c00
+    );
   border:3px solid #8b5200;
   box-shadow:
     inset 0 3px 4px rgba(255,255,255,.65),
     0 3px 5px rgba(0,0,0,.45);
 }
 
-/*
-  鍵発光
-*/
 .chest.unlocking .lidGroup{
   filter:
     brightness(1.3)
-    drop-shadow(0 0 8px rgba(255,225,100,.8));
+    drop-shadow(
+      0 0 8px
+      rgba(255,225,100,.8)
+    );
 }
 
 .chest.unlocking .chestLock{
-  animation:lockPulse .5s ease-in-out infinite alternate;
+  animation:
+    lockPulse .5s
+    ease-in-out
+    infinite alternate;
 }
+
 @keyframes lockPulse{
   from{
     filter:brightness(1);
@@ -585,31 +749,19 @@ body{
   }
 }
 
-/* =================================================
-   ★ 開いた状態 ★
-
-   横方向には一切移動しない。
-
-   フタ＋鍵が一緒に、
-   真上・真後ろへ開いたように見せる。
-================================================= */
+/* 開いた状態 */
 .chest.open .lidGroup{
   transform:
     translateY(-42px)
     rotate(-13deg);
-
   filter:brightness(1.12);
 }
 
-/*
-  開いた時にフタの下側を少し細く見せて
-  「立ち上がった感」を出す。
-*/
 .chest.open .chestLid{
   border-radius:28px 28px 12px 12px;
 }
 
-/* 中から出る光 */
+/* 中の光 */
 .chestGlow{
   position:absolute;
   z-index:7;
@@ -617,62 +769,137 @@ body{
   bottom:38px;
   width:105%;
   height:105px;
-  transform:translateX(-50%) scale(.15);
+  transform:
+    translateX(-50%)
+    scale(.15);
   transform-origin:50% 100%;
   border-radius:50%;
   opacity:0;
   pointer-events:none;
-
-  background:radial-gradient(
-    ellipse at center bottom,
-    rgba(255,255,255,1) 0%,
-    rgba(255,248,183,.98) 17%,
-    rgba(255,135,193,.72) 44%,
-    rgba(255,0,115,0) 74%
-  );
-
+  background:
+    radial-gradient(
+      ellipse at center bottom,
+      rgba(255,255,255,1) 0%,
+      rgba(255,248,183,.98) 17%,
+      rgba(255,135,193,.72) 44%,
+      rgba(255,0,115,0) 74%
+    );
   filter:blur(6px);
 }
 
 .chest.open .chestGlow{
-  animation:chestGlowBurst .9s ease-out forwards;
+  animation:
+    chestGlowBurst .9s
+    ease-out forwards;
 }
 
 @keyframes chestGlowBurst{
   0%{
     opacity:0;
-    transform:translateX(-50%) scale(.15);
+    transform:
+      translateX(-50%)
+      scale(.15);
   }
   22%{
     opacity:1;
-    transform:translateX(-50%) scale(1.35);
+    transform:
+      translateX(-50%)
+      scale(1.35);
   }
   55%{
     opacity:1;
-    transform:translateX(-50%) scale(1.1);
+    transform:
+      translateX(-50%)
+      scale(1.1);
   }
   100%{
     opacity:.55;
-    transform:translateX(-50%) scale(1);
+    transform:
+      translateX(-50%)
+      scale(1);
   }
 }
 
-/* 選択時のブルブル */
+/* ブルブル */
 .chest.shake{
   animation:chestShake .62s linear;
 }
+
 @keyframes chestShake{
-  0%,100%{transform:translate(0,0)}
-  12%{transform:translateX(-8px)}
-  24%{transform:translateX(8px)}
-  36%{transform:translateX(-7px)}
-  48%{transform:translateX(7px)}
-  60%{transform:translateX(-5px)}
-  72%{transform:translateX(5px)}
-  84%{transform:translateX(-2px)}
+  0%,100%{
+    transform:translateX(0);
+  }
+  12%{
+    transform:translateX(-8px);
+  }
+  24%{
+    transform:translateX(8px);
+  }
+  36%{
+    transform:translateX(-7px);
+  }
+  48%{
+    transform:translateX(7px);
+  }
+  60%{
+    transform:translateX(-5px);
+  }
+  72%{
+    transform:translateX(5px);
+  }
+  84%{
+    transform:translateX(-2px);
+  }
 }
 
-/* ランク */
+/* =========================
+   選んだ箱の強調
+========================= */
+.chest.selectedChest{
+  z-index:25;
+  filter:
+    brightness(1.18)
+    drop-shadow(0 0 7px #fff)
+    drop-shadow(0 0 17px #ff4fa1)
+    drop-shadow(0 0 30px rgba(255,0,118,.9));
+}
+
+.chest.selectedChest::before{
+  content:"あなたが選んだ箱";
+  position:absolute;
+  z-index:40;
+  left:50%;
+  top:-48px;
+  transform:translateX(-50%);
+  width:max-content;
+  padding:6px 11px;
+  border-radius:999px;
+  background:
+    linear-gradient(
+      180deg,
+      #ff6bb0,
+      #c90060
+    );
+  border:2px solid #fff;
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.02em;
+  box-shadow:
+    0 3px 0 #750038,
+    0 0 15px rgba(255,73,160,.8);
+  text-shadow:0 1px 3px rgba(0,0,0,.5);
+}
+
+/* 選ばなかった箱 */
+.chest.otherChest{
+  opacity:.48;
+  filter:
+    brightness(.72)
+    saturate(.7);
+}
+
+/* 等級 */
 .rankLabel{
   position:absolute;
   z-index:20;
@@ -682,23 +909,100 @@ body{
   white-space:nowrap;
   font-size:25px;
   font-weight:1000;
-  text-shadow:0 2px 5px #000;
+  text-shadow:
+    0 2px 5px #000;
   display:none;
 }
-.rank1{color:#ffd84e}
-.rank2{color:#e9eef7}
-.rank3{color:#e99a4c}
 
-#prizeResult{
-  margin-top:50px;
-  min-height:70px;
-  text-align:center;
-  font-size:42px;
-  font-weight:1000;
-  text-shadow:0 3px 10px #000;
+.selectedChest .rankLabel{
+  font-size:31px;
+  text-shadow:
+    0 2px 5px #000,
+    0 0 9px currentColor,
+    0 0 18px currentColor;
 }
+
+.rank1{
+  color:#ffd84e;
+}
+
+.rank2{
+  color:#e9eef7;
+}
+
+.rank3{
+  color:#e99a4c;
+}
+
+/* =========================
+   あなたの当選結果
+========================= */
+#prizeResult{
+  margin-top:55px;
+  min-height:96px;
+  width:100%;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+#resultSmall{
+  display:none;
+  margin-bottom:2px;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-shadow:
+    0 2px 6px #000;
+}
+
+#resultBig{
+  display:none;
+  font-size:46px;
+  line-height:1.1;
+  font-weight:1000;
+  white-space:nowrap;
+  -webkit-text-stroke:2px rgba(90,0,40,.45);
+  text-shadow:
+    0 4px 0 rgba(80,0,35,.65),
+    0 7px 10px rgba(0,0,0,.7),
+    0 0 14px currentColor;
+}
+
+.resultPop{
+  animation:
+    resultPop .65s
+    cubic-bezier(.12,.9,.18,1.15);
+}
+
+@keyframes resultPop{
+  0%{
+    opacity:0;
+    transform:scale(2.2);
+    filter:brightness(3);
+  }
+  35%{
+    opacity:1;
+    transform:scale(.88);
+  }
+  60%{
+    transform:scale(1.12);
+  }
+  78%{
+    transform:scale(.97);
+  }
+  100%{
+    opacity:1;
+    transform:scale(1);
+    filter:brightness(1);
+  }
+}
+
 #nextButton{
-  margin-top:25px;
+  margin-top:18px;
   padding:14px 50px;
   border:0;
   border-radius:999px;
@@ -707,6 +1011,24 @@ body{
   font-size:20px;
   font-weight:900;
   display:none;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,.3);
+}
+
+/* 小さいiPhone対策 */
+@media(max-height:700px){
+  #treasureTitle{
+    font-size:21px;
+    margin-bottom:20px;
+  }
+
+  #prizeResult{
+    margin-top:42px;
+  }
+
+  #resultBig{
+    font-size:40px;
+  }
 }
 </style>
 </head>
@@ -798,39 +1120,88 @@ body{
 
     </div>
 
-    <div id="prizeResult"></div>
+    <div id="prizeResult">
+      <div id="resultSmall">
+        あなたの結果
+      </div>
 
-    <button id="nextButton">NEXT</button>
+      <div id="resultBig"></div>
+    </div>
+
+    <button id="nextButton">
+      NEXT
+    </button>
 
   </div>
+
 </div>
 
 <script>
-const game=document.getElementById("game");
-const startScreen=document.getElementById("startScreen");
-const startButton=document.getElementById("startButton");
-const number=document.getElementById("number");
-const message=document.getElementById("message");
-const blackout=document.getElementById("blackout");
-const hitDark=document.getElementById("hitDark");
-const flash=document.getElementById("flash");
-const slashLayer=document.getElementById("slashLayer");
-const hitText=document.getElementById("hitText");
-const starLayer=document.getElementById("starLayer");
+const game=
+  document.getElementById("game");
 
-const treasure=document.getElementById("treasure");
-const treasureTitle=document.getElementById("treasureTitle");
-const prizeResult=document.getElementById("prizeResult");
-const nextButton=document.getElementById("nextButton");
-const chests=[...document.querySelectorAll(".chest")];
+const startScreen=
+  document.getElementById("startScreen");
 
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const startButton=
+  document.getElementById("startButton");
+
+const number=
+  document.getElementById("number");
+
+const message=
+  document.getElementById("message");
+
+const blackout=
+  document.getElementById("blackout");
+
+const hitDark=
+  document.getElementById("hitDark");
+
+const flash=
+  document.getElementById("flash");
+
+const slashLayer=
+  document.getElementById("slashLayer");
+
+const hitText=
+  document.getElementById("hitText");
+
+const starLayer=
+  document.getElementById("starLayer");
+
+const treasure=
+  document.getElementById("treasure");
+
+const treasureTitle=
+  document.getElementById("treasureTitle");
+
+const nextButton=
+  document.getElementById("nextButton");
+
+const resultSmall=
+  document.getElementById("resultSmall");
+
+const resultBig=
+  document.getElementById("resultBig");
+
+const chests=[
+  ...document.querySelectorAll(".chest")
+];
+
+const sleep=
+  ms=>new Promise(
+    r=>setTimeout(r,ms)
+  );
 
 let playing=false;
 let playToken=0;
 let starTimers=[];
 
-/* AUDIO */
+/* =========================
+   AUDIO
+========================= */
+
 let audioCtx=null;
 let tensionBuffer=null;
 let hitBuffer=null;
@@ -840,17 +1211,29 @@ let hitSource=null;
 let audioPreparing=null;
 
 function ensureAudioContext(){
+
   if(!audioCtx){
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(AC)audioCtx=new AC();
+
+    const AC=
+      window.AudioContext||
+      window.webkitAudioContext;
+
+    if(AC){
+      audioCtx=new AC();
+    }
   }
 }
 
 async function prepareAudio(){
+
   ensureAudioContext();
 
   if(!audioCtx)return;
-  if(tensionBuffer&&hitBuffer)return;
+
+  if(
+    tensionBuffer&&
+    hitBuffer
+  )return;
 
   if(audioPreparing){
     await audioPreparing;
@@ -858,34 +1241,51 @@ async function prepareAudio(){
   }
 
   audioPreparing=(async()=>{
+
     try{
-      const [a,b]=await Promise.all([
-        fetch("./Tension.mp3"),
-        fetch("./hit_music_final.mp3")
-      ]);
 
-      const [aa,bb]=await Promise.all([
-        a.arrayBuffer(),
-        b.arrayBuffer()
-      ]);
+      const [a,b]=
+        await Promise.all([
+          fetch("./Tension.mp3"),
+          fetch("./hit_music_final.mp3")
+        ]);
 
-      [tensionBuffer,hitBuffer]=await Promise.all([
-        audioCtx.decodeAudioData(aa),
-        audioCtx.decodeAudioData(bb)
-      ]);
+      const [aa,bb]=
+        await Promise.all([
+          a.arrayBuffer(),
+          b.arrayBuffer()
+        ]);
+
+      [
+        tensionBuffer,
+        hitBuffer
+      ]=
+        await Promise.all([
+          audioCtx.decodeAudioData(aa),
+          audioCtx.decodeAudioData(bb)
+        ]);
+
     }catch(e){
-      console.log("audio load error",e);
+
+      console.log(
+        "audio load error",
+        e
+      );
     }
+
   })();
 
   await audioPreparing;
 }
 
 async function unlockAudio(){
+
   ensureAudioContext();
+
   if(!audioCtx)return;
 
-  const resumePromise=audioCtx.resume();
+  const resumePromise=
+    audioCtx.resume();
 
   try{
     await resumePromise;
@@ -895,64 +1295,114 @@ async function unlockAudio(){
 }
 
 function startTension(){
-  if(!audioCtx||!tensionBuffer)return;
+
+  if(
+    !audioCtx||
+    !tensionBuffer
+  )return;
 
   stopTension();
 
-  tensionSource=audioCtx.createBufferSource();
-  tensionGain=audioCtx.createGain();
+  tensionSource=
+    audioCtx.createBufferSource();
 
-  tensionSource.buffer=tensionBuffer;
+  tensionGain=
+    audioCtx.createGain();
+
+  tensionSource.buffer=
+    tensionBuffer;
+
   tensionSource.loop=true;
 
   tensionGain.gain.value=.72;
 
-  tensionSource.connect(tensionGain);
-  tensionGain.connect(audioCtx.destination);
+  tensionSource.connect(
+    tensionGain
+  );
+
+  tensionGain.connect(
+    audioCtx.destination
+  );
 
   tensionSource.start(0);
 }
 
 function stopTension(){
+
   if(tensionSource){
-    try{tensionSource.stop()}catch(e){}
-    try{tensionSource.disconnect()}catch(e){}
+
+    try{
+      tensionSource.stop();
+    }catch(e){}
+
+    try{
+      tensionSource.disconnect();
+    }catch(e){}
+
     tensionSource=null;
   }
 
   if(tensionGain){
-    try{tensionGain.disconnect()}catch(e){}
+
+    try{
+      tensionGain.disconnect();
+    }catch(e){}
+
     tensionGain=null;
   }
 }
 
 function stopHitMusic(){
+
   if(hitSource){
-    try{hitSource.stop()}catch(e){}
-    try{hitSource.disconnect()}catch(e){}
+
+    try{
+      hitSource.stop();
+    }catch(e){}
+
+    try{
+      hitSource.disconnect();
+    }catch(e){}
+
     hitSource=null;
   }
 }
 
 function playHitMusic(){
-  if(!audioCtx||!hitBuffer)return;
+
+  if(
+    !audioCtx||
+    !hitBuffer
+  )return;
 
   stopHitMusic();
 
-  hitSource=audioCtx.createBufferSource();
-  const gain=audioCtx.createGain();
+  hitSource=
+    audioCtx.createBufferSource();
 
-  hitSource.buffer=hitBuffer;
+  const gain=
+    audioCtx.createGain();
+
+  hitSource.buffer=
+    hitBuffer;
+
   gain.gain.value=1;
 
   hitSource.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
 
   hitSource.start(0);
 }
 
-/* NUMBER */
+/* =========================
+   NUMBER
+========================= */
+
 function showNumber(n){
+
   message.style.display="none";
 
   number.classList.remove(
@@ -965,14 +1415,20 @@ function showNumber(n){
   number.style.display="block";
 
   void number.offsetWidth;
-  number.classList.add("numberPop");
+
+  number.classList.add(
+    "numberPop"
+  );
 }
 
 function hideNumber(){
   number.style.display="none";
 }
 
-async function showDots(duration=1200){
+async function showDots(
+  duration=1200
+){
+
   hideNumber();
 
   message.textContent="…";
@@ -985,6 +1441,7 @@ async function showDots(duration=1200){
 }
 
 async function normalCount(){
+
   showNumber("3");
   await sleep(1800);
 
@@ -995,150 +1452,328 @@ async function normalCount(){
   await sleep(2100);
 }
 
-/* STARS */
+/* =========================
+   STARS
+========================= */
+
 function clearStarTimers(){
-  starTimers.forEach(clearTimeout);
+
+  starTimers.forEach(
+    clearTimeout
+  );
+
   starTimers=[];
+
   starLayer.innerHTML="";
 }
 
 function makeStar(){
-  const star=document.createElement("div");
-  star.className="shootingStar";
 
-  const startX=5+Math.random()*65;
-  const startY=7+Math.random()*38;
-  const angle=14+Math.random()*24;
-  const travelX=160+Math.random()*180;
-  const travelY=55+Math.random()*125;
-  const tail=135+Math.random()*165;
-  const duration=.58+Math.random()*.4;
-  const size=10+Math.random()*7;
+  const star=
+    document.createElement("div");
 
-  star.style.left=startX+"vw";
-  star.style.top=startY+"vh";
-  star.style.width=size+"px";
-  star.style.height=size+"px";
+  star.className=
+    "shootingStar";
 
-  star.style.setProperty("--angle",angle+"deg");
-  star.style.setProperty("--travelX",travelX+"px");
-  star.style.setProperty("--travelY",travelY+"px");
-  star.style.setProperty("--tail",tail+"px");
-  star.style.setProperty("--duration",duration+"s");
+  const startX=
+    5+Math.random()*65;
+
+  const startY=
+    7+Math.random()*38;
+
+  const angle=
+    14+Math.random()*24;
+
+  const travelX=
+    160+Math.random()*180;
+
+  const travelY=
+    55+Math.random()*125;
+
+  const tail=
+    135+Math.random()*165;
+
+  const duration=
+    .58+Math.random()*.4;
+
+  const size=
+    10+Math.random()*7;
+
+  star.style.left=
+    startX+"vw";
+
+  star.style.top=
+    startY+"vh";
+
+  star.style.width=
+    size+"px";
+
+  star.style.height=
+    size+"px";
+
+  star.style.setProperty(
+    "--angle",
+    angle+"deg"
+  );
+
+  star.style.setProperty(
+    "--travelX",
+    travelX+"px"
+  );
+
+  star.style.setProperty(
+    "--travelY",
+    travelY+"px"
+  );
+
+  star.style.setProperty(
+    "--tail",
+    tail+"px"
+  );
+
+  star.style.setProperty(
+    "--duration",
+    duration+"s"
+  );
 
   starLayer.appendChild(star);
 
-  setTimeout(()=>star.remove(),1700);
+  setTimeout(
+    ()=>star.remove(),
+    1700
+  );
 }
 
 function meteorBurst(count){
-  const token=playToken;
 
-  for(let i=0;i<count;i++){
+  const token=
+    playToken;
+
+  for(
+    let i=0;
+    i<count;
+    i++
+  ){
+
     const delay=
-      i*(120+Math.random()*230)+
+      i*(
+        120+
+        Math.random()*230
+      )+
       Math.random()*160;
 
-    const timer=setTimeout(()=>{
-      if(!playing||token!==playToken)return;
-      makeStar();
-    },delay);
+    const timer=
+      setTimeout(()=>{
+
+        if(
+          !playing||
+          token!==playToken
+        )return;
+
+        makeStar();
+
+      },delay);
 
     starTimers.push(timer);
   }
 }
 
 function randomMeteorCount(){
+
   const r=Math.random();
 
-  if(r<.75)return 1+Math.floor(Math.random()*3);
-  if(r<.95)return 4+Math.floor(Math.random()*3);
+  if(r<.75){
+    return 1+
+      Math.floor(
+        Math.random()*3
+      );
+  }
 
-  return 7+Math.floor(Math.random()*4);
+  if(r<.95){
+    return 4+
+      Math.floor(
+        Math.random()*3
+      );
+  }
+
+  return 7+
+    Math.floor(
+      Math.random()*4
+    );
 }
 
 function scheduleStars(){
-  const token=playToken;
+
+  const token=
+    playToken;
 
   /* 約73%は星なし */
-  if(Math.random()>.27)return;
+  if(
+    Math.random()>.27
+  )return;
 
-  let timer=setTimeout(()=>{
-    if(!playing||token!==playToken)return;
-    meteorBurst(randomMeteorCount());
-  },550+Math.random()*4800);
+  let timer=
+    setTimeout(()=>{
+
+      if(
+        !playing||
+        token!==playToken
+      )return;
+
+      meteorBurst(
+        randomMeteorCount()
+      );
+
+    },
+    550+
+    Math.random()*4800
+    );
 
   starTimers.push(timer);
 
-  if(Math.random()<.15){
-    timer=setTimeout(()=>{
-      if(!playing||token!==playToken)return;
-      meteorBurst(randomMeteorCount());
-    },3300+Math.random()*4300);
+  if(
+    Math.random()<.15
+  ){
+
+    timer=
+      setTimeout(()=>{
+
+        if(
+          !playing||
+          token!==playToken
+        )return;
+
+        meteorBurst(
+          randomMeteorCount()
+        );
+
+      },
+      3300+
+      Math.random()*4300
+      );
 
     starTimers.push(timer);
   }
 }
 
-/* EFFECT */
-async function doBlackout(duration=250){
+/* =========================
+   EFFECT
+========================= */
+
+async function doBlackout(
+  duration=250
+){
+
   blackout.style.opacity="1";
+
   await sleep(duration);
+
   blackout.style.opacity="0";
 }
 
 function doFlash(){
-  flash.classList.remove("flashExplosion");
+
+  flash.classList.remove(
+    "flashExplosion"
+  );
+
   void flash.offsetWidth;
-  flash.classList.add("flashExplosion");
+
+  flash.classList.add(
+    "flashExplosion"
+  );
 }
 
-function createSlash(doubleSlash=false){
+function createSlash(
+  doubleSlash=false
+){
+
   slashLayer.innerHTML="";
 
-  const s1=document.createElement("div");
+  const s1=
+    document.createElement("div");
+
   s1.className="slash";
+
   slashLayer.appendChild(s1);
 
   if(doubleSlash){
-    const s2=document.createElement("div");
-    s2.className="slash second";
+
+    const s2=
+      document.createElement("div");
+
+    s2.className=
+      "slash second";
+
     slashLayer.appendChild(s2);
   }
 
   setTimeout(()=>{
+
     slashLayer.innerHTML="";
+
   },1000);
 }
 
 function doHitShake(){
-  game.classList.remove("hitShake");
+
+  game.classList.remove(
+    "hitShake"
+  );
+
   void game.offsetWidth;
-  game.classList.add("hitShake");
+
+  game.classList.add(
+    "hitShake"
+  );
 
   setTimeout(()=>{
-    game.classList.remove("hitShake");
+
+    game.classList.remove(
+      "hitShake"
+    );
+
   },520);
 }
 
 function doHitZoom(){
-  game.classList.remove("hitZoom");
+
+  game.classList.remove(
+    "hitZoom"
+  );
+
   void game.offsetWidth;
-  game.classList.add("hitZoom");
+
+  game.classList.add(
+    "hitZoom"
+  );
 
   setTimeout(()=>{
-    game.classList.remove("hitZoom");
+
+    game.classList.remove(
+      "hitZoom"
+    );
+
   },700);
 }
 
-/* REAL HIT */
-async function HIT(options={}){
+/* =========================
+   HIT
+========================= */
+
+async function HIT(
+  options={}
+){
+
   hideNumber();
+
   message.style.display="none";
 
   stopTension();
 
-  await sleep(options.silence ?? 700);
+  await sleep(
+    options.silence ?? 700
+  );
 
   blackout.style.opacity="1";
   hitDark.style.opacity="1";
@@ -1149,7 +1784,9 @@ async function HIT(options={}){
 
   await sleep(70);
 
-  createSlash(options.doubleSlash===true);
+  createSlash(
+    options.doubleSlash===true
+  );
 
   await sleep(230);
 
@@ -1172,30 +1809,45 @@ async function HIT(options={}){
 
   void hitText.offsetWidth;
 
-  hitText.classList.add("hitTextImpact");
+  hitText.classList.add(
+    "hitTextImpact"
+  );
 
   doHitZoom();
+
   playHitMusic();
 
   await sleep(900);
 
-  hitText.classList.remove("hitTextImpact");
+  hitText.classList.remove(
+    "hitTextImpact"
+  );
+
   hitText.style.opacity="1";
 
   void hitText.offsetWidth;
 
-  hitText.classList.add("hitTextPulse");
+  hitText.classList.add(
+    "hitTextPulse"
+  );
 
   await sleep(1300);
 
-  hitText.classList.remove("hitTextPulse");
+  hitText.classList.remove(
+    "hitTextPulse"
+  );
+
   hitText.style.opacity="0";
 
   await showTreasure();
 }
 
-/* HIT ROUTES */
+/* =========================
+   HIT ROUTES
+========================= */
+
 async function normalHitAt(stage){
+
   showNumber("3");
 
   if(stage===3){
@@ -1204,6 +1856,7 @@ async function normalHitAt(stage){
   }
 
   await sleep(1800);
+
   showNumber("2");
 
   if(stage===2){
@@ -1212,6 +1865,7 @@ async function normalHitAt(stage){
   }
 
   await sleep(1900);
+
   showNumber("1");
 
   if(stage===1){
@@ -1220,24 +1874,31 @@ async function normalHitAt(stage){
   }
 
   await sleep(2100);
+
   hideNumber();
+
   await sleep(700);
 
   return HIT();
 }
 
 async function normalBlackout(){
+
   await normalCount();
+
   hideNumber();
 
   await sleep(500);
+
   await doBlackout(850);
+
   await sleep(650);
 
   return HIT();
 }
 
 async function freezeTwo(){
+
   showNumber("3");
   await sleep(1700);
 
@@ -1248,89 +1909,149 @@ async function freezeTwo(){
 }
 
 async function reverseCountdown(){
-  showNumber("3"); await sleep(1500);
-  showNumber("2"); await sleep(1500);
-  showNumber("3"); await sleep(1200);
-  showNumber("2"); await sleep(1200);
-  showNumber("1"); await sleep(1500);
+
+  showNumber("3");
+  await sleep(1500);
+
+  showNumber("2");
+  await sleep(1500);
+
+  showNumber("3");
+  await sleep(1200);
+
+  showNumber("2");
+  await sleep(1200);
+
+  showNumber("1");
+  await sleep(1500);
 
   return HIT();
 }
 
 async function zeroPremium(){
+
   await normalCount();
 
   showNumber("0");
-  number.classList.add("goldNumber");
+
+  number.classList.add(
+    "goldNumber"
+  );
 
   await sleep(1700);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function numberDisappear(){
-  showNumber("3"); await sleep(1700);
-  showNumber("2"); await sleep(1700);
+
+  showNumber("3");
+  await sleep(1700);
+
+  showNumber("2");
+  await sleep(1700);
 
   hideNumber();
+
   await sleep(1700);
 
   return HIT();
 }
 
 async function soundStopPattern(){
-  showNumber("3"); await sleep(1600);
-  showNumber("2"); await sleep(1700);
+
+  showNumber("3");
+  await sleep(1600);
+
+  showNumber("2");
+  await sleep(1700);
 
   stopTension();
 
-  showNumber("1"); await sleep(3000);
+  showNumber("1");
+  await sleep(3000);
 
   return HIT();
 }
 
 async function longOne(){
-  showNumber("3"); await sleep(1700);
-  showNumber("2"); await sleep(1800);
-  showNumber("1"); await sleep(4300);
+
+  showNumber("3");
+  await sleep(1700);
+
+  showNumber("2");
+  await sleep(1800);
+
+  showNumber("1");
+  await sleep(4300);
 
   return HIT();
 }
 
 async function recountSequence(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(700);
 
-  showNumber("3"); await sleep(800);
-  showNumber("2"); await sleep(800);
-  showNumber("1"); await sleep(1000);
+  showNumber("3");
+  await sleep(800);
 
-  return HIT({doubleSlash:true});
+  showNumber("2");
+  await sleep(800);
+
+  showNumber("1");
+  await sleep(1000);
+
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function doubleCountdown(){
-  showNumber("3"); await sleep(1000);
-  showNumber("2"); await sleep(1000);
-  showNumber("1"); await sleep(1100);
 
-  showNumber("3"); await sleep(900);
-  showNumber("2"); await sleep(900);
-  showNumber("1"); await sleep(1200);
+  showNumber("3");
+  await sleep(1000);
+
+  showNumber("2");
+  await sleep(1000);
+
+  showNumber("1");
+  await sleep(1100);
+
+  showNumber("3");
+  await sleep(900);
+
+  showNumber("2");
+  await sleep(900);
+
+  showNumber("1");
+  await sleep(1200);
 
   return HIT();
 }
 
 async function puchunDirect(){
-  showNumber("3"); await sleep(1600);
-  showNumber("2"); await sleep(1700);
-  showNumber("1"); await sleep(1600);
+
+  showNumber("3");
+  await sleep(1600);
+
+  showNumber("2");
+  await sleep(1700);
+
+  showNumber("1");
+  await sleep(1600);
 
   stopTension();
 
   blackout.style.opacity="1";
+
   await sleep(2100);
+
   blackout.style.opacity="0";
 
   return HIT({
@@ -1340,25 +2061,37 @@ async function puchunDirect(){
 }
 
 async function puchunRecount(){
+
   await normalCount();
 
   stopTension();
 
   blackout.style.opacity="1";
+
   await sleep(1600);
+
   blackout.style.opacity="0";
 
-  showNumber("3"); await sleep(750);
-  showNumber("2"); await sleep(750);
-  showNumber("1"); await sleep(1100);
+  showNumber("3");
+  await sleep(750);
 
-  return HIT({doubleSlash:true});
+  showNumber("2");
+  await sleep(750);
+
+  showNumber("1");
+  await sleep(1100);
+
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function fakeSlashPattern(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(450);
 
   createSlash(false);
@@ -1366,105 +2099,175 @@ async function fakeSlashPattern(){
   await sleep(1400);
 
   showNumber("1");
+
   await sleep(1500);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function weirdCountdown(){
-  showNumber("3"); await sleep(1500);
-  showNumber("1"); await sleep(1500);
-  showNumber("2"); await sleep(1500);
-  showNumber("1"); await sleep(1600);
+
+  showNumber("3");
+  await sleep(1500);
+
+  showNumber("1");
+  await sleep(1500);
+
+  showNumber("2");
+  await sleep(1500);
+
+  showNumber("1");
+  await sleep(1600);
 
   return HIT();
 }
 
 async function silentStart(){
+
   stopTension();
 
-  showNumber("3"); await sleep(1900);
-  showNumber("2"); await sleep(2000);
-  showNumber("1"); await sleep(2500);
+  showNumber("3");
+  await sleep(1900);
 
-  return HIT({silence:800});
+  showNumber("2");
+  await sleep(2000);
+
+  showNumber("1");
+  await sleep(2500);
+
+  return HIT({
+    silence:800
+  });
 }
 
 async function classicRevival(){
+
   await normalCount();
 
   hideNumber();
+
   stopTension();
 
   await showDots(1700);
+
   await sleep(900);
 
   showNumber("1");
+
   await sleep(1500);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function skipCountHit(){
-  showNumber("3"); await sleep(1700);
-  showNumber("1"); await sleep(1700);
+
+  showNumber("3");
+  await sleep(1700);
+
+  showNumber("1");
+  await sleep(1700);
 
   return HIT();
 }
 
 async function oneVanishHit(){
-  showNumber("3"); await sleep(1600);
-  showNumber("2"); await sleep(1700);
-  showNumber("1"); await sleep(1300);
+
+  showNumber("3");
+  await sleep(1600);
+
+  showNumber("2");
+  await sleep(1700);
+
+  showNumber("1");
+  await sleep(1300);
 
   hideNumber();
+
   await sleep(1800);
 
   return HIT();
 }
 
 async function oneBackToTwoHit(){
-  showNumber("3"); await sleep(1500);
-  showNumber("2"); await sleep(1500);
-  showNumber("1"); await sleep(1700);
-  showNumber("2"); await sleep(1000);
-  showNumber("1"); await sleep(1200);
+
+  showNumber("3");
+  await sleep(1500);
+
+  showNumber("2");
+  await sleep(1500);
+
+  showNumber("1");
+  await sleep(1700);
+
+  showNumber("2");
+  await sleep(1000);
+
+  showNumber("1");
+  await sleep(1200);
 
   return HIT();
 }
 
 async function speedCountHit(){
-  showNumber("3"); await sleep(500);
-  showNumber("2"); await sleep(500);
-  showNumber("1"); await sleep(700);
+
+  showNumber("3");
+  await sleep(500);
+
+  showNumber("2");
+  await sleep(500);
+
+  showNumber("1");
+  await sleep(700);
 
   await sleep(1000);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function doubleSlashHit(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(650);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function silentOddityHit(){
-  showNumber("3"); await sleep(1500);
+
+  showNumber("3");
+
+  await sleep(1500);
 
   stopTension();
+
   await sleep(1000);
 
-  showNumber("2"); await sleep(1900);
-  showNumber("1"); await sleep(2400);
+  showNumber("2");
 
-  return HIT({silence:900});
+  await sleep(1900);
+
+  showNumber("1");
+
+  await sleep(2400);
+
+  return HIT({
+    silence:900
+  });
 }
 
 async function questionHit(){
+
   await normalCount();
 
   hideNumber();
@@ -1481,51 +2284,66 @@ async function questionHit(){
 }
 
 async function blackoutReturnHit(){
+
   await normalCount();
 
   hideNumber();
+
   stopTension();
 
   await doBlackout(1000);
 
   showNumber("1");
+
   await sleep(2200);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function dotsDirectHit(){
+
   await normalCount();
 
   hideNumber();
 
   await showDots(1700);
+
   await sleep(900);
 
   return HIT();
 }
 
 async function dotsOneRevival(){
+
   await normalCount();
 
   hideNumber();
 
   await showDots(1600);
+
   await sleep(600);
 
   showNumber("1");
+
   await sleep(1800);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
 }
 
 async function dotsBlackoutHit(){
+
   await normalCount();
 
   stopTension();
 
   await showDots(1500);
+
   await doBlackout(1000);
+
   await sleep(500);
 
   return HIT({
@@ -1535,11 +2353,14 @@ async function dotsBlackoutHit(){
 }
 
 async function dotsStarHit(){
+
   await normalCount();
 
   await showDots(1500);
 
-  meteorBurst(randomMeteorCount());
+  meteorBurst(
+    randomMeteorCount()
+  );
 
   await sleep(1400);
 
@@ -1547,11 +2368,13 @@ async function dotsStarHit(){
 }
 
 async function dotsLongSilenceHit(){
+
   await normalCount();
 
   stopTension();
 
   await showDots(1700);
+
   await sleep(2200);
 
   return HIT({
@@ -1595,198 +2418,373 @@ const hitRoutes=[
   dotsLongSilenceHit
 ];
 
-/* MISS */
+/* =========================
+   MISS
+========================= */
+
 async function normalMiss(){
+
   await normalCount();
+
   hideNumber();
+
   stopTension();
+
   await sleep(1600);
+
   resetGame();
 }
 
 async function finishWeakFake(){
+
   hideNumber();
+
   stopTension();
 
   await sleep(500);
+
   await showDots(1500);
+
   await sleep(850);
 
   resetGame();
 }
 
 async function weakFake1(){
-  showNumber("3");await sleep(1700);
-  showNumber("2");await sleep(3100);
-  showNumber("1");await sleep(1900);
+  showNumber("3");
+  await sleep(1700);
+  showNumber("2");
+  await sleep(3100);
+  showNumber("1");
+  await sleep(1900);
   return finishWeakFake();
 }
+
 async function weakFake2(){
-  showNumber("3");await sleep(1700);
-  showNumber("2");await sleep(1800);
-  showNumber("1");await sleep(3500);
+  showNumber("3");
+  await sleep(1700);
+  showNumber("2");
+  await sleep(1800);
+  showNumber("1");
+  await sleep(3500);
   return finishWeakFake();
 }
+
 async function weakFake3(){
   await normalCount();
-  number.classList.add("redNumber");
+
+  number.classList.add(
+    "redNumber"
+  );
+
   await sleep(500);
-  number.classList.remove("redNumber");
+
+  number.classList.remove(
+    "redNumber"
+  );
+
   await sleep(700);
+
   return finishWeakFake();
 }
+
 async function weakFake4(){
-  showNumber("3");await sleep(1700);
-  showNumber("2");await sleep(1800);
-  stopTension();
-  showNumber("1");await sleep(2600);
-  return finishWeakFake();
-}
-async function weakFake5(){
-  await normalCount();
-  hideNumber();
-  await doBlackout(450);
-  showNumber("1");
-  await sleep(1500);
-  return finishWeakFake();
-}
-async function weakFake6(){
-  showNumber("3");await sleep(3600);
-  showNumber("2");await sleep(1700);
-  showNumber("1");await sleep(1800);
-  return finishWeakFake();
-}
-async function weakFake7(){
-  showNumber("3");await sleep(1700);
+  showNumber("3");
+  await sleep(1700);
+
   showNumber("2");
-  number.classList.add("redNumber");
-  await sleep(550);
-  number.classList.remove("redNumber");
-  await sleep(1500);
-  showNumber("1");await sleep(1900);
+  await sleep(1800);
+
+  stopTension();
+
+  showNumber("1");
+  await sleep(2600);
+
   return finishWeakFake();
 }
-async function weakFake8(){
-  showNumber("3");await sleep(1600);
-  showNumber("2");await sleep(1700);
-  showNumber("0");await sleep(450);
-  showNumber("1");await sleep(2000);
-  return finishWeakFake();
-}
-async function weakFake9(){
+
+async function weakFake5(){
+
   await normalCount();
-  number.style.fontSize="min(43vw,210px)";
-  await sleep(1300);
-  number.style.fontSize="";
+
+  hideNumber();
+
+  await doBlackout(450);
+
+  showNumber("1");
+
+  await sleep(1500);
+
   return finishWeakFake();
 }
+
+async function weakFake6(){
+  showNumber("3");
+  await sleep(3600);
+
+  showNumber("2");
+  await sleep(1700);
+
+  showNumber("1");
+  await sleep(1800);
+
+  return finishWeakFake();
+}
+
+async function weakFake7(){
+  showNumber("3");
+  await sleep(1700);
+
+  showNumber("2");
+
+  number.classList.add(
+    "redNumber"
+  );
+
+  await sleep(550);
+
+  number.classList.remove(
+    "redNumber"
+  );
+
+  await sleep(1500);
+
+  showNumber("1");
+
+  await sleep(1900);
+
+  return finishWeakFake();
+}
+
+async function weakFake8(){
+  showNumber("3");
+  await sleep(1600);
+
+  showNumber("2");
+  await sleep(1700);
+
+  showNumber("0");
+  await sleep(450);
+
+  showNumber("1");
+  await sleep(2000);
+
+  return finishWeakFake();
+}
+
+async function weakFake9(){
+
+  await normalCount();
+
+  number.style.fontSize=
+    "min(43vw,210px)";
+
+  await sleep(1300);
+
+  number.style.fontSize="";
+
+  return finishWeakFake();
+}
+
 async function weakFake10(){
-  showNumber("3");await sleep(600);
-  showNumber("2");await sleep(650);
-  showNumber("1");await sleep(2300);
+  showNumber("3");
+  await sleep(600);
+
+  showNumber("2");
+  await sleep(650);
+
+  showNumber("1");
+  await sleep(2300);
+
   return finishWeakFake();
 }
 
 const weakFakes=[
-  weakFake1,weakFake2,weakFake3,weakFake4,weakFake5,
-  weakFake6,weakFake7,weakFake8,weakFake9,weakFake10
+  weakFake1,
+  weakFake2,
+  weakFake3,
+  weakFake4,
+  weakFake5,
+  weakFake6,
+  weakFake7,
+  weakFake8,
+  weakFake9,
+  weakFake10
 ];
 
 async function finishStrongFake(){
+
   hideNumber();
+
   stopTension();
 
   blackout.style.opacity="1";
+
   await sleep(700);
+
   blackout.style.opacity="0";
 
   await sleep(350);
+
   await showDots(1700);
+
   await sleep(950);
 
   resetGame();
 }
 
 async function strongFake1(){
+
   await normalCount();
+
   hideNumber();
+
   createSlash(false);
+
   await sleep(1700);
+
   return finishStrongFake();
 }
+
 async function strongFake2(){
+
   await normalCount();
+
   hideNumber();
+
   stopTension();
+
   await doBlackout(1500);
+
   await sleep(900);
+
   return finishStrongFake();
 }
+
 async function strongFake3(){
+
   await normalCount();
-  number.classList.add("goldNumber");
+
+  number.classList.add(
+    "goldNumber"
+  );
+
   await sleep(2900);
-  number.classList.remove("goldNumber");
+
+  number.classList.remove(
+    "goldNumber"
+  );
+
   return finishStrongFake();
 }
+
 async function strongFake4(){
+
   await normalCount();
+
   hideNumber();
+
   createSlash(false);
+
   await sleep(100);
+
   doFlash();
+
   await sleep(1900);
+
   return finishStrongFake();
 }
+
 async function strongFake5(){
+
   await normalCount();
+
   hideNumber();
+
   await doBlackout(1100);
+
   showNumber("1");
+
   await sleep(2600);
+
   return finishStrongFake();
 }
+
 async function strongFake6(){
+
   await normalCount();
-  number.classList.add("goldNumber");
+
+  number.classList.add(
+    "goldNumber"
+  );
+
   await sleep(650);
+
   stopTension();
+
   await sleep(3300);
-  number.classList.remove("goldNumber");
+
+  number.classList.remove(
+    "goldNumber"
+  );
+
   return finishStrongFake();
 }
 
 const strongFakes=[
-  strongFake1,strongFake2,strongFake3,
-  strongFake4,strongFake5,strongFake6
+  strongFake1,
+  strongFake2,
+  strongFake3,
+  strongFake4,
+  strongFake5,
+  strongFake6
 ];
 
 async function playMiss(){
+
   const r=Math.random();
 
-  if(r<.50)return normalMiss();
+  if(r<.50){
+    return normalMiss();
+  }
 
   if(r<.75){
+
     return weakFakes[
-      Math.floor(Math.random()*weakFakes.length)
+      Math.floor(
+        Math.random()*
+        weakFakes.length
+      )
     ]();
   }
 
   return strongFakes[
-    Math.floor(Math.random()*strongFakes.length)
+    Math.floor(
+      Math.random()*
+      strongFakes.length
+    )
   ]();
 }
 
-/* PRIZE
+/* =========================
+   PRIZE
+
    1等 2%
    2等 20%
    3等 78%
-*/
+========================= */
+
 function drawPrize(){
+
   const r=Math.random();
 
-  if(r<.02)return 1;
-  if(r<.22)return 2;
+  if(r<.02){
+    return 1;
+  }
+
+  if(r<.22){
+    return 2;
+  }
 
   return 3;
 }
@@ -1800,23 +2798,74 @@ function rankClass(rank){
 }
 
 function resetChests(){
+
   chests.forEach(chest=>{
+
     chest.classList.remove(
       "open",
       "shake",
-      "unlocking"
+      "unlocking",
+      "selectedChest",
+      "otherChest"
     );
 
-    const label=chest.querySelector(".rankLabel");
+    const label=
+      chest.querySelector(
+        ".rankLabel"
+      );
 
     label.style.display="none";
+
     label.textContent="";
-    label.className="rankLabel";
+
+    label.className=
+      "rankLabel";
   });
+
+  resultSmall.style.display=
+    "none";
+
+  resultBig.style.display=
+    "none";
+
+  resultBig.textContent="";
+
+  resultBig.className="";
 }
 
-/* TREASURE */
+/* =========================
+   RESULT DISPLAY
+========================= */
+
+function showSelectedResult(
+  rank
+){
+
+  resultSmall.style.display=
+    "block";
+
+  resultBig.textContent=
+    rank+"等 当選！";
+
+  resultBig.className=
+    rankClass(rank);
+
+  resultBig.style.display=
+    "block";
+
+  void resultBig.offsetWidth;
+
+  resultBig.classList.add(
+    "resultPop"
+  );
+}
+
+/* =========================
+   TREASURE
+========================= */
+
 async function showTreasure(){
+
   clearStarTimers();
 
   treasure.style.display="flex";
@@ -1826,138 +2875,293 @@ async function showTreasure(){
     "運命の宝箱を選べ！<br>"+
     "この一箱が、結果を決める。";
 
-  prizeResult.textContent="";
-  prizeResult.className="";
-  nextButton.style.display="none";
+  nextButton.style.display=
+    "none";
 
   resetChests();
 
-  const selectedRank=drawPrize();
+  /*
+    選択前に景品を1回だけ抽選
+  */
+  const selectedRank=
+    drawPrize();
 
   let chosen=false;
 
-  const chooseHandler=async e=>{
+  const chooseHandler=
+    async e=>{
+
     if(chosen)return;
 
     chosen=true;
 
     chests.forEach(c=>{
-      c.removeEventListener("click",chooseHandler);
+
+      c.removeEventListener(
+        "click",
+        chooseHandler
+      );
+
     });
 
-    const chest=e.currentTarget;
-    const chosenIndex=Number(chest.dataset.index);
+    const chest=
+      e.currentTarget;
 
-    const otherRanks=[1,2,3].filter(
-      r=>r!==selectedRank
+    const chosenIndex=
+      Number(
+        chest.dataset.index
+      );
+
+    /*
+      ★ 選んだ箱を記録・強調
+    */
+    chest.classList.add(
+      "selectedChest"
     );
 
-    if(Math.random()<.5){
+    /*
+      残りの箱
+    */
+    const otherIndexes=
+      [0,1,2].filter(
+        i=>i!==chosenIndex
+      );
+
+    /*
+      選択した等級以外を
+      残り2箱に配置
+    */
+    const otherRanks=
+      [1,2,3].filter(
+        r=>r!==selectedRank
+      );
+
+    if(
+      Math.random()<.5
+    ){
       otherRanks.reverse();
     }
 
-    const assignments=new Array(3);
-    assignments[chosenIndex]=selectedRank;
+    const assignments=
+      new Array(3);
 
-    const otherIndexes=[0,1,2].filter(
-      i=>i!==chosenIndex
+    assignments[
+      chosenIndex
+    ]=
+      selectedRank;
+
+    assignments[
+      otherIndexes[0]
+    ]=
+      otherRanks[0];
+
+    assignments[
+      otherIndexes[1]
+    ]=
+      otherRanks[1];
+
+    /* =====================
+       選んだ箱
+    ===================== */
+
+    chest.classList.add(
+      "shake"
     );
 
-    assignments[otherIndexes[0]]=otherRanks[0];
-    assignments[otherIndexes[1]]=otherRanks[1];
-
-    /* 選択した箱 */
-
-    chest.classList.add("shake");
     await sleep(650);
-    chest.classList.remove("shake");
 
-    /* フタ＋鍵が一緒に発光 */
-    chest.classList.add("unlocking");
+    chest.classList.remove(
+      "shake"
+    );
+
+    chest.classList.add(
+      "unlocking"
+    );
+
     await sleep(550);
 
-    /* 溜め */
     await sleep(250);
 
-    /* 開封 */
-    chest.classList.add("open");
+    chest.classList.add(
+      "open"
+    );
 
-    /* フタの動きを見せる */
     await sleep(480);
 
     doFlash();
 
     await sleep(320);
 
-    const label=chest.querySelector(".rankLabel");
+    const label=
+      chest.querySelector(
+        ".rankLabel"
+      );
 
-    label.textContent=rankText(selectedRank);
-    label.classList.add(rankClass(selectedRank));
-    label.style.display="block";
+    label.textContent=
+      rankText(
+        selectedRank
+      );
 
-    prizeResult.className=rankClass(selectedRank);
-    prizeResult.textContent=selectedRank+"等 当選！";
+    label.classList.add(
+      rankClass(
+        selectedRank
+      )
+    );
 
-    await sleep(2200);
+    label.style.display=
+      "block";
 
+    /*
+      ★ 自分の当選結果を
+         大きく表示
+    */
+    showSelectedResult(
+      selectedRank
+    );
+
+    await sleep(2400);
+
+    /*
+      残り箱を開ける時も
+      自分の結果は消さない
+    */
     treasureTitle.innerHTML=
       "残りの宝箱は…<br>"+
       "選ばなかった箱もオープン";
 
-    prizeResult.textContent="";
+    /*
+      残り箱を少し暗くする
+    */
+    otherIndexes.forEach(
+      idx=>{
+        chests[idx]
+          .classList.add(
+            "otherChest"
+          );
+      }
+    );
 
-    if(Math.random()<.5){
+    if(
+      Math.random()<.5
+    ){
       otherIndexes.reverse();
     }
 
-    /* 残り2箱 */
-    for(const idx of otherIndexes){
-      const c=chests[idx];
+    /* =====================
+       残り2箱
+    ===================== */
 
-      c.classList.add("shake");
+    for(
+      const idx
+      of otherIndexes
+    ){
+
+      const c=
+        chests[idx];
+
+      c.classList.add(
+        "shake"
+      );
+
       await sleep(380);
-      c.classList.remove("shake");
 
-      c.classList.add("unlocking");
+      c.classList.remove(
+        "shake"
+      );
+
+      c.classList.add(
+        "unlocking"
+      );
+
       await sleep(320);
 
-      c.classList.add("open");
+      c.classList.add(
+        "open"
+      );
 
       await sleep(500);
 
-      const l=c.querySelector(".rankLabel");
-      const rank=assignments[idx];
+      const l=
+        c.querySelector(
+          ".rankLabel"
+        );
 
-      l.textContent=rankText(rank);
-      l.classList.add(rankClass(rank));
-      l.style.display="block";
+      const rank=
+        assignments[idx];
+
+      l.textContent=
+        rankText(rank);
+
+      l.classList.add(
+        rankClass(rank)
+      );
+
+      l.style.display=
+        "block";
 
       await sleep(700);
     }
 
-    await sleep(500);
+    /*
+      ★ 最終画面
+    */
+    treasureTitle.innerHTML=
+      "あなたが選んだ宝箱";
 
-    nextButton.style.display="block";
+    /*
+      選んだ箱の結果は
+      ここでも残り続ける
+    */
+    resultSmall.textContent=
+      "あなたの結果";
+
+    resultSmall.style.display=
+      "block";
+
+    resultBig.textContent=
+      selectedRank+
+      "等 当選！";
+
+    resultBig.style.display=
+      "block";
+
+    await sleep(450);
+
+    nextButton.style.display=
+      "block";
   };
 
   chests.forEach(chest=>{
-    chest.addEventListener("click",chooseHandler);
+
+    chest.addEventListener(
+      "click",
+      chooseHandler
+    );
+
   });
 }
 
-/* RESET */
+/* =========================
+   RESET
+========================= */
+
 function resetGame(){
+
   playToken++;
 
   clearStarTimers();
+
   stopTension();
 
   hideNumber();
 
-  message.style.display="none";
+  message.style.display=
+    "none";
+
   message.style.fontSize="";
 
   number.style.fontSize="";
+
   number.classList.remove(
     "goldNumber",
     "redNumber",
@@ -1965,16 +3169,20 @@ function resetGame(){
   );
 
   blackout.style.opacity="0";
+
   hitDark.style.opacity="0";
 
   slashLayer.innerHTML="";
 
-  flash.classList.remove("flashExplosion");
+  flash.classList.remove(
+    "flashExplosion"
+  );
 
   hitText.classList.remove(
     "hitTextImpact",
     "hitTextPulse"
   );
+
   hitText.style.opacity="0";
 
   game.classList.remove(
@@ -1983,61 +3191,93 @@ function resetGame(){
   );
 
   playing=false;
-  startScreen.style.display="flex";
+
+  startScreen.style.display=
+    "flex";
 }
 
-/* START */
-startButton.addEventListener("click",async()=>{
-  if(playing)return;
+/* =========================
+   START
 
-  playing=true;
-  playToken++;
+   現在は100%当たりテスト
+========================= */
 
-  clearStarTimers();
+startButton.addEventListener(
+  "click",
+  async()=>{
 
-  startScreen.style.display="none";
+    if(playing)return;
 
-  await unlockAudio();
+    playing=true;
 
-  startTension();
+    playToken++;
 
-  scheduleStars();
+    clearStarTimers();
 
-  /*
-    ★ 現在は宝箱確認用の強制当たり ★
-  */
-  const win=true;
+    startScreen.style.display=
+      "none";
 
-  /*
-    本番はこれに戻す：
+    await unlockAudio();
 
-    const win = Math.random() < (1/30);
-  */
+    startTension();
 
-  if(win){
-    const route=
-      hitRoutes[
-        Math.floor(Math.random()*hitRoutes.length)
-      ];
+    scheduleStars();
 
-    await route();
-  }else{
-    await playMiss();
+    /*
+      ★ 宝箱確認用
+      現在100%当たり
+    */
+    const win=true;
+
+    /*
+      本番に戻す時だけ
+
+      const win =
+        Math.random() < (1/30);
+
+      に変更
+    */
+
+    if(win){
+
+      const route=
+        hitRoutes[
+          Math.floor(
+            Math.random()*
+            hitRoutes.length
+          )
+        ];
+
+      await route();
+
+    }else{
+
+      await playMiss();
+
+    }
   }
-});
+);
 
-/* NEXT */
-nextButton.addEventListener("click",()=>{
-  treasure.style.display="none";
+/* =========================
+   NEXT
+========================= */
 
-  stopHitMusic();
+nextButton.addEventListener(
+  "click",
+  ()=>{
 
-  resetGame();
-});
+    treasure.style.display=
+      "none";
+
+    stopHitMusic();
+
+    resetGame();
+  }
+);
 
 /* 音源先読み */
 prepareAudio();
-</script>
 
+</script>
 </body>
 </html>
