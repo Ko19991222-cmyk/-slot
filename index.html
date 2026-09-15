@@ -2,27 +2,46 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+>
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
 
 <title>COUNTDOWN LOTTERY</title>
 
 <style>
+
+/* =========================================================
+   BASIC
+========================================================= */
 
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
   margin:0;
   width:100%;
   height:100%;
   overflow:hidden;
+
   background:#120008;
   color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
 }
 
 body{
@@ -30,9 +49,10 @@ body{
   inset:0;
 }
 
-/* =========================
+
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 #bg{
   position:fixed;
@@ -53,6 +73,7 @@ body{
   position:fixed;
   inset:0;
   z-index:1;
+
   pointer-events:none;
 
   background:
@@ -64,23 +85,27 @@ body{
     );
 }
 
-/* =========================
+
+/* =========================================================
    GAME
-========================= */
+========================================================= */
 
 #game{
   position:fixed;
   inset:0;
+
   z-index:10;
 }
 
-/* =========================
+
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 #startScreen{
   position:absolute;
   inset:0;
+
   z-index:30;
 
   display:flex;
@@ -93,12 +118,14 @@ body{
 
 #startInfo{
   text-align:center;
+
   margin-bottom:18px;
 
   font-weight:900;
   letter-spacing:.14em;
 
-  text-shadow:0 3px 7px rgba(0,0,0,.85);
+  text-shadow:
+    0 3px 7px rgba(0,0,0,.85);
 }
 
 #startInfo .main{
@@ -107,7 +134,9 @@ body{
 
 #startInfo .sub{
   margin-top:5px;
+
   font-size:11px;
+
   opacity:.85;
 }
 
@@ -115,13 +144,16 @@ body{
   width:min(78vw,330px);
   height:72px;
 
-  border:2px solid rgba(255,255,255,.9);
+  border:
+    2px solid rgba(255,255,255,.9);
+
   border-radius:18px;
 
   color:#fff;
 
   font-size:27px;
   font-weight:1000;
+
   letter-spacing:.16em;
 
   background:
@@ -138,16 +170,20 @@ body{
 }
 
 #startButton:active{
-  transform:translateY(4px);
+  transform:
+    translateY(4px);
 
   box-shadow:
     0 3px 0 #790037,
     0 8px 18px rgba(0,0,0,.5);
 }
 
-/* =========================
+
+/* =========================================================
    NUMBER
-========================= */
+
+   ★45vw → 52vw
+========================================================= */
 
 #number{
   position:absolute;
@@ -155,11 +191,13 @@ body{
   left:50%;
   top:61%;
 
-  transform:translate(-50%,-50%);
+  transform:
+    translate(-50%,-50%);
 
   z-index:20;
 
-  font-size:min(45vw,220px);
+  font-size:min(52vw,255px);
+
   line-height:.8;
 
   font-weight:1000;
@@ -172,13 +210,13 @@ body{
   color:#fff7fb;
 
   -webkit-text-stroke:
-    clamp(4px,1.4vw,8px)
+    clamp(5px,1.6vw,9px)
     #ff4b9d;
 
   text-shadow:
-    0 5px 0 #d82779,
-    0 10px 0 #a80052,
-    0 15px 7px rgba(60,0,28,.72);
+    0 6px 0 #d82779,
+    0 12px 0 #a80052,
+    0 18px 8px rgba(60,0,28,.72);
 
   opacity:0;
 
@@ -188,7 +226,9 @@ body{
 
 #number.show{
   opacity:1;
-  animation:numberIn .16s ease-out;
+
+  animation:
+    numberIn .16s ease-out;
 }
 
 @keyframes numberIn{
@@ -196,7 +236,7 @@ body{
   0%{
     transform:
       translate(-50%,-50%)
-      scale(.88);
+      scale(.86);
   }
 
   100%{
@@ -210,23 +250,25 @@ body{
 #number.red{
   color:#fff0f3;
 
-  -webkit-text-stroke:7px #ff153e;
+  -webkit-text-stroke:
+    8px #ff153e;
 
   text-shadow:
-    0 5px 0 #d00029,
-    0 10px 0 #830016,
-    0 15px 7px rgba(0,0,0,.7);
+    0 6px 0 #d00029,
+    0 12px 0 #830016,
+    0 18px 8px rgba(0,0,0,.7);
 }
 
 #number.gold{
   color:#fffde6;
 
-  -webkit-text-stroke:7px #ffd200;
+  -webkit-text-stroke:
+    8px #ffd200;
 
   text-shadow:
-    0 5px 0 #e59b00,
-    0 10px 0 #9c5900,
-    0 15px 7px rgba(0,0,0,.7);
+    0 6px 0 #e59b00,
+    0 12px 0 #9c5900,
+    0 18px 8px rgba(0,0,0,.7);
 }
 
 #number.small{
@@ -235,35 +277,45 @@ body{
     scale(.76);
 }
 
-/* =========================
+
+/* =========================================================
    MESSAGE
-========================= */
+
+   ★「…」25px → 50px
+========================================================= */
 
 #message{
   position:absolute;
 
   left:50%;
-  top:74%;
+  top:63%;
 
-  transform:translateX(-50%);
+  transform:
+    translate(-50%,-50%);
 
-  z-index:21;
+  z-index:25;
 
   width:100%;
 
   text-align:center;
 
-  font-size:25px;
+  font-size:50px;
+  line-height:1;
+
   font-weight:1000;
 
-  text-shadow:0 3px 8px #000;
+  letter-spacing:.12em;
+
+  text-shadow:
+    0 4px 10px rgba(0,0,0,.95);
 
   pointer-events:none;
 }
 
-/* =========================
+
+/* =========================================================
    BLACKOUT
-========================= */
+========================================================= */
 
 #blackout{
   position:fixed;
@@ -277,22 +329,24 @@ body{
 
   pointer-events:none;
 
-  transition:opacity .06s linear;
+  transition:
+    opacity .06s linear;
 }
 
 #blackout.on{
   opacity:1;
 }
 
-/* =========================
+
+/* =========================================================
    FLASH
-========================= */
+========================================================= */
 
 #flash{
   position:fixed;
   inset:0;
 
-  z-index:70;
+  z-index:75;
 
   background:#fff;
 
@@ -302,7 +356,8 @@ body{
 }
 
 #flash.on{
-  animation:flashAnim .30s ease-out;
+  animation:
+    flashAnim .34s ease-out;
 }
 
 @keyframes flashAnim{
@@ -317,15 +372,16 @@ body{
 
 }
 
-/* =========================
+
+/* =========================================================
    SLASH
-========================= */
+========================================================= */
 
 #slashLayer{
   position:fixed;
   inset:0;
 
-  z-index:65;
+  z-index:70;
 
   overflow:hidden;
 
@@ -335,11 +391,15 @@ body{
 .slash{
   position:absolute;
 
-  left:-35vw;
+  left:-40vw;
   top:50%;
 
-  width:170vw;
-  height:12px;
+  width:180vw;
+
+  /*
+    ★前より太く
+  */
+  height:18px;
 
   transform-origin:center;
 
@@ -347,19 +407,20 @@ body{
 
   box-shadow:
     0 0 7px #fff,
-    0 0 18px #ff3b96,
-    0 0 40px #ff006e;
+    0 0 16px #fff,
+    0 0 28px #ff3b96,
+    0 0 55px #ff006e;
 
   animation:
-    slashGo .38s
-    cubic-bezier(.1,.8,.2,1)
+    slashGo .40s
+    cubic-bezier(.08,.85,.18,1)
     forwards;
 }
 
 .slash.two{
   animation:
-    slashGo2 .38s
-    cubic-bezier(.1,.8,.2,1)
+    slashGo2 .40s
+    cubic-bezier(.08,.85,.18,1)
     forwards;
 }
 
@@ -374,11 +435,13 @@ body{
       scaleX(0);
   }
 
-  20%{
+  12%{
     opacity:1;
   }
 
-  55%{
+  52%{
+    opacity:1;
+
     transform:
       translateY(-50%)
       rotate(-25deg)
@@ -407,11 +470,13 @@ body{
       scaleX(0);
   }
 
-  20%{
+  12%{
     opacity:1;
   }
 
-  55%{
+  52%{
+    opacity:1;
+
     transform:
       translateY(-50%)
       rotate(24deg)
@@ -429,9 +494,62 @@ body{
 
 }
 
-/* =========================
-   HIT
-========================= */
+
+/* =========================================================
+   HIT SHAKE
+
+   ★当たり時だけ一発
+========================================================= */
+
+body.hitShake{
+  animation:
+    hitShake .36s
+    cubic-bezier(.2,.8,.3,1);
+}
+
+@keyframes hitShake{
+
+  0%{
+    transform:
+      translate3d(0,0,0);
+  }
+
+  15%{
+    transform:
+      translate3d(-10px,5px,0);
+  }
+
+  30%{
+    transform:
+      translate3d(9px,-5px,0);
+  }
+
+  45%{
+    transform:
+      translate3d(-7px,4px,0);
+  }
+
+  60%{
+    transform:
+      translate3d(6px,-3px,0);
+  }
+
+  75%{
+    transform:
+      translate3d(-3px,2px,0);
+  }
+
+  100%{
+    transform:
+      translate3d(0,0,0);
+  }
+
+}
+
+
+/* =========================================================
+   HIT TEXT
+========================================================= */
 
 #hitText{
   position:fixed;
@@ -441,11 +559,11 @@ body{
 
   transform:
     translate(-50%,-50%)
-    scale(.4);
+    scale(.15);
 
-  z-index:80;
+  z-index:90;
 
-  font-size:min(22vw,110px);
+  font-size:min(25vw,125px);
 
   white-space:nowrap;
 
@@ -458,12 +576,14 @@ body{
 
   color:#fff;
 
-  -webkit-text-stroke:5px #ff2486;
+  -webkit-text-stroke:
+    6px #ff2486;
 
   text-shadow:
-    0 5px 0 #d00064,
-    0 10px 0 #780032,
-    0 0 25px #ff1680;
+    0 6px 0 #d00064,
+    0 12px 0 #780032,
+    0 0 18px #fff,
+    0 0 38px #ff1680;
 
   opacity:0;
 
@@ -472,8 +592,8 @@ body{
 
 #hitText.on{
   animation:
-    hitPop .7s
-    cubic-bezier(.12,.8,.15,1)
+    hitPop .72s
+    cubic-bezier(.12,.88,.12,1)
     forwards;
 }
 
@@ -484,21 +604,27 @@ body{
 
     transform:
       translate(-50%,-50%)
-      scale(.3);
+      scale(.15);
   }
 
-  35%{
+  30%{
     opacity:1;
 
     transform:
       translate(-50%,-50%)
-      scale(1.18);
+      scale(1.28);
   }
 
-  55%{
+  50%{
     transform:
       translate(-50%,-50%)
-      scale(.96);
+      scale(.91);
+  }
+
+  68%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.07);
   }
 
   100%{
@@ -511,9 +637,10 @@ body{
 
 }
 
-/* =========================
+
+/* =========================================================
    TREASURE
-========================= */
+========================================================= */
 
 #treasureScreen{
   position:fixed;
@@ -527,7 +654,8 @@ body{
   justify-content:center;
   flex-direction:column;
 
-  padding:30px 14px;
+  padding:
+    30px 14px;
 
   background:
     radial-gradient(
@@ -545,6 +673,7 @@ body{
 #treasureIntro{
   font-size:14px;
   font-weight:800;
+
   letter-spacing:.12em;
 
   margin-bottom:8px;
@@ -556,7 +685,8 @@ body{
   font-size:27px;
   font-weight:1000;
 
-  text-shadow:0 0 15px #ff1680;
+  text-shadow:
+    0 0 15px #ff1680;
 }
 
 #treasureSub{
@@ -597,11 +727,13 @@ body{
 
   width:100%;
 
-  aspect-ratio:1.08 / 1;
+  aspect-ratio:
+    1.08 / 1;
 
   cursor:pointer;
 
-  transform-origin:center bottom;
+  transform-origin:
+    center bottom;
 }
 
 .chestLid{
@@ -626,15 +758,18 @@ body{
       #6f2b08 100%
     );
 
-  border:3px solid #ffd96b;
+  border:
+    3px solid #ffd96b;
 
   box-shadow:
     inset 0 4px 4px rgba(255,255,255,.3),
     0 5px 8px rgba(0,0,0,.5);
 
-  transform-origin:center bottom;
+  transform-origin:
+    center bottom;
 
-  transition:transform .45s ease;
+  transition:
+    transform .45s ease;
 }
 
 .chestBody{
@@ -659,7 +794,8 @@ body{
       #5d2007
     );
 
-  border:3px solid #ffc94f;
+  border:
+    3px solid #ffc94f;
 
   box-shadow:
     inset 0 0 12px rgba(0,0,0,.6),
@@ -672,7 +808,8 @@ body{
   left:50%;
   top:43%;
 
-  transform:translateX(-50%);
+  transform:
+    translateX(-50%);
 
   width:25%;
   height:30%;
@@ -685,7 +822,8 @@ body{
       #d49315
     );
 
-  border:2px solid #704000;
+  border:
+    2px solid #704000;
 
   z-index:3;
 }
@@ -697,29 +835,41 @@ body{
 }
 
 .chest.shake{
-  animation:chestShake .48s linear;
+  animation:
+    chestShake .48s linear;
 }
 
 @keyframes chestShake{
 
-  0%,100%{
-    transform:translateX(0) rotate(0);
+  0%,
+  100%{
+    transform:
+      translateX(0)
+      rotate(0);
   }
 
   20%{
-    transform:translateX(-6px) rotate(-3deg);
+    transform:
+      translateX(-6px)
+      rotate(-3deg);
   }
 
   40%{
-    transform:translateX(6px) rotate(3deg);
+    transform:
+      translateX(6px)
+      rotate(3deg);
   }
 
   60%{
-    transform:translateX(-5px) rotate(-2deg);
+    transform:
+      translateX(-5px)
+      rotate(-2deg);
   }
 
   80%{
-    transform:translateX(5px) rotate(2deg);
+    transform:
+      translateX(5px)
+      rotate(2deg);
   }
 
 }
@@ -741,22 +891,29 @@ body{
 
 .rank1{
   color:#ffe36b;
-  text-shadow:0 0 12px #ffb300;
+
+  text-shadow:
+    0 0 12px #ffb300;
 }
 
 .rank2{
   color:#f4f4f4;
-  text-shadow:0 0 10px #aab6c7;
+
+  text-shadow:
+    0 0 10px #aab6c7;
 }
 
 .rank3{
   color:#ff9c4a;
-  text-shadow:0 0 10px #c94d00;
+
+  text-shadow:
+    0 0 10px #c94d00;
 }
 
-/* =========================
+
+/* =========================================================
    RANK RESULT
-========================= */
+========================================================= */
 
 #rankResult{
   position:fixed;
@@ -770,7 +927,8 @@ body{
   justify-content:center;
   flex-direction:column;
 
-  background:rgba(0,0,0,.77);
+  background:
+    rgba(0,0,0,.77);
 }
 
 #rankResult.show{
@@ -778,7 +936,8 @@ body{
 }
 
 #rankBig{
-  font-size:min(24vw,120px);
+  font-size:
+    min(24vw,120px);
 
   font-weight:1000;
 
@@ -802,7 +961,9 @@ body{
   width:min(72vw,300px);
   height:60px;
 
-  border:2px solid #fff;
+  border:
+    2px solid #fff;
+
   border-radius:16px;
 
   color:#fff;
@@ -825,7 +986,9 @@ body{
 <body>
 
 <div id="bg"></div>
+
 <div id="shade"></div>
+
 
 <div id="game">
 
@@ -843,11 +1006,13 @@ body{
 
     </div>
 
+
     <button id="startButton">
       START
     </button>
 
   </div>
+
 
   <div id="number"></div>
 
@@ -874,9 +1039,11 @@ body{
     ここからが本番。
   </div>
 
+
   <div id="treasureTitle">
     運命の宝箱を選べ！
   </div>
+
 
   <div id="treasureSub">
     この一箱が、結果を決める。
@@ -887,10 +1054,17 @@ body{
 
     <div class="chestWrap">
 
-      <div class="chest" data-index="0">
+      <div
+        class="chest"
+        data-index="0"
+      >
+
         <div class="chestLid"></div>
+
         <div class="chestBody"></div>
+
         <div class="chestLock"></div>
+
       </div>
 
       <div class="rankLabel"></div>
@@ -900,10 +1074,17 @@ body{
 
     <div class="chestWrap">
 
-      <div class="chest" data-index="1">
+      <div
+        class="chest"
+        data-index="1"
+      >
+
         <div class="chestLid"></div>
+
         <div class="chestBody"></div>
+
         <div class="chestLock"></div>
+
       </div>
 
       <div class="rankLabel"></div>
@@ -913,10 +1094,17 @@ body{
 
     <div class="chestWrap">
 
-      <div class="chest" data-index="2">
+      <div
+        class="chest"
+        data-index="2"
+      >
+
         <div class="chestLid"></div>
+
         <div class="chestBody"></div>
+
         <div class="chestLock"></div>
+
       </div>
 
       <div class="rankLabel"></div>
@@ -959,43 +1147,69 @@ const sleep =
 
 
 const number =
-  document.getElementById("number");
+  document.getElementById(
+    "number"
+  );
 
 const message =
-  document.getElementById("message");
+  document.getElementById(
+    "message"
+  );
 
 const startScreen =
-  document.getElementById("startScreen");
+  document.getElementById(
+    "startScreen"
+  );
 
 const startButton =
-  document.getElementById("startButton");
+  document.getElementById(
+    "startButton"
+  );
 
 const blackout =
-  document.getElementById("blackout");
+  document.getElementById(
+    "blackout"
+  );
 
 const flash =
-  document.getElementById("flash");
+  document.getElementById(
+    "flash"
+  );
 
 const hitText =
-  document.getElementById("hitText");
+  document.getElementById(
+    "hitText"
+  );
 
 const treasureScreen =
-  document.getElementById("treasureScreen");
+  document.getElementById(
+    "treasureScreen"
+  );
 
 const treasureTitle =
-  document.getElementById("treasureTitle");
+  document.getElementById(
+    "treasureTitle"
+  );
 
 const treasureSub =
-  document.getElementById("treasureSub");
+  document.getElementById(
+    "treasureSub"
+  );
 
 const nextButton =
-  document.getElementById("nextButton");
+  document.getElementById(
+    "nextButton"
+  );
 
 const rankResult =
-  document.getElementById("rankResult");
+  document.getElementById(
+    "rankResult"
+  );
 
 const rankBig =
-  document.getElementById("rankBig");
+  document.getElementById(
+    "rankBig"
+  );
 
 
 let playing=false;
@@ -1010,10 +1224,8 @@ let treasureLocked=false;
 /* =========================================================
    AUDIO ENGINE
 
-   ★電子音生成は一切しない
-
-   Web Audio APIは
-   MP3を鳴らすためだけに使用。
+   ★MP3再生専用
+   ★電子音生成なし
 ========================================================= */
 
 let audioCtx=null;
@@ -1032,7 +1244,7 @@ let audioLoadingPromise=null;
 
 
 /* =========================================================
-   LOAD MP3
+   LOAD AUDIO
 ========================================================= */
 
 async function loadAudioFile(url){
@@ -1069,12 +1281,7 @@ async function loadAudioFile(url){
 
 
 /* =========================================================
-   PRELOAD AUDIO
-
-   ページを開いた時点で
-   MP3データだけ読み込む。
-
-   音は一切鳴らさない。
+   PREPARE AUDIO
 ========================================================= */
 
 async function prepareAudio(){
@@ -1110,6 +1317,7 @@ async function prepareAudio(){
 
         audioCtx =
           new AudioContextClass();
+
       }
 
 
@@ -1162,20 +1370,14 @@ async function prepareAudio(){
 
 
 /*
-  ページロード後に
-  データだけ先読み開始。
+  データだけ先読み
 */
 
 prepareAudio();
 
 
 /* =========================================================
-   UNLOCK
-
-   ★STARTタップから直接resume()
-
-   ここでは音源を再生しないので
-   当たり曲の頭が漏れない。
+   UNLOCK AUDIO
 ========================================================= */
 
 async function unlockAudio(){
@@ -1213,7 +1415,7 @@ async function unlockAudio(){
 
 
 /* =========================================================
-   STOP SOURCE
+   SOURCE STOP
 ========================================================= */
 
 function stopSource(source){
@@ -1271,7 +1473,10 @@ function startTension(){
   gain.gain.value=.72;
 
 
-  source.connect(gain);
+  source.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
@@ -1281,7 +1486,8 @@ function startTension(){
   source.start(0);
 
 
-  tensionSource=source;
+  tensionSource =
+    source;
 
 
   source.onended=()=>{
@@ -1289,7 +1495,9 @@ function startTension(){
     if(
       tensionSource===source
     ){
+
       tensionSource=null;
+
     }
 
   };
@@ -1316,7 +1524,7 @@ function stopTension(){
 /* =========================================================
    HIT MUSIC
 
-   ★本物の当たり専用
+   ★本当の当たり専用
 ========================================================= */
 
 function playHitMusic(){
@@ -1331,6 +1539,7 @@ function playHitMusic(){
     );
 
     return;
+
   }
 
 
@@ -1357,25 +1566,21 @@ function playHitMusic(){
   gain.gain.value=1;
 
 
-  source.connect(gain);
+  source.connect(
+    gain
+  );
+
 
   gain.connect(
     audioCtx.destination
   );
 
 
-  /*
-    ★ここではHTMLAudioElement.play()
-    を使わない。
-
-    START時にresume済みの
-    AudioContextから直接再生。
-  */
-
   source.start(0);
 
 
-  hitSource=source;
+  hitSource=
+    source;
 
 
   source.onended=()=>{
@@ -1383,7 +1588,9 @@ function playHitMusic(){
     if(
       hitSource===source
     ){
+
       hitSource=null;
+
     }
 
   };
@@ -1499,9 +1706,45 @@ function doFlash(){
 
 
 /* =========================================================
-   SLASH
+   SCREEN HIT
 
-   ★音なし
+   ★一発だけ揺らす
+========================================================= */
+
+function doHitShake(){
+
+  document.body
+    .classList
+    .remove(
+      "hitShake"
+    );
+
+
+  void document.body.offsetWidth;
+
+
+  document.body
+    .classList
+    .add(
+      "hitShake"
+    );
+
+
+  setTimeout(()=>{
+
+    document.body
+      .classList
+      .remove(
+        "hitShake"
+      );
+
+  },420);
+
+}
+
+
+/* =========================================================
+   SLASH
 ========================================================= */
 
 function slash(
@@ -1521,10 +1764,13 @@ function slash(
     );
 
 
-  s.className="slash";
+  s.className=
+    "slash";
 
 
-  layer.appendChild(s);
+  layer.appendChild(
+    s
+  );
 
 
   if(double){
@@ -1541,7 +1787,9 @@ function slash(
         "slash two";
 
 
-      layer.appendChild(s2);
+      layer.appendChild(
+        s2
+      );
 
 
       setTimeout(()=>{
@@ -1574,11 +1822,21 @@ function slash(
 /* =========================================================
    REAL HIT
 
+   ★強化版
+
    Tension停止
    ↓
-   一瞬無音
+   無音
    ↓
-   斬撃
+   暗転
+   ↓
+   極太斬撃
+   ↓
+   白フラッシュ
+   ↓
+   一発揺れ
+   ↓
+   当たり文字
    ↓
    当たり曲
 ========================================================= */
@@ -1594,23 +1852,40 @@ async function HIT(
 
 
   /*
-    ★緊張BGMを完全停止
+    ① 緊張BGMをブツ切り
   */
 
   stopTension();
 
 
   /*
-    間
+    ② 完全無音
   */
 
   await sleep(
-    options.silence || 350
+    options.silence || 520
   );
 
 
   /*
-    斬撃
+    ③ 一瞬暗転
+  */
+
+  blackout.classList.add(
+    "on"
+  );
+
+
+  await sleep(180);
+
+
+  blackout.classList.remove(
+    "on"
+  );
+
+
+  /*
+    ④ 極太斬撃
   */
 
   slash(
@@ -1619,11 +1894,22 @@ async function HIT(
   );
 
 
-  await sleep(160);
+  /*
+    ⑤ 斬撃が走った直後
+  */
+
+  await sleep(125);
 
 
   /*
-    当たり表示
+    ⑥ 画面を一発だけドン
+  */
+
+  doHitShake();
+
+
+  /*
+    ⑦ 当たり表示
   */
 
   hitText.classList.remove(
@@ -1640,18 +1926,20 @@ async function HIT(
 
 
   /*
-    ★★★★★★★★★★★★★★★
+    ⑧ 本当の当たり曲
 
-       本物の当たりだけ
-       MP3を再生
-
-    ★★★★★★★★★★★★★★★
+    ★ここ以外からは
+    絶対に再生しない
   */
 
   playHitMusic();
 
 
-  await sleep(1850);
+  /*
+    当たりを見せる
+  */
+
+  await sleep(2100);
 
 
   hitText.classList.remove(
@@ -1659,8 +1947,12 @@ async function HIT(
   );
 
 
-  await sleep(700);
+  await sleep(650);
 
+
+  /*
+    宝箱へ
+  */
 
   showTreasure();
 
@@ -1668,7 +1960,7 @@ async function HIT(
 
 
 /* =========================================================
-   HIT ROUTES
+   27 HIT ROUTES
 ========================================================= */
 
 async function normalHitAt(point){
@@ -1725,7 +2017,7 @@ async function normalHitAt(point){
 
 
   return HIT({
-    silence:300
+    silence:400
   });
 
 }
@@ -1750,8 +2042,13 @@ async function normalBlackout(){
   await sleep(1100);
 
 
+  blackout.classList.remove(
+    "on"
+  );
+
+
   return HIT({
-    silence:250
+    silence:320
   });
 
 }
@@ -1770,7 +2067,7 @@ async function freezeTwo(){
 
 
   return HIT({
-    silence:200
+    silence:350
   });
 
 }
@@ -1878,7 +2175,7 @@ async function soundStopPattern(){
 
 
   return HIT({
-    silence:400
+    silence:500
   });
 
 }
@@ -1902,7 +2199,7 @@ async function longOne(){
 
 
   return HIT({
-    silence:250
+    silence:400
   });
 
 }
@@ -2009,8 +2306,13 @@ async function puchunDirect(){
   await sleep(1700);
 
 
+  blackout.classList.remove(
+    "on"
+  );
+
+
   return HIT({
-    silence:450
+    silence:500
   });
 
 }
@@ -2074,6 +2376,10 @@ async function fakeSlashPattern(){
   await sleep(450);
 
 
+  /*
+    偽斬撃
+  */
+
   slash(true);
 
 
@@ -2128,15 +2434,18 @@ async function silentStart(){
 
   showNumber(3);
 
+
   await sleep(1300);
 
 
   showNumber(2);
 
+
   await sleep(1600);
 
 
   showNumber(1);
+
 
   await sleep(1800);
 
@@ -2160,13 +2469,15 @@ async function classicRevival(){
   await sleep(1900);
 
 
-  message.textContent="…";
+  message.textContent=
+    "…";
 
 
   await sleep(700);
 
 
-  message.textContent="";
+  message.textContent=
+    "";
 
 
   await sleep(700);
@@ -2181,10 +2492,12 @@ async function skipCountHit(){
 
   showNumber(3);
 
+
   await sleep(1700);
 
 
   showNumber(1);
+
 
   await sleep(1800);
 
@@ -2209,7 +2522,7 @@ async function oneVanishHit(){
 
 
   return HIT({
-    silence:500
+    silence:600
   });
 
 }
@@ -2222,10 +2535,12 @@ async function oneBackToTwoHit(){
 
   showNumber(2);
 
+
   await sleep(1200);
 
 
   showNumber(1);
+
 
   await sleep(1200);
 
@@ -2239,15 +2554,18 @@ async function speedCountHit(){
 
   showNumber(3);
 
+
   await sleep(550);
 
 
   showNumber(2);
 
+
   await sleep(500);
 
 
   showNumber(1);
+
 
   await sleep(650);
 
@@ -2273,15 +2591,18 @@ async function silentOddityHit(){
 
   showNumber(3);
 
+
   await sleep(1700);
 
 
   hideNumber();
 
+
   await sleep(1200);
 
 
   showNumber(2);
+
 
   await sleep(1800);
 
@@ -2291,11 +2612,12 @@ async function silentOddityHit(){
 
   hideNumber();
 
+
   await sleep(1600);
 
 
   return HIT({
-    silence:600
+    silence:650
   });
 
 }
@@ -2305,15 +2627,18 @@ async function questionHit(){
 
   showNumber(3);
 
+
   await sleep(1600);
 
 
   showNumber(2);
 
+
   await sleep(1800);
 
 
-  message.textContent="?";
+  message.textContent=
+    "?";
 
 
   hideNumber();
@@ -2322,7 +2647,8 @@ async function questionHit(){
   await sleep(1500);
 
 
-  message.textContent="";
+  message.textContent=
+    "";
 
 
   return HIT();
@@ -2366,7 +2692,7 @@ async function blackoutReturnHit(){
 
 
 /* =========================================================
-   EXACTLY 27 ROUTES
+   EXACTLY 27 HIT ROUTES
 ========================================================= */
 
 const hitRoutes=[
@@ -2443,6 +2769,10 @@ async function normalMiss(){
   stopTension();
 
 
+  /*
+    ★何も表示しないハズレ
+  */
+
   await sleep(900);
 
 
@@ -2466,11 +2796,21 @@ async function weakFake(){
   showNumber(3);
 
 
+  /*
+    6:
+    3が異常に長い
+  */
+
   if(type===5){
 
     await sleep(3400);
 
   }
+
+  /*
+    10:
+    3→2が速い
+  */
 
   else if(type===9){
 
@@ -2488,6 +2828,11 @@ async function weakFake(){
   showNumber(2);
 
 
+  /*
+    1:
+    2が長い
+  */
+
   if(type===0){
 
     await sleep(3100);
@@ -2500,6 +2845,11 @@ async function weakFake(){
 
   }
 
+
+  /*
+    7:
+    2が赤
+  */
 
   if(type===6){
 
@@ -2518,6 +2868,11 @@ async function weakFake(){
   }
 
 
+  /*
+    5:
+    一瞬暗転
+  */
+
   if(type===4){
 
     blackout.classList.add(
@@ -2535,6 +2890,11 @@ async function weakFake(){
   }
 
 
+  /*
+    8:
+    0が一瞬出る
+  */
+
   if(type===7){
 
     showNumber(0);
@@ -2547,6 +2907,11 @@ async function weakFake(){
 
   showNumber(1);
 
+
+  /*
+    3:
+    1が赤
+  */
 
   if(type===2){
 
@@ -2565,6 +2930,11 @@ async function weakFake(){
   }
 
 
+  /*
+    9:
+    1が少し小さい
+  */
+
   if(type===8){
 
     number.classList.add(
@@ -2575,8 +2945,8 @@ async function weakFake(){
 
 
   /*
-    弱フェイク4
-    BGMだけ突然消える
+    4:
+    BGM停止
   */
 
   if(type===3){
@@ -2598,6 +2968,11 @@ async function weakFake(){
   }
 
 
+  /*
+    2:
+    1が異常に長い
+  */
+
   if(type===1){
 
     await sleep(3500);
@@ -2617,13 +2992,19 @@ async function weakFake(){
   stopTension();
 
 
-  message.textContent="…";
+  /*
+    ★大きい「…」
+  */
+
+  message.textContent=
+    "…";
 
 
-  await sleep(600);
+  await sleep(700);
 
 
-  message.textContent="";
+  message.textContent=
+    "";
 
 
   await sleep(350);
@@ -2654,6 +3035,11 @@ async function strongFake(){
 
   switch(type){
 
+    /*
+      1:
+      偽斬撃
+    */
+
     case 0:
 
       await sleep(400);
@@ -2666,6 +3052,11 @@ async function strongFake(){
 
       break;
 
+
+    /*
+      2:
+      暗転
+    */
 
     case 1:
 
@@ -2693,6 +3084,11 @@ async function strongFake(){
       break;
 
 
+    /*
+      3:
+      金1
+    */
+
     case 2:
 
       showNumber(1);
@@ -2711,6 +3107,11 @@ async function strongFake(){
       break;
 
 
+    /*
+      4:
+      偽斬撃＋白フラッシュ
+    */
+
     case 3:
 
       slash(true);
@@ -2723,6 +3124,11 @@ async function strongFake(){
 
       break;
 
+
+    /*
+      5:
+      暗転→1
+    */
 
     case 4:
 
@@ -2753,6 +3159,11 @@ async function strongFake(){
       break;
 
 
+    /*
+      6:
+      金→無音→何もなし
+    */
+
     case 5:
 
       showNumber(1);
@@ -2782,6 +3193,10 @@ async function strongFake(){
   stopTension();
 
 
+  /*
+    強フェイク終了
+  */
+
   blackout.classList.add(
     "on"
   );
@@ -2795,7 +3210,26 @@ async function strongFake(){
   );
 
 
+  await sleep(250);
+
+
+  /*
+    ★強フェイクも
+    最後に大きい「…」
+  */
+
+  message.textContent=
+    "…";
+
+
   await sleep(700);
+
+
+  message.textContent=
+    "";
+
+
+  await sleep(350);
 
 
   resetGame();
@@ -2805,6 +3239,12 @@ async function strongFake(){
 
 /* =========================================================
    MISS BRANCH
+
+   ハズレ確定後だけ
+
+   50% normal
+   25% weak
+   25% strong
 ========================================================= */
 
 async function MISS(){
@@ -2835,10 +3275,7 @@ async function MISS(){
 /* =========================================================
    START
 
-   ★完全独立 1/30
-
-   ★AudioContextのresumeは
-   STARTタップから実行
+   ★完全独立抽選 1/30
 ========================================================= */
 
 startButton.addEventListener(
@@ -2862,20 +3299,15 @@ startButton.addEventListener(
 
 
     /*
-      ★★★★★★★★★★★★★★★
-
-      重要：
-      STARTのユーザー操作で
-      AudioContextをrunningへ。
-
-      ★★★★★★★★★★★★★★★
+      STARTタップで
+      AudioContextを有効化
     */
 
     await unlockAudio();
 
 
     /*
-      カウントダウンBGM開始
+      Tension開始
     */
 
     startTension();
@@ -2888,9 +3320,10 @@ startButton.addEventListener(
     /*
       ★★★★★★★★★★★★★★★
 
-      抽選はここで1回だけ。
+      STARTにつき
+      抽選はここで1回だけ
 
-      1/30
+      完全独立 1/30
 
       ★★★★★★★★★★★★★★★
     */
@@ -2900,6 +3333,11 @@ startButton.addEventListener(
 
 
     if(win){
+
+      /*
+        当たり確定後に
+        27演出から選択
+      */
 
       const route =
         hitRoutes[
@@ -2916,6 +3354,11 @@ startButton.addEventListener(
 
     else{
 
+      /*
+        ハズレ確定後に
+        ハズレ演出を選択
+      */
+
       await MISS();
 
     }
@@ -2926,6 +3369,10 @@ startButton.addEventListener(
 
 /* =========================================================
    PRIZE DRAW
+
+   1等 5%
+   2等 20%
+   3等 75%
 ========================================================= */
 
 function drawPrize(){
@@ -3013,7 +3460,9 @@ function showTreasure(){
 
   treasureScreen
     .classList
-    .add("show");
+    .add(
+      "show"
+    );
 
 }
 
@@ -3024,7 +3473,9 @@ function showTreasure(){
 
 function shuffle(arr){
 
-  const a=[...arr];
+  const a=[
+    ...arr
+  ];
 
 
   for(
@@ -3057,7 +3508,7 @@ function shuffle(arr){
 
 
 /* =========================================================
-   CHESTS
+   CHEST CLICK
 ========================================================= */
 
 document
@@ -3092,8 +3543,8 @@ document
 
 
         /*
-          選択箱 =
-          事前抽選結果
+          選択した箱 =
+          事前抽選した結果
         */
 
         chestRanks[chosen] =
@@ -3101,7 +3552,7 @@ document
 
 
         /*
-          残りは他の2等級
+          残り2等級
         */
 
         const remainingRanks =
@@ -3112,6 +3563,10 @@ document
             )
           );
 
+
+        /*
+          残り2箱
+        */
 
         const otherIndexes =
           shuffle(
@@ -3135,7 +3590,7 @@ document
 
 
         /*
-          選択箱
+          選択箱を揺らす
         */
 
         chest.classList.add(
@@ -3150,6 +3605,10 @@ document
           "shake"
         );
 
+
+        /*
+          OPEN
+        */
 
         chest.classList.add(
           "open"
@@ -3171,6 +3630,10 @@ document
         await sleep(450);
 
 
+        /*
+          大きく結果表示
+        */
+
         await showBigRank(
           selectedRank
         );
@@ -3185,8 +3648,7 @@ document
 
 
         /*
-          残り2箱
-          開封順ランダム
+          残り開封順もランダム
         */
 
         const revealOrder =
@@ -3211,7 +3673,9 @@ document
 
           otherChest
             .classList
-            .add("shake");
+            .add(
+              "shake"
+            );
 
 
           await sleep(420);
@@ -3219,12 +3683,16 @@ document
 
           otherChest
             .classList
-            .remove("shake");
+            .remove(
+              "shake"
+            );
 
 
           otherChest
             .classList
-            .add("open");
+            .add(
+              "open"
+            );
 
 
           doFlash();
@@ -3275,7 +3743,7 @@ function showRankLabel(
       );
 
 
-  label.textContent =
+  label.textContent=
     `${rank}等`;
 
 
@@ -3293,17 +3761,19 @@ function showRankLabel(
 
 async function showBigRank(rank){
 
-  rankBig.textContent =
+  rankBig.textContent=
     `${rank}等`;
 
 
-  rankBig.className =
+  rankBig.className=
     `rank${rank}`;
 
 
   rankResult
     .classList
-    .add("show");
+    .add(
+      "show"
+    );
 
 
   await sleep(
@@ -3315,7 +3785,9 @@ async function showBigRank(rank){
 
   rankResult
     .classList
-    .remove("show");
+    .remove(
+      "show"
+    );
 
 }
 
@@ -3330,7 +3802,9 @@ nextButton.addEventListener(
 
     treasureScreen
       .classList
-      .remove("show");
+      .remove(
+        "show"
+      );
 
 
     resetGame();
@@ -3351,7 +3825,8 @@ function clearVisuals(){
   clearNumberStyle();
 
 
-  message.textContent="";
+  message.textContent=
+    "";
 
 
   blackout.classList.remove(
@@ -3362,6 +3837,13 @@ function clearVisuals(){
   hitText.classList.remove(
     "on"
   );
+
+
+  document.body
+    .classList
+    .remove(
+      "hitShake"
+    );
 
 }
 
