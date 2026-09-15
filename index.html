@@ -2,11 +2,14 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <title>COUNTDOWN LOTTERY</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
@@ -18,8 +21,8 @@ html,body{
   height:100%;
   overflow:hidden;
   background:#100008;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
 }
 
 body{
@@ -27,9 +30,9 @@ body{
   inset:0;
 }
 
-/* =========================
-   背景
-========================= */
+/* ========================================
+   BACKGROUND
+======================================== */
 
 #bg{
   position:fixed;
@@ -37,12 +40,10 @@ body{
   z-index:0;
 
   background-color:#16000c;
-  background-image:url("./AAECEFCC-FDEB-4353-9E97-53CA100DE812.png");
 
-  /*
-    縦方向を全部見せる。
-    前の cover よりロゴが切れにくい。
-  */
+  background-image:
+    url("./AAECEFCC-FDEB-4353-9E97-53CA100DE812.png");
+
   background-size:auto 100%;
   background-position:center top;
   background-repeat:no-repeat;
@@ -53,55 +54,58 @@ body{
   inset:0;
   z-index:1;
   pointer-events:none;
+
   background:
     radial-gradient(
-      circle at 50% 52%,
-      rgba(255,20,130,.02) 0%,
-      rgba(20,0,12,.04) 48%,
-      rgba(0,0,0,.28) 100%
+      circle at 50% 55%,
+      rgba(255,20,130,.01),
+      rgba(0,0,0,.20)
     );
 }
 
-/* =========================
-   羽
-========================= */
+/* ========================================
+   FEATHERS
+======================================== */
 
 #featherLayer{
   position:fixed;
   inset:0;
-  z-index:4;
+  z-index:5;
   overflow:hidden;
   pointer-events:none;
 }
 
-.featherWrap{
-  position:absolute;
-  top:-45vh;
-  left:0;
-  pointer-events:none;
-  will-change:transform;
-}
-
-.featherSway{
-  width:100%;
-  height:100%;
-  will-change:transform;
-}
-
 .feather{
+  position:absolute;
+  top:-130px;
+
   display:block;
-  width:100%;
-  height:100%;
+
+  width:auto;
+  height:auto;
+
   object-fit:contain;
+
   pointer-events:none;
   user-select:none;
   -webkit-user-drag:none;
+
+  /*
+    黒っぽい背景を目立たなくする
+  */
+  mix-blend-mode:screen;
+
+  /*
+    filterを重くしすぎない
+  */
+  filter:brightness(1.05);
+
   will-change:transform,opacity;
 }
 
-/* =========================
-   メイン
-========================= */
+/* ========================================
+   GAME
+======================================== */
 
 #game{
   position:fixed;
@@ -109,27 +113,33 @@ body{
   z-index:10;
 }
 
-/* =========================
-   スタート画面
-========================= */
+/* ========================================
+   START
+======================================== */
 
 #startScreen{
   position:absolute;
   inset:0;
+
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:flex-end;
+
   padding-bottom:max(8vh,55px);
+
   z-index:30;
 }
 
 #startInfo{
   text-align:center;
   margin-bottom:18px;
+
   font-weight:800;
   letter-spacing:.14em;
-  text-shadow:0 2px 5px #000;
+
+  text-shadow:
+    0 2px 5px #000;
 }
 
 #startInfo .main{
@@ -145,18 +155,25 @@ body{
 #startButton{
   width:min(78vw,330px);
   height:72px;
-  border:2px solid rgba(255,255,255,.85);
+
+  border:
+    2px solid rgba(255,255,255,.85);
+
   border-radius:18px;
+
   color:#fff;
+
   font-size:27px;
   font-weight:900;
   letter-spacing:.16em;
+
   background:
     linear-gradient(
       180deg,
       rgba(255,105,178,.96),
       rgba(218,0,99,.96)
     );
+
   box-shadow:
     0 7px 0 #790037,
     0 12px 25px rgba(0,0,0,.5),
@@ -165,27 +182,35 @@ body{
 
 #startButton:active{
   transform:translateY(4px);
+
   box-shadow:
     0 3px 0 #790037,
     0 8px 18px rgba(0,0,0,.5);
 }
 
-/* =========================
-   カウント数字
-========================= */
+/* ========================================
+   COUNTDOWN NUMBER
+======================================== */
 
 #number{
   position:absolute;
+
   left:50%;
   top:61%;
-  transform:translate(-50%,-50%);
+
+  transform:
+    translate(-50%,-50%);
 
   z-index:20;
 
   font-size:min(45vw,220px);
   line-height:.8;
+
   font-weight:1000;
-  font-family:Impact,"Arial Black",sans-serif;
+  font-family:
+    Impact,
+    "Arial Black",
+    sans-serif;
 
   color:#fff7fb;
 
@@ -199,27 +224,40 @@ body{
     0 15px 7px rgba(60,0,28,.72);
 
   opacity:0;
+
   pointer-events:none;
   user-select:none;
 }
 
 #number.show{
   opacity:1;
-  animation:numberIn .16s ease-out;
+
+  animation:
+    numberIn .16s ease-out;
 }
 
 @keyframes numberIn{
+
   0%{
-    transform:translate(-50%,-50%) scale(.88);
+    transform:
+      translate(-50%,-50%)
+      scale(.88);
   }
+
   100%{
-    transform:translate(-50%,-50%) scale(1);
+    transform:
+      translate(-50%,-50%)
+      scale(1);
   }
+
 }
 
 #number.red{
   color:#fff0f3;
-  -webkit-text-stroke:7px #ff153e;
+
+  -webkit-text-stroke:
+    7px #ff153e;
+
   text-shadow:
     0 5px 0 #d00029,
     0 10px 0 #830016,
@@ -228,7 +266,10 @@ body{
 
 #number.gold{
   color:#fffde6;
-  -webkit-text-stroke:7px #ffd200;
+
+  -webkit-text-stroke:
+    7px #ffd200;
+
   text-shadow:
     0 5px 0 #e59b00,
     0 10px 0 #9c5900,
@@ -236,91 +277,120 @@ body{
 }
 
 #number.small{
-  transform:translate(-50%,-50%) scale(.76);
+  transform:
+    translate(-50%,-50%)
+    scale(.76);
 }
 
-/* =========================
-   メッセージ
-========================= */
+/* ========================================
+   MESSAGE
+======================================== */
 
 #message{
   position:absolute;
+
   left:50%;
   top:73%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   z-index:21;
+
   width:100%;
+
   text-align:center;
+
   font-size:24px;
   font-weight:900;
-  letter-spacing:.1em;
-  text-shadow:0 3px 8px #000;
+
+  text-shadow:
+    0 3px 8px #000;
+
   pointer-events:none;
 }
 
-/* =========================
-   ブラックアウト
-========================= */
+/* ========================================
+   BLACKOUT
+======================================== */
 
 #blackout{
   position:fixed;
   inset:0;
+
   z-index:50;
+
   background:#000;
+
   opacity:0;
+
   pointer-events:none;
-  transition:opacity .06s linear;
+
+  transition:
+    opacity .06s linear;
 }
 
 #blackout.on{
   opacity:1;
 }
 
-/* =========================
-   フラッシュ
-========================= */
+/* ========================================
+   FLASH
+======================================== */
 
 #flash{
   position:fixed;
   inset:0;
+
   z-index:70;
+
   background:#fff;
+
   opacity:0;
+
   pointer-events:none;
 }
 
 #flash.on{
-  animation:flashAnim .32s ease-out;
+  animation:
+    flashAnim .30s ease-out;
 }
 
 @keyframes flashAnim{
-  0%{opacity:1}
-  100%{opacity:0}
+
+  0%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+  }
+
 }
 
-/* =========================
-   斬撃
-========================= */
+/* ========================================
+   SLASH
+======================================== */
 
 #slashLayer{
   position:fixed;
   inset:0;
+
   z-index:65;
-  pointer-events:none;
+
   overflow:hidden;
+
+  pointer-events:none;
 }
 
 .slash{
   position:absolute;
+
   left:-35vw;
   top:50%;
+
   width:170vw;
   height:12px;
-
-  transform:
-    translateY(-50%)
-    rotate(-25deg)
-    scaleX(0);
 
   transform-origin:center;
 
@@ -329,64 +399,118 @@ body{
   box-shadow:
     0 0 7px #fff,
     0 0 18px #ff3b96,
-    0 0 40px #ff006e,
-    0 0 70px #ff006e;
+    0 0 40px #ff006e;
 
-  animation:slashGo .38s cubic-bezier(.1,.8,.2,1) forwards;
+  animation:
+    slashGo .38s
+    cubic-bezier(.1,.8,.2,1)
+    forwards;
 }
 
 .slash.two{
-  transform:
-    translateY(-50%)
-    rotate(24deg)
-    scaleX(0);
+  animation:
+    slashGo2 .38s
+    cubic-bezier(.1,.8,.2,1)
+    forwards;
 }
 
 @keyframes slashGo{
+
   0%{
     opacity:0;
+
     transform:
       translateY(-50%)
       rotate(-25deg)
       scaleX(0);
   }
-  22%{
+
+  20%{
     opacity:1;
   }
+
   55%{
     transform:
       translateY(-50%)
       rotate(-25deg)
       scaleX(1);
   }
+
   100%{
     opacity:0;
+
     transform:
       translateY(-50%)
       rotate(-25deg)
       scaleX(1);
   }
+
 }
 
-/* =========================
-   当たり
-========================= */
+@keyframes slashGo2{
+
+  0%{
+    opacity:0;
+
+    transform:
+      translateY(-50%)
+      rotate(24deg)
+      scaleX(0);
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  55%{
+    transform:
+      translateY(-50%)
+      rotate(24deg)
+      scaleX(1);
+  }
+
+  100%{
+    opacity:0;
+
+    transform:
+      translateY(-50%)
+      rotate(24deg)
+      scaleX(1);
+  }
+
+}
+
+/* ========================================
+   HIT
+======================================== */
 
 #hitText{
   position:fixed;
+
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%) scale(.4);
+
+  transform:
+    translate(-50%,-50%)
+    scale(.4);
+
   z-index:80;
 
   font-size:min(22vw,110px);
+
   white-space:nowrap;
+
   font-weight:1000;
-  font-family:Impact,"Arial Black",sans-serif;
+
+  font-family:
+    Impact,
+    "Arial Black",
+    sans-serif;
 
   color:#fff;
 
-  -webkit-text-stroke:5px #ff2486;
+  -webkit-text-stroke:
+    5px #ff2486;
 
   text-shadow:
     0 5px 0 #d00064,
@@ -394,44 +518,69 @@ body{
     0 0 25px #ff1680;
 
   opacity:0;
+
   pointer-events:none;
 }
 
 #hitText.on{
-  animation:hitPop .7s cubic-bezier(.12,.8,.15,1) forwards;
+  animation:
+    hitPop .7s
+    cubic-bezier(.12,.8,.15,1)
+    forwards;
 }
 
 @keyframes hitPop{
+
   0%{
     opacity:0;
-    transform:translate(-50%,-50%) scale(.3);
+
+    transform:
+      translate(-50%,-50%)
+      scale(.3);
   }
+
   35%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1.18);
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.18);
   }
+
   55%{
-    transform:translate(-50%,-50%) scale(.96);
+    transform:
+      translate(-50%,-50%)
+      scale(.96);
   }
+
   100%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(1);
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
   }
+
 }
 
-/* =========================
-   宝箱
-========================= */
+/* ========================================
+   TREASURE
+======================================== */
 
 #treasureScreen{
   position:fixed;
   inset:0;
+
   z-index:100;
+
   display:none;
+
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  padding:30px 14px;
+
+  padding:
+    30px 14px;
 
   background:
     radial-gradient(
@@ -450,57 +599,78 @@ body{
   font-size:14px;
   font-weight:800;
   letter-spacing:.12em;
+
   margin-bottom:8px;
 }
 
 #treasureTitle{
   text-align:center;
+
   font-size:27px;
   font-weight:1000;
-  letter-spacing:.06em;
-  text-shadow:0 0 15px #ff1680;
+
+  text-shadow:
+    0 0 15px #ff1680;
 }
 
 #treasureSub{
   margin-top:8px;
+
   font-size:13px;
+
   opacity:.88;
+
   text-align:center;
 }
 
 #chests{
   width:100%;
   max-width:500px;
+
   display:flex;
+
   justify-content:center;
   align-items:flex-end;
+
   gap:8px;
+
   margin-top:42px;
 }
 
 .chestWrap{
   flex:1;
+
   max-width:150px;
   min-width:0;
+
   text-align:center;
 }
 
 .chest{
   position:relative;
+
   width:100%;
-  aspect-ratio:1.08/1;
+
+  aspect-ratio:
+    1.08 / 1;
+
   cursor:pointer;
-  transform-origin:center bottom;
+
+  transform-origin:
+    center bottom;
 }
 
-/* 蓋 */
 .chestLid{
   position:absolute;
+
   left:7%;
   top:16%;
+
   width:86%;
   height:34%;
-  border-radius:18px 18px 7px 7px;
+
+  border-radius:
+    18px 18px 7px 7px;
 
   background:
     linear-gradient(
@@ -512,24 +682,31 @@ body{
       #6f2b08 100%
     );
 
-  border:3px solid #ffd96b;
+  border:
+    3px solid #ffd96b;
 
   box-shadow:
     inset 0 4px 4px rgba(255,255,255,.3),
     0 5px 8px rgba(0,0,0,.5);
 
-  transform-origin:center bottom;
-  transition:transform .45s ease;
+  transform-origin:
+    center bottom;
+
+  transition:
+    transform .45s ease;
 }
 
-/* 本体 */
 .chestBody{
   position:absolute;
+
   left:7%;
   bottom:7%;
+
   width:86%;
   height:52%;
-  border-radius:5px 5px 14px 14px;
+
+  border-radius:
+    5px 5px 14px 14px;
 
   background:
     linear-gradient(
@@ -541,7 +718,8 @@ body{
       #5d2007
     );
 
-  border:3px solid #ffc94f;
+  border:
+    3px solid #ffc94f;
 
   box-shadow:
     inset 0 0 12px rgba(0,0,0,.6),
@@ -550,18 +728,26 @@ body{
 
 .chestLock{
   position:absolute;
+
   left:50%;
   top:43%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   width:25%;
   height:30%;
 
   border-radius:5px;
 
   background:
-    linear-gradient(#fff1a3,#d49315);
+    linear-gradient(
+      #fff1a3,
+      #d49315
+    );
 
-  border:2px solid #704000;
+  border:
+    2px solid #704000;
 
   z-index:3;
 }
@@ -573,23 +759,52 @@ body{
 }
 
 .chest.shake{
-  animation:chestShake .48s linear;
+  animation:
+    chestShake .48s linear;
 }
 
 @keyframes chestShake{
-  0%,100%{transform:translateX(0) rotate(0)}
-  15%{transform:translateX(-7px) rotate(-3deg)}
-  30%{transform:translateX(7px) rotate(3deg)}
-  45%{transform:translateX(-6px) rotate(-2deg)}
-  60%{transform:translateX(6px) rotate(2deg)}
-  75%{transform:translateX(-3px)}
+
+  0%,100%{
+    transform:
+      translateX(0)
+      rotate(0);
+  }
+
+  20%{
+    transform:
+      translateX(-6px)
+      rotate(-3deg);
+  }
+
+  40%{
+    transform:
+      translateX(6px)
+      rotate(3deg);
+  }
+
+  60%{
+    transform:
+      translateX(-5px)
+      rotate(-2deg);
+  }
+
+  80%{
+    transform:
+      translateX(5px)
+      rotate(2deg);
+  }
+
 }
 
 .rankLabel{
   margin-top:9px;
+
   min-height:29px;
+
   font-size:22px;
   font-weight:1000;
+
   opacity:0;
 }
 
@@ -599,33 +814,43 @@ body{
 
 .rank1{
   color:#ffe36b;
-  text-shadow:0 0 12px #ffb300;
+
+  text-shadow:
+    0 0 12px #ffb300;
 }
 
 .rank2{
   color:#f4f4f4;
-  text-shadow:0 0 10px #aab6c7;
+
+  text-shadow:
+    0 0 10px #aab6c7;
 }
 
 .rank3{
   color:#ff9c4a;
-  text-shadow:0 0 10px #c94d00;
+
+  text-shadow:
+    0 0 10px #c94d00;
 }
 
-/* =========================
-   等級結果
-========================= */
+/* ========================================
+   RANK RESULT
+======================================== */
 
 #rankResult{
   position:fixed;
   inset:0;
+
   z-index:130;
+
   display:none;
+
   align-items:center;
   justify-content:center;
   flex-direction:column;
 
-  background:rgba(0,0,0,.77);
+  background:
+    rgba(0,0,0,.77);
 }
 
 #rankResult.show{
@@ -634,55 +859,48 @@ body{
 
 #rankBig{
   font-size:min(24vw,120px);
+
   font-weight:1000;
+
   line-height:1;
+
   text-align:center;
 }
 
 #rankWin{
   margin-top:15px;
+
   font-size:31px;
   font-weight:1000;
 }
 
-/* =========================
-   NEXT
-========================= */
-
 #nextButton{
   display:none;
+
   margin-top:32px;
+
   width:min(72vw,300px);
   height:60px;
 
-  border:2px solid #fff;
+  border:
+    2px solid #fff;
+
   border-radius:16px;
 
   color:#fff;
-  background:linear-gradient(#ff5fa8,#bc0055);
+
+  background:
+    linear-gradient(
+      #ff5fa8,
+      #bc0055
+    );
 
   font-size:22px;
   font-weight:1000;
+
   letter-spacing:.12em;
 }
 
-/* =========================
-   小さい画面
-========================= */
-
-@media(max-width:380px){
-  #treasureTitle{
-    font-size:23px;
-  }
-
-  #chests{
-    gap:4px;
-  }
-
-  .rankLabel{
-    font-size:19px;
-  }
-}
 </style>
 </head>
 
@@ -695,12 +913,23 @@ body{
 <div id="game">
 
   <div id="startScreen">
+
     <div id="startInfo">
-      <div class="main">完全抽選 1/30</div>
-      <div class="sub">毎回独立抽選</div>
+
+      <div class="main">
+        完全抽選 1/30
+      </div>
+
+      <div class="sub">
+        毎回独立抽選
+      </div>
+
     </div>
 
-    <button id="startButton">START</button>
+    <button id="startButton">
+      START
+    </button>
+
   </div>
 
   <div id="number"></div>
@@ -711,11 +940,17 @@ body{
 <div id="slashLayer"></div>
 <div id="blackout"></div>
 <div id="flash"></div>
-<div id="hitText">当たり</div>
+
+<div id="hitText">
+  当たり
+</div>
+
 
 <div id="treasureScreen">
 
-  <div id="treasureIntro">ここからが本番。</div>
+  <div id="treasureIntro">
+    ここからが本番。
+  </div>
 
   <div id="treasureTitle">
     運命の宝箱を選べ！
@@ -725,60 +960,98 @@ body{
     この一箱が、結果を決める。
   </div>
 
+
   <div id="chests">
 
     <div class="chestWrap">
+
       <div class="chest" data-index="0">
+
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestLock"></div>
+
       </div>
+
       <div class="rankLabel"></div>
+
     </div>
 
+
     <div class="chestWrap">
+
       <div class="chest" data-index="1">
+
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestLock"></div>
+
       </div>
+
       <div class="rankLabel"></div>
+
     </div>
 
+
     <div class="chestWrap">
+
       <div class="chest" data-index="2">
+
         <div class="chestLid"></div>
         <div class="chestBody"></div>
         <div class="chestLock"></div>
+
       </div>
+
       <div class="rankLabel"></div>
+
     </div>
 
   </div>
 
-  <button id="nextButton">NEXT</button>
+
+  <button id="nextButton">
+    NEXT
+  </button>
 
 </div>
+
 
 <div id="rankResult">
+
   <div id="rankBig"></div>
-  <div id="rankWin">当選！</div>
+
+  <div id="rankWin">
+    当選！
+  </div>
+
 </div>
 
+
+<!--
+  ★唯一の音源
+  当たり時以外はplay()しない
+-->
 <audio
   id="hitMusic"
   src="./hit_music_final.mp3"
-  preload="auto">
+  preload="metadata"
+  playsinline>
 </audio>
+
 
 <script>
 
-/* =========================================================
-   基本
-========================================================= */
+/* ========================================
+   BASIC
+======================================== */
 
 const sleep = ms =>
-  new Promise(resolve => setTimeout(resolve,ms));
+  new Promise(
+    resolve =>
+      setTimeout(resolve,ms)
+  );
+
 
 const number =
   document.getElementById("number");
@@ -825,16 +1098,25 @@ const rankResult =
 const rankBig =
   document.getElementById("rankBig");
 
-let playing = false;
-let featherTimer = null;
-let audioCtx = null;
+
+let playing=false;
+
+let featherStageLevel=0;
+
+let featherTimer=null;
+
+let selectedRank=null;
+
+let chestRanks=[];
+
+let treasureLocked=false;
 
 
-/* =========================================================
-   羽8種類
-========================================================= */
+/* ========================================
+   FEATHER FILES
+======================================== */
 
-const FEATHERS = [
+const FEATHERS=[
 
   "./2861EE44-6874-491B-9FD1-2EAD12340DBA.png",
 
@@ -855,313 +1137,290 @@ const FEATHERS = [
 ];
 
 
-/* =========================================================
-   羽生成
-========================================================= */
+/* ========================================
+   RANDOM
+======================================== */
 
 function rand(min,max){
-  return Math.random() * (max-min) + min;
+
+  return (
+    Math.random() *
+    (max-min)
+  ) + min;
+
 }
+
 
 function randomItem(arr){
+
   return arr[
-    Math.floor(Math.random()*arr.length)
+    Math.floor(
+      Math.random()*arr.length
+    )
   ];
+
 }
 
+
+/* ========================================
+   FEATHER COUNT
+
+   ★同時最大4枚
+======================================== */
+
+function featherCount(){
+
+  return featherLayer
+    .querySelectorAll(".feather")
+    .length;
+
+}
+
+
+/* ========================================
+   CREATE FEATHER
+======================================== */
+
 function createFeather(
-  intensity = 1,
-  burst = false
+  burst=false
 ){
 
-  const wrap =
-    document.createElement("div");
+  /*
+    通常は最大4枚。
 
-  wrap.className =
-    "featherWrap";
+    当たりburstだけ
+    最大6枚まで許可。
+  */
+
+  const max =
+    burst ? 6 : 4;
 
 
-  const sway =
-    document.createElement("div");
-
-  sway.className =
-    "featherSway";
+  if(
+    featherCount() >= max
+  ){
+    return;
+  }
 
 
   const img =
     document.createElement("img");
 
-  img.className =
-    "feather";
+
+  img.className="feather";
+
 
   img.src =
     randomItem(FEATHERS);
 
 
   /*
-    通常時は小〜中サイズ。
-    当たり時だけ大きい羽も混ぜる。
+    前より小さめ
   */
 
-  let size;
-
-  if(burst){
-
-    size =
-      rand(45,145);
-
-  }else{
-
-    size =
-      rand(28,88) *
-      (0.85 + intensity*.13);
-
-  }
+  const size =
+    burst
+      ? rand(38,72)
+      : rand(28,58);
 
 
-  wrap.style.width =
+  img.style.width =
     size+"px";
 
-  wrap.style.height =
-    size*1.35+"px";
-
 
   /*
-    左右の画面外からも入る
+    出現位置
   */
 
-  const startX =
-    rand(-12,100);
-
-  wrap.style.left =
-    startX+"vw";
+  img.style.left =
+    rand(-5,95)+"vw";
 
 
   /*
-    奥行き感
+    透明度
   */
 
   const opacity =
     burst
-      ? rand(.58,.96)
-      : rand(.30,.78);
-
-  img.style.opacity =
-    opacity;
+      ? rand(.55,.80)
+      : rand(.35,.60);
 
 
   /*
-    左右反転を混ぜる
-  */
-
-  if(Math.random()<.5){
-    img.style.transform =
-      "scaleX(-1)";
-  }
-
-
-  sway.appendChild(img);
-  wrap.appendChild(sway);
-  featherLayer.appendChild(wrap);
-
-
-  /*
-    落下速度
+    軽量化のため
+    1枚1アニメーションのみ
   */
 
   const duration =
     burst
-      ? rand(2800,5200)
-      : rand(6000,11500);
+      ? rand(3500,4800)
+      : rand(6500,9000);
 
-
-  /*
-    横移動
-  */
 
   const drift =
-    rand(-38,38);
+    rand(-18,18);
 
 
-  /*
-    回転
-  */
-
-  const startRot =
-    rand(-100,100);
-
-  const rotations =
-    rand(90,420) *
-    (Math.random()<.5 ? -1 : 1);
+  const midDrift =
+    rand(-10,10);
 
 
-  /*
-    落下
-  */
+  const startRotation =
+    rand(-70,70);
 
-  wrap.animate(
-    [
+
+  const rotation =
+    rand(100,240) *
+    (
+      Math.random()<.5
+        ? -1
+        : 1
+    );
+
+
+  featherLayer
+    .appendChild(img);
+
+
+  const animation =
+    img.animate(
+
+      [
+
+        {
+          opacity:0,
+
+          transform:
+            `translate3d(0,-5vh,0)
+             rotate(${startRotation}deg)`
+        },
+
+
+        {
+          opacity:opacity,
+
+          offset:.12,
+
+          transform:
+            `translate3d(
+              ${midDrift}vw,
+              25vh,
+              0
+            )
+            rotate(
+              ${startRotation + rotation*.25}deg
+            )`
+        },
+
+
+        {
+          opacity:opacity,
+
+          offset:.55,
+
+          transform:
+            `translate3d(
+              ${drift}vw,
+              70vh,
+              0
+            )
+            rotate(
+              ${startRotation + rotation*.6}deg
+            )`
+        },
+
+
+        {
+          opacity:0,
+
+          transform:
+            `translate3d(
+              ${drift*.4}vw,
+              125vh,
+              0
+            )
+            rotate(
+              ${startRotation + rotation}deg
+            )`
+        }
+
+      ],
+
       {
-        transform:
-          `translate3d(0,-15vh,0)
-           rotate(${startRot}deg)`
-      },
-
-      {
-        transform:
-          `translate3d(${drift*.45}vw,55vh,0)
-           rotate(${startRot + rotations*.45}deg)`
-      },
-
-      {
-        transform:
-          `translate3d(${drift}vw,150vh,0)
-           rotate(${startRot + rotations}deg)`
+        duration:duration,
+        easing:"linear",
+        fill:"forwards"
       }
-    ],
-    {
-      duration,
-      easing:"linear",
-      fill:"forwards"
-    }
-  );
+
+    );
 
 
-  /*
-    羽独特の左右揺れ
-  */
+  animation.onfinish=()=>{
 
-  const swayAmount =
-    rand(12,42);
+    img.remove();
 
-  const swayTime =
-    rand(1200,2600);
+  };
 
-  sway.animate(
-    [
-      {
-        transform:
-          `translateX(${-swayAmount}px)
-           rotate(-7deg)`
-      },
-
-      {
-        transform:
-          `translateX(${swayAmount}px)
-           rotate(8deg)`
-      },
-
-      {
-        transform:
-          `translateX(${-swayAmount*.7}px)
-           rotate(-5deg)`
-      }
-    ],
-    {
-      duration:swayTime,
-      iterations:Infinity,
-      direction:"alternate",
-      easing:"ease-in-out"
-    }
-  );
-
-
-  /*
-    少しふわっと出て消える
-  */
-
-  img.animate(
-    [
-      {opacity:0},
-      {opacity:opacity,offset:.08},
-      {opacity:opacity,offset:.84},
-      {opacity:0}
-    ],
-    {
-      duration,
-      easing:"linear",
-      fill:"forwards"
-    }
-  );
-
-
-  setTimeout(()=>{
-    wrap.remove();
-  },duration+300);
 }
 
 
-/* =========================================================
-   羽量
-========================================================= */
-
-function featherBurst(count=16){
-
-  for(let i=0;i<count;i++){
-
-    setTimeout(()=>{
-
-      createFeather(
-        3,
-        true
-      );
-
-    },Math.random()*600);
-
-  }
-}
-
+/* ========================================
+   FEATHER STAGE
+======================================== */
 
 function featherStage(level){
 
-  clearInterval(featherTimer);
+  featherStageLevel=level;
+
+
+  clearInterval(
+    featherTimer
+  );
+
+
+  /*
+    3 = かなり少ない
+    2 = 少し増える
+    1 = 最大4枚
+  */
 
   let interval;
 
+
   if(level===1){
 
-    interval = 1150;
+    interval=2800;
 
-  }else if(level===2){
+  }
 
-    interval = 720;
+  else if(level===2){
 
-  }else{
+    interval=2000;
 
-    interval = 420;
+  }
+
+  else{
+
+    interval=1450;
 
   }
 
 
   /*
-    ステージ開始直後にも数枚
+    数字が変わった瞬間に
+    1枚だけ追加
   */
 
-  const first =
-    level===1 ? 2 :
-    level===2 ? 4 : 7;
-
-  for(let i=0;i<first;i++){
-
-    setTimeout(()=>{
-
-      createFeather(level);
-
-    },i*120);
-
-  }
+  createFeather(false);
 
 
   featherTimer =
     setInterval(()=>{
 
-      createFeather(level);
+      if(playing){
 
-      if(
-        level===3 &&
-        Math.random()<.35
-      ){
-        createFeather(level);
+        createFeather(false);
+
       }
 
     },interval);
@@ -1169,127 +1428,65 @@ function featherStage(level){
 }
 
 
+/* ========================================
+   STOP FEATHERS
+======================================== */
+
 function stopFeathers(){
 
-  clearInterval(featherTimer);
-  featherTimer = null;
+  clearInterval(
+    featherTimer
+  );
+
+  featherTimer=null;
+
+  featherStageLevel=0;
 
 }
 
 
-/* =========================================================
-   iPhone用オーディオ解除
-========================================================= */
+/* ========================================
+   HIT FEATHER BURST
 
-function unlockAudio(){
+   ★最大6枚
+======================================== */
 
-  try{
+function featherBurst(){
 
-    if(!audioCtx){
+  /*
+    既存枚数を含め最大6枚なので
+    大量生成しない
+  */
 
-      audioCtx =
-        new(
-          window.AudioContext ||
-          window.webkitAudioContext
-        )();
-
-    }
-
-    if(audioCtx.state==="suspended"){
-      audioCtx.resume();
-    }
-
-    hitMusic.volume = 0;
-
-    hitMusic.play()
-      .then(()=>{
-
-        hitMusic.pause();
-        hitMusic.currentTime=0;
-        hitMusic.volume=1;
-
-      })
-      .catch(()=>{});
-
-  }catch(e){}
-
-}
+  const need =
+    Math.max(
+      0,
+      6-featherCount()
+    );
 
 
-/* =========================================================
-   オリジナル効果音
-========================================================= */
+  for(
+    let i=0;
+    i<need;
+    i++
+  ){
 
-function tone(
-  freq=120,
-  duration=.1,
-  volume=.12,
-  type="sine"
-){
+    setTimeout(()=>{
 
-  if(!audioCtx)return;
+      createFeather(true);
 
-  const osc =
-    audioCtx.createOscillator();
+    },i*100);
 
-  const gain =
-    audioCtx.createGain();
-
-  osc.type = type;
-  osc.frequency.value = freq;
-
-  gain.gain.setValueAtTime(
-    volume,
-    audioCtx.currentTime
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    .001,
-    audioCtx.currentTime + duration
-  );
-
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  osc.start();
-  osc.stop(
-    audioCtx.currentTime + duration
-  );
-
-}
-
-
-function countSound(n){
-
-  if(n===3){
-    tone(92,.14,.11,"sine");
-  }
-
-  if(n===2){
-    tone(105,.15,.13,"sine");
-  }
-
-  if(n===1){
-    tone(122,.18,.15,"sine");
   }
 
 }
 
 
-function slashSound(){
+/* ========================================
+   NUMBER
 
-  tone(70,.18,.24,"sawtooth");
-
-  setTimeout(()=>{
-    tone(45,.35,.26,"sine");
-  },55);
-
-}
-
-
-/* =========================================================
-   数字表示
-========================================================= */
+   ★音なし
+======================================== */
 
 function clearNumberStyle(){
 
@@ -1306,29 +1503,42 @@ function showNumber(n){
 
   clearNumberStyle();
 
+
   number.textContent=n;
 
-  number.classList.remove("show");
+
+  number.classList.remove(
+    "show"
+  );
+
 
   void number.offsetWidth;
 
-  number.classList.add("show");
 
-  countSound(Number(n));
+  number.classList.add(
+    "show"
+  );
+
+
+  /*
+    ★ここでは何も鳴らさない
+  */
 
 }
 
 
 function hideNumber(){
 
-  number.classList.remove("show");
+  number.classList.remove(
+    "show"
+  );
 
 }
 
 
-/* =========================================================
-   通常カウント
-========================================================= */
+/* ========================================
+   NORMAL COUNT
+======================================== */
 
 async function normalCount(){
 
@@ -1355,9 +1565,11 @@ async function normalCount(){
 }
 
 
-/* =========================================================
-   斬撃
-========================================================= */
+/* ========================================
+   SLASH
+
+   ★音なし
+======================================== */
 
 function slash(
   fake=false,
@@ -1369,14 +1581,15 @@ function slash(
       "slashLayer"
     );
 
+
   const s =
     document.createElement("div");
 
+
   s.className="slash";
 
-  layer.appendChild(s);
 
-  slashSound();
+  layer.appendChild(s);
 
 
   if(double){
@@ -1386,16 +1599,21 @@ function slash(
       const s2 =
         document.createElement("div");
 
-      s2.className =
+
+      s2.className=
         "slash two";
+
 
       layer.appendChild(s2);
 
+
       setTimeout(()=>{
+
         s2.remove();
+
       },600);
 
-    },100);
+    },110);
 
   }
 
@@ -1404,7 +1622,9 @@ function slash(
 
     flash.classList.remove("on");
 
+
     void flash.offsetWidth;
+
 
     flash.classList.add("on");
 
@@ -1412,15 +1632,66 @@ function slash(
 
 
   setTimeout(()=>{
+
     s.remove();
+
   },600);
 
 }
 
 
-/* =========================================================
-   当たり確定
-========================================================= */
+/* ========================================
+   HIT MUSIC
+
+   ★MP3を再生する関数はここだけ
+======================================== */
+
+function playHitMusic(){
+
+  /*
+    本当の当たりからしか
+    この関数を呼ばない
+  */
+
+  try{
+
+    hitMusic.pause();
+
+    hitMusic.currentTime=0;
+
+    hitMusic.volume=1;
+
+
+    const p =
+      hitMusic.play();
+
+
+    if(
+      p &&
+      typeof p.catch==="function"
+    ){
+
+      p.catch(()=>{
+
+        /*
+          Safariにブロックされても
+          他の音を代わりに鳴らさない
+        */
+
+      });
+
+    }
+
+  }catch(e){}
+
+}
+
+
+/* ========================================
+   HIT
+
+   ★本当の当たり
+======================================== */
 
 async function HIT(
   options={}
@@ -1428,18 +1699,25 @@ async function HIT(
 
   stopFeathers();
 
+
   hideNumber();
+
 
   message.textContent="";
 
+
   /*
-    一瞬無音
+    一瞬の間
   */
 
   await sleep(
-    options.silence || 130
+    options.silence || 180
   );
 
+
+  /*
+    斬撃は映像のみ
+  */
 
   slash(
     false,
@@ -1447,34 +1725,46 @@ async function HIT(
   );
 
 
-  featherBurst(
-    options.bigBurst ? 27 : 19
+  /*
+    羽 最大6枚
+  */
+
+  featherBurst();
+
+
+  await sleep(170);
+
+
+  hitText.classList.remove(
+    "on"
   );
 
 
-  await sleep(160);
-
-
-  hitText.classList.remove("on");
-
   void hitText.offsetWidth;
 
-  hitText.classList.add("on");
+
+  hitText.classList.add(
+    "on"
+  );
 
 
-  try{
+  /*
+    ★★★★★★★★★★★★★★★★★
+    本物の当たり確定
 
-    hitMusic.currentTime=0;
-    hitMusic.volume=1;
+    音楽はここでだけ再生
+    ★★★★★★★★★★★★★★★★★
+  */
 
-    await hitMusic.play();
-
-  }catch(e){}
+  playHitMusic();
 
 
   await sleep(1850);
 
-  hitText.classList.remove("on");
+
+  hitText.classList.remove(
+    "on"
+  );
 
 
   await sleep(700);
@@ -1485,9 +1775,9 @@ async function HIT(
 }
 
 
-/* =========================================================
-   27種類の当たり演出
-========================================================= */
+/* ========================================
+   27 HIT ROUTES
+======================================== */
 
 async function normalHitAt(point){
 
@@ -1495,10 +1785,15 @@ async function normalHitAt(point){
 
   showNumber(3);
 
+
   if(point===3){
+
     await sleep(1500);
+
     return HIT();
+
   }
+
 
   await sleep(1850);
 
@@ -1507,10 +1802,15 @@ async function normalHitAt(point){
 
   showNumber(2);
 
+
   if(point===2){
+
     await sleep(1650);
+
     return HIT();
+
   }
+
 
   await sleep(2050);
 
@@ -1519,16 +1819,24 @@ async function normalHitAt(point){
 
   showNumber(1);
 
+
   if(point===1){
+
     await sleep(1850);
+
     return HIT();
+
   }
+
 
   await sleep(2250);
 
+
   hideNumber();
 
+
   await sleep(700);
+
 
   return HIT({
     silence:300
@@ -1550,8 +1858,7 @@ async function normalBlackout(){
   await sleep(1100);
 
   return HIT({
-    silence:250,
-    bigBurst:true
+    silence:250
   });
 
 }
@@ -1585,25 +1892,35 @@ async function reverseCountdown(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1400);
+
+
+  featherStage(2);
 
   showNumber(2);
-  featherStage(2);
+
   await sleep(1400);
 
-  showNumber(1);
+
   featherStage(3);
+
+  showNumber(1);
+
   await sleep(1700);
 
+
   showNumber(2);
+
   await sleep(850);
 
+
   showNumber(1);
+
   await sleep(900);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1612,15 +1929,19 @@ async function zeroPremium(){
 
   await normalCount();
 
+
   showNumber(0);
 
-  number.classList.add("gold");
+
+  number.classList.add(
+    "gold"
+  );
+
 
   await sleep(950);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1630,19 +1951,29 @@ async function numberDisappear(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1700);
 
+
   hideNumber();
+
   await sleep(1000);
 
-  showNumber(2);
+
   featherStage(2);
+
+  showNumber(2);
+
   await sleep(1800);
 
+
   hideNumber();
+
   await sleep(900);
 
+
   return HIT();
+
 }
 
 
@@ -1651,16 +1982,21 @@ async function soundStopPattern(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1800);
 
-  showNumber(2);
+
   featherStage(2);
 
+  showNumber(2);
+
   await sleep(1500);
+
 
   hideNumber();
 
   await sleep(1600);
+
 
   return HIT({
     silence:400
@@ -1674,16 +2010,23 @@ async function longOne(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1700);
 
+
   featherStage(2);
+
   showNumber(2);
+
   await sleep(1900);
 
+
   featherStage(3);
+
   showNumber(1);
 
   await sleep(4600);
+
 
   return HIT({
     silence:250
@@ -1697,31 +2040,45 @@ async function recountSequence(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1300);
 
-  showNumber(2);
+
   featherStage(2);
+
+  showNumber(2);
+
   await sleep(1400);
 
-  showNumber(1);
+
   featherStage(3);
+
+  showNumber(1);
+
   await sleep(1700);
 
+
   hideNumber();
+
   await sleep(900);
+
 
   showNumber(3);
+
   await sleep(700);
+
 
   showNumber(2);
+
   await sleep(700);
 
+
   showNumber(1);
+
   await sleep(900);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1731,28 +2088,40 @@ async function doubleCountdown(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(1100);
+
+
+  featherStage(2);
 
   showNumber(2);
-  featherStage(2);
+
   await sleep(1100);
 
-  showNumber(1);
+
   featherStage(3);
+
+  showNumber(1);
+
   await sleep(1300);
 
+
   showNumber(3);
+
   await sleep(800);
+
 
   showNumber(2);
+
   await sleep(800);
 
+
   showNumber(1);
+
   await sleep(1100);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1761,17 +2130,21 @@ async function puchunDirect(){
 
   await normalCount();
 
+
   hideNumber();
+
 
   await sleep(400);
 
+
   blackout.classList.add("on");
+
 
   await sleep(1700);
 
+
   return HIT({
-    silence:450,
-    bigBurst:true
+    silence:450
   });
 
 }
@@ -1781,28 +2154,38 @@ async function puchunRecount(){
 
   await normalCount();
 
+
   hideNumber();
+
 
   blackout.classList.add("on");
 
+
   await sleep(1300);
+
 
   blackout.classList.remove("on");
 
+
   await sleep(350);
 
+
   showNumber(3);
+
   await sleep(700);
+
 
   showNumber(2);
+
   await sleep(700);
 
+
   showNumber(1);
+
   await sleep(850);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1811,17 +2194,28 @@ async function fakeSlashPattern(){
 
   await normalCount();
 
+
   hideNumber();
+
 
   await sleep(450);
 
+
+  /*
+    偽斬撃も無音
+  */
+
   slash(true);
+
 
   await sleep(1500);
 
+
   showNumber(1);
 
+
   await sleep(1200);
+
 
   return HIT({
     doubleSlash:true
@@ -1835,21 +2229,32 @@ async function weirdCountdown(){
   featherStage(1);
 
   showNumber(3);
+
   await sleep(2200);
 
-  showNumber(1);
+
   featherStage(2);
+
+  showNumber(1);
+
   await sleep(1500);
 
-  showNumber(2);
+
   featherStage(3);
+
+  showNumber(2);
+
   await sleep(1700);
+
 
   hideNumber();
 
+
   await sleep(900);
 
+
   return HIT();
+
 }
 
 
@@ -1857,23 +2262,34 @@ async function silentStart(){
 
   featherStage(1);
 
+
   await sleep(1700);
+
 
   showNumber(3);
 
+
   await sleep(1300);
 
-  showNumber(2);
+
   featherStage(2);
+
+  showNumber(2);
+
 
   await sleep(1600);
 
-  showNumber(1);
+
   featherStage(3);
+
+  showNumber(1);
+
 
   await sleep(1800);
 
+
   return HIT();
+
 }
 
 
@@ -1881,21 +2297,26 @@ async function classicRevival(){
 
   await normalCount();
 
+
   hideNumber();
+
 
   await sleep(1900);
 
+
   message.textContent="…";
 
+
   await sleep(700);
+
 
   message.textContent="";
 
+
   await sleep(700);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1904,17 +2325,24 @@ async function skipCountHit(){
 
   featherStage(1);
 
+
   showNumber(3);
+
 
   await sleep(1700);
 
+
   featherStage(3);
+
 
   showNumber(1);
 
+
   await sleep(1800);
 
+
   return HIT();
+
 }
 
 
@@ -1922,9 +2350,12 @@ async function oneVanishHit(){
 
   await normalCount();
 
+
   hideNumber();
 
+
   await sleep(2200);
+
 
   return HIT({
     silence:500
@@ -1937,15 +2368,21 @@ async function oneBackToTwoHit(){
 
   await normalCount();
 
+
   showNumber(2);
 
+
   await sleep(1200);
+
 
   showNumber(1);
 
+
   await sleep(1200);
 
+
   return HIT();
+
 }
 
 
@@ -1953,19 +2390,29 @@ async function speedCountHit(){
 
   featherStage(2);
 
+
   showNumber(3);
+
+
   await sleep(550);
 
-  showNumber(2);
+
   featherStage(3);
+
+
+  showNumber(2);
+
+
   await sleep(500);
 
+
   showNumber(1);
+
+
   await sleep(650);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
@@ -1974,9 +2421,9 @@ async function doubleSlashHit(){
 
   await normalCount();
 
+
   return HIT({
-    doubleSlash:true,
-    bigBurst:true
+    doubleSlash:true
   });
 
 }
@@ -1986,18 +2433,33 @@ async function silentOddityHit(){
 
   featherStage(1);
 
+
   showNumber(3);
+
+
   await sleep(1700);
 
+
   hideNumber();
+
+
   await sleep(1200);
 
+
   featherStage(2);
+
+
   showNumber(2);
+
+
   await sleep(1800);
 
+
   hideNumber();
+
+
   await sleep(1600);
+
 
   return HIT({
     silence:600
@@ -2010,22 +2472,36 @@ async function questionHit(){
 
   featherStage(1);
 
+
   showNumber(3);
+
+
   await sleep(1600);
 
-  showNumber(2);
+
   featherStage(2);
+
+
+  showNumber(2);
+
+
   await sleep(1800);
+
 
   message.textContent="?";
 
+
   hideNumber();
+
 
   await sleep(1500);
 
+
   message.textContent="";
 
+
   return HIT();
+
 }
 
 
@@ -2033,30 +2509,35 @@ async function blackoutReturnHit(){
 
   await normalCount();
 
+
   blackout.classList.add("on");
+
 
   hideNumber();
 
+
   await sleep(1200);
+
 
   blackout.classList.remove("on");
 
+
   showNumber(1);
+
 
   await sleep(1400);
 
-  return HIT({
-    bigBurst:true
-  });
+
+  return HIT();
 
 }
 
 
-/* =========================================================
-   当たりルート
-========================================================= */
+/* ========================================
+   HIT ROUTES
+======================================== */
 
-const hitRoutes = [
+const hitRoutes=[
 
   ()=>normalHitAt(3),
 
@@ -2115,48 +2596,64 @@ const hitRoutes = [
 ];
 
 
-/* =========================================================
-   ハズレ通常
-========================================================= */
+/* ========================================
+   NORMAL MISS
+
+   ★完全無音
+======================================== */
 
 async function normalMiss(){
 
   await normalCount();
 
+
   hideNumber();
+
 
   stopFeathers();
 
+
   await sleep(900);
 
-  return resetGame();
+
+  resetGame();
 
 }
 
 
-/* =========================================================
-   弱フェイク10種類
-========================================================= */
+/* ========================================
+   WEAK FAKE 10
+
+   ★全部無音
+======================================== */
 
 async function weakFake(){
 
   const type =
-    Math.floor(Math.random()*10);
+    Math.floor(
+      Math.random()*10
+    );
 
 
   featherStage(1);
 
+
   showNumber(3);
+
 
   if(type===5){
 
     await sleep(3400);
 
-  }else if(type===9){
+  }
+
+  else if(type===9){
 
     await sleep(650);
 
-  }else{
+  }
+
+  else{
 
     await sleep(1800);
 
@@ -2165,14 +2662,17 @@ async function weakFake(){
 
   featherStage(2);
 
+
   showNumber(2);
 
 
-  if(type===1){
+  if(type===0){
 
     await sleep(3100);
 
-  }else{
+  }
+
+  else{
 
     await sleep(1950);
 
@@ -2212,6 +2712,7 @@ async function weakFake(){
 
   featherStage(3);
 
+
   showNumber(1);
 
 
@@ -2246,11 +2747,13 @@ async function weakFake(){
   }
 
 
-  if(type===0){
+  if(type===1){
 
     await sleep(3500);
 
-  }else{
+  }
+
+  else{
 
     await sleep(2200);
 
@@ -2259,39 +2762,49 @@ async function weakFake(){
 
   hideNumber();
 
+
   stopFeathers();
+
 
   message.textContent="…";
 
+
   await sleep(600);
+
 
   message.textContent="";
 
+
   await sleep(350);
+
 
   resetGame();
 
 }
 
 
-/* =========================================================
-   強フェイク6種類
-========================================================= */
+/* ========================================
+   STRONG FAKE 6
+
+   ★偽斬撃含め全部無音
+======================================== */
 
 async function strongFake(){
 
   const type =
-    Math.floor(Math.random()*6);
+    Math.floor(
+      Math.random()*6
+    );
 
 
   await normalCount();
+
 
   hideNumber();
 
 
   switch(type){
 
-    /* 偽斬撃 */
     case 0:
 
       await sleep(400);
@@ -2303,7 +2816,6 @@ async function strongFake(){
       break;
 
 
-    /* ブラックアウト */
     case 1:
 
       await sleep(350);
@@ -2319,7 +2831,6 @@ async function strongFake(){
       break;
 
 
-    /* 金1 */
     case 2:
 
       showNumber(1);
@@ -2333,7 +2844,6 @@ async function strongFake(){
       break;
 
 
-    /* 偽斬撃＋白フラッシュ */
     case 3:
 
       slash(true);
@@ -2349,7 +2859,6 @@ async function strongFake(){
       break;
 
 
-    /* 暗転→1 */
     case 4:
 
       blackout.classList.add("on");
@@ -2367,7 +2876,6 @@ async function strongFake(){
       break;
 
 
-    /* 金→沈黙 */
     case 5:
 
       showNumber(1);
@@ -2387,33 +2895,36 @@ async function strongFake(){
 
   stopFeathers();
 
+
   blackout.classList.add("on");
+
 
   await sleep(500);
 
+
   blackout.classList.remove("on");
 
+
   await sleep(700);
+
 
   resetGame();
 
 }
 
 
-/* =========================================================
-   ハズレ分岐
-========================================================= */
+/* ========================================
+   MISS BRANCH
+======================================== */
 
 async function MISS(){
 
   /*
-    ハズレになった後だけ演出抽選
+    1/30でハズレ確定した後だけ
 
     50% 通常
     25% 弱フェイク
     25% 強フェイク
-
-    ここは1/30には一切影響しない。
   */
 
   const r =
@@ -2439,21 +2950,43 @@ async function MISS(){
 }
 
 
-/* =========================================================
+/* ========================================
    START
-========================================================= */
+
+   ★START時も完全無音
+======================================== */
 
 startButton.addEventListener(
   "click",
   async()=>{
 
-    if(playing)return;
+    if(playing){
+      return;
+    }
+
 
     playing=true;
 
-    unlockAudio();
 
-    startScreen.style.display="none";
+    /*
+      ★前回の音が残っていたら停止するだけ
+
+      play()は絶対しない
+    */
+
+    hitMusic.pause();
+
+
+    try{
+
+      hitMusic.currentTime=0;
+
+    }catch(e){}
+
+
+    startScreen.style.display=
+      "none";
+
 
     clearVisuals();
 
@@ -2461,11 +2994,8 @@ startButton.addEventListener(
     /*
       ★完全確率1/30
 
-      STARTを押した瞬間に
-      一度だけ抽選。
-
-      過去の結果は無関係。
-      30回目保証もなし。
+      STARTにつき
+      ここで一度だけ抽選
     */
 
     const win =
@@ -2475,8 +3005,8 @@ startButton.addEventListener(
     if(win){
 
       /*
-        当たった後に
-        27種類から演出だけ選ぶ。
+        当たり確定後に
+        27種類から演出だけ選択
       */
 
       const route =
@@ -2487,9 +3017,17 @@ startButton.addEventListener(
           )
         ];
 
+
       await route();
 
-    }else{
+    }
+
+    else{
+
+      /*
+        ハズレ
+        音楽再生処理なし
+      */
 
       await MISS();
 
@@ -2499,57 +3037,65 @@ startButton.addEventListener(
 );
 
 
-/* =========================================================
-   宝箱
-========================================================= */
+/* ========================================
+   PRIZE DRAW
 
-let selectedRank = null;
-let chestRanks = [];
-let treasureLocked = false;
-
-
-/*
-  当たり後の賞抽選
-
-  1等 5%
-  2等 20%
-  3等 75%
-*/
+   1等 5%
+   2等 20%
+   3等 75%
+======================================== */
 
 function drawPrize(){
 
   const r =
     Math.random();
 
+
   if(r < .05){
+
     return 1;
+
   }
 
+
   if(r < .25){
+
     return 2;
+
   }
+
 
   return 3;
 
 }
 
 
+/* ========================================
+   SHOW TREASURE
+======================================== */
+
 function showTreasure(){
 
   blackout.classList.remove("on");
 
+
   selectedRank =
     drawPrize();
 
+
   treasureLocked=false;
 
-  treasureTitle.textContent =
+
+  treasureTitle.textContent=
     "運命の宝箱を選べ！";
 
-  treasureSub.textContent =
+
+  treasureSub.textContent=
     "この一箱が、結果を決める。";
 
-  nextButton.style.display="none";
+
+  nextButton.style.display=
+    "none";
 
 
   document
@@ -2569,23 +3115,28 @@ function showTreasure(){
     .forEach(label=>{
 
       label.textContent="";
-      label.className="rankLabel";
+
+      label.className=
+        "rankLabel";
 
     });
 
 
-  treasureScreen.classList.add("show");
+  treasureScreen
+    .classList
+    .add("show");
 
 }
 
 
-/* =========================================================
-   シャッフル
-========================================================= */
+/* ========================================
+   SHUFFLE
+======================================== */
 
 function shuffle(arr){
 
   const a=[...arr];
+
 
   for(
     let i=a.length-1;
@@ -2595,8 +3146,10 @@ function shuffle(arr){
 
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() *
+        (i+1)
       );
+
 
     [
       a[i],
@@ -2608,14 +3161,15 @@ function shuffle(arr){
 
   }
 
+
   return a;
 
 }
 
 
-/* =========================================================
-   宝箱選択
-========================================================= */
+/* ========================================
+   CHEST CLICK
+======================================== */
 
 document
   .querySelectorAll(".chest")
@@ -2625,7 +3179,10 @@ document
       "click",
       async()=>{
 
-        if(treasureLocked)return;
+        if(treasureLocked){
+          return;
+        }
+
 
         treasureLocked=true;
 
@@ -2636,21 +3193,24 @@ document
           );
 
 
-        /*
-          選んだ箱に
-          事前抽選済み等級を配置。
-        */
+        chestRanks=[
+          null,
+          null,
+          null
+        ];
 
-        chestRanks =
-          [null,null,null];
+
+        /*
+          選択した箱に
+          事前抽選済みの等級
+        */
 
         chestRanks[chosen] =
           selectedRank;
 
 
         /*
-          残り2つは
-          残った2等級をランダム配置。
+          残りの2等級
         */
 
         const remainingRanks =
@@ -2662,10 +3222,15 @@ document
           );
 
 
+        /*
+          残り2箱の位置もランダム
+        */
+
         const otherIndexes =
           shuffle(
             [0,1,2].filter(
-              i => i !== chosen
+              i =>
+                i !== chosen
             )
           );
 
@@ -2675,31 +3240,37 @@ document
         ] =
           remainingRanks[0];
 
+
         chestRanks[
           otherIndexes[1]
         ] =
           remainingRanks[1];
 
 
-        /* 選んだ箱揺れ */
+        /*
+          選択箱
+        */
 
         chest.classList.add("shake");
 
+
         await sleep(600);
 
+
         chest.classList.remove("shake");
+
 
         chest.classList.add("open");
 
 
         flash.classList.remove("on");
 
+
         void flash.offsetWidth;
+
 
         flash.classList.add("on");
 
-
-        featherBurst(11);
 
         await sleep(550);
 
@@ -2718,10 +3289,11 @@ document
         );
 
 
-        treasureTitle.textContent =
+        treasureTitle.textContent=
           "残りの宝箱は…";
 
-        treasureSub.textContent =
+
+        treasureSub.textContent=
           "選ばなかった箱もオープン";
 
 
@@ -2737,45 +3309,58 @@ document
 
 
         for(
-          const index of revealOrder
+          const index
+          of revealOrder
         ){
 
           const otherChest =
-            document
-              .querySelector(
-                `.chest[data-index="${index}"]`
-              );
+            document.querySelector(
+              `.chest[data-index="${index}"]`
+            );
+
 
           otherChest
-            .classList.add("shake");
+            .classList
+            .add("shake");
+
 
           await sleep(420);
 
-          otherChest
-            .classList.remove("shake");
 
           otherChest
-            .classList.add("open");
+            .classList
+            .remove("shake");
+
+
+          otherChest
+            .classList
+            .add("open");
+
 
           flash.classList.remove("on");
 
+
           void flash.offsetWidth;
+
 
           flash.classList.add("on");
 
+
           await sleep(300);
+
 
           showRankLabel(
             index,
             chestRanks[index]
           );
 
+
           await sleep(650);
 
         }
 
 
-        nextButton.style.display =
+        nextButton.style.display=
           "block";
 
       }
@@ -2784,9 +3369,9 @@ document
   });
 
 
-/* =========================================================
-   等級ラベル
-========================================================= */
+/* ========================================
+   RANK LABEL
+======================================== */
 
 function showRankLabel(
   index,
@@ -2798,14 +3383,17 @@ function showRankLabel(
       ".chestWrap"
     );
 
+
   const label =
     wraps[index]
       .querySelector(
         ".rankLabel"
       );
 
+
   label.textContent =
     `${rank}等`;
+
 
   label.classList.add(
     "show",
@@ -2815,50 +3403,57 @@ function showRankLabel(
 }
 
 
-/* =========================================================
-   大当たり結果
-========================================================= */
+/* ========================================
+   BIG RANK
+======================================== */
 
 async function showBigRank(rank){
 
   rankBig.textContent =
     `${rank}等`;
 
+
   rankBig.className =
     `rank${rank}`;
 
-  rankResult.classList.add(
-    "show"
-  );
 
-  featherBurst(
-    rank===1 ? 28 :
-    rank===2 ? 18 : 12
-  );
+  rankResult
+    .classList
+    .add("show");
+
+
+  /*
+    宝箱では羽を増やさない。
+    軽さ優先。
+  */
 
 
   await sleep(
-    rank===1 ? 2400 : 1800
+    rank===1
+      ? 2400
+      : 1800
   );
 
 
-  rankResult.classList.remove(
-    "show"
-  );
+  rankResult
+    .classList
+    .remove("show");
 
 }
 
 
-/* =========================================================
+/* ========================================
    NEXT
-========================================================= */
+======================================== */
 
 nextButton.addEventListener(
   "click",
   ()=>{
 
     treasureScreen
-      .classList.remove("show");
+      .classList
+      .remove("show");
+
 
     resetGame();
 
@@ -2866,61 +3461,71 @@ nextButton.addEventListener(
 );
 
 
-/* =========================================================
-   初期化
-========================================================= */
+/* ========================================
+   CLEAR
+======================================== */
 
 function clearVisuals(){
 
   hideNumber();
 
+
   clearNumberStyle();
+
 
   message.textContent="";
 
+
   blackout.classList.remove("on");
+
 
   hitText.classList.remove("on");
 
 }
 
 
+/* ========================================
+   RESET
+======================================== */
+
 function resetGame(){
 
   stopFeathers();
 
+
   clearVisuals();
 
+
   /*
-    残った羽を少しだけ残して
-    自然に消させる。
-    即全消去にはしない。
+    当たり曲を必ず停止
   */
 
-  startScreen.style.display="flex";
+  hitMusic.pause();
+
+
+  try{
+
+    hitMusic.currentTime=0;
+
+  }catch(e){}
+
+
+  startScreen.style.display=
+    "flex";
+
 
   playing=false;
 
 }
 
 
-/* =========================================================
-   初期画面の飾り羽
-========================================================= */
+/* ========================================
+   START SCREEN
 
-setInterval(()=>{
+   ★待機中は動く羽を出さない
 
-  if(!playing){
-
-    if(Math.random()<.55){
-
-      createFeather(.7);
-
-    }
-
-  }
-
-},2200);
+   これも軽量化。
+======================================== */
 
 </script>
 
