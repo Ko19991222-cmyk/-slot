@@ -37,9 +37,7 @@ body{
   background-color:#120008;
 }
 
-/* =========================
-   START
-========================= */
+/* START */
 
 #startScreen{
   position:absolute;
@@ -55,7 +53,7 @@ body{
 
 #startButton{
   width:min(78vw,390px);
-  padding:20px 20px;
+  padding:20px;
   border:2px solid rgba(255,255,255,.9);
   border-radius:999px;
   background:linear-gradient(#ff78b9,#d51c72);
@@ -85,9 +83,7 @@ body{
   text-shadow:0 2px 5px #000;
 }
 
-/* =========================
-   COUNT NUMBER
-========================= */
+/* COUNTDOWN */
 
 #number{
   position:absolute;
@@ -137,9 +133,7 @@ body{
   pointer-events:none;
 }
 
-/* =========================
-   SHOOTING STARS
-========================= */
+/* SHOOTING STARS */
 
 #starLayer{
   position:absolute;
@@ -151,14 +145,14 @@ body{
 
 .shootingStar{
   position:absolute;
-  width:11px;
-  height:11px;
+  width:12px;
+  height:12px;
   border-radius:50%;
   background:#fff;
   opacity:0;
   filter:
-    drop-shadow(0 0 5px white)
-    drop-shadow(0 0 12px rgba(255,220,245,.95));
+    drop-shadow(0 0 6px #fff)
+    drop-shadow(0 0 15px rgba(255,220,245,.95));
   transform:rotate(var(--angle));
   transform-origin:center;
   animation:shoot var(--duration) cubic-bezier(.12,.65,.25,1) forwards;
@@ -176,21 +170,20 @@ body{
   background:linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255,255,255,.08) 15%,
-    rgba(255,235,247,.35) 45%,
-    rgba(255,255,255,.95) 100%
+    rgba(255,255,255,.06) 12%,
+    rgba(255,230,246,.35) 42%,
+    rgba(255,255,255,.98) 100%
   );
   border-radius:100%;
-  filter:blur(.3px);
 }
 
 .shootingStar::after{
   content:"";
   position:absolute;
-  inset:-5px;
+  inset:-6px;
   border-radius:50%;
-  background:rgba(255,255,255,.45);
-  filter:blur(6px);
+  background:rgba(255,255,255,.48);
+  filter:blur(7px);
 }
 
 @keyframes shoot{
@@ -199,16 +192,12 @@ body{
     transform:
       translate3d(0,0,0)
       rotate(var(--angle))
-      scale(.45);
+      scale(.4);
   }
 
-  8%{
-    opacity:1;
-  }
+  8%{opacity:1}
 
-  68%{
-    opacity:1;
-  }
+  68%{opacity:1}
 
   100%{
     opacity:0;
@@ -219,9 +208,7 @@ body{
   }
 }
 
-/* =========================
-   BLACKOUT / FLASH
-========================= */
+/* BLACKOUT */
 
 #blackout{
   position:absolute;
@@ -232,6 +219,8 @@ body{
   pointer-events:none;
   transition:opacity .08s linear;
 }
+
+/* FLASH */
 
 #flash{
   position:absolute;
@@ -253,9 +242,7 @@ body{
   100%{opacity:0}
 }
 
-/* =========================
-   SLASH
-========================= */
+/* SLASH */
 
 #slashLayer{
   position:absolute;
@@ -270,7 +257,7 @@ body{
   left:-25%;
   top:48%;
   width:150%;
-  height:18px;
+  height:20px;
   opacity:0;
   border-radius:100%;
   background:
@@ -285,9 +272,9 @@ body{
     );
   box-shadow:
     0 0 8px #fff,
-    0 0 20px #fff,
-    0 0 35px #ff5cac,
-    0 0 65px #ff1687;
+    0 0 22px #fff,
+    0 0 38px #ff5cac,
+    0 0 70px #ff1687;
   transform:rotate(-18deg) scaleX(.05);
   animation:slashCut .55s cubic-bezier(.08,.8,.2,1) forwards;
 }
@@ -297,19 +284,19 @@ body{
   position:absolute;
   left:0;
   right:0;
-  top:-15px;
-  height:48px;
+  top:-18px;
+  height:56px;
   background:linear-gradient(
     transparent,
-    rgba(255,255,255,.5),
+    rgba(255,255,255,.55),
     transparent
   );
-  filter:blur(10px);
+  filter:blur(11px);
 }
 
 .slash.second{
   top:53%;
-  transform:rotate(19deg) scaleX(.05);
+  animation-name:slashCut2;
   animation-delay:.07s;
 }
 
@@ -318,9 +305,7 @@ body{
     opacity:0;
     transform:rotate(-18deg) scaleX(.02);
   }
-  10%{
-    opacity:1;
-  }
+  10%{opacity:1}
   42%{
     opacity:1;
     transform:rotate(-18deg) scaleX(1);
@@ -331,18 +316,12 @@ body{
   }
 }
 
-.slash.second{
-  animation-name:slashCut2;
-}
-
 @keyframes slashCut2{
   0%{
     opacity:0;
     transform:rotate(19deg) scaleX(.02);
   }
-  10%{
-    opacity:1;
-  }
+  10%{opacity:1}
   42%{
     opacity:1;
     transform:rotate(19deg) scaleX(1);
@@ -353,20 +332,18 @@ body{
   }
 }
 
-/* =========================
-   HIT
-========================= */
+/* HIT */
 
 #hitText{
   position:absolute;
   z-index:80;
   left:50%;
   top:52%;
-  width:140vw;
+  width:150vw;
   transform:translate(-50%,-50%);
   text-align:center;
   color:#fff9dc;
-  font-size:min(34vw,175px);
+  font-size:min(37vw,190px);
   line-height:1;
   font-weight:1000;
   letter-spacing:-.06em;
@@ -375,8 +352,8 @@ body{
     0 7px 0 #d30061,
     0 14px 0 #7e003b,
     0 0 18px #fff,
-    0 0 38px #ff55a7,
-    0 0 70px #ff1681;
+    0 0 40px #ff55a7,
+    0 0 75px #ff1681;
   opacity:0;
   pointer-events:none;
 }
@@ -388,15 +365,15 @@ body{
 @keyframes hitTextPop{
   0%{
     opacity:0;
-    transform:translate(-50%,-50%) scale(2.5);
+    transform:translate(-50%,-50%) scale(2.7);
     filter:brightness(3);
   }
   32%{
     opacity:1;
-    transform:translate(-50%,-50%) scale(.88);
+    transform:translate(-50%,-50%) scale(.86);
   }
   55%{
-    transform:translate(-50%,-50%) scale(1.13);
+    transform:translate(-50%,-50%) scale(1.15);
   }
   75%{
     transform:translate(-50%,-50%) scale(.97);
@@ -424,9 +401,7 @@ body{
   100%{transform:translate(0,0)}
 }
 
-/* =========================
-   TREASURE
-========================= */
+/* TREASURE */
 
 #treasure{
   position:absolute;
@@ -561,10 +536,6 @@ body{
   display:none;
 }
 
-/* =========================
-   MISC
-========================= */
-
 .goldNumber{
   color:#fff6bd !important;
   -webkit-text-stroke-color:#f0ad00 !important;
@@ -600,6 +571,7 @@ body{
 
   <div id="startScreen">
     <button id="startButton">START</button>
+
     <div id="probability">
       完全抽選 1/30<br>
       毎回独立抽選
@@ -607,6 +579,7 @@ body{
   </div>
 
   <div id="treasure">
+
     <div id="treasureTitle">
       ここからが本番。<br>
       運命の宝箱を選べ！<br>
@@ -614,6 +587,7 @@ body{
     </div>
 
     <div id="chests">
+
       <button class="chest" data-index="0">
         <div class="chestLid"></div>
         <div class="chestBox"></div>
@@ -634,67 +608,92 @@ body{
         <div class="chestLock"></div>
         <div class="rankLabel"></div>
       </button>
+
     </div>
 
     <div id="prizeResult"></div>
+
     <button id="nextButton">NEXT</button>
+
   </div>
 
 </div>
 
 <script>
+
 const game = document.getElementById("game");
 const startScreen = document.getElementById("startScreen");
 const startButton = document.getElementById("startButton");
+
 const number = document.getElementById("number");
 const message = document.getElementById("message");
+
 const blackout = document.getElementById("blackout");
 const flash = document.getElementById("flash");
 const slashLayer = document.getElementById("slashLayer");
 const hitText = document.getElementById("hitText");
+
 const starLayer = document.getElementById("starLayer");
 
 const treasure = document.getElementById("treasure");
 const treasureTitle = document.getElementById("treasureTitle");
 const prizeResult = document.getElementById("prizeResult");
 const nextButton = document.getElementById("nextButton");
+
 const chests = [...document.querySelectorAll(".chest")];
 
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+
 let playing = false;
+
 let playToken = 0;
+
 let starTimers = [];
 
-const sleep = ms => new Promise(r => setTimeout(r,ms));
 
-/* =========================================================
+/* ======================================================
    AUDIO
-   MP3をWeb Audioで再生
-   synthetic tone / oscillator は一切なし
-========================================================= */
+====================================================== */
 
 let audioCtx = null;
+
 let tensionBuffer = null;
 let hitBuffer = null;
 
 let tensionSource = null;
 let tensionGain = null;
+
 let hitSource = null;
 
 let audioPreparing = null;
 
+
 function ensureAudioContext(){
+
   if(!audioCtx){
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if(AC) audioCtx = new AC();
+
+    const AC =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if(AC){
+      audioCtx = new AC();
+    }
+
   }
+
 }
 
+
 async function prepareAudio(){
+
   ensureAudioContext();
 
   if(!audioCtx) return;
 
-  if(tensionBuffer && hitBuffer) return;
+  if(tensionBuffer && hitBuffer){
+    return;
+  }
 
   if(audioPreparing){
     await audioPreparing;
@@ -702,110 +701,226 @@ async function prepareAudio(){
   }
 
   audioPreparing = (async()=>{
+
     try{
-      const [tensionRes,hitRes] = await Promise.all([
+
+      const [
+        tensionRes,
+        hitRes
+      ] = await Promise.all([
+
         fetch("./Tension.mp3"),
+
         fetch("./hit_music_final.mp3")
+
       ]);
 
-      const [tensionData,hitData] = await Promise.all([
+
+      const [
+        tensionData,
+        hitData
+      ] = await Promise.all([
+
         tensionRes.arrayBuffer(),
+
         hitRes.arrayBuffer()
+
       ]);
 
-      const [tBuf,hBuf] = await Promise.all([
+
+      const [
+        tBuf,
+        hBuf
+      ] = await Promise.all([
+
         audioCtx.decodeAudioData(tensionData),
+
         audioCtx.decodeAudioData(hitData)
+
       ]);
+
 
       tensionBuffer = tBuf;
       hitBuffer = hBuf;
+
     }catch(e){
+
       console.log("audio load error",e);
+
     }
+
   })();
 
+
   await audioPreparing;
+
 }
+
 
 async function unlockAudio(){
+
   ensureAudioContext();
+
   if(!audioCtx) return;
 
-  /* iPhone対策：
-     ユーザーがSTARTを押した瞬間にresumeを先に呼ぶ */
-  const resumePromise = audioCtx.resume();
+
+  /*
+    iPhone Safari対策
+
+    STARTを押した瞬間に
+    resume()を先に開始する
+  */
+
+  const resumePromise =
+    audioCtx.resume();
+
 
   try{
+
     await resumePromise;
+
   }catch(e){}
 
+
   await prepareAudio();
+
 }
 
+
 function startTension(){
-  if(!audioCtx || !tensionBuffer) return;
+
+  if(!audioCtx || !tensionBuffer){
+    return;
+  }
+
 
   stopTension();
 
-  tensionSource = audioCtx.createBufferSource();
-  tensionGain = audioCtx.createGain();
 
-  tensionSource.buffer = tensionBuffer;
+  tensionSource =
+    audioCtx.createBufferSource();
+
+  tensionGain =
+    audioCtx.createGain();
+
+
+  tensionSource.buffer =
+    tensionBuffer;
+
   tensionSource.loop = true;
+
 
   tensionGain.gain.value = .72;
 
-  tensionSource.connect(tensionGain);
-  tensionGain.connect(audioCtx.destination);
+
+  tensionSource.connect(
+    tensionGain
+  );
+
+  tensionGain.connect(
+    audioCtx.destination
+  );
+
 
   tensionSource.start(0);
+
 }
+
 
 function stopTension(){
+
   if(tensionSource){
-    try{ tensionSource.stop(); }catch(e){}
-    try{ tensionSource.disconnect(); }catch(e){}
+
+    try{
+      tensionSource.stop();
+    }catch(e){}
+
+    try{
+      tensionSource.disconnect();
+    }catch(e){}
+
     tensionSource = null;
+
   }
+
 
   if(tensionGain){
-    try{ tensionGain.disconnect(); }catch(e){}
+
+    try{
+      tensionGain.disconnect();
+    }catch(e){}
+
     tensionGain = null;
+
   }
+
 }
+
 
 function stopHitMusic(){
+
   if(hitSource){
-    try{ hitSource.stop(); }catch(e){}
-    try{ hitSource.disconnect(); }catch(e){}
+
+    try{
+      hitSource.stop();
+    }catch(e){}
+
+    try{
+      hitSource.disconnect();
+    }catch(e){}
+
     hitSource = null;
+
   }
+
 }
 
+
 function playHitMusic(){
-  if(!audioCtx || !hitBuffer) return;
+
+  if(!audioCtx || !hitBuffer){
+    return;
+  }
+
 
   stopHitMusic();
 
-  hitSource = audioCtx.createBufferSource();
-  const gain = audioCtx.createGain();
 
-  hitSource.buffer = hitBuffer;
+  hitSource =
+    audioCtx.createBufferSource();
+
+
+  const gain =
+    audioCtx.createGain();
+
+
+  hitSource.buffer =
+    hitBuffer;
+
+
   gain.gain.value = 1;
 
+
   hitSource.connect(gain);
-  gain.connect(audioCtx.destination);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
 
   hitSource.start(0);
+
 }
 
-/* =========================================================
-   BASIC DISPLAY
-========================================================= */
+
+/* ======================================================
+   COUNTDOWN
+====================================================== */
 
 function showNumber(n){
+
   message.style.display = "none";
+
 
   number.classList.remove(
     "numberPop",
@@ -813,460 +928,867 @@ function showNumber(n){
     "redNumber"
   );
 
+
   number.textContent = n;
+
   number.style.display = "block";
 
+
   void number.offsetWidth;
-  number.classList.add("numberPop");
+
+
+  number.classList.add(
+    "numberPop"
+  );
+
 }
+
 
 function hideNumber(){
+
   number.style.display = "none";
+
 }
 
+
 async function showDots(duration=1200){
+
   hideNumber();
 
+
   message.textContent = "…";
+
+  message.style.fontSize = "90px";
+
   message.style.display = "block";
+
 
   await sleep(duration);
 
+
   message.style.display = "none";
+
 }
+
 
 async function normalCount(){
+
   showNumber("3");
+
   await sleep(1800);
 
+
   showNumber("2");
+
   await sleep(1900);
 
+
   showNumber("1");
+
   await sleep(2100);
+
 }
 
-/* =========================================================
-   SHOOTING STAR
-   1〜10本
-   明るい先端 + 長い尾 + 残光
-========================================================= */
+
+/* ======================================================
+   SHOOTING STARS
+
+   ★ 今回変更 ★
+
+   星なしを基本にする。
+
+   星が出ても
+   1〜3本が中心。
+
+   4〜6本は少ない。
+
+   7〜10本はかなりレア。
+====================================================== */
 
 function clearStarTimers(){
-  starTimers.forEach(t => clearTimeout(t));
+
+  starTimers.forEach(
+    timer=>clearTimeout(timer)
+  );
+
   starTimers = [];
+
   starLayer.innerHTML = "";
+
 }
 
+
 function makeStar(){
-  const star = document.createElement("div");
-  star.className = "shootingStar";
 
-  /*
-    主に画面上〜中央に出す。
-    端からではなく空中から突然流れる。
-  */
-  const startX = 5 + Math.random()*65;
-  const startY = 7 + Math.random()*37;
+  const star =
+    document.createElement("div");
 
-  const angle = 14 + Math.random()*24;
 
-  const travelX = 150 + Math.random()*170;
-  const travelY = 55 + Math.random()*120;
+  star.className =
+    "shootingStar";
 
-  const tail = 120 + Math.random()*150;
-  const duration = .55 + Math.random()*.38;
 
-  star.style.left = startX + "vw";
-  star.style.top = startY + "vh";
+  const startX =
+    5 + Math.random()*65;
 
-  star.style.setProperty("--angle",angle+"deg");
-  star.style.setProperty("--travelX",travelX+"px");
-  star.style.setProperty("--travelY",travelY+"px");
-  star.style.setProperty("--tail",tail+"px");
-  star.style.setProperty("--duration",duration+"s");
 
-  /*
-    少しだけ個体差。
-    棒ではなく先端の光を認識しやすくする。
-  */
-  const size = 9 + Math.random()*7;
-  star.style.width = size+"px";
-  star.style.height = size+"px";
+  const startY =
+    7 + Math.random()*38;
+
+
+  const angle =
+    14 + Math.random()*24;
+
+
+  const travelX =
+    150 + Math.random()*180;
+
+
+  const travelY =
+    55 + Math.random()*125;
+
+
+  const tail =
+    130 + Math.random()*160;
+
+
+  const duration =
+    .58 + Math.random()*.40;
+
+
+  const size =
+    10 + Math.random()*7;
+
+
+  star.style.left =
+    startX + "vw";
+
+
+  star.style.top =
+    startY + "vh";
+
+
+  star.style.width =
+    size + "px";
+
+
+  star.style.height =
+    size + "px";
+
+
+  star.style.setProperty(
+    "--angle",
+    angle+"deg"
+  );
+
+
+  star.style.setProperty(
+    "--travelX",
+    travelX+"px"
+  );
+
+
+  star.style.setProperty(
+    "--travelY",
+    travelY+"px"
+  );
+
+
+  star.style.setProperty(
+    "--tail",
+    tail+"px"
+  );
+
+
+  star.style.setProperty(
+    "--duration",
+    duration+"s"
+  );
+
 
   starLayer.appendChild(star);
 
+
   setTimeout(()=>{
+
     star.remove();
-  },1600);
+
+  },1700);
+
 }
+
 
 function meteorBurst(count){
-  const token = playToken;
+
+  const token =
+    playToken;
+
 
   for(let i=0;i<count;i++){
-    const delay =
-      i * (100 + Math.random()*220) +
-      Math.random()*180;
 
-    const timer = setTimeout(()=>{
-      if(!playing || token !== playToken) return;
-      makeStar();
-    },delay);
+    const delay =
+
+      i * (
+        120 +
+        Math.random()*230
+      )
+
+      +
+
+      Math.random()*160;
+
+
+    const timer =
+      setTimeout(()=>{
+
+        if(
+          !playing ||
+          token !== playToken
+        ){
+          return;
+        }
+
+
+        makeStar();
+
+      },delay);
+
 
     starTimers.push(timer);
+
   }
+
 }
 
-function randomMeteorCount(){
-  const r = Math.random();
-
-  if(r < .32){
-    return 1 + Math.floor(Math.random()*2);     // 1〜2
-  }
-
-  if(r < .67){
-    return 2 + Math.floor(Math.random()*2);     // 2〜3
-  }
-
-  if(r < .90){
-    return 4 + Math.floor(Math.random()*3);     // 4〜6
-  }
-
-  return 7 + Math.floor(Math.random()*4);       // 7〜10
-}
 
 /*
-  当たり判定とは完全に別。
-  ハズレでも大量に流れる。
+  星が出ることになった場合の
+  本数抽選
 */
+
+function randomMeteorCount(){
+
+  const r =
+    Math.random();
+
+
+  /*
+    75%
+    1〜3本
+  */
+
+  if(r < .75){
+
+    return 1 +
+      Math.floor(
+        Math.random()*3
+      );
+
+  }
+
+
+  /*
+    20%
+    4〜6本
+  */
+
+  if(r < .95){
+
+    return 4 +
+      Math.floor(
+        Math.random()*3
+      );
+
+  }
+
+
+  /*
+    5%
+    7〜10本
+  */
+
+  return 7 +
+    Math.floor(
+      Math.random()*4
+    );
+
+}
+
+
+/*
+  ★ 星そのものの出現率 ★
+
+  約27%
+
+  つまり約73%は
+  星なし。
+
+  当たり判定とは別抽選。
+*/
+
 function scheduleStars(){
-  const token = playToken;
 
-  /* 70%のプレイで最低1回 */
-  if(Math.random() > .70) return;
+  const token =
+    playToken;
 
-  const firstDelay = 550 + Math.random()*4700;
 
-  let timer = setTimeout(()=>{
-    if(!playing || token !== playToken) return;
+  if(Math.random() > .27){
+    return;
+  }
 
-    meteorBurst(randomMeteorCount());
 
-  },firstDelay);
+  /*
+    カウント中のどこに出るか
+    毎回変える
+  */
+
+  const firstDelay =
+    550 +
+    Math.random()*4800;
+
+
+  let timer =
+    setTimeout(()=>{
+
+      if(
+        !playing ||
+        token !== playToken
+      ){
+        return;
+      }
+
+
+      meteorBurst(
+        randomMeteorCount()
+      );
+
+    },firstDelay);
+
 
   starTimers.push(timer);
 
-  /* 25%で2回目 */
-  if(Math.random() < .25){
 
-    timer = setTimeout(()=>{
-      if(!playing || token !== playToken) return;
+  /*
+    星が出たゲームの中でも
+    15%だけ2回目。
 
-      meteorBurst(randomMeteorCount());
+    毎回流星祭りにならないようにする。
+  */
 
-    },3200 + Math.random()*4200);
+  if(Math.random() < .15){
+
+    timer =
+      setTimeout(()=>{
+
+        if(
+          !playing ||
+          token !== playToken
+        ){
+          return;
+        }
+
+
+        meteorBurst(
+          randomMeteorCount()
+        );
+
+      },
+
+      3300 +
+      Math.random()*4300);
+
 
     starTimers.push(timer);
+
   }
+
 }
 
-/* =========================================================
-   BLACKOUT / FLASH / SLASH
-========================================================= */
+
+/* ======================================================
+   EFFECTS
+====================================================== */
 
 async function doBlackout(duration=250){
+
   blackout.style.opacity = "1";
+
   await sleep(duration);
+
   blackout.style.opacity = "0";
+
 }
+
 
 function doFlash(){
-  flash.classList.remove("flashHit");
+
+  flash.classList.remove(
+    "flashHit"
+  );
+
+
   void flash.offsetWidth;
-  flash.classList.add("flashHit");
+
+
+  flash.classList.add(
+    "flashHit"
+  );
+
 }
+
 
 function createSlash(doubleSlash=false){
+
   slashLayer.innerHTML = "";
 
-  const s1 = document.createElement("div");
+
+  const s1 =
+    document.createElement("div");
+
+
   s1.className = "slash";
+
+
   slashLayer.appendChild(s1);
 
+
   if(doubleSlash){
-    const s2 = document.createElement("div");
-    s2.className = "slash second";
+
+    const s2 =
+      document.createElement("div");
+
+
+    s2.className =
+      "slash second";
+
+
     slashLayer.appendChild(s2);
+
   }
 
+
   setTimeout(()=>{
+
     slashLayer.innerHTML = "";
+
   },900);
+
 }
+
 
 function doHitShake(){
-  game.classList.remove("hitShake");
+
+  game.classList.remove(
+    "hitShake"
+  );
+
+
   void game.offsetWidth;
-  game.classList.add("hitShake");
+
+
+  game.classList.add(
+    "hitShake"
+  );
+
 
   setTimeout(()=>{
-    game.classList.remove("hitShake");
+
+    game.classList.remove(
+      "hitShake"
+    );
+
   },450);
+
 }
 
-/* =========================================================
-   REAL HIT
-   ★ 当たりインパクト強化版 ★
 
-   Tensionブツ切り
-   ↓
-   約0.5秒 完全無音
-   ↓
-   暗転
-   ↓
-   極太斬撃
-   ↓
-   強烈白フラッシュ
-   ↓
-   一発画面衝撃
-   ↓
-   超巨大 当たり
-   ↓
-   hit_music_final.mp3
-========================================================= */
+/* ======================================================
+   HIT IMPACT
+====================================================== */
 
 async function HIT(options={}){
+
   hideNumber();
+
   message.style.display = "none";
 
-  /* ブツ切り */
+
+  /*
+    Tension ブツ切り
+  */
+
   stopTension();
 
-  /* ここが「来る…？」の間 */
-  await sleep(options.silence ?? 520);
 
-  /* 一瞬真っ暗 */
+  /*
+    完全無音
+  */
+
+  await sleep(
+    options.silence ?? 520
+  );
+
+
+  /*
+    暗転
+  */
+
   blackout.style.opacity = "1";
+
+
   await sleep(180);
+
+
   blackout.style.opacity = "0";
+
 
   await sleep(45);
 
-  /* 斬撃 */
-  createSlash(options.doubleSlash === true);
+
+  /*
+    極太斬撃
+  */
+
+  createSlash(
+    options.doubleSlash === true
+  );
+
 
   await sleep(105);
 
-  /* 白フラッシュ + 一発だけ画面衝撃 */
+
+  /*
+    強烈フラッシュ
+    ＋
+    画面衝撃は1回だけ
+  */
+
   doFlash();
+
   doHitShake();
+
 
   await sleep(70);
 
-  /* 当たり文字 */
-  hitText.classList.remove("hitTextPop");
+
+  /*
+    超巨大 当たり
+  */
+
+  hitText.classList.remove(
+    "hitTextPop"
+  );
+
+
   hitText.style.opacity = "0";
+
 
   void hitText.offsetWidth;
 
-  hitText.classList.add("hitTextPop");
+
+  hitText.classList.add(
+    "hitTextPop"
+  );
+
 
   /*
-    当たり文字が出た瞬間に曲。
-    hit_musicはREAL HITからしか呼ばない。
+    本当のHITでだけ
+    当たり曲
   */
+
   playHitMusic();
+
 
   await sleep(2250);
 
-  hitText.classList.remove("hitTextPop");
+
+  hitText.classList.remove(
+    "hitTextPop"
+  );
+
+
   hitText.style.opacity = "0";
 
+
   await showTreasure();
+
 }
 
-/* =========================================================
+
+/* ======================================================
    32 HIT ROUTES
-========================================================= */
+====================================================== */
 
 async function normalHitAt(stage){
 
   showNumber("3");
 
+
   if(stage===3){
+
     await sleep(1450);
+
     return HIT();
+
   }
+
 
   await sleep(1800);
+
+
   showNumber("2");
 
+
   if(stage===2){
+
     await sleep(1550);
+
     return HIT();
+
   }
+
 
   await sleep(1900);
+
+
   showNumber("1");
 
+
   if(stage===1){
+
     await sleep(1750);
+
     return HIT();
+
   }
 
+
   await sleep(2100);
+
   hideNumber();
+
+
   await sleep(700);
 
+
   return HIT();
+
 }
 
+
 async function normalBlackout(){
+
   await normalCount();
+
   hideNumber();
 
   await sleep(500);
+
   await doBlackout(850);
+
   await sleep(650);
 
   return HIT();
+
 }
 
+
 async function freezeTwo(){
+
   showNumber("3");
+
   await sleep(1700);
 
   showNumber("2");
+
   await sleep(3900);
 
   return HIT();
+
 }
 
+
 async function reverseCountdown(){
+
   showNumber("3");
+
   await sleep(1500);
 
   showNumber("2");
+
   await sleep(1500);
 
   showNumber("3");
+
   await sleep(1200);
 
   showNumber("2");
+
   await sleep(1200);
 
   showNumber("1");
+
   await sleep(1500);
 
   return HIT();
+
 }
 
+
 async function zeroPremium(){
+
   await normalCount();
 
   showNumber("0");
-  number.classList.add("goldNumber");
+
+  number.classList.add(
+    "goldNumber"
+  );
 
   await sleep(1700);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function numberDisappear(){
+
   showNumber("3");
+
   await sleep(1700);
 
   showNumber("2");
+
   await sleep(1700);
 
   hideNumber();
+
   await sleep(1700);
 
   return HIT();
+
 }
 
+
 async function soundStopPattern(){
+
   showNumber("3");
+
   await sleep(1600);
 
   showNumber("2");
+
   await sleep(1700);
 
   stopTension();
 
   showNumber("1");
+
   await sleep(3000);
 
   return HIT();
+
 }
 
+
 async function longOne(){
+
   showNumber("3");
+
   await sleep(1700);
 
   showNumber("2");
+
   await sleep(1800);
 
   showNumber("1");
+
   await sleep(4300);
 
   return HIT();
+
 }
 
+
 async function recountSequence(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(700);
 
   showNumber("3");
+
   await sleep(800);
 
   showNumber("2");
+
   await sleep(800);
 
   showNumber("1");
+
   await sleep(1000);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function doubleCountdown(){
+
   showNumber("3");
+
   await sleep(1000);
 
   showNumber("2");
+
   await sleep(1000);
 
   showNumber("1");
+
   await sleep(1100);
 
   showNumber("3");
+
   await sleep(900);
 
   showNumber("2");
+
   await sleep(900);
 
   showNumber("1");
+
   await sleep(1200);
 
   return HIT();
+
 }
 
+
 async function puchunDirect(){
+
   showNumber("3");
+
   await sleep(1600);
 
   showNumber("2");
+
   await sleep(1700);
 
   showNumber("1");
+
   await sleep(1600);
 
   stopTension();
 
   blackout.style.opacity = "1";
+
   await sleep(2100);
 
   blackout.style.opacity = "0";
@@ -1275,82 +1797,118 @@ async function puchunDirect(){
     silence:250,
     doubleSlash:true
   });
+
 }
 
+
 async function puchunRecount(){
+
   await normalCount();
 
   stopTension();
 
   blackout.style.opacity = "1";
+
   await sleep(1600);
+
   blackout.style.opacity = "0";
 
   showNumber("3");
+
   await sleep(750);
 
   showNumber("2");
+
   await sleep(750);
 
   showNumber("1");
+
   await sleep(1100);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function fakeSlashPattern(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(450);
 
-  /* フェイク斬撃。曲は鳴らさない */
   createSlash(false);
+
   doFlash();
 
   await sleep(1400);
 
   showNumber("1");
+
   await sleep(1500);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function weirdCountdown(){
+
   showNumber("3");
+
   await sleep(1500);
 
   showNumber("1");
+
   await sleep(1500);
 
   showNumber("2");
+
   await sleep(1500);
 
   showNumber("1");
+
   await sleep(1600);
 
   return HIT();
+
 }
 
+
 async function silentStart(){
+
   stopTension();
 
   showNumber("3");
+
   await sleep(1900);
 
   showNumber("2");
+
   await sleep(2000);
 
   showNumber("1");
+
   await sleep(2500);
 
-  return HIT({silence:800});
+  return HIT({
+    silence:800
+  });
+
 }
 
+
 async function classicRevival(){
+
   await normalCount();
 
   hideNumber();
+
   stopTension();
 
   await showDots(1700);
@@ -1358,82 +1916,123 @@ async function classicRevival(){
   await sleep(900);
 
   showNumber("1");
+
   await sleep(1500);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function skipCountHit(){
+
   showNumber("3");
+
   await sleep(1700);
 
   showNumber("1");
+
   await sleep(1700);
 
   return HIT();
+
 }
 
+
 async function oneVanishHit(){
+
   showNumber("3");
+
   await sleep(1600);
 
   showNumber("2");
+
   await sleep(1700);
 
   showNumber("1");
+
   await sleep(1300);
 
   hideNumber();
+
   await sleep(1800);
 
   return HIT();
+
 }
 
+
 async function oneBackToTwoHit(){
+
   showNumber("3");
+
   await sleep(1500);
 
   showNumber("2");
+
   await sleep(1500);
 
   showNumber("1");
+
   await sleep(1700);
 
   showNumber("2");
+
   await sleep(1000);
 
   showNumber("1");
+
   await sleep(1200);
 
   return HIT();
+
 }
 
+
 async function speedCountHit(){
+
   showNumber("3");
+
   await sleep(500);
 
   showNumber("2");
+
   await sleep(500);
 
   showNumber("1");
+
   await sleep(700);
 
   await sleep(1000);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function doubleSlashHit(){
+
   await normalCount();
 
   hideNumber();
+
   await sleep(650);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function silentOddityHit(){
+
   showNumber("3");
+
   await sleep(1500);
 
   stopTension();
@@ -1441,74 +2040,102 @@ async function silentOddityHit(){
   await sleep(1000);
 
   showNumber("2");
+
   await sleep(1900);
 
   showNumber("1");
+
   await sleep(2400);
 
-  return HIT({silence:900});
+  return HIT({
+    silence:900
+  });
+
 }
 
+
 async function questionHit(){
+
   await normalCount();
 
   hideNumber();
 
   message.textContent = "？";
-  message.style.display = "block";
+
   message.style.fontSize = "90px";
+
+  message.style.display = "block";
 
   await sleep(1600);
 
   message.style.display = "none";
 
   return HIT();
+
 }
 
+
 async function blackoutReturnHit(){
+
   await normalCount();
 
   hideNumber();
+
   stopTension();
 
   await doBlackout(1000);
 
   showNumber("1");
+
   await sleep(2200);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
-/* =========================
-   NEW DOT HIT ROUTES
-========================= */
+
+/* DOT HIT ROUTES */
 
 async function dotsDirectHit(){
+
   await normalCount();
 
   hideNumber();
+
   await showDots(1700);
 
   await sleep(900);
 
   return HIT();
+
 }
 
+
 async function dotsOneRevival(){
+
   await normalCount();
 
   hideNumber();
+
   await showDots(1600);
 
   await sleep(600);
 
   showNumber("1");
+
   await sleep(1800);
 
-  return HIT({doubleSlash:true});
+  return HIT({
+    doubleSlash:true
+  });
+
 }
 
+
 async function dotsBlackoutHit(){
+
   await normalCount();
 
   stopTension();
@@ -1523,25 +2150,34 @@ async function dotsBlackoutHit(){
     silence:750,
     doubleSlash:true
   });
+
 }
 
+
 async function dotsStarHit(){
+
   await normalCount();
 
   await showDots(1500);
 
   /*
-    このルートだけの星に見えすぎないよう、
-    普通の流星イベントと同じ関数を使う。
+    星は大量固定にしない。
+    普通の星抽選と同じ本数。
   */
-  meteorBurst(randomMeteorCount());
+
+  meteorBurst(
+    randomMeteorCount()
+  );
 
   await sleep(1400);
 
   return HIT();
+
 }
 
+
 async function dotsLongSilenceHit(){
+
   await normalCount();
 
   stopTension();
@@ -1554,50 +2190,90 @@ async function dotsLongSilenceHit(){
     silence:900,
     doubleSlash:true
   });
+
 }
 
+
 const hitRoutes = [
+
   ()=>normalHitAt(3),
+
   ()=>normalHitAt(2),
+
   ()=>normalHitAt(1),
+
   ()=>normalHitAt(0),
 
   normalBlackout,
+
   freezeTwo,
+
   reverseCountdown,
+
   zeroPremium,
+
   numberDisappear,
+
   soundStopPattern,
+
   longOne,
+
   recountSequence,
+
   doubleCountdown,
+
   puchunDirect,
+
   puchunRecount,
+
   fakeSlashPattern,
+
   weirdCountdown,
+
   silentStart,
+
   classicRevival,
+
   skipCountHit,
+
   oneVanishHit,
+
   oneBackToTwoHit,
+
   speedCountHit,
+
   doubleSlashHit,
+
   silentOddityHit,
+
   questionHit,
+
   blackoutReturnHit,
 
   dotsDirectHit,
+
   dotsOneRevival,
+
   dotsBlackoutHit,
+
   dotsStarHit,
+
   dotsLongSilenceHit
+
 ];
 
-/* =========================================================
+
+/* ======================================================
    MISS
-========================================================= */
+
+   ※強制当たりテスト中なので
+   今は基本ここには来ない。
+
+   本番1/30へ戻したら使用される。
+====================================================== */
 
 async function normalMiss(){
+
   await normalCount();
 
   hideNumber();
@@ -1607,13 +2283,14 @@ async function normalMiss(){
   await sleep(1600);
 
   resetGame();
+
 }
 
-/* =========================================================
-   WEAK FAKE 10
-========================================================= */
+
+/* WEAK FAKE 10 */
 
 async function weakFake1(){
+
   showNumber("3");
   await sleep(1700);
 
@@ -1624,9 +2301,12 @@ async function weakFake1(){
   await sleep(1900);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake2(){
+
   showNumber("3");
   await sleep(1700);
 
@@ -1637,21 +2317,33 @@ async function weakFake2(){
   await sleep(3500);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake3(){
+
   await normalCount();
 
-  number.classList.add("redNumber");
+  number.classList.add(
+    "redNumber"
+  );
+
   await sleep(500);
 
-  number.classList.remove("redNumber");
+  number.classList.remove(
+    "redNumber"
+  );
+
   await sleep(700);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake4(){
+
   showNumber("3");
   await sleep(1700);
 
@@ -1664,9 +2356,12 @@ async function weakFake4(){
   await sleep(2600);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake5(){
+
   await normalCount();
 
   hideNumber();
@@ -1674,84 +2369,122 @@ async function weakFake5(){
   await doBlackout(450);
 
   showNumber("1");
+
   await sleep(1500);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake6(){
+
   showNumber("3");
+
   await sleep(3600);
 
   showNumber("2");
+
   await sleep(1700);
 
   showNumber("1");
+
   await sleep(1800);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake7(){
+
   showNumber("3");
+
   await sleep(1700);
 
   showNumber("2");
-  number.classList.add("redNumber");
+
+  number.classList.add(
+    "redNumber"
+  );
 
   await sleep(550);
 
-  number.classList.remove("redNumber");
+  number.classList.remove(
+    "redNumber"
+  );
 
   await sleep(1500);
 
   showNumber("1");
+
   await sleep(1900);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake8(){
+
   showNumber("3");
+
   await sleep(1600);
 
   showNumber("2");
+
   await sleep(1700);
 
   showNumber("0");
+
   await sleep(450);
 
   showNumber("1");
+
   await sleep(2000);
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake9(){
+
   await normalCount();
 
-  number.style.fontSize = "min(43vw,210px)";
+  number.style.fontSize =
+    "min(43vw,210px)";
+
   await sleep(1300);
 
   number.style.fontSize = "";
 
   await finishWeakFake();
+
 }
 
+
 async function weakFake10(){
+
   showNumber("3");
+
   await sleep(600);
 
   showNumber("2");
+
   await sleep(650);
 
   showNumber("1");
+
   await sleep(2300);
 
   await finishWeakFake();
+
 }
 
+
 async function finishWeakFake(){
+
   hideNumber();
 
   stopTension();
@@ -1763,9 +2496,12 @@ async function finishWeakFake(){
   await sleep(850);
 
   resetGame();
+
 }
 
+
 const weakFakes = [
+
   weakFake1,
   weakFake2,
   weakFake3,
@@ -1776,13 +2512,14 @@ const weakFakes = [
   weakFake8,
   weakFake9,
   weakFake10
+
 ];
 
-/* =========================================================
-   STRONG FAKE 6
-========================================================= */
+
+/* STRONG FAKE 6 */
 
 async function strongFake1(){
+
   await normalCount();
 
   hideNumber();
@@ -1792,9 +2529,12 @@ async function strongFake1(){
   await sleep(1700);
 
   await finishStrongFake();
+
 }
 
+
 async function strongFake2(){
+
   await normalCount();
 
   hideNumber();
@@ -1806,21 +2546,31 @@ async function strongFake2(){
   await sleep(900);
 
   await finishStrongFake();
+
 }
 
+
 async function strongFake3(){
+
   await normalCount();
 
-  number.classList.add("goldNumber");
+  number.classList.add(
+    "goldNumber"
+  );
 
   await sleep(2900);
 
-  number.classList.remove("goldNumber");
+  number.classList.remove(
+    "goldNumber"
+  );
 
   await finishStrongFake();
+
 }
 
+
 async function strongFake4(){
+
   await normalCount();
 
   hideNumber();
@@ -1834,9 +2584,12 @@ async function strongFake4(){
   await sleep(1900);
 
   await finishStrongFake();
+
 }
 
+
 async function strongFake5(){
+
   await normalCount();
 
   hideNumber();
@@ -1848,12 +2601,17 @@ async function strongFake5(){
   await sleep(2600);
 
   await finishStrongFake();
+
 }
 
+
 async function strongFake6(){
+
   await normalCount();
 
-  number.classList.add("goldNumber");
+  number.classList.add(
+    "goldNumber"
+  );
 
   await sleep(650);
 
@@ -1861,17 +2619,23 @@ async function strongFake6(){
 
   await sleep(3300);
 
-  number.classList.remove("goldNumber");
+  number.classList.remove(
+    "goldNumber"
+  );
 
   await finishStrongFake();
+
 }
 
+
 async function finishStrongFake(){
+
   hideNumber();
 
   stopTension();
 
   blackout.style.opacity = "1";
+
   await sleep(700);
 
   blackout.style.opacity = "0";
@@ -1883,255 +2647,487 @@ async function finishStrongFake(){
   await sleep(950);
 
   resetGame();
+
 }
 
+
 const strongFakes = [
+
   strongFake1,
   strongFake2,
   strongFake3,
   strongFake4,
   strongFake5,
   strongFake6
+
 ];
 
-/* =========================================================
-   MISS BRANCH
 
-   overall miss後だけ
-   50% normal
-   25% weak
-   25% strong
-========================================================= */
+/*
+   ハズレ後の演出
+
+   50% 普通
+   25% 弱フェイク
+   25% 強フェイク
+
+   星は別抽選なので
+   星あり/なしも混ざる。
+*/
 
 async function playMiss(){
-  const r = Math.random();
+
+  const r =
+    Math.random();
+
 
   if(r < .50){
+
     return normalMiss();
+
   }
+
 
   if(r < .75){
+
     const f =
       weakFakes[
-        Math.floor(Math.random()*weakFakes.length)
+        Math.floor(
+          Math.random() *
+          weakFakes.length
+        )
       ];
 
+
     return f();
+
   }
+
 
   const f =
     strongFakes[
-      Math.floor(Math.random()*strongFakes.length)
+      Math.floor(
+        Math.random() *
+        strongFakes.length
+      )
     ];
 
+
   return f();
+
 }
 
-/* =========================================================
-   TREASURE
-   1等 5%
+
+/* ======================================================
+   PRIZE
+
+   ★ 今回変更 ★
+
+   1等 2%
    2等 20%
-   3等 75%
-========================================================= */
+   3等 78%
+====================================================== */
 
 function drawPrize(){
-  const r = Math.random();
 
-  if(r < .05) return 1;
-  if(r < .25) return 2;
+  const r =
+    Math.random();
+
+
+  if(r < .02){
+
+    return 1;
+
+  }
+
+
+  if(r < .22){
+
+    return 2;
+
+  }
+
 
   return 3;
+
 }
+
 
 function rankText(rank){
+
   return rank + "等";
+
 }
+
 
 function rankClass(rank){
+
   return "rank" + rank;
+
 }
+
 
 function resetChests(){
+
   chests.forEach(chest=>{
-    chest.classList.remove("open","shake");
+
+    chest.classList.remove(
+      "open",
+      "shake"
+    );
+
 
     const label =
-      chest.querySelector(".rankLabel");
+      chest.querySelector(
+        ".rankLabel"
+      );
 
-    label.style.display = "none";
+
+    label.style.display =
+      "none";
+
+
     label.textContent = "";
-    label.className = "rankLabel";
+
+
+    label.className =
+      "rankLabel";
+
   });
+
 }
 
+
+/* ======================================================
+   TREASURE
+====================================================== */
+
 async function showTreasure(){
+
   clearStarTimers();
 
-  treasure.style.display = "flex";
+
+  treasure.style.display =
+    "flex";
+
 
   treasureTitle.innerHTML =
+
     "ここからが本番。<br>" +
+
     "運命の宝箱を選べ！<br>" +
+
     "この一箱が、結果を決める。";
 
+
   prizeResult.textContent = "";
-  nextButton.style.display = "none";
+
+
+  prizeResult.className = "";
+
+
+  nextButton.style.display =
+    "none";
+
 
   resetChests();
 
-  const selectedRank = drawPrize();
+
+  /*
+    選んだ箱の等級は
+    ここで先に抽選。
+
+    1等2%
+    2等20%
+    3等78%
+  */
+
+  const selectedRank =
+    drawPrize();
+
 
   let chosen = false;
 
-  const chooseHandler = async e=>{
-    if(chosen) return;
 
-    const chest =
-      e.currentTarget;
+  const chooseHandler =
+    async e=>{
 
-    chosen = true;
 
-    chests.forEach(c=>{
-      c.removeEventListener(
-        "click",
-        chooseHandler
+      if(chosen){
+        return;
+      }
+
+
+      chosen = true;
+
+
+      chests.forEach(c=>{
+
+        c.removeEventListener(
+          "click",
+          chooseHandler
+        );
+
+      });
+
+
+      const chest =
+        e.currentTarget;
+
+
+      const chosenIndex =
+        Number(
+          chest.dataset.index
+        );
+
+
+      /*
+        残り2箱には
+        選ばれなかった等級を配置。
+      */
+
+      const otherRanks =
+        [1,2,3].filter(
+          r=>r!==selectedRank
+        );
+
+
+      /*
+        左右ランダム
+      */
+
+      if(Math.random() < .5){
+
+        otherRanks.reverse();
+
+      }
+
+
+      const assignments =
+        new Array(3);
+
+
+      assignments[
+        chosenIndex
+      ] = selectedRank;
+
+
+      const otherIndexes =
+        [0,1,2].filter(
+          i=>i!==chosenIndex
+        );
+
+
+      assignments[
+        otherIndexes[0]
+      ] = otherRanks[0];
+
+
+      assignments[
+        otherIndexes[1]
+      ] = otherRanks[1];
+
+
+      /*
+        選択箱ブルブル
+      */
+
+      chest.classList.add(
+        "shake"
       );
-    });
 
-    const chosenIndex =
-      Number(chest.dataset.index);
 
-    const otherRanks =
-      [1,2,3].filter(r=>r!==selectedRank);
+      await sleep(700);
 
-    for(let i=otherRanks.length-1;i>0;i--){
-      const j =
-        Math.floor(Math.random()*(i+1));
 
-      [otherRanks[i],otherRanks[j]] =
-        [otherRanks[j],otherRanks[i]];
-    }
-
-    const assignments =
-      new Array(3);
-
-    assignments[chosenIndex] =
-      selectedRank;
-
-    const otherIndexes =
-      [0,1,2].filter(
-        i=>i!==chosenIndex
+      chest.classList.remove(
+        "shake"
       );
 
-    assignments[otherIndexes[0]] =
-      otherRanks[0];
 
-    assignments[otherIndexes[1]] =
-      otherRanks[1];
+      /*
+        OPEN
+      */
 
-    chest.classList.add("shake");
+      chest.classList.add(
+        "open"
+      );
 
-    await sleep(700);
 
-    chest.classList.remove("shake");
-    chest.classList.add("open");
+      doFlash();
 
-    doFlash();
 
-    await sleep(450);
+      await sleep(450);
 
-    const label =
-      chest.querySelector(".rankLabel");
 
-    label.textContent =
-      rankText(selectedRank);
+      const label =
+        chest.querySelector(
+          ".rankLabel"
+        );
 
-    label.classList.add(
-      rankClass(selectedRank)
-    );
 
-    label.style.display = "block";
+      label.textContent =
+        rankText(
+          selectedRank
+        );
 
-    prizeResult.className =
-      rankClass(selectedRank);
 
-    prizeResult.textContent =
-      selectedRank + "等 当選！";
+      label.classList.add(
+        rankClass(
+          selectedRank
+        )
+      );
 
-    await sleep(2200);
 
-    treasureTitle.innerHTML =
-      "残りの宝箱は…<br>" +
-      "選ばなかった箱もオープン";
+      label.style.display =
+        "block";
 
-    prizeResult.textContent = "";
 
-    /*
-      選ばなかった2箱の開く順番もランダム
-    */
-    if(Math.random()<.5){
-      otherIndexes.reverse();
-    }
+      prizeResult.className =
+        rankClass(
+          selectedRank
+        );
 
-    for(const idx of otherIndexes){
 
-      const c = chests[idx];
+      prizeResult.textContent =
 
-      c.classList.add("shake");
+        selectedRank +
+
+        "等 当選！";
+
+
+      await sleep(2200);
+
+
+      /*
+        残り箱
+      */
+
+      treasureTitle.innerHTML =
+
+        "残りの宝箱は…<br>" +
+
+        "選ばなかった箱もオープン";
+
+
+      prizeResult.textContent =
+        "";
+
+
+      /*
+        残りを開ける順番も
+        ランダム
+      */
+
+      if(Math.random() < .5){
+
+        otherIndexes.reverse();
+
+      }
+
+
+      for(
+        const idx
+        of otherIndexes
+      ){
+
+        const c =
+          chests[idx];
+
+
+        c.classList.add(
+          "shake"
+        );
+
+
+        await sleep(500);
+
+
+        c.classList.remove(
+          "shake"
+        );
+
+
+        c.classList.add(
+          "open"
+        );
+
+
+        const l =
+          c.querySelector(
+            ".rankLabel"
+          );
+
+
+        const rank =
+          assignments[idx];
+
+
+        l.textContent =
+          rankText(rank);
+
+
+        l.classList.add(
+          rankClass(rank)
+        );
+
+
+        l.style.display =
+          "block";
+
+
+        await sleep(750);
+
+      }
+
 
       await sleep(500);
 
-      c.classList.remove("shake");
-      c.classList.add("open");
 
-      const l =
-        c.querySelector(".rankLabel");
+      nextButton.style.display =
+        "block";
 
-      const rank =
-        assignments[idx];
+    };
 
-      l.textContent =
-        rankText(rank);
-
-      l.classList.add(
-        rankClass(rank)
-      );
-
-      l.style.display = "block";
-
-      await sleep(750);
-    }
-
-    await sleep(500);
-
-    nextButton.style.display = "block";
-  };
 
   chests.forEach(chest=>{
+
     chest.addEventListener(
       "click",
       chooseHandler
     );
+
   });
+
 }
 
-/* =========================================================
+
+/* ======================================================
    RESET
-========================================================= */
+====================================================== */
 
 function resetGame(){
+
   playToken++;
+
 
   clearStarTimers();
 
+
   stopTension();
+
 
   hideNumber();
 
-  message.style.display = "none";
+
+  message.style.display =
+    "none";
+
+
   message.style.fontSize = "";
 
+
   number.style.fontSize = "";
+
 
   number.classList.remove(
     "goldNumber",
@@ -2139,107 +3135,182 @@ function resetGame(){
     "numberPop"
   );
 
-  blackout.style.opacity = "0";
 
-  slashLayer.innerHTML = "";
+  blackout.style.opacity =
+    "0";
 
-  hitText.classList.remove("hitTextPop");
-  hitText.style.opacity = "0";
+
+  slashLayer.innerHTML =
+    "";
+
+
+  hitText.classList.remove(
+    "hitTextPop"
+  );
+
+
+  hitText.style.opacity =
+    "0";
+
 
   playing = false;
 
-  startScreen.style.display = "flex";
+
+  startScreen.style.display =
+    "flex";
+
 }
 
-/* =========================================================
+
+/* ======================================================
    START
 
-   ★ 最重要 ★
-   ここで1回だけ1/30抽選。
-   演出途中で再抽選しない。
-========================================================= */
+   ★★★★★★★★★★★★★★★★★★★★★
 
-startButton.addEventListener("click",async()=>{
+   現在はテスト用
+   100% 強制当たり
 
-  if(playing) return;
+   ★★★★★★★★★★★★★★★★★★★★★
+====================================================== */
 
-  playing = true;
-  playToken++;
+startButton.addEventListener(
+  "click",
+  async()=>{
 
-  clearStarTimers();
 
-  startScreen.style.display = "none";
+    if(playing){
+      return;
+    }
 
-  /*
-    iPhone Safari対策。
-    STARTタップのユーザー操作中に
-    AudioContext.resume()を開始。
-  */
-  await unlockAudio();
 
-  startTension();
+    playing = true;
 
-  /*
-    流れ星は当落を知る前に予約。
-    ＝星そのものは当たり確定ではない。
-  */
-  scheduleStars();
 
-  /*
-    ★ 唯一の総合当たり抽選 ★
+    playToken++;
 
-    毎プレイ完全独立 1/30
-  */
-  const win =
-    Math.random() < (1/30);
 
-  if(win){
+    clearStarTimers();
+
+
+    startScreen.style.display =
+      "none";
+
 
     /*
-      当たった後に
-      32種類から演出だけ選ぶ。
-
-      ここでは当たり判定を
-      やり直さない。
+      STARTタップで
+      iPhone音声を解除
     */
-    const route =
-      hitRoutes[
-        Math.floor(
-          Math.random()*hitRoutes.length
-        )
-      ];
 
-    await route();
+    await unlockAudio();
 
-  }else{
+
+    startTension();
+
 
     /*
-      1/30に外れた後だけ
-      ハズレ演出を選ぶ。
+      星演出
+
+      約73% 星なし
+      約27% 星あり
     */
-    await playMiss();
+
+    scheduleStars();
+
+
+    /*
+      ==================================
+
+      ★ 強制当たりテスト中 ★
+
+      STARTを押すたび
+      必ず当たる。
+
+      ==================================
+    */
+
+    const win = true;
+
+
+    /*
+      本番に戻す時は
+      ↑の
+
+      const win = true;
+
+      を削除して
+
+      const win =
+        Math.random() < (1/30);
+
+      に戻すだけ。
+    */
+
+
+    if(win){
+
+
+      /*
+        強制当たりでも
+        32種類の当たりルートは
+        ランダム
+      */
+
+      const route =
+        hitRoutes[
+          Math.floor(
+            Math.random() *
+            hitRoutes.length
+          )
+        ];
+
+
+      await route();
+
+
+    }else{
+
+
+      await playMiss();
+
+    }
+
   }
-});
+);
 
-/* =========================================================
+
+/* ======================================================
    NEXT
-========================================================= */
+====================================================== */
 
-nextButton.addEventListener("click",()=>{
+nextButton.addEventListener(
+  "click",
+  ()=>{
 
-  treasure.style.display = "none";
 
-  stopHitMusic();
+    treasure.style.display =
+      "none";
 
-  resetGame();
-});
+
+    stopHitMusic();
+
+
+    resetGame();
+
+  }
+);
+
 
 /*
-  ページ表示時に裏で読み込みだけ開始。
-  再生許可はSTARTタップで解除。
+  ページ表示時に
+  MP3を先読み。
+
+  実際の再生許可は
+  STARTタップで解除。
 */
+
 prepareAudio();
 
 </script>
+
 </body>
 </html>
