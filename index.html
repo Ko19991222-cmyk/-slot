@@ -6,582 +6,307 @@
 <title>COUNTDOWN</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  color:#fff;
+  margin:0;width:100%;height:100%;overflow:hidden;
+  background:#000;color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
 }
-
-body{user-select:none;}
-button{font-family:inherit;}
+body{user-select:none}
+button{font-family:inherit}
 
 #stage{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
   background:radial-gradient(circle at 50% 45%,#171717 0%,#050505 48%,#000 82%);
 }
 
 #number{
-  position:relative;
-  z-index:5;
+  position:relative;z-index:5;
   font-size:min(60vw,360px);
-  font-weight:1000;
-  line-height:1;
-  text-shadow:
-    0 0 15px #fff,
-    0 0 40px rgba(255,255,255,.45);
-  transition:
-    color .15s,
-    transform .15s,
-    left .15s,
-    top .15s,
-    opacity .15s;
+  font-weight:1000;line-height:1;
+  text-shadow:0 0 15px #fff,0 0 40px rgba(255,255,255,.45);
+  transition:color .15s,transform .15s,left .15s,top .15s,opacity .15s;
 }
 
-#number.show{
-  animation:numberIn .42s ease-out;
-}
+#number.show{animation:numberIn .42s ease-out}
 
 @keyframes numberIn{
-  0%{
-    opacity:0;
-    transform:scale(1.32);
-    filter:blur(8px);
-  }
-  100%{
-    opacity:1;
-    transform:scale(1);
-    filter:blur(0);
-  }
+  0%{opacity:0;transform:scale(1.32);filter:blur(8px)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}
 }
 
-#number.red{color:#ff2828;}
-#number.gold{color:#ffe16b;}
-#number.small{transform:scale(.84);}
+#number.red{color:#ff2828}
+#number.gold{color:#ffe16b}
+#number.small{transform:scale(.84)}
 
 #startInfo{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:18%;
-  z-index:300;
-  text-align:center;
-  pointer-events:none;
+  position:absolute;left:0;right:0;bottom:18%;
+  z-index:300;text-align:center;pointer-events:none;
 }
 
 #oddsText{
   font-size:clamp(24px,7vw,42px);
-  font-weight:1000;
-  letter-spacing:.08em;
-  text-shadow:
-    0 0 10px rgba(255,255,255,.7),
-    0 0 24px rgba(255,255,255,.25);
+  font-weight:1000;letter-spacing:.08em;
+  text-shadow:0 0 10px rgba(255,255,255,.7),0 0 24px rgba(255,255,255,.25);
 }
 
 #independentText{
-  margin-top:8px;
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:.16em;
-  opacity:.6;
+  margin-top:8px;font-size:13px;font-weight:800;
+  letter-spacing:.16em;opacity:.6;
 }
 
-#start{
-  position:absolute;
-  bottom:8%;
-  z-index:400;
-  padding:17px 46px;
-  border-radius:999px;
+#start,#treasureNext{
+  position:absolute;bottom:8%;z-index:400;
+  padding:17px 46px;border-radius:999px;
   border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.78);
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-  letter-spacing:.12em;
+  background:rgba(0,0,0,.78);color:#fff;
+  font-size:17px;font-weight:900;letter-spacing:.12em;
 }
 
-#start:active{
-  transform:scale(.96);
-}
+#start:active,#treasureNext:active{transform:scale(.96)}
 
 #black{
-  position:fixed;
-  inset:0;
-  z-index:80;
-  display:none;
-  background:#000;
+  position:fixed;inset:0;z-index:80;
+  display:none;background:#000;
 }
 
 #slash{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  overflow:hidden;
-  pointer-events:none;
+  position:fixed;inset:0;z-index:100;
+  display:none;overflow:hidden;pointer-events:none;
 }
-
-#slash.go{display:block;}
+#slash.go{display:block}
 
 #line{
-  position:absolute;
-  left:-30%;
-  top:50%;
-  width:160%;
-  height:9px;
-  background:#fff;
-  box-shadow:
-    0 0 15px #fff,
-    0 0 40px #fff,
-    0 0 90px #fff;
+  position:absolute;left:-30%;top:50%;
+  width:160%;height:9px;background:#fff;
+  box-shadow:0 0 15px #fff,0 0 40px #fff,0 0 90px #fff;
   transform:rotate(-18deg) scaleX(0);
 }
+#slash.reverse #line{transform:rotate(18deg) scaleX(0)}
 
-#slash.go #line{
-  animation:slashAnim .20s ease-out forwards;
-}
+#slash.go #line{animation:slashAnim .20s ease-out forwards}
+#slash.go.reverse #line{animation:slashReverse .20s ease-out forwards}
 
 @keyframes slashAnim{
-  to{transform:rotate(-18deg) scaleX(1);}
+  to{transform:rotate(-18deg) scaleX(1)}
+}
+@keyframes slashReverse{
+  to{transform:rotate(18deg) scaleX(1)}
 }
 
 #flash{
-  position:fixed;
-  inset:0;
-  z-index:350;
-  background:#fff;
-  opacity:0;
-  pointer-events:none;
+  position:fixed;inset:0;z-index:350;
+  background:#fff;opacity:0;pointer-events:none;
 }
-
-#flash.go{
-  animation:flashAnim .45s ease-out;
-}
+#flash.go{animation:flashAnim .45s ease-out}
 
 @keyframes flashAnim{
-  0%{opacity:0;}
-  10%{opacity:1;}
-  28%{opacity:.25;}
-  40%{opacity:1;}
-  100%{opacity:0;}
+  0%{opacity:0}
+  10%{opacity:1}
+  28%{opacity:.25}
+  40%{opacity:1}
+  100%{opacity:0}
 }
 
 #hit{
-  position:fixed;
-  inset:0;
-  z-index:140;
-  display:none;
-  align-items:center;
-  justify-content:center;
+  position:fixed;inset:0;z-index:140;
+  display:none;align-items:center;justify-content:center;
   overflow:hidden;
-  background:
-    radial-gradient(circle,#8b1a00 0%,#390000 35%,#090000 68%,#000 100%);
+  background:radial-gradient(circle,#8b1a00 0%,#390000 35%,#090000 68%,#000 100%);
 }
-
-#hit.show{display:flex;}
+#hit.show{display:flex}
 
 #glow{
-  position:absolute;
-  width:150vw;
-  height:150vw;
-  border-radius:50%;
-  background:
-    conic-gradient(
-      transparent,
-      rgba(255,180,0,.35),
-      transparent,
-      rgba(255,0,0,.42),
-      transparent
-    );
+  position:absolute;width:150vw;height:150vw;border-radius:50%;
+  background:conic-gradient(transparent,rgba(255,180,0,.35),transparent,rgba(255,0,0,.42),transparent);
   animation:spin 3s linear infinite;
 }
-
-@keyframes spin{
-  to{transform:rotate(360deg);}
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 #hitText{
-  position:relative;
-  z-index:5;
-  font-size:min(24vw,150px);
-  font-weight:1000;
-  text-align:center;
-  text-shadow:
-    0 0 12px #fff,
-    0 0 30px #ffe100,
-    0 0 70px #ff4500,
-    0 0 110px red;
+  position:relative;z-index:5;
+  font-size:min(24vw,150px);font-weight:1000;text-align:center;
+  text-shadow:0 0 12px #fff,0 0 30px #ffe100,0 0 70px #ff4500,0 0 110px red;
   animation:hitIn .55s cubic-bezier(.05,1.4,.2,1);
 }
 
 @keyframes hitIn{
-  0%{
-    opacity:0;
-    transform:scale(.25);
-    filter:blur(10px);
-  }
-  70%{
-    opacity:1;
-    transform:scale(1.18);
-    filter:blur(0);
-  }
-  100%{transform:scale(1);}
+  0%{opacity:0;transform:scale(.25);filter:blur(10px)}
+  70%{opacity:1;transform:scale(1.18);filter:blur(0)}
+  100%{transform:scale(1)}
 }
 
 #subText{
-  position:absolute;
-  bottom:25%;
-  z-index:5;
-  font-size:15px;
-  font-weight:900;
-  letter-spacing:.16em;
+  position:absolute;bottom:25%;z-index:5;
+  font-size:15px;font-weight:900;letter-spacing:.16em;
 }
 
 #preTreasure{
-  position:fixed;
-  inset:0;
-  z-index:175;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:#000;
+  position:fixed;inset:0;z-index:175;
+  display:none;align-items:center;justify-content:center;background:#000;
 }
-
-#preTreasure.show{
-  display:flex;
-}
+#preTreasure.show{display:flex}
 
 #preTreasureText{
   font-size:clamp(34px,11vw,70px);
-  font-weight:1000;
-  letter-spacing:.08em;
-  text-align:center;
-  text-shadow:
-    0 0 12px rgba(255,255,255,.85),
-    0 0 30px rgba(255,255,255,.25);
-  animation:preTreasureIn .45s ease-out;
+  font-weight:1000;letter-spacing:.08em;text-align:center;
+  text-shadow:0 0 12px rgba(255,255,255,.85),0 0 30px rgba(255,255,255,.25);
+  animation:preIn .45s ease-out;
+}
+@keyframes preIn{
+  from{opacity:0;transform:scale(.8)}
+  to{opacity:1;transform:scale(1)}
 }
 
-@keyframes preTreasureIn{
-  0%{
-    opacity:0;
-    transform:scale(.8);
-  }
-  100%{
-    opacity:1;
-    transform:scale(1);
-  }
-}
+/* 宝箱 */
 
 #treasureScreen{
-  position:fixed;
-  inset:0;
-  z-index:180;
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 50% 42%,#202020 0%,#090909 48%,#000 100%);
+  position:fixed;inset:0;z-index:180;
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 42%,#202020 0%,#090909 48%,#000 100%);
 }
-
-#treasureScreen.show{display:flex;}
+#treasureScreen.show{display:flex}
 
 #treasureTitle{
-  position:absolute;
-  top:10%;
-  width:100%;
-  text-align:center;
-  font-size:clamp(24px,8vw,48px);
-  font-weight:1000;
-  letter-spacing:.08em;
+  position:absolute;top:10%;width:100%;text-align:center;
+  font-size:clamp(24px,8vw,48px);font-weight:1000;letter-spacing:.08em;
 }
 
 #treasureSub{
-  position:absolute;
-  top:18%;
-  width:100%;
-  text-align:center;
-  font-size:13px;
-  letter-spacing:.12em;
-  opacity:.72;
+  position:absolute;top:18%;width:100%;text-align:center;
+  font-size:13px;letter-spacing:.12em;opacity:.72;
 }
 
 #chests{
   width:min(96vw,700px);
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:7px;
-  padding:0 7px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:7px;padding:0 7px;
 }
 
 .chest{
-  appearance:none;
-  border:none;
-  background:transparent;
-  width:32%;
-  padding:0;
-  color:#fff;
-  position:relative;
-  transition:.25s;
+  appearance:none;border:none;background:transparent;
+  width:32%;padding:0;color:#fff;position:relative;transition:.25s;
 }
-
-.chest:active{transform:scale(.94);}
-.chest.disabled{pointer-events:none;}
-.chest.dim{opacity:.38;}
+.chest:active{transform:scale(.94)}
+.chest.disabled{pointer-events:none}
+.chest.dim{opacity:.38}
 
 .chestWrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:1/.88;
+  position:relative;width:100%;aspect-ratio:1/.88;
   animation:chestFloat 1.5s ease-in-out infinite;
 }
-
-.chest:nth-child(2) .chestWrap{animation-delay:.15s;}
-.chest:nth-child(3) .chestWrap{animation-delay:.3s;}
+.chest:nth-child(2) .chestWrap{animation-delay:.15s}
+.chest:nth-child(3) .chestWrap{animation-delay:.3s}
 
 @keyframes chestFloat{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-8px);}
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
 .chestBody{
-  position:absolute;
-  left:10%;
-  bottom:7%;
-  width:80%;
-  height:48%;
+  position:absolute;left:10%;bottom:7%;width:80%;height:48%;
   border-radius:8px 8px 18px 18px;
-  background:
-    linear-gradient(
-      90deg,
-      #6e2f07,
-      #b75b10 18%,
-      #7d3406 50%,
-      #bf6618 82%,
-      #642905
-    );
+  background:linear-gradient(90deg,#6e2f07,#b75b10 18%,#7d3406 50%,#bf6618 82%,#642905);
   border:4px solid #dca62f;
 }
 
 .chestLid{
-  position:absolute;
-  left:7%;
-  top:22%;
-  width:86%;
-  height:34%;
+  position:absolute;left:7%;top:22%;width:86%;height:34%;
   border-radius:50% 50% 7px 7px;
-  background:
-    linear-gradient(
-      90deg,
-      #6b2a05,
-      #c36813 25%,
-      #813605 55%,
-      #c9741a 82%,
-      #652705
-    );
+  background:linear-gradient(90deg,#6b2a05,#c36813 25%,#813605 55%,#c9741a 82%,#652705);
   border:4px solid #e0ad36;
   transform-origin:50% 100%;
   transition:transform .6s;
 }
 
 .chestBand{
-  position:absolute;
-  left:44%;
-  top:18%;
-  width:12%;
-  height:64%;
+  position:absolute;left:44%;top:18%;width:12%;height:64%;
   background:linear-gradient(#ffe27a,#b37b13,#ffdd65);
-  border-radius:4px;
-  z-index:4;
+  border-radius:4px;z-index:4;
 }
 
 .chestLock{
-  position:absolute;
-  left:40%;
-  bottom:26%;
-  width:20%;
-  aspect-ratio:1;
-  border-radius:6px;
-  background:linear-gradient(#ffe98a,#a87511);
-  border:2px solid #fff1a5;
-  z-index:6;
+  position:absolute;left:40%;bottom:26%;width:20%;aspect-ratio:1;
+  border-radius:6px;background:linear-gradient(#ffe98a,#a87511);
+  border:2px solid #fff1a5;z-index:6;
 }
 
 .chestLight{
-  position:absolute;
-  left:26%;
-  bottom:26%;
-  width:48%;
-  height:15%;
-  opacity:0;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:
-    0 0 20px #fff,
-    0 0 50px #ffe66a,
-    0 0 100px #ffb300;
+  position:absolute;left:26%;bottom:26%;width:48%;height:15%;
+  opacity:0;border-radius:50%;background:#fff;
+  box-shadow:0 0 20px #fff,0 0 50px #ffe66a,0 0 100px #ffb300;
   z-index:2;
 }
 
 .chestNum{
-  margin-top:4px;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.08em;
-  opacity:.6;
+  margin-top:4px;font-size:11px;font-weight:900;letter-spacing:.08em;opacity:.6;
 }
 
 .chestResult{
-  min-height:34px;
-  margin-top:7px;
-  font-size:clamp(20px,7vw,38px);
-  font-weight:1000;
-  opacity:0;
-  transform:scale(.4);
+  min-height:34px;margin-top:7px;
+  font-size:clamp(20px,7vw,38px);font-weight:1000;
+  opacity:0;transform:scale(.4);
   transition:.4s cubic-bezier(.1,1.5,.2,1);
-  text-shadow:
-    0 0 10px #fff,
-    0 0 25px currentColor;
+  text-shadow:0 0 10px #fff,0 0 25px currentColor;
 }
+.chestResult.show{opacity:1;transform:scale(1)}
+.chestResult.first{color:#ffe35e}
+.chestResult.second{color:#e8efff}
+.chestResult.third{color:#ff9b55}
 
-.chestResult.show{
-  opacity:1;
-  transform:scale(1);
-}
-
-.chestResult.first{color:#ffe35e;}
-.chestResult.second{color:#e8efff;}
-.chestResult.third{color:#ff9b55;}
-
-.chest.selected .chestWrap{
-  animation:chestShake .12s linear infinite;
-}
-
+.chest.selected .chestWrap{animation:chestShake .12s linear infinite}
 @keyframes chestShake{
-  0%{transform:translate(-3px,0) rotate(-1deg);}
-  25%{transform:translate(3px,-2px) rotate(1deg);}
-  50%{transform:translate(-2px,2px) rotate(-1deg);}
-  75%{transform:translate(2px,-1px) rotate(1deg);}
-  100%{transform:translate(-3px,0) rotate(-1deg);}
+  0%{transform:translate(-3px,0) rotate(-1deg)}
+  25%{transform:translate(3px,-2px) rotate(1deg)}
+  50%{transform:translate(-2px,2px) rotate(-1deg)}
+  75%{transform:translate(2px,-1px) rotate(1deg)}
+  100%{transform:translate(-3px,0) rotate(-1deg)}
 }
 
-.chest.open .chestWrap{animation:none;}
-
-.chest.open .chestLid{
-  transform:rotateX(145deg) translateY(-4px);
-}
-
-.chest.open{
-  transform:scale(1.08);
-  filter:brightness(1.25);
-}
-
-.chest.open .chestLight{
-  opacity:1;
-  animation:lightBurst .7s ease-out forwards;
-}
+.chest.open .chestWrap{animation:none}
+.chest.open .chestLid{transform:rotateX(145deg) translateY(-4px)}
+.chest.open{transform:scale(1.08);filter:brightness(1.25)}
+.chest.open .chestLight{opacity:1;animation:lightBurst .7s ease-out forwards}
 
 @keyframes lightBurst{
-  from{
-    transform:scale(.3);
-    opacity:1;
-  }
-  to{
-    transform:scale(4.5);
-    opacity:0;
-  }
+  from{transform:scale(.3);opacity:1}
+  to{transform:scale(4.5);opacity:0}
 }
 
-#treasureNext{
-  position:absolute;
-  bottom:8%;
-  z-index:400;
-  display:none;
-  padding:17px 46px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.78);
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-  letter-spacing:.12em;
-}
+#treasureNext{display:none}
+
+/* 賞表示 */
 
 #prizeBox{
-  position:fixed;
-  inset:0;
-  z-index:230;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  overflow:hidden;
+  position:fixed;inset:0;z-index:230;
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;overflow:hidden;
 }
+#prizeBox.show{display:flex}
 
-#prizeBox.show{display:flex;}
-
-#prizeBox.first{
-  background:
-    radial-gradient(circle,#fff7a0 0%,#d99b00 25%,#5c2500 60%,#000 100%);
-}
-
-#prizeBox.second{
-  background:
-    radial-gradient(circle,#fff 0%,#a9b2be 28%,#272d35 62%,#000 100%);
-}
-
-#prizeBox.third{
-  background:
-    radial-gradient(circle,#ffd2a8 0%,#b75a22 30%,#4c1e08 62%,#000 100%);
-}
+#prizeBox.first{background:radial-gradient(circle,#fff7a0 0%,#d99b00 25%,#5c2500 60%,#000 100%)}
+#prizeBox.second{background:radial-gradient(circle,#fff 0%,#a9b2be 28%,#272d35 62%,#000 100%)}
+#prizeBox.third{background:radial-gradient(circle,#ffd2a8 0%,#b75a22 30%,#4c1e08 62%,#000 100%)}
 
 #prizeBurst{
-  position:absolute;
-  width:160vw;
-  height:160vw;
-  border-radius:50%;
-  background:
-    repeating-conic-gradient(
-      rgba(255,255,255,.22) 0deg 4deg,
-      transparent 4deg 11deg
-    );
+  position:absolute;width:160vw;height:160vw;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,255,255,.22) 0deg 4deg,transparent 4deg 11deg);
   animation:spin 6s linear infinite;
 }
 
 #prizeLabel{
-  position:relative;
-  z-index:3;
+  position:relative;z-index:3;
   font-size:clamp(72px,28vw,180px);
-  font-weight:1000;
-  line-height:1;
-  text-align:center;
-  text-shadow:
-    0 0 12px #fff,
-    0 0 40px rgba(255,255,255,.7),
-    0 0 90px rgba(255,180,0,.7);
+  font-weight:1000;line-height:1;text-align:center;
+  text-shadow:0 0 12px #fff,0 0 40px rgba(255,255,255,.7),0 0 90px rgba(255,180,0,.7);
 }
 
 #prizeWon{
-  position:relative;
-  z-index:3;
-  margin-top:20px;
-  font-size:clamp(20px,6vw,38px);
-  font-weight:1000;
-  letter-spacing:.15em;
+  position:relative;z-index:3;margin-top:20px;
+  font-size:clamp(20px,6vw,38px);font-weight:1000;letter-spacing:.15em;
 }
 </style>
 </head>
@@ -601,10 +326,7 @@ button{font-family:inherit;}
 
 <div id="black"></div>
 
-<div id="slash">
-  <div id="line"></div>
-</div>
-
+<div id="slash"><div id="line"></div></div>
 <div id="flash"></div>
 
 <div id="hit">
@@ -618,6 +340,7 @@ button{font-family:inherit;}
 </div>
 
 <div id="treasureScreen">
+
   <div id="treasureTitle">運命の宝箱を選べ！</div>
   <div id="treasureSub">この一箱が、結果を決める。</div>
 
@@ -672,120 +395,102 @@ button{font-family:inherit;}
 
 <audio
   id="hitMusic"
-  src="./hit_music_final.mp3?v=20260914-production2"
+  src="./hit_music_final.mp3?v=20260915-final"
   preload="auto"
   playsinline>
 </audio>
 
 <script>
-
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
-const sleep = ms => new Promise(resolve => setTimeout(resolve,ms));
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
 
-let busy = false;
-let chestBusy = false;
+let busy=false;
+let chestBusy=false;
+let selectedPrize=null;
+let chestResults=[];
 
-let selectedPrize = null;
-let chestResults = [];
+let audioCtx=null;
+let tensionOsc1=null;
+let tensionOsc2=null;
+let tensionOsc3=null;
+let tensionOsc4=null;
+let tensionGain=null;
+let tensionCompressor=null;
+let pulseTimer=null;
+let tensionLevel=1;
 
-let audioCtx = null;
+const hitMusic=$("#hitMusic");
 
-let tensionOsc1 = null;
-let tensionOsc2 = null;
-let tensionOsc3 = null;
-let tensionOsc4 = null;
 
-let tensionGain = null;
-let tensionCompressor = null;
-let pulseTimer = null;
-
-let tensionLevel = 1;
-
-const hitMusic = $("#hitMusic");
-
+/* =========================
+   AUDIO
+========================= */
 
 function initAudio(){
-
   if(!audioCtx){
-    audioCtx = new(
-      window.AudioContext ||
-      window.webkitAudioContext
-    )();
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   }
-
-  if(audioCtx.state === "suspended"){
-    audioCtx.resume();
-  }
+  if(audioCtx.state==="suspended") audioCtx.resume();
 }
 
-
 async function unlockHitMusic(){
-
   try{
-
     hitMusic.pause();
-    hitMusic.currentTime = 0;
-    hitMusic.muted = false;
-    hitMusic.volume = .001;
+    hitMusic.currentTime=0;
+    hitMusic.muted=false;
+    hitMusic.volume=.001;
 
     await hitMusic.play();
     await sleep(60);
 
     hitMusic.pause();
-    hitMusic.currentTime = 0;
-    hitMusic.volume = 1;
-
+    hitMusic.currentTime=0;
+    hitMusic.volume=1;
   }catch(e){
-
-    hitMusic.volume = 1;
-
+    hitMusic.volume=1;
   }
 }
 
-
 function startTension(){
-
   initAudio();
   stopTension();
 
-  tensionLevel = 1;
+  tensionLevel=1;
 
-  tensionGain = audioCtx.createGain();
+  tensionGain=audioCtx.createGain();
+  tensionCompressor=audioCtx.createDynamicsCompressor();
 
-  tensionCompressor =
-    audioCtx.createDynamicsCompressor();
+  tensionCompressor.threshold.value=-14;
+  tensionCompressor.knee.value=12;
+  tensionCompressor.ratio.value=5;
+  tensionCompressor.attack.value=.005;
+  tensionCompressor.release.value=.18;
 
-  tensionCompressor.threshold.value = -14;
-  tensionCompressor.knee.value = 12;
-  tensionCompressor.ratio.value = 5;
-  tensionCompressor.attack.value = .005;
-  tensionCompressor.release.value = .18;
+  tensionOsc1=audioCtx.createOscillator();
+  tensionOsc2=audioCtx.createOscillator();
+  tensionOsc3=audioCtx.createOscillator();
+  tensionOsc4=audioCtx.createOscillator();
 
-  tensionOsc1 = audioCtx.createOscillator();
-  tensionOsc2 = audioCtx.createOscillator();
-  tensionOsc3 = audioCtx.createOscillator();
-  tensionOsc4 = audioCtx.createOscillator();
+  tensionOsc1.type="sine";
+  tensionOsc2.type="triangle";
+  tensionOsc3.type="sawtooth";
+  tensionOsc4.type="triangle";
 
-  tensionOsc1.type = "sine";
-  tensionOsc2.type = "triangle";
-  tensionOsc3.type = "sawtooth";
-  tensionOsc4.type = "triangle";
+  tensionOsc1.frequency.value=92;
+  tensionOsc2.frequency.value=184;
+  tensionOsc3.frequency.value=276;
+  tensionOsc4.frequency.value=368;
 
-  tensionOsc1.frequency.value = 92;
-  tensionOsc2.frequency.value = 184;
-  tensionOsc3.frequency.value = 276;
-  tensionOsc4.frequency.value = 368;
+  const g1=audioCtx.createGain();
+  const g2=audioCtx.createGain();
+  const g3=audioCtx.createGain();
+  const g4=audioCtx.createGain();
 
-  const g1 = audioCtx.createGain();
-  const g2 = audioCtx.createGain();
-  const g3 = audioCtx.createGain();
-  const g4 = audioCtx.createGain();
-
-  g1.gain.value = .72;
-  g2.gain.value = .34;
-  g3.gain.value = .055;
-  g4.gain.value = .035;
+  g1.gain.value=.72;
+  g2.gain.value=.34;
+  g3.gain.value=.055;
+  g4.gain.value=.035;
 
   tensionOsc1.connect(g1);
   tensionOsc2.connect(g2);
@@ -808,145 +513,94 @@ function startTension(){
   startPulse();
 }
 
-
 function startPulse(){
-
-  if(pulseTimer){
-    clearTimeout(pulseTimer);
-  }
+  if(pulseTimer) clearTimeout(pulseTimer);
 
   function pulse(){
-
     if(!tensionGain) return;
 
-    const t = audioCtx.currentTime;
+    const t=audioCtx.currentTime;
 
-    let base = .12;
-    let peak = .34;
-    let speed = 620;
+    let base=.12;
+    let peak=.34;
+    let speed=620;
 
-    if(tensionLevel === 2){
-      base = .14;
-      peak = .40;
-      speed = 500;
+    if(tensionLevel===2){
+      base=.14;peak=.40;speed=500;
     }
 
-    if(tensionLevel === 3){
-      base = .16;
-      peak = .48;
-      speed = 390;
+    if(tensionLevel===3){
+      base=.16;peak=.48;speed=390;
     }
 
     tensionGain.gain.cancelScheduledValues(t);
     tensionGain.gain.setValueAtTime(base,t);
+    tensionGain.gain.exponentialRampToValueAtTime(peak,t+.045);
+    tensionGain.gain.exponentialRampToValueAtTime(base,t+.25);
 
-    tensionGain.gain.exponentialRampToValueAtTime(
-      peak,
-      t + .045
-    );
-
-    tensionGain.gain.exponentialRampToValueAtTime(
-      base,
-      t + .25
-    );
-
-    pulseTimer = setTimeout(pulse,speed);
+    pulseTimer=setTimeout(pulse,speed);
   }
 
   pulse();
 }
 
-
 function raiseTension(level){
-
-  tensionLevel = level;
-
+  tensionLevel=level;
   if(!audioCtx) return;
 
-  const t = audioCtx.currentTime;
+  const t=audioCtx.currentTime;
 
   try{
-
-    if(level === 1){
+    if(level===1){
       tensionOsc1?.frequency.linearRampToValueAtTime(92,t+.3);
       tensionOsc2?.frequency.linearRampToValueAtTime(184,t+.3);
     }
-
-    if(level === 2){
+    if(level===2){
       tensionOsc1?.frequency.linearRampToValueAtTime(104,t+.3);
       tensionOsc2?.frequency.linearRampToValueAtTime(208,t+.3);
     }
-
-    if(level === 3){
+    if(level===3){
       tensionOsc1?.frequency.linearRampToValueAtTime(118,t+.3);
       tensionOsc2?.frequency.linearRampToValueAtTime(236,t+.3);
     }
-
   }catch(e){}
 }
 
-
 function stopTension(){
-
   if(pulseTimer){
     clearTimeout(pulseTimer);
-    pulseTimer = null;
+    pulseTimer=null;
   }
 
-  try{tensionOsc1?.stop();}catch(e){}
-  try{tensionOsc2?.stop();}catch(e){}
-  try{tensionOsc3?.stop();}catch(e){}
-  try{tensionOsc4?.stop();}catch(e){}
+  try{tensionOsc1?.stop()}catch(e){}
+  try{tensionOsc2?.stop()}catch(e){}
+  try{tensionOsc3?.stop()}catch(e){}
+  try{tensionOsc4?.stop()}catch(e){}
 
-  tensionOsc1 = null;
-  tensionOsc2 = null;
-  tensionOsc3 = null;
-  tensionOsc4 = null;
-
-  tensionGain = null;
-  tensionCompressor = null;
+  tensionOsc1=null;
+  tensionOsc2=null;
+  tensionOsc3=null;
+  tensionOsc4=null;
+  tensionGain=null;
+  tensionCompressor=null;
 }
 
-
 function countSound(n){
-
   initAudio();
 
-  const now = audioCtx.currentTime;
+  const now=audioCtx.currentTime;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
 
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
+  const freq={3:160,2:145,1:128,0:110};
 
-  const freq = {
-    3:160,
-    2:145,
-    1:128,
-    0:110
-  };
-
-  osc.type = "triangle";
-
-  osc.frequency.setValueAtTime(
-    freq[n] || 140,
-    now
-  );
-
-  osc.frequency.exponentialRampToValueAtTime(
-    65,
-    now+.45
-  );
+  osc.type="triangle";
+  osc.frequency.setValueAtTime(freq[n]||140,now);
+  osc.frequency.exponentialRampToValueAtTime(65,now+.45);
 
   gain.gain.setValueAtTime(.0001,now);
-
-  gain.gain.exponentialRampToValueAtTime(
-    .72,
-    now+.012
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now+.52
-  );
+  gain.gain.exponentialRampToValueAtTime(.72,now+.012);
+  gain.gain.exponentialRampToValueAtTime(.0001,now+.52);
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
@@ -955,122 +609,75 @@ function countSound(n){
   osc.stop(now+.55);
 }
 
-
 function puchunSound(){
-
   initAudio();
 
-  const now = audioCtx.currentTime;
+  const now=audioCtx.currentTime;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
 
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = "square";
-
+  osc.type="square";
   osc.frequency.setValueAtTime(330,now);
-
-  osc.frequency.exponentialRampToValueAtTime(
-    32,
-    now+.12
-  );
+  osc.frequency.exponentialRampToValueAtTime(32,now+.12);
 
   gain.gain.setValueAtTime(.5,now);
-
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now+.13
-  );
+  gain.gain.exponentialRampToValueAtTime(.0001,now+.13);
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
-
   osc.start(now);
   osc.stop(now+.14);
 }
 
-
 function slashSound(){
-
   initAudio();
 
-  const now = audioCtx.currentTime;
+  const now=audioCtx.currentTime;
 
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
 
-  osc.type = "sawtooth";
-
+  osc.type="sawtooth";
   osc.frequency.setValueAtTime(1800,now);
-
-  osc.frequency.exponentialRampToValueAtTime(
-    180,
-    now+.15
-  );
+  osc.frequency.exponentialRampToValueAtTime(180,now+.15);
 
   gain.gain.setValueAtTime(.45,now);
-
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now+.18
-  );
+  gain.gain.exponentialRampToValueAtTime(.0001,now+.18);
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
-
   osc.start(now);
   osc.stop(now+.2);
 
-  const bass = audioCtx.createOscillator();
-  const bassGain = audioCtx.createGain();
+  const bass=audioCtx.createOscillator();
+  const bg=audioCtx.createGain();
 
-  bass.type = "triangle";
-
+  bass.type="triangle";
   bass.frequency.setValueAtTime(120,now);
+  bass.frequency.exponentialRampToValueAtTime(42,now+.5);
 
-  bass.frequency.exponentialRampToValueAtTime(
-    42,
-    now+.5
-  );
+  bg.gain.setValueAtTime(.9,now);
+  bg.gain.exponentialRampToValueAtTime(.0001,now+.5);
 
-  bassGain.gain.setValueAtTime(.9,now);
-
-  bassGain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now+.5
-  );
-
-  bass.connect(bassGain);
-  bassGain.connect(audioCtx.destination);
-
+  bass.connect(bg);
+  bg.connect(audioCtx.destination);
   bass.start(now);
   bass.stop(now+.55);
 }
 
-
 function chestOpenSound(){
-
   initAudio();
 
-  const now = audioCtx.currentTime;
+  const now=audioCtx.currentTime;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
 
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = "triangle";
-
+  osc.type="triangle";
   osc.frequency.setValueAtTime(420,now);
-
-  osc.frequency.exponentialRampToValueAtTime(
-    850,
-    now+.18
-  );
+  osc.frequency.exponentialRampToValueAtTime(850,now+.18);
 
   gain.gain.setValueAtTime(.26,now);
-
-  gain.gain.exponentialRampToValueAtTime(
-    .0001,
-    now+.25
-  );
+  gain.gain.exponentialRampToValueAtTime(.0001,now+.25);
 
   osc.connect(gain);
   gain.connect(audioCtx.destination);
@@ -1079,195 +686,104 @@ function chestOpenSound(){
   osc.stop(now+.28);
 }
 
-
 async function playHitMusic(){
-
   try{
-
     hitMusic.pause();
-    hitMusic.currentTime = 0;
-    hitMusic.volume = 1;
-
+    hitMusic.currentTime=0;
+    hitMusic.volume=1;
     await hitMusic.play();
-
-  }catch(e){
-
-    console.log(e);
-
-  }
+  }catch(e){}
 }
 
 
-function drawPrize(){
-
-  const r = Math.random();
-
-  if(r < .05){
-    return{
-      label:"1等",
-      className:"first"
-    };
-  }
-
-  if(r < .25){
-    return{
-      label:"2等",
-      className:"second"
-    };
-  }
-
-  return{
-    label:"3等",
-    className:"third"
-  };
-}
-
-
-function classForPrize(label){
-
-  if(label === "1等") return "first";
-  if(label === "2等") return "second";
-
-  return "third";
-}
-
-
-function buildChestResults(selectedIndex){
-
-  const all = [
-    "1等",
-    "2等",
-    "3等"
-  ];
-
-  const remaining =
-    all.filter(
-      x => x !== selectedPrize.label
-    );
-
-  if(Math.random() < .5){
-    remaining.reverse();
-  }
-
-  chestResults = new Array(3);
-
-  chestResults[selectedIndex] =
-    selectedPrize.label;
-
-  const otherIndexes =
-    [0,1,2].filter(
-      i => i !== selectedIndex
-    );
-
-  chestResults[otherIndexes[0]] =
-    remaining[0];
-
-  chestResults[otherIndexes[1]] =
-    remaining[1];
-}
-
+/* =========================
+   COMMON
+========================= */
 
 function resetNumberStyle(){
-
-  const n = $("#number");
-
-  n.className = "";
-
-  n.style.opacity = "";
-  n.style.transform = "";
-  n.style.left = "";
-  n.style.top = "";
-  n.style.color = "";
-  n.style.fontSize = "";
+  const n=$("#number");
+  n.className="";
+  n.style.opacity="";
+  n.style.transform="";
+  n.style.left="";
+  n.style.top="";
+  n.style.color="";
+  n.style.fontSize="";
 }
-
 
 function showNumber(value,sound=true){
-
   resetNumberStyle();
 
-  const n = $("#number");
-
-  n.textContent = value;
+  const n=$("#number");
+  n.textContent=value;
 
   void n.offsetWidth;
-
   n.classList.add("show");
 
-  if(value === 3){
-    raiseTension(1);
-  }
+  if(value===3) raiseTension(1);
+  if(value===2) raiseTension(2);
+  if(value===1) raiseTension(3);
 
-  if(value === 2){
-    raiseTension(2);
-  }
-
-  if(value === 1){
-    raiseTension(3);
-  }
-
-  if(sound){
-    countSound(value);
-  }
+  if(sound) countSound(value);
 }
-
 
 function flash(){
-
-  const f = $("#flash");
-
-  f.className = "";
-
+  const f=$("#flash");
+  f.className="";
   void f.offsetWidth;
-
-  f.className = "go";
+  f.className="go";
 }
 
+async function slashVisual(reverse=false){
+  slashSound();
+
+  const s=$("#slash");
+  s.className=reverse ? "go reverse" : "go";
+
+  await sleep(190);
+  s.className="";
+}
 
 async function slashHit(){
-
   stopTension();
 
   await sleep(180);
 
-  slashSound();
-
-  $("#slash").className = "go";
-
-  await sleep(170);
-
+  await slashVisual(false);
   flash();
 
   await sleep(300);
 
-  $("#slash").className = "";
-
   await showHit();
 }
 
-
 async function showHit(){
-
-  $("#hit").className = "show";
+  $("#hit").className="show";
 
   playHitMusic();
 
   await sleep(2200);
 
-  $("#hit").className = "";
+  $("#hit").className="";
 
-  $("#preTreasure").className = "show";
+  $("#preTreasure").className="show";
 
   await sleep(1300);
 
-  $("#preTreasure").className = "";
+  $("#preTreasure").className="";
 
   showTreasure();
 }
 
 
-async function missNormal(){
+/* =========================
+   MISS
+   50% normal
+   25% weak fake
+   25% strong fake
+========================= */
 
+async function missNormal(){
   showNumber(3);
   await sleep(1800);
 
@@ -1279,367 +795,214 @@ async function missNormal(){
 
   stopTension();
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   await sleep(900);
 
   reset();
 }
 
-
-async function missWeakFake(){
-
-  const type =
-    Math.floor(Math.random()*10);
-
-  if(type === 0){
-
-    showNumber(3);
-    await sleep(1800);
-
-    showNumber(2);
-    await sleep(3100);
-
-    showNumber(1);
-    await sleep(1900);
-  }
-
-  else if(type === 1){
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1850);
-
-    showNumber(1);
-    await sleep(3500);
-  }
-
-  else if(type === 2){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-
-    await sleep(700);
-
-    $("#number").classList.add("red");
-
-    await sleep(180);
-
-    $("#number").classList.remove("red");
-
-    await sleep(1600);
-  }
-
-  else if(type === 3){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-
-    await sleep(650);
-
-    stopTension();
-
-    await sleep(850);
-
-    startTension();
-    raiseTension(3);
-
-    await sleep(1250);
-  }
-
-  else if(type === 4){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-
-    await sleep(850);
-
-    stopTension();
-
-    $("#black").style.display = "block";
-
-    await sleep(420);
-
-    $("#black").style.display = "none";
-
-    startTension();
-    raiseTension(3);
-
-    await sleep(1200);
-  }
-
-  else if(type === 5){
-
-    showNumber(3);
-    await sleep(3300);
-
-    showNumber(2);
-    await sleep(1700);
-
-    showNumber(1);
-    await sleep(1900);
-  }
-
-  else if(type === 6){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-
-    await sleep(650);
-
-    $("#number").classList.add("red");
-
-    await sleep(140);
-
-    $("#number").classList.remove("red");
-
-    await sleep(1100);
-
-    showNumber(1);
-
-    await sleep(2000);
-  }
-
-  else if(type === 7){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-    await sleep(1750);
-
-    $("#number").textContent = "0";
-
-    await sleep(110);
-
-    showNumber(1);
-
-    await sleep(2100);
-  }
-
-  else if(type === 8){
-
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-
-    await sleep(400);
-
-    $("#number").classList.add("small");
-
-    await sleep(1500);
-  }
-
-  else{
-
-    showNumber(3);
-
-    await sleep(650);
-
-    showNumber(2);
-
-    await sleep(2000);
-
-    showNumber(1);
-
-    await sleep(2400);
-  }
-
+async function weakMissEnding(){
   stopTension();
 
   resetNumberStyle();
 
-  $("#number").textContent = "…";
-
-  $("#number").style.fontSize =
-    "min(18vw,100px)";
-
-  $("#number").style.opacity = ".65";
+  $("#number").textContent="…";
+  $("#number").style.fontSize="min(18vw,100px)";
+  $("#number").style.opacity=".65";
 
   await sleep(600);
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   await sleep(350);
-
-  $("#number").style.fontSize = "";
-  $("#number").style.opacity = "";
 
   reset();
 }
 
+async function missWeakFake(){
+  const type=Math.floor(Math.random()*12);
 
-async function missStrongFake(){
+  showNumber(3);
 
-  const type =
-    Math.floor(Math.random()*6);
+  if(type===9){
+    await sleep(650);
+  }else{
+    await sleep(type===5 ? 3300 : 1750);
+  }
 
-  if(type === 0){
+  showNumber(2);
 
-    showNumber(3);
-    await sleep(1750);
-
-    showNumber(2);
+  if(type===0){
+    await sleep(3100);
+  }else{
     await sleep(1800);
+  }
 
-    showNumber(1);
+  if(type===6){
+    $("#number").classList.add("red");
+    await sleep(180);
+    $("#number").classList.remove("red");
+    await sleep(600);
+  }
+
+  if(type===7){
+    showNumber(0);
+    await sleep(130);
+  }
+
+  if(type===10){
+    $("#number").textContent="?";
+    await sleep(260);
+  }
+
+  showNumber(1);
+
+  if(type===1){
+    await sleep(3500);
+  }
+
+  else if(type===2){
+    await sleep(650);
+    $("#number").classList.add("red");
+    await sleep(180);
+    $("#number").classList.remove("red");
     await sleep(1450);
+  }
 
+  else if(type===3){
+    await sleep(650);
+    stopTension();
+    await sleep(800);
+    startTension();
+    raiseTension(3);
+    await sleep(1200);
+  }
+
+  else if(type===4){
+    await sleep(800);
     stopTension();
 
-    slashSound();
+    $("#black").style.display="block";
+    await sleep(420);
+    $("#black").style.display="none";
 
-    $("#slash").className = "go";
+    startTension();
+    raiseTension(3);
 
-    await sleep(180);
+    await sleep(1100);
+  }
 
-    $("#slash").className = "";
+  else if(type===8){
+    await sleep(400);
+    $("#number").classList.add("small");
+    await sleep(1500);
+  }
 
+  else if(type===11){
+    /* 無音違和感ハズレ */
+    stopTension();
+    await sleep(2100);
+  }
+
+  else{
+    await sleep(2000);
+  }
+
+  await weakMissEnding();
+}
+
+async function strongMissEnding(){
+  stopTension();
+
+  $("#number").textContent="";
+  $("#black").style.display="block";
+
+  await sleep(500);
+
+  $("#black").style.display="none";
+
+  await sleep(700);
+
+  reset();
+}
+
+async function missStrongFake(){
+  const type=Math.floor(Math.random()*8);
+
+  showNumber(3);
+  await sleep(1700);
+
+  showNumber(2);
+  await sleep(1800);
+
+  if(type===6){
+    $("#number").textContent="?";
+    await sleep(450);
+  }
+
+  showNumber(1);
+  await sleep(type===2 ? 700 : 1250);
+
+  if(type===0){
+    /* フェイク切り込み */
+    stopTension();
+    await slashVisual(false);
     await sleep(1700);
   }
 
-  else if(type === 1){
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-    await sleep(1300);
-
+  else if(type===1){
+    /* プチュン暗転ハズレ */
     stopTension();
-
     puchunSound();
 
     await sleep(80);
 
-    $("#black").style.display = "block";
+    $("#black").style.display="block";
+    $("#number").textContent="";
 
-    $("#number").textContent = "";
+    await sleep(2200);
 
-    await sleep(
-      1800 +
-      Math.random()*900
-    );
-
-    $("#black").style.display = "none";
-
-    await sleep(800);
-  }
-
-  else if(type === 2){
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
+    $("#black").style.display="none";
 
     await sleep(700);
+  }
 
+  else if(type===2){
+    /* 金色なのにハズレ */
     $("#number").classList.add("gold");
-
     await sleep(450);
-
     $("#number").classList.remove("gold");
-
     await sleep(2700);
   }
 
-  else if(type === 3){
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-    await sleep(1250);
-
+  else if(type===3){
+    /* 切り込み＋白フラッシュでもハズレ */
     stopTension();
 
-    slashSound();
-
-    $("#slash").className = "go";
-
-    await sleep(170);
-
+    await slashVisual(false);
     flash();
 
-    await sleep(300);
-
-    $("#slash").className = "";
-
-    await sleep(1700);
+    await sleep(1800);
   }
 
-  else if(type === 4){
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-    await sleep(1100);
-
+  else if(type===4){
+    /* 暗転→1に戻る→ハズレ */
     stopTension();
 
-    $("#black").style.display = "block";
-
+    $("#black").style.display="block";
     await sleep(1500);
 
-    $("#black").style.display = "none";
-
-    $("#number").textContent = "1";
+    $("#black").style.display="none";
+    $("#number").textContent="1";
 
     await sleep(2300);
   }
 
-  else{
-
-    showNumber(3);
-    await sleep(1700);
-
-    showNumber(2);
-    await sleep(1800);
-
-    showNumber(1);
-    await sleep(650);
-
+  else if(type===5){
+    /* 金→無音→何もなし */
     $("#number").classList.add("gold");
-
     await sleep(380);
-
     $("#number").classList.remove("gold");
 
     stopTension();
@@ -1647,43 +1010,52 @@ async function missStrongFake(){
     await sleep(2800);
   }
 
-  stopTension();
+  else if(type===6){
+    /* ? が出てもハズレ */
+    await sleep(2200);
+  }
 
-  $("#number").textContent = "";
+  else{
+    /* 暗転フェイク復帰→普通にハズレ */
+    stopTension();
 
-  $("#black").style.display = "block";
+    puchunSound();
 
-  await sleep(500);
+    $("#black").style.display="block";
 
-  $("#black").style.display = "none";
+    await sleep(1200);
 
-  await sleep(700);
+    $("#black").style.display="none";
 
-  reset();
+    $("#number").textContent="1";
+
+    startTension();
+    raiseTension(3);
+
+    await sleep(2100);
+  }
+
+  await strongMissEnding();
 }
 
-
 async function normalMiss(){
+  const r=Math.random();
 
-  const r = Math.random();
-
-  if(r < .50){
-    return missNormal();
-  }
-
-  if(r < .75){
-    return missWeakFake();
-  }
+  if(r<.50) return missNormal();
+  if(r<.75) return missWeakFake();
 
   return missStrongFake();
 }
 
 
-async function normalHitAt(point){
+/* =========================
+   HIT PATTERNS
+========================= */
 
+async function normalHitAt(point){
   showNumber(3);
 
-  if(point === 3){
+  if(point===3){
     await sleep(1350);
     return slashHit();
   }
@@ -1692,7 +1064,7 @@ async function normalHitAt(point){
 
   showNumber(2);
 
-  if(point === 2){
+  if(point===2){
     await sleep(1450);
     return slashHit();
   }
@@ -1701,23 +1073,21 @@ async function normalHitAt(point){
 
   showNumber(1);
 
-  if(point === 1){
+  if(point===1){
     await sleep(1650);
     return slashHit();
   }
 
   await sleep(2250);
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   await sleep(700);
 
   return slashHit();
 }
 
-
 async function normalBlackout(){
-
   showNumber(3);
   await sleep(1700);
 
@@ -1729,18 +1099,16 @@ async function normalBlackout(){
 
   stopTension();
 
-  $("#black").style.display = "block";
+  $("#black").style.display="block";
 
   await sleep(1400);
 
-  $("#black").style.display = "none";
+  $("#black").style.display="none";
 
   return slashHit();
 }
 
-
 async function freezeTwo(){
-
   showNumber(3);
   await sleep(1850);
 
@@ -1750,9 +1118,7 @@ async function freezeTwo(){
   return slashHit();
 }
 
-
 async function reverseCountdown(){
-
   showNumber(3);
   await sleep(1800);
 
@@ -1771,9 +1137,7 @@ async function reverseCountdown(){
   return slashHit();
 }
 
-
 async function zeroPremium(){
-
   showNumber(3);
   await sleep(1800);
 
@@ -1789,16 +1153,14 @@ async function zeroPremium(){
   return slashHit();
 }
 
-
 async function numberDisappear(){
-
   showNumber(3);
   await sleep(1800);
 
   showNumber(2);
   await sleep(1800);
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   stopTension();
 
@@ -1807,9 +1169,7 @@ async function numberDisappear(){
   return slashHit();
 }
 
-
 async function soundStopPattern(){
-
   showNumber(3);
   await sleep(1750);
 
@@ -1826,9 +1186,7 @@ async function soundStopPattern(){
   return slashHit();
 }
 
-
 async function longOne(){
-
   showNumber(3);
   await sleep(1800);
 
@@ -1841,15 +1199,12 @@ async function longOne(){
   return slashHit();
 }
 
-
 async function recountSequence(){
-
-  const hitPoint =
-    Math.floor(Math.random()*4);
+  const hitPoint=Math.floor(Math.random()*4);
 
   showNumber(3);
 
-  if(hitPoint === 0){
+  if(hitPoint===0){
     await sleep(1250);
     return slashHit();
   }
@@ -1858,7 +1213,7 @@ async function recountSequence(){
 
   showNumber(2);
 
-  if(hitPoint === 1){
+  if(hitPoint===1){
     await sleep(1400);
     return slashHit();
   }
@@ -1867,23 +1222,21 @@ async function recountSequence(){
 
   showNumber(1);
 
-  if(hitPoint === 2){
+  if(hitPoint===2){
     await sleep(1550);
     return slashHit();
   }
 
   await sleep(2200);
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   await sleep(900);
 
   return slashHit();
 }
 
-
 async function doubleCountdown(){
-
   showNumber(3);
   await sleep(1700);
 
@@ -1893,50 +1246,43 @@ async function doubleCountdown(){
   showNumber(1);
   await sleep(1900);
 
-  $("#number").textContent = "";
+  $("#number").textContent="";
 
   await sleep(1500);
 
   return recountSequence();
 }
 
-
 async function puchunDirect(){
-
   stopTension();
 
   puchunSound();
 
   await sleep(80);
 
-  $("#black").style.display = "block";
-  $("#number").textContent = "";
+  $("#black").style.display="block";
+  $("#number").textContent="";
 
-  await sleep(
-    1800 +
-    Math.random()*1300
-  );
+  await sleep(1800+Math.random()*1300);
 
-  $("#black").style.display = "none";
+  $("#black").style.display="none";
 
   return slashHit();
 }
 
-
 async function puchunRecount(){
-
   stopTension();
 
   puchunSound();
 
   await sleep(80);
 
-  $("#black").style.display = "block";
-  $("#number").textContent = "";
+  $("#black").style.display="block";
+  $("#number").textContent="";
 
   await sleep(2200);
 
-  $("#black").style.display = "none";
+  $("#black").style.display="none";
 
   await sleep(600);
 
@@ -1945,22 +1291,14 @@ async function puchunRecount(){
   return recountSequence();
 }
 
-
 async function fakeSlashPattern(){
-
   showNumber(3);
   await sleep(1800);
 
   showNumber(2);
   await sleep(1200);
 
-  slashSound();
-
-  $("#slash").className = "go";
-
-  await sleep(170);
-
-  $("#slash").className = "";
+  await slashVisual(false);
 
   await sleep(700);
 
@@ -1970,13 +1308,11 @@ async function fakeSlashPattern(){
   return slashHit();
 }
 
-
 async function weirdCountdown(){
-
   showNumber(3);
   await sleep(900);
 
-  if(Math.random() < .5){
+  if(Math.random()<.5){
     $("#number").classList.add("red");
     await sleep(180);
     $("#number").classList.remove("red");
@@ -1987,7 +1323,7 @@ async function weirdCountdown(){
   showNumber(2);
   await sleep(900);
 
-  if(Math.random() < .5){
+  if(Math.random()<.5){
     $("#number").classList.add("gold");
     await sleep(180);
     $("#number").classList.remove("gold");
@@ -2001,9 +1337,7 @@ async function weirdCountdown(){
   return slashHit();
 }
 
-
 async function silentStart(){
-
   stopTension();
 
   showNumber(3,false);
@@ -2013,136 +1347,380 @@ async function silentStart(){
   startTension();
 
   showNumber(2);
-
   await sleep(1900);
 
   showNumber(1);
-
   await sleep(1900);
 
   return slashHit();
 }
 
 
-async function runRandomHit(){
+/* 王道復活 */
+async function classicRevival(){
+  showNumber(3);
+  await sleep(1800);
 
-  const pattern =
-    Math.floor(Math.random()*18);
+  showNumber(2);
+  await sleep(1900);
+
+  showNumber(1);
+  await sleep(2200);
+
+  stopTension();
+
+  resetNumberStyle();
+
+  $("#number").textContent="…";
+  $("#number").style.fontSize="min(18vw,100px)";
+  $("#number").style.opacity=".65";
+
+  await sleep(650);
+
+  $("#number").textContent="";
+
+  await sleep(600);
+
+  $("#black").style.display="block";
+
+  await sleep(2100);
+
+  $("#black").style.display="none";
+
+  await sleep(100);
+
+  return slashHit();
+}
+
+
+/* カウント飛ばし */
+async function skipCountHit(){
+  showNumber(3);
+  await sleep(1800);
+
+  showNumber(2);
+  await sleep(1800);
+
+  $("#number").textContent="";
+
+  await sleep(900);
+
+  showNumber(0);
+
+  await sleep(700);
+
+  return slashHit();
+}
+
+
+/* 1消滅 */
+async function oneVanishHit(){
+  showNumber(3);
+  await sleep(1800);
+
+  showNumber(2);
+  await sleep(1900);
+
+  showNumber(1);
+  await sleep(1000);
+
+  $("#number").style.opacity="0";
+
+  stopTension();
+
+  await sleep(2300);
+
+  return slashHit();
+}
+
+
+/* 1→2逆転 */
+async function oneBackToTwoHit(){
+  showNumber(3);
+  await sleep(1750);
+
+  showNumber(2);
+  await sleep(1850);
+
+  showNumber(1);
+  await sleep(1800);
+
+  showNumber(2);
+
+  await sleep(2100);
+
+  return slashHit();
+}
+
+
+/* 超高速 */
+async function speedCountHit(){
+  showNumber(3);
+  await sleep(600);
+
+  showNumber(2);
+  await sleep(320);
+
+  showNumber(1);
+  await sleep(300);
+
+  stopTension();
+
+  $("#black").style.display="block";
+
+  await sleep(950);
+
+  $("#black").style.display="none";
+
+  return slashHit();
+}
+
+
+/* 一撃目失敗→反対方向から二撃目 */
+async function doubleSlashHit(){
+  showNumber(3);
+  await sleep(1700);
+
+  showNumber(2);
+  await sleep(1800);
+
+  showNumber(1);
+  await sleep(1400);
+
+  stopTension();
+
+  await slashVisual(false);
+
+  /* 一撃目では何も起きない */
+  await sleep(1500);
+
+  /* 二撃目 */
+  await slashVisual(true);
+
+  flash();
+
+  await sleep(300);
+
+  return showHit();
+}
+
+
+/* 無音違和感→当たり */
+async function silentOddityHit(){
+  showNumber(3);
+  await sleep(1750);
+
+  stopTension();
+
+  showNumber(2,false);
+  await sleep(1900);
+
+  showNumber(1,false);
+  await sleep(2200);
+
+  return slashHit();
+}
+
+
+/* ? 違和感→当たり */
+async function questionHit(){
+  showNumber(3);
+  await sleep(1700);
+
+  showNumber(2);
+  await sleep(1500);
+
+  resetNumberStyle();
+  $("#number").textContent="?";
+
+  await sleep(700);
+
+  showNumber(1);
+
+  await sleep(1700);
+
+  return slashHit();
+}
+
+
+/* 暗転→普通に1へ戻る→さらに当たり */
+async function blackoutReturnHit(){
+  showNumber(3);
+  await sleep(1700);
+
+  showNumber(2);
+  await sleep(1800);
+
+  showNumber(1);
+  await sleep(1200);
+
+  stopTension();
+
+  puchunSound();
+
+  $("#black").style.display="block";
+
+  await sleep(1500);
+
+  $("#black").style.display="none";
+
+  resetNumberStyle();
+  $("#number").textContent="1";
+
+  await sleep(1700);
+
+  return slashHit();
+}
+
+
+/* 全27種類 */
+async function runRandomHit(){
+  const pattern=Math.floor(Math.random()*27);
 
   switch(pattern){
+    case 0:return normalHitAt(3);
+    case 1:return normalHitAt(2);
+    case 2:return normalHitAt(1);
+    case 3:return normalHitAt(0);
+    case 4:return normalBlackout();
+    case 5:return freezeTwo();
+    case 6:return reverseCountdown();
+    case 7:return zeroPremium();
+    case 8:return numberDisappear();
+    case 9:return soundStopPattern();
+    case 10:return longOne();
+    case 11:return recountSequence();
+    case 12:return doubleCountdown();
+    case 13:return puchunDirect();
+    case 14:return puchunRecount();
+    case 15:return fakeSlashPattern();
+    case 16:return weirdCountdown();
+    case 17:return silentStart();
 
-    case 0:
-      return normalHitAt(3);
-
-    case 1:
-      return normalHitAt(2);
-
-    case 2:
-      return normalHitAt(1);
-
-    case 3:
-      return normalHitAt(0);
-
-    case 4:
-      return normalBlackout();
-
-    case 5:
-      return freezeTwo();
-
-    case 6:
-      return reverseCountdown();
-
-    case 7:
-      return zeroPremium();
-
-    case 8:
-      return numberDisappear();
-
-    case 9:
-      return soundStopPattern();
-
-    case 10:
-      return longOne();
-
-    case 11:
-      return recountSequence();
-
-    case 12:
-      return doubleCountdown();
-
-    case 13:
-      return puchunDirect();
-
-    case 14:
-      return puchunRecount();
-
-    case 15:
-      return fakeSlashPattern();
-
-    case 16:
-      return weirdCountdown();
-
-    case 17:
-      return silentStart();
+    case 18:return classicRevival();
+    case 19:return skipCountHit();
+    case 20:return oneVanishHit();
+    case 21:return oneBackToTwoHit();
+    case 22:return speedCountHit();
+    case 23:return doubleSlashHit();
+    case 24:return silentOddityHit();
+    case 25:return questionHit();
+    case 26:return blackoutReturnHit();
   }
 }
 
 
-function showTreasure(){
+/* =========================
+   PRIZE
+========================= */
 
-  selectedPrize = drawPrize();
+function drawPrize(){
+  const r=Math.random();
 
-  chestBusy = false;
-  chestResults = [];
+  if(r<.05){
+    return{label:"1等",className:"first"};
+  }
 
-  $("#treasureTitle").textContent =
-    "運命の宝箱を選べ！";
+  if(r<.25){
+    return{label:"2等",className:"second"};
+  }
 
-  $("#treasureSub").textContent =
-    "この一箱が、結果を決める。";
+  return{label:"3等",className:"third"};
+}
 
-  $("#treasureNext").style.display =
-    "none";
-
-  $$(".chest").forEach(chest=>{
-
-    chest.classList.remove(
-      "selected",
-      "open",
-      "dim",
-      "disabled"
-    );
-
-    const result =
-      chest.querySelector(".chestResult");
-
-    result.textContent = "";
-    result.className = "chestResult";
-  });
-
-  $("#treasureScreen").className =
-    "show";
+function classForPrize(label){
+  if(label==="1等") return "first";
+  if(label==="2等") return "second";
+  return "third";
 }
 
 
-async function chooseChest(chest){
+/*
+  選んだ箱は抽選済みの等級。
+  残り2箱は毎回ランダム配置。
+*/
+function buildChestResults(selectedIndex){
+  const all=["1等","2等","3等"];
 
+  const remaining=all.filter(
+    x=>x!==selectedPrize.label
+  );
+
+  /* Fisher-Yates */
+  for(let i=remaining.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [remaining[i],remaining[j]]=[remaining[j],remaining[i]];
+  }
+
+  chestResults=new Array(3);
+
+  chestResults[selectedIndex]=selectedPrize.label;
+
+  const otherIndexes=[0,1,2].filter(
+    i=>i!==selectedIndex
+  );
+
+  chestResults[otherIndexes[0]]=remaining[0];
+  chestResults[otherIndexes[1]]=remaining[1];
+}
+
+function showTreasure(){
+  selectedPrize=drawPrize();
+
+  chestBusy=false;
+  chestResults=[];
+
+  $("#treasureTitle").textContent="運命の宝箱を選べ！";
+  $("#treasureSub").textContent="この一箱が、結果を決める。";
+  $("#treasureNext").style.display="none";
+
+  $$(".chest").forEach(chest=>{
+    chest.classList.remove("selected","open","dim","disabled");
+
+    const result=chest.querySelector(".chestResult");
+    result.textContent="";
+    result.className="chestResult";
+  });
+
+  $("#treasureScreen").className="show";
+}
+
+function showChestResult(chest,label){
+  const result=chest.querySelector(".chestResult");
+
+  result.textContent=label;
+  result.className="chestResult "+classForPrize(label);
+
+  void result.offsetWidth;
+
+  result.classList.add("show");
+}
+
+async function showSelectedPrize(){
+  $("#prizeLabel").textContent=selectedPrize.label;
+  $("#prizeBox").className="show "+selectedPrize.className;
+
+  flash();
+
+  await sleep(1550);
+
+  $("#prizeBox").className="";
+}
+
+async function chooseChest(chest){
   if(chestBusy) return;
 
-  chestBusy = true;
+  chestBusy=true;
 
-  const chests = $$(".chest");
-
-  const selectedIndex =
-    chests.indexOf(chest);
+  const chests=$$(".chest");
+  const selectedIndex=chests.indexOf(chest);
 
   buildChestResults(selectedIndex);
 
   chests.forEach(c=>{
-
     c.classList.add("disabled");
 
-    if(c !== chest){
+    if(c!==chest){
       c.classList.add("dim");
     }
   });
@@ -2157,10 +1735,7 @@ async function chooseChest(chest){
   chestOpenSound();
   flash();
 
-  showChestResult(
-    chest,
-    selectedPrize.label
-  );
+  showChestResult(chest,selectedPrize.label);
 
   await sleep(750);
 
@@ -2168,30 +1743,23 @@ async function chooseChest(chest){
 
   await sleep(300);
 
-  $("#treasureTitle").textContent =
-    "残りの宝箱は…";
+  $("#treasureTitle").textContent="残りの宝箱は…";
+  $("#treasureSub").textContent="選ばなかった箱もオープン";
 
-  $("#treasureSub").textContent =
-    "選ばなかった箱もオープン";
+  chests.forEach(c=>c.classList.remove("dim"));
 
-  chests.forEach(
-    c=>c.classList.remove("dim")
-  );
+  const others=chests
+    .map((c,i)=>({chest:c,index:i}))
+    .filter(x=>x.index!==selectedIndex);
 
-  const others =
-    chests
-      .map((c,i)=>({
-        chest:c,
-        index:i
-      }))
-      .filter(
-        x=>x.index !== selectedIndex
-      );
+  /* 残り箱を開ける順番もランダム */
+  if(Math.random()<.5){
+    others.reverse();
+  }
 
   await sleep(500);
 
   for(const item of others){
-
     item.chest.classList.add("open");
 
     chestOpenSound();
@@ -2205,63 +1773,24 @@ async function chooseChest(chest){
     await sleep(950);
   }
 
-  $("#treasureTitle").textContent =
-    selectedPrize.label +
-    " 当選！";
+  $("#treasureTitle").textContent=selectedPrize.label+" 当選！";
+  $("#treasureSub").textContent="3つの宝箱の結果";
 
-  $("#treasureSub").textContent =
-    "3つの宝箱の結果";
-
-  $("#treasureNext").style.display =
-    "block";
+  $("#treasureNext").style.display="block";
 }
 
 
-function showChestResult(chest,label){
-
-  const result =
-    chest.querySelector(".chestResult");
-
-  result.textContent = label;
-
-  result.className =
-    "chestResult " +
-    classForPrize(label);
-
-  void result.offsetWidth;
-
-  result.classList.add("show");
-}
-
-
-async function showSelectedPrize(){
-
-  $("#prizeLabel").textContent =
-    selectedPrize.label;
-
-  $("#prizeBox").className =
-    "show " +
-    selectedPrize.className;
-
-  flash();
-
-  await sleep(1550);
-
-  $("#prizeBox").className = "";
-}
-
+/* =========================
+   PRODUCTION DRAW
+========================= */
 
 async function productionPlay(){
-
   if(busy) return;
 
-  busy = true;
+  busy=true;
 
-  $("#start").style.display =
-    "none";
-
-  $("#startInfo").style.display =
-    "none";
+  $("#start").style.display="none";
+  $("#startInfo").style.display="none";
 
   initAudio();
 
@@ -2269,93 +1798,81 @@ async function productionPlay(){
 
   startTension();
 
-  const win =
-    Math.random() < (1/30);
+  /*
+    ★ ここで1回だけ抽選
+    毎プレイ独立 1/30
+  */
+  const win=Math.random()<(1/30);
 
   if(!win){
-
     await normalMiss();
-
     return;
   }
 
+  /*
+    当たり確定後に
+    演出を選択するだけなので
+    1/30には影響しない
+  */
   await runRandomHit();
 }
 
 
-function reset(){
+/* =========================
+   RESET
+========================= */
 
+function reset(){
   stopTension();
 
   hitMusic.pause();
 
-  try{
-    hitMusic.currentTime = 0;
-  }catch(e){}
+  try{hitMusic.currentTime=0}catch(e){}
 
-  $("#hit").className = "";
-  $("#preTreasure").className = "";
-  $("#treasureScreen").className = "";
-  $("#prizeBox").className = "";
-  $("#slash").className = "";
+  $("#hit").className="";
+  $("#preTreasure").className="";
+  $("#treasureScreen").className="";
+  $("#prizeBox").className="";
+  $("#slash").className="";
 
-  $("#black").style.display =
-    "none";
+  $("#black").style.display="none";
 
-  $("#treasureNext").style.display =
-    "none";
+  $("#treasureNext").style.display="none";
 
   resetNumberStyle();
 
-  $("#number").textContent = "3";
+  $("#number").textContent="3";
 
   $$(".chest").forEach(c=>{
+    c.classList.remove("selected","open","dim","disabled");
 
-    c.classList.remove(
-      "selected",
-      "open",
-      "dim",
-      "disabled"
-    );
-
-    const result =
-      c.querySelector(".chestResult");
-
-    result.textContent = "";
-    result.className = "chestResult";
+    const result=c.querySelector(".chestResult");
+    result.textContent="";
+    result.className="chestResult";
   });
 
-  selectedPrize = null;
-  chestResults = [];
+  selectedPrize=null;
+  chestResults=[];
 
-  chestBusy = false;
-  busy = false;
+  chestBusy=false;
+  busy=false;
 
-  $("#startInfo").style.display =
-    "block";
-
-  $("#start").style.display =
-    "block";
+  $("#startInfo").style.display="block";
+  $("#start").style.display="block";
 }
 
 
-$("#start").addEventListener(
-  "click",
-  productionPlay
-);
+/* =========================
+   EVENTS
+========================= */
+
+$("#start").addEventListener("click",productionPlay);
 
 $$(".chest").forEach(chest=>{
-
-  chest.addEventListener(
-    "click",
-    ()=>chooseChest(chest)
-  );
+  chest.addEventListener("click",()=>chooseChest(chest));
 });
 
-$("#treasureNext").addEventListener(
-  "click",
-  reset
-);
+$("#treasureNext").addEventListener("click",reset);
 
 </script>
 </body>
